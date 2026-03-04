@@ -7,13 +7,28 @@ import time
 import json
 from pathlib import Path
 
+
 TRACE_FILE = Path("../runtime/runtime_trace.jsonl")
 
 
 def log_event(event):
+
     TRACE_FILE.parent.mkdir(parents=True, exist_ok=True)
+
     with open(TRACE_FILE, "a") as f:
         f.write(json.dumps(event) + "\n")
+
+
+def heartbeat(tick):
+
+    event = {
+        "system": "FlowAgent",
+        "tick": tick,
+        "action": "heartbeat",
+        "timestamp": time.time()
+    }
+
+    log_event(event)
 
 
 def main_loop():
@@ -24,13 +39,7 @@ def main_loop():
 
     while True:
 
-        event = {
-            "tick": tick,
-            "action": "heartbeat",
-            "timestamp": time.time()
-        }
-
-        log_event(event)
+        heartbeat(tick)
 
         print("tick:", tick)
 
