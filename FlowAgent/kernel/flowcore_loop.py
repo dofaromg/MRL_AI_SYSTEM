@@ -13,7 +13,6 @@ if str(REPO_ROOT) not in sys.path:
 import time
 import json
 
-
 from FlowAgent.memory.merkle.memory_chain import MerkleChain
 
 TRACE_FILE = Path("../runtime/runtime_trace.jsonl")
