@@ -15,7 +15,7 @@ import json
 
 from FlowAgent.memory.merkle.memory_chain import MerkleChain
 
-TRACE_FILE = Path("../runtime/runtime_trace.jsonl")
+TRACE_FILE = Path("../runtime/_data/runtime_trace.jsonl")
 
 # local runtime data dir (do NOT commit these files)
 DATA_DIR = Path("../runtime/_data/memory_chain")
