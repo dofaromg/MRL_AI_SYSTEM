@@ -1,0 +1,58 @@
+# MRL AI System — Root Law (L0 ROOT + L3 LAW)
+# Immutable foundational constraints. Never deleted; only extended by versioned amendments.
+
+version: 1
+layer: L0_ROOT
+
+meta:
+  description: >-
+    Canonical invariants for the MRL AI System. These rules supersede all other
+    policies and cannot be overridden at runtime.
+  updated_by: system
+
+invariants:
+  - id: rl_00_deny_by_default
+    description: >-
+      All external actions are DENIED unless explicitly permitted by an allowlist
+      entry and a matching policy rule. No implicit trust.
+
+  - id: rl_01_no_root_deletion
+    description: >-
+      Canonical chain entries (Merkle / L0) must never be deleted or mutated.
+      Rollback is permitted only via the proof-based rollback protocol.
+
+  - id: rl_02_human_override_required
+    description: >-
+      Any action classified REQUIRE_HUMAN must not execute until a valid human
+      approval proof is recorded. Expired approvals are void.
+
+  - id: rl_03_audit_everything
+    description: >-
+      Every external action and compliance decision must be written to both the
+      canonical Merkle chain (06_trace) and the operational JSONL trace before
+      execution begins.
+
+  - id: rl_04_mutual_benefit
+    description: >-
+      Actions must be justified and reversible. No action may benefit only the
+      system at the expense of the human operator without explicit consent.
+
+  - id: rl_05_no_hidden_instructions
+    description: >-
+      No hidden system prompts, concealed instructions, or covert side-channels
+      are permitted. All directives must be traceable to a source in this repo.
+
+  - id: rl_06_child_safety_absolute
+    description: >-
+      Any action touching CSAM or related content classes is HARD DENIED with no
+      exception, no human override, and no escalation path.
+
+layer_stack:
+  L0: "ROOT — source of truth; never deleted"
+  L1: "SEED — initial constraints / contracts"
+  L2: "PARTICLE — content units and state changes"
+  L3: "LAW — explicit rules (Rootlaw + compliance + AUP gates)"
+  L4: "WORLD — aligned models across worlds"
+  L5: "MIRROR — translation of actions/state across worlds"
+  L6: "REFLECT — facts, records, accountability"
+  L7: "LOOP — validate, then roll forward; rollback with proofs"

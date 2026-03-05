@@ -8,7 +8,7 @@ This repo keeps the **mirror + manifest** representation. The sealed canonical s
 - **Real world**: human society, legal obligations, recordkeeping (proof + accountability).
 
 ## Kernel closure (Loop cycle)
-Observe → resolve → mirror → project → verify → iterate.
+Observe → Resolve → Mirror → Project → Verify → Iterate.
 
 ## Layer stack (L0–L7)
 - L0 ROOT: source of truth; never deleted.
