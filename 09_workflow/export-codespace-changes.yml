@@ -1,0 +1,110 @@
+name: Export Codespace Changes
+
+description: |
+  This workflow exports unpushed Codespace changes to either a new branch in the same repository
+  or a new repository. It checks for uncommitted changes, creates a new branch with a timestamp,
+  commits all changes, and then pushes either to a new branch or a new repository. For cross-fork
+  operations and pushing to new repositories, a Personal Access Token (PAT) with `repo` scope must
+  be provided as `PAT` secret.
+
+on:
+  workflow_dispatch:
+    inputs:
+      exportType:
+        description: 'Select where to export unpushed changes: a new branch in the current repo or a new repository.'
+        required: true
+        default: branch
+        type: choice
+        options:
+          - branch
+          - repo
+      newRepoName:
+        description: 'If exportType is repo, specify the name of the new repository (without owner).'
+        required: false
+        type: string
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      # `packages` and `pull-requests` are not needed but can be added if your repo uses them.
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Ensure there are uncommitted changes
+        id: check_changes
+        run: |
+          if [[ -z $(git status --porcelain) ]]; then
+            echo "No uncommitted changes found. Exiting."
+            echo "export_needed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Uncommitted changes found. Proceeding with export."
+            echo "export_needed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Stop workflow if no changes
+        if: steps.check_changes.outputs.export_needed == 'false'
+        run: |
+          echo "No changes to export. Ending workflow."
+          exit 0
+
+      - name: Set up Git config
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create branch and commit changes
+        run: |
+          # Create a timestamped branch name
+          BRANCH="export-codespace-$(date -u +'%Y%m%d-%H%M%S')"
+          git checkout -b "$BRANCH"
+          git add .
+          git commit -m "Export Codespace changes on $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          echo "BRANCH=$BRANCH" >> "$GITHUB_ENV"
+
+      - name: Push to new branch in current repository
+        if: inputs.exportType == 'branch'
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
+        run: |
+          # Push the new branch to the current repository. For forks, ensure PAT has appropriate permissions.
+          git push --set-upstream https://$GITHUB_TOKEN@github.com/${{ github.repository }} $BRANCH
+
+      - name: Install GitHub CLI
+        if: inputs.exportType == 'repo'
+        uses: cli/cli-action@v2
+        with:
+          install-only: true
+
+      - name: Create and push to new repository
+        if: inputs.exportType == 'repo'
+        env:
+          PAT: ${{ secrets.PAT }}
+        run: |
+          if [[ -z "${{ inputs.newRepoName }}" ]]; then
+            echo "Error: newRepoName input is required when exportType is 'repo'."
+            exit 1
+          fi
+
+          # Determine owner for the new repository: use the current repository owner
+          OWNER="${{ github.repository_owner }}"
+          NEW_REPO="$OWNER/${{ inputs.newRepoName }}"
+
+          # Create the new repository using GitHub CLI
+          echo "Creating repository $NEW_REPO ..."
+          echo "$PAT" | gh auth login --with-token
+          gh repo create "$NEW_REPO" --public --confirm --source=. --remote=new --push || {
+            echo "Failed to create repository. Ensure PAT has the 'repo' scope and that the repo doesn't already exist.";
+            exit 1;
+          }
+
+          # Now push the branch to the new repository's default branch
+          echo "Pushing to new repository..."
+          git remote add new https://$PAT@github.com/$NEW_REPO.git
+          git push new $BRANCH:main
+          echo "Exported changes to new repository $NEW_REPO."
+
+      - name: Complete
+        run: echo "Export workflow finished."
