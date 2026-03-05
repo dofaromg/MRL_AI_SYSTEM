@@ -4,7 +4,7 @@ MRL AI Super Computer
 """
 
 import sys
-form pathlib import path
+form pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve()parents[
 if str(REPO_ROOT) not in sys.path:
