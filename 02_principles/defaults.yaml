@@ -18,16 +18,16 @@ human_approval:
   default_expiry_seconds: 600
 
 allowlists:
-  hosts_file: ../allowlist/allowed_hosts.yaml
-  sources_file: ../allowlist/allowed_sources.yaml
-  recipients_file: ../allowlist/allowed_recipients.yaml
+  hosts_file: ../07_ingest/allowlist/allowed_hosts.yaml
+  sources_file: ../07_ingest/allowlist/allowed_sources.yaml
+  recipients_file: ../07_ingest/allowlist/allowed_recipients.yaml
 
 denylist:
-  blocked_actions_file: ../denylist/blocked_actions.yaml
+  blocked_actions_file: ../07_ingest/denylist/blocked_actions.yaml
 
 trace:
   enabled: true
   canonical_writer: merkle_chain
   runtime_writer: jsonl
-  runtime_trace_schema: ../schemas/runtime_trace.schema.json
-  canonical_trace_schema: ../schemas/trace_record.schema.json
+  runtime_trace_schema: ../01_schema/runtime_trace.schema.json
+  canonical_trace_schema: ../01_schema/trace_record.schema.json

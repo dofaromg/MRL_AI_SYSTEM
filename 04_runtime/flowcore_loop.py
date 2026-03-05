@@ -6,19 +6,19 @@ MRL AI Super Computer
 import sys
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve()parents[2]
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
-    
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
+# Add merkle module to path (03_memory/merkle/ is not a Python package due to numeric prefix)
+sys.path.insert(0, str(REPO_ROOT / "03_memory" / "merkle"))
+
 import time
 import json
 
-from FlowAgent.memory.merkle.memory_chain import MerkleChain
-
-TRACE_FILE = Path("../runtime/_data/runtime_trace.jsonl")
+from memory_chain import MerkleChain
 
 # local runtime data dir (do NOT commit these files)
-DATA_DIR = Path("../runtime/_data/memory_chain")
+TRACE_FILE = REPO_ROOT / "06_trace" / "traces" / "_data" / "runtime_trace.jsonl"
+DATA_DIR = REPO_ROOT / "03_memory" / "_data" / "memory_chain"
 
 
 def log_event(event):
