@@ -17,6 +17,18 @@ sources:
     path: "Mrliou_agents/Mrl_FlowAgent/FlowCoreLoop_AIComputer_Runtime_v0/memory/ingest/raw"
     role: world generation framing
 
+  - id: final_integration_v1_3
+    name: "MrLiou 萬物邏輯結構 - 最終整合總綱 v1.3"
+    sealed: "2026-02-15"
+    origin_signature: MrLiouWord
+    status: Immutable / Declarative / Sealed
+    role: final alignment overview — Liou Closure Law, LAW-0 signature, SEED(X), OriginCollapse 16, MRLIOU ASI MVP L0-L7, N0-N11 workflow
+    implementations:
+      - "00_rootlaw/rootlaw.yaml"        # Liou Closure Law + LAW-0 + OriginCollapse 16
+      - "09_workflow/api.js"             # MRLIOU ASI MVP (L0-L7)
+      - "09_workflow/signature.js"       # LAW-0 interfaces
+      - "09_workflow/seed.js"            # SEED(X) compression
+
 # Usage:
 # - append here whenever you add a new source file
 # - never delete canonical sources; deprecate via metadata
