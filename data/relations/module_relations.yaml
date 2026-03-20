@@ -291,6 +291,75 @@ relations:
       - { type: depends_on,  to: "00_rootlaw/rootlaw.yaml" }
       - { type: indexed_by,  to: "09_workflow/mrl_librarian.py" }
 
+  # ── 03_memory/vector ──
+  - from: "03_memory/vector/vector_store.py"
+    layer: L6
+    group: 2
+    state: runnable
+    links:
+      - { type: implements,  to: "ParticleReversible / RAG VectorStore" }
+      - { type: depends_on,  to: "03_memory/merkle/memory_chain.py" }
+
+  # ── 09_workflow (industry + MRL combination modules) ──
+  - from: "09_workflow/tool_registry.py"
+    layer: L7
+    group: 3
+    state: runnable
+    links:
+      - { type: implements,  to: "FlowAgentRuntime / ToolRegistry" }
+      - { type: depends_on,  to: "09_workflow/signature.js" }
+
+  - from: "09_workflow/prompt_template.py"
+    layer: L7
+    group: 3
+    state: runnable
+    links:
+      - { type: implements,  to: "FlowAgentRuntime / PromptTemplate" }
+      - { type: depends_on,  to: "09_workflow/tool_registry.py" }
+
+  - from: "09_workflow/agent_planner.py"
+    layer: L7
+    group: 3
+    state: runnable
+    links:
+      - { type: implements,  to: "FlowAgentRuntime / ReActAgentLoop" }
+      - { type: depends_on,  to: "09_workflow/tool_registry.py" }
+      - { type: depends_on,  to: "09_workflow/prompt_template.py" }
+
+  - from: "09_workflow/eval_engine.py"
+    layer: L6
+    group: 5
+    state: runnable
+    links:
+      - { type: implements,  to: "FileIndexGovernance / EvalPipeline" }
+      - { type: depends_on,  to: "02_principles/rules.aup_v1.yaml" }
+
+  - from: "09_workflow/plugin_manager.py"
+    layer: L7
+    group: 3
+    state: runnable
+    links:
+      - { type: implements,  to: "FlowAgentRuntime / PluginManager" }
+      - { type: depends_on,  to: "09_workflow/tool_registry.py" }
+      - { type: indexed_by,  to: "09_workflow/mrl_librarian.py" }
+
+  - from: "09_workflow/mother_assembly.py"
+    layer: L7
+    group: 1
+    state: entry
+    links:
+      - { type: entry_of,    to: "MotherCore / MotherAssembly" }
+      - { type: depends_on,  to: "03_memory/merkle/memory_chain.py" }
+      - { type: depends_on,  to: "03_memory/vector/vector_store.py" }
+      - { type: depends_on,  to: "05_persona/world_module.py" }
+      - { type: depends_on,  to: "09_workflow/tool_registry.py" }
+      - { type: depends_on,  to: "09_workflow/prompt_template.py" }
+      - { type: depends_on,  to: "09_workflow/agent_planner.py" }
+      - { type: depends_on,  to: "09_workflow/eval_engine.py" }
+      - { type: depends_on,  to: "09_workflow/plugin_manager.py" }
+      - { type: depends_on,  to: "09_workflow/fltnz_parser.py" }
+      - { type: mirrors,     to: "data/relations/module_relations.yaml" }
+
   # ── ui ──
   - from: "ui/streamlit_app/app.py"
     layer: Platform

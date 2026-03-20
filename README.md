@@ -43,6 +43,8 @@ Design principle: **怎麼過去，就怎麼回來** (the path forward is the pa
 
 ## Key modules
 
+### MRL core modules
+
 | Module | Purpose |
 |--------|---------|
 | `09_workflow/mrl_librarian.py` | T/X/Y/Z indexed file librarian — rebuild with `python 09_workflow/mrl_librarian.py index` |
@@ -54,6 +56,24 @@ Design principle: **怎麼過去，就怎麼回來** (the path forward is the pa
 | `09_workflow/api.js` | L0–L7 layer stack (Node.js, v1.3) |
 | `09_workflow/signature.js` | LAW-0 signature law implementation |
 | `09_workflow/seed.js` | SEED(X) compression pipeline |
+
+### Industry-standard modules (新增)
+
+| Module | Industry feature | MRL extension |
+|--------|-----------------|---------------|
+| `03_memory/vector/vector_store.py` | RAG — cosine-similarity vector store | entries stamped with origin_signature, sealable into MerkleChain |
+| `09_workflow/tool_registry.py` | Tool / function calling | call records traceable to L7 trace format |
+| `09_workflow/prompt_template.py` | Prompt template management | versioned templates persisted to `data/prompt_templates.json` |
+| `09_workflow/agent_planner.py` | ReAct Plan→Act→Observe agent loop | trajectory steps compatible with WorldModule format |
+| `09_workflow/eval_engine.py` | Output scoring / evaluation pipeline | safety scorer enforces L3 LAW deny-list |
+| `09_workflow/plugin_manager.py` | Plugin discovery & lifecycle | plugins must declare TXYZ coordinates (layer + group) |
+
+### MotherAssembly — 組合入口 (the combination)
+
+| Module | Purpose |
+|--------|---------|
+| `09_workflow/mother_assembly.py` | **Unified system entry point** — boots and wires all 7 subsystems together. The combination (組合) is the system's biggest feature. |
+| `09_workflow/plugins/` | Plugin directory — drop `*.py` files here following the plugin contract |
 
 ## Design principles
 
@@ -92,6 +112,46 @@ python 09_workflow/fltnz_parser.py encode --src README.md --dst /tmp/readme.fltn
 
 # 4. Inspect world state
 python 05_persona/world_module.py snap
+
+# ── MotherAssembly (boots all 7 subsystems at once) ──────────────────────────
+
+# 5. Boot and check status
+python 09_workflow/mother_assembly.py boot
+python 09_workflow/mother_assembly.py status
+
+# 6. Run an agent task
+python 09_workflow/mother_assembly.py run --goal "Summarise the repo structure"
+
+# 7. Evaluate an output
+python 09_workflow/mother_assembly.py eval \
+    --output "The MRL system uses Merkle chains for immutable tracing." \
+    --keywords "MRL,Merkle,tracing"
+
+# 8. Seal text through the full reversible chain + MerkleChain
+python 09_workflow/mother_assembly.py seal --text "Hello, MRL!" --label readme
+
+# ── Individual industry modules ───────────────────────────────────────────────
+
+# Vector store (RAG)
+python 03_memory/vector/vector_store.py add --id doc1 --vec "0.1,0.9,0.3"
+python 03_memory/vector/vector_store.py query --vec "0.1,0.8,0.3" --k 3
+
+# Tool registry
+python 09_workflow/tool_registry.py list
+python 09_workflow/tool_registry.py call --tool add --args '{"a":3,"b":4}'
+
+# Prompt templates
+python 09_workflow/prompt_template.py add --id greet --text "Hello, {name}!"
+python 09_workflow/prompt_template.py render --id greet --vars '{"name":"MRL"}'
+
+# Agent planner demo
+python 09_workflow/agent_planner.py demo
+
+# Eval engine
+python 09_workflow/eval_engine.py demo
+
+# Plugin discovery
+python 09_workflow/plugin_manager.py discover --dir 09_workflow/plugins
 ```
 
 See `04_runtime/runtime_manifest.yaml` for the full install order and recovery protocol.

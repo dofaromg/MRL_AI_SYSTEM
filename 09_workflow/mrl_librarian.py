@@ -62,6 +62,7 @@ _DIR_CLASSIFICATION: List[tuple[str, str, int, str]] = [
 _PATH_OVERRIDES: Dict[str, Dict[str, Any]] = {
     "00_rootlaw/rootlaw.yaml":           {"T": "spec",     "Y": 1, "Z": 2},
     "03_memory/merkle/memory_chain.py":  {"T": "runnable", "Y": 2, "Z": 1},
+    "03_memory/vector/vector_store.py":  {"T": "runnable", "Y": 2, "Z": 1},
     "04_runtime/flowcore_loop.py":       {"T": "runnable", "Y": 3, "Z": 2},
     "04_runtime/runtime_manifest.yaml":  {"T": "spec",     "Y": 3, "Z": 2},
     "05_persona/world_module.py":        {"T": "prototype","Y": 4, "Z": 1},
@@ -71,6 +72,12 @@ _PATH_OVERRIDES: Dict[str, Dict[str, Any]] = {
     "09_workflow/fltnz_parser.py":       {"X": "L2", "T": "runnable", "Y": 2, "Z": 2},
     "09_workflow/mrl_librarian.py":      {"T": "entry",    "Y": 5, "Z": 2},
     "09_workflow/MRL__Flowcore_Loop_2.py": {"T": "runnable","Y": 3, "Z": 2},
+    "09_workflow/tool_registry.py":      {"T": "runnable", "Y": 3, "Z": 1},
+    "09_workflow/prompt_template.py":    {"T": "runnable", "Y": 3, "Z": 1},
+    "09_workflow/agent_planner.py":      {"T": "runnable", "Y": 3, "Z": 2},
+    "09_workflow/eval_engine.py":        {"T": "runnable", "Y": 5, "Z": 1},
+    "09_workflow/plugin_manager.py":     {"T": "runnable", "Y": 3, "Z": 1},
+    "09_workflow/mother_assembly.py":    {"T": "entry",    "Y": 1, "Z": 2},
     "data/relations/module_relations.yaml": {"T": "spec",  "Y": 5, "Z": 2},
     "data/master/master_summary_v1.3.md":   {"T": "spec",  "Y": 1, "Z": 1},
 }
