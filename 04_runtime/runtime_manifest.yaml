@@ -44,13 +44,16 @@ tiers:
 
   Runtime:
     description: >-
-      The minimal runnable subset: kernel loop + Merkle chain + trace writer.
-      Sufficient for heartbeat, audit, and memory without UI or persona.
+      The AI Computer Runtime: filesystem vault + trace + HTTP API + CLI.
+      Provides the full FlowCoreLoop v1.3 feature set including Vault,
+      SteeringStore, Tracer, and FSD integration in a single self-contained file.
     required_modules:
       - "00_rootlaw/rootlaw.yaml"
-      - "03_memory/merkle/memory_chain.py"
       - "04_runtime/flowcore_loop.py"
-    start_command: "python 04_runtime/flowcore_loop.py"
+    start_command: "python 04_runtime/flowcore_loop.py serve"
+    env_vars:
+      FLOW_VAULT_ROOT: "path/to/vault"
+      FLOW_PORT: "8787"
     layer: "L0 + L6 + L7"
     core_groups: [1, 2, 3]
 
@@ -59,12 +62,14 @@ tiers:
       FlowCoreLoop HTTP control plane + Vault + Tracer + SteeringStore,
       packaged as a single self-contained process. Use when you need
       a local API endpoint, file-vault access, and trace management.
+      Both 04_runtime/flowcore_loop.py and 09_workflow/MRL__Flowcore_Loop_2.py
+      provide equivalent serve functionality.
     required_modules:
-      - "09_workflow/MRL__Flowcore_Loop_2.py"
-    start_command: "python 09_workflow/MRL__Flowcore_Loop_2.py serve"
+      - "04_runtime/flowcore_loop.py"
+    start_command: "python 04_runtime/flowcore_loop.py serve"
     env_vars:
-      VAULT_ROOT: "path/to/vault"
-      PORT: "8080"
+      FLOW_VAULT_ROOT: "path/to/vault"
+      FLOW_PORT: "8787"
     layer: "L7 + MetaEnv"
     core_groups: [3, 5]
 
@@ -109,7 +114,7 @@ tiers:
         group: 3
 
       - name: "Start FlowCoreLoop HTTP server"
-        run: "python 09_workflow/MRL__Flowcore_Loop_2.py serve"
+        run: "python 04_runtime/flowcore_loop.py serve"
         layer: L7
         group: 3
 
@@ -135,8 +140,8 @@ install_order:
       validates: "09_workflow/mrl_librarian.py"
 
     - step: 4
-      action: "Start Runtime kernel (background)"
-      command: "python 04_runtime/flowcore_loop.py"
+      action: "Start Runtime HTTP server (background)"
+      command: "python 04_runtime/flowcore_loop.py serve --host 127.0.0.1 --port 8787"
       validates: "04_runtime/flowcore_loop.py"
 
     - step: 5
