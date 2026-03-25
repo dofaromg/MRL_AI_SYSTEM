@@ -211,3 +211,5 @@ __marimo__/
 06_trace/traces/_data/
 05_persona/_data/
 data/librarian_index.json
+04_runtime/log/
+09_workflow/log/
