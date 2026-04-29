@@ -68,15 +68,28 @@ Design principle: **怎麼過去，就怎麼回來** (the path forward is the pa
 | `09_workflow/eval_engine.py` | Output scoring / evaluation pipeline | safety scorer enforces L3 LAW deny-list |
 | `09_workflow/plugin_manager.py` | Plugin discovery & lifecycle | plugins must declare TXYZ coordinates (layer + group) |
 
-### MotherAssembly — 組合入口 (the combination)
+### MRL_AGI — 補齊模組 (v1.1 new, zero external dependencies)
+
+> 目標：產品級營運私人專用；全部本地可控，無任何外部 API 依賴。
+
+| Module | Feature | Local-only implementation |
+|--------|---------|--------------------------|
+| `09_workflow/llm_gateway.py` | **LLM 連接器** — unified local LLM gateway | Ollama (`/api/chat`) → llama-cpp-python (`/v1/chat/completions`) → stub fallback; auto-detects active backend; streaming via `stream_chat()` |
+| `09_workflow/conversation.py` | **多輪對話管理** — session manager + context-window budgeting | Named sessions persisted as JSONL under `data/sessions/`; auto-prunes + summarises old turns when token budget exceeded |
+| `09_workflow/multi_agent.py` | **多 Agent 協作** — AutoGen-style group chat + human proxy | `Agent` · `HumanProxyAgent` · `GroupChat` · `GroupChatManager`; round-robin or custom speaker selection; REQUIRE_HUMAN enforced via `HumanProxyAgent` |
+| `09_workflow/guardrail.py` | **安全護欄鏈** — pre/post content safety | `InputGuardrail` + `OutputGuardrail` + `GuardrailChain`; policies: strict / standard / permissive; deny-list, PII detection, length limits, repetition check |
+| `09_workflow/output_parser.py` | **結構化輸出解析** — extract structured data from LLM text | `JSONParser` · `ListParser` · `KeyValueParser` · `CodeBlockParser` · `TableParser` · `ParserChain` |
+
+### MotherAssembly — 組合入口 v1.1 (the combination)
 
 | Module | Purpose |
 |--------|---------|
-| `09_workflow/mother_assembly.py` | **Unified system entry point** — boots and wires all 7 subsystems together. The combination (組合) is the system's biggest feature. |
+| `09_workflow/mother_assembly.py` | **Unified system entry point** — boots and wires all **10** subsystems together. v1.1 adds LLMGateway, ConversationManager, and Guardrail. |
 | `09_workflow/plugins/` | Plugin directory — drop `*.py` files here following the plugin contract |
 
 ## Design principles
 
+- **Local-only / 完全本地** — no cloud API calls; all inference via Ollama/llama-cpp or stub
 - **Deny-by-default** — all external actions blocked unless explicitly allowlisted
 - **Audit everything** — every action writes to both Merkle chain and JSONL before execution
 - **Human override** — REQUIRE_HUMAN decisions never execute without a recorded proof
@@ -89,11 +102,11 @@ Design principle: **怎麼過去，就怎麼回來** (the path forward is the pa
 L0 ROOT     source of truth; never deleted
 L1 SEED     initial constraints / contracts
 L2 PARTICLE content units and state changes
-L3 LAW      explicit rules (Rootlaw + compliance + AUP gates)
+L3 LAW      explicit rules (Rootlaw + compliance + AUP gates)  ← Guardrail lives here
 L4 WORLD    aligned models across worlds
 L5 MIRROR   translation of actions/state across worlds
 L6 REFLECT  facts, records, accountability
-L7 LOOP     validate, then roll forward; rollback with proofs
+L7 LOOP     validate, then roll forward; rollback with proofs   ← LLM gateway, conversation, multi-agent
 MetaEnv     variable environment: spawn / scale / snapshot / migrate
 Platform    FluinHub / FlowCoreLoop / partner platforms / 3-D globe / AI chat
 ```
@@ -113,7 +126,7 @@ python 09_workflow/fltnz_parser.py encode --src README.md --dst /tmp/readme.fltn
 # 4. Inspect world state
 python 05_persona/world_module.py snap
 
-# ── MotherAssembly (boots all 7 subsystems at once) ──────────────────────────
+# ── MotherAssembly v1.1 (boots all 10 subsystems at once) ────────────────────
 
 # 5. Boot and check status
 python 09_workflow/mother_assembly.py boot
@@ -130,7 +143,52 @@ python 09_workflow/mother_assembly.py eval \
 # 8. Seal text through the full reversible chain + MerkleChain
 python 09_workflow/mother_assembly.py seal --text "Hello, MRL!" --label readme
 
-# ── Individual industry modules ───────────────────────────────────────────────
+# ── New MRL_AGI commands (v1.1) ───────────────────────────────────────────────
+
+# 9. Chat (guardrail → conversation → local LLM)
+python 09_workflow/mother_assembly.py chat --msg "What is MRL?"
+python 09_workflow/mother_assembly.py chat --msg "Hello" --session my_session --system "You are MRL."
+
+# 10. Multi-agent group chat
+python 09_workflow/mother_assembly.py multi-agent --task "Analyse the repo" --agents "Planner,Executor"
+
+# 11. Guardrail check
+python 09_workflow/mother_assembly.py guard --text "Hello world" --direction input
+python 09_workflow/mother_assembly.py guard --text "bad content" --policy strict
+
+# 12. Structured output parsing
+python 09_workflow/mother_assembly.py parse --text '{"answer": 42}' --type json
+python 09_workflow/mother_assembly.py parse --text "Name: Alice\nAge: 30" --type kv
+
+# ── Individual new modules ────────────────────────────────────────────────────
+
+# LLM Gateway (auto-detects Ollama → llama-cpp → stub)
+python 09_workflow/llm_gateway.py status
+python 09_workflow/llm_gateway.py chat --msg "Hello"
+python 09_workflow/llm_gateway.py list-models
+
+# Conversation manager
+python 09_workflow/conversation.py new  --system "You are helpful."
+python 09_workflow/conversation.py list
+python 09_workflow/conversation.py chat --id <session_id> --msg "Hello"
+
+# Multi-agent demo
+python 09_workflow/multi_agent.py demo
+python 09_workflow/multi_agent.py run --goal "Index Python files" --agents "Planner,Executor"
+
+# Guardrail checks
+python 09_workflow/guardrail.py check-input  --text "Hello world"
+python 09_workflow/guardrail.py check-output --text "Here is the answer."
+python 09_workflow/guardrail.py demo
+
+# Output parsers
+python 09_workflow/output_parser.py parse-json  --text '{"a":1}'
+python 09_workflow/output_parser.py parse-list  --text "- item1\n- item2"
+python 09_workflow/output_parser.py parse-kv    --text "Key: Value"
+python 09_workflow/output_parser.py parse-code  --text '```python\nprint(1)\n```'
+python 09_workflow/output_parser.py demo
+
+# ── Individual original modules ───────────────────────────────────────────────
 
 # Vector store (RAG)
 python 03_memory/vector/vector_store.py add --id doc1 --vec "0.1,0.9,0.3"
@@ -152,6 +210,17 @@ python 09_workflow/eval_engine.py demo
 
 # Plugin discovery
 python 09_workflow/plugin_manager.py discover --dir 09_workflow/plugins
+```
+
+### Connecting a local LLM (Ollama)
+
+```bash
+# Install Ollama: https://ollama.com  (no account needed, runs fully local)
+ollama pull llama3        # download once
+ollama serve              # keep running in background
+
+# Now all commands automatically use the real model:
+python 09_workflow/mother_assembly.py chat --msg "Explain MRL in one sentence"
 ```
 
 See `04_runtime/runtime_manifest.yaml` for the full install order and recovery protocol.
