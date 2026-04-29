@@ -90,7 +90,7 @@ import time
 from typing import Any, Dict, List, Optional
 
 ORIGIN_SIGNATURE = "MrLiouWord"
-ASSEMBLY_VERSION = "1.0"
+ASSEMBLY_VERSION = "2.0"
 
 _REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 
@@ -129,13 +129,18 @@ class MotherAssembly:
 
     Attributes
     ----------
-    tool_registry    : ToolRegistry
-    template_registry: TemplateRegistry
-    eval_pipeline    : EvalPipeline
-    plugin_manager   : PluginManager
-    vector_store     : VectorStore
-    world            : WorldModule
-    chain            : MerkleChain  (canonical immutable record)
+    tool_registry       : ToolRegistry
+    template_registry   : TemplateRegistry
+    eval_pipeline       : EvalPipeline
+    plugin_manager      : PluginManager
+    vector_store        : VectorStore
+    world               : WorldModule
+    chain               : MerkleChain  (canonical immutable record)
+    conversation_manager: ConversationManager
+    llm_gateway         : LLMGateway
+    context_manager     : ContextManager
+    scheduler           : TaskScheduler
+    config              : ConfigManager
     """
 
     def __init__(self) -> None:
@@ -147,6 +152,12 @@ class MotherAssembly:
         self.vector_store: Any = None
         self.world: Any = None
         self.chain: Any = None
+        # New modules (v2.0)
+        self.conversation_manager: Any = None
+        self.llm_gateway: Any = None
+        self.context_manager: Any = None
+        self.scheduler: Any = None
+        self.config: Any = None
         self._boot_log: List[Dict[str, Any]] = []
 
     # ── Boot ──────────────────────────────────────────────────────────────────
@@ -187,6 +198,21 @@ class MotherAssembly:
 
         # 7 ── PluginManager
         report["subsystems"]["plugin_manager"] = self._boot_plugins()
+
+        # 8 ── ConfigManager (v2.0)
+        report["subsystems"]["config_manager"] = self._boot_config()
+
+        # 9 ── ConversationManager (v2.0)
+        report["subsystems"]["conversation_manager"] = self._boot_conversation()
+
+        # 10 ── LLMGateway (v2.0)
+        report["subsystems"]["llm_gateway"] = self._boot_llm_gateway()
+
+        # 11 ── ContextManager (v2.0)
+        report["subsystems"]["context_manager"] = self._boot_context_manager()
+
+        # 12 ── TaskScheduler (v2.0)
+        report["subsystems"]["scheduler"] = self._boot_scheduler()
 
         self._booted = True
         self._seal_event("boot", report)
@@ -270,6 +296,63 @@ class MotherAssembly:
             found = self.plugin_manager.discover()
             self.plugin_manager.activate_all()
             return f"ok ({len(found)} plugin(s) discovered)"
+        except Exception as exc:  # noqa: BLE001
+            return f"error: {exc}"
+
+    def _boot_config(self) -> str:
+        ConfigManager = _try_import("config_manager", "ConfigManager")
+        if ConfigManager is None:
+            return "unavailable"
+        try:
+            self.config = ConfigManager()
+            return "ok"
+        except Exception as exc:  # noqa: BLE001
+            return f"error: {exc}"
+
+    def _boot_conversation(self) -> str:
+        ConversationManager = _try_import("conversation_manager", "ConversationManager")
+        if ConversationManager is None:
+            return "unavailable"
+        try:
+            self.conversation_manager = ConversationManager()
+            return "ok"
+        except Exception as exc:  # noqa: BLE001
+            return f"error: {exc}"
+
+    def _boot_llm_gateway(self) -> str:
+        LLMGateway = _try_import("llm_adapter", "LLMGateway")
+        if LLMGateway is None:
+            return "unavailable"
+        try:
+            self.llm_gateway = LLMGateway()
+            return "ok"
+        except Exception as exc:  # noqa: BLE001
+            return f"error: {exc}"
+
+    def _boot_context_manager(self) -> str:
+        ContextManager = _try_import("context_manager", "ContextManager")
+        if ContextManager is None:
+            return "unavailable"
+        try:
+            max_tokens = 4096
+            if self.config:
+                max_tokens = int(self.config.get("context.max_tokens", 4096))
+            self.context_manager = ContextManager(max_tokens=max_tokens)
+            return "ok"
+        except Exception as exc:  # noqa: BLE001
+            return f"error: {exc}"
+
+    def _boot_scheduler(self) -> str:
+        TaskScheduler = _try_import("scheduler", "TaskScheduler")
+        if TaskScheduler is None:
+            return "unavailable"
+        try:
+            workers = 2
+            if self.config:
+                workers = int(self.config.get("scheduler.workers", 2))
+            self.scheduler = TaskScheduler(workers=workers)
+            self.scheduler.start()
+            return f"ok ({workers} worker(s))"
         except Exception as exc:  # noqa: BLE001
             return f"error: {exc}"
 
@@ -415,6 +498,149 @@ class MotherAssembly:
         self._seal_event("seal_text", {"label": label})
         return trace
 
+    def chat(
+        self,
+        message: str,
+        *,
+        session_id: Optional[str] = None,
+        model: Optional[str] = None,
+        system_prompt: Optional[str] = None,
+        max_tokens: int = 1024,
+        temperature: float = 0.7,
+    ) -> Dict[str, Any]:
+        """
+        Send a chat message and return the assistant reply.
+
+        Creates a new session automatically if *session_id* is not provided.
+        Applies context window management before calling the LLM.
+
+        Returns
+        -------
+        {
+          "session_id": ...,
+          "reply":      ...,
+          "model":      ...,
+          "origin_signature": "MrLiouWord",
+        }
+        """
+        if self.conversation_manager is None:
+            return {"error": "ConversationManager unavailable"}
+
+        # Resolve model
+        resolved_model = model or (
+            self.config.get("llm.default_model", "mock") if self.config else "mock"
+        )
+
+        # Get or create session
+        if session_id is None:
+            sp = system_prompt or (
+                self.config.get("conversation.default_system_prompt", "") if self.config else ""
+            )
+            session_id = self.conversation_manager.new_session(system_prompt=sp)
+        else:
+            if self.conversation_manager.get_session(session_id) is None:
+                return {"error": f"Session not found: {session_id}"}
+
+        # Record user message
+        self.conversation_manager.add_message(session_id, "user", message)
+
+        # Get history and trim context
+        history = self.conversation_manager.get_history(session_id)
+        if self.context_manager is not None:
+            history, _ = self.context_manager.fit(history)
+
+        # Build LLM-compatible message list
+        llm_messages = [
+            {"role": m["role"], "content": m["content"]}
+            for m in history
+        ]
+
+        # LLM call
+        reply_text = f"[MockAdapter] Echo: {message}"
+        if self.llm_gateway is not None:
+            LLMRequest = _try_import("llm_adapter", "LLMRequest")
+            if LLMRequest is not None:
+                req = LLMRequest(
+                    model=resolved_model,
+                    messages=llm_messages,
+                    max_tokens=max_tokens,
+                    temperature=temperature,
+                )
+                resp = self.llm_gateway.complete(req)
+                reply_text = resp.text if resp.ok else f"[LLM Error] {resp.error}"
+
+        # Record assistant reply
+        self.conversation_manager.add_message(session_id, "assistant", reply_text)
+        self._seal_event("chat", {"session_id": session_id, "model": resolved_model})
+
+        return {
+            "session_id": session_id,
+            "reply": reply_text,
+            "model": resolved_model,
+            "origin_signature": ORIGIN_SIGNATURE,
+        }
+
+    def submit_task(
+        self,
+        fn: Any,
+        *,
+        name: str = "task",
+        priority: int = 5,
+    ) -> Optional[str]:
+        """Submit a background task to the TaskScheduler. Returns task_id or None."""
+        if self.scheduler is None:
+            return None
+        return self.scheduler.submit(fn, name=name, priority=priority)
+
+    def run_multi_agent(
+        self,
+        goal: str,
+        roles: Optional[List[Any]] = None,
+        mode: str = "sequential",
+        rounds: int = 3,
+    ) -> Dict[str, Any]:
+        """
+        Run a multi-agent session for *goal*.
+
+        Parameters
+        ----------
+        goal  : top-level objective
+        roles : list of AgentRole objects (default: planner + researcher + writer)
+        mode  : "sequential" | "round_robin"
+        rounds: number of rounds (round_robin mode only)
+        """
+        MultiAgentSession = _try_import("multi_agent", "MultiAgentSession")
+        AgentRole = _try_import("multi_agent", "AgentRole")
+
+        if MultiAgentSession is None or AgentRole is None:
+            return {"error": "multi_agent module unavailable"}
+
+        sess = MultiAgentSession(goal=goal)
+
+        if roles is None:
+            roles = [
+                AgentRole("planner",    "Decompose the goal into concrete sub-tasks."),
+                AgentRole("researcher", "Research each sub-task and gather information."),
+                AgentRole("writer",     "Synthesise the research into a clear answer."),
+            ]
+
+        for role in roles:
+            sess.add_role(role)
+
+        if mode == "round_robin":
+            results = sess.run_round_robin(rounds=rounds)
+        else:
+            results = sess.run_sequential()
+
+        self._seal_event("multi_agent", {"goal": goal, "mode": mode, "agents": len(roles)})
+        return {
+            "goal": goal,
+            "mode": mode,
+            "results": results,
+            "summary": sess.summary(),
+            "origin_signature": ORIGIN_SIGNATURE,
+        }
+
     def status(self) -> Dict[str, Any]:
         """Return a health-check snapshot of all subsystems."""
         return {
@@ -422,13 +648,19 @@ class MotherAssembly:
             "origin_signature": ORIGIN_SIGNATURE,
             "booted": self._booted,
             "subsystems": {
-                "merkle_chain":    self.chain is not None,
-                "world_module":    self.world is not None,
-                "vector_store":    self.vector_store is not None,
-                "tool_registry":   self.tool_registry is not None,
-                "template_registry": self.template_registry is not None,
-                "eval_pipeline":   self.eval_pipeline is not None,
-                "plugin_manager":  self.plugin_manager is not None,
+                "merkle_chain":         self.chain is not None,
+                "world_module":         self.world is not None,
+                "vector_store":         self.vector_store is not None,
+                "tool_registry":        self.tool_registry is not None,
+                "template_registry":    self.template_registry is not None,
+                "eval_pipeline":        self.eval_pipeline is not None,
+                "plugin_manager":       self.plugin_manager is not None,
+                # v2.0
+                "config_manager":       self.config is not None,
+                "conversation_manager": self.conversation_manager is not None,
+                "llm_gateway":          self.llm_gateway is not None,
+                "context_manager":      self.context_manager is not None,
+                "scheduler":            self.scheduler is not None,
             },
             "checked_at_ms": int(time.time() * 1000),
         }
@@ -497,6 +729,24 @@ def _cmd_seal(args: argparse.Namespace) -> None:
     print(json.dumps(trace, ensure_ascii=False, indent=2, default=str))
 
 
+def _cmd_chat(args: argparse.Namespace) -> None:
+    ma = MotherAssembly()
+    ma.boot()
+    result = ma.chat(
+        args.message,
+        session_id=args.sid or None,
+        model=args.model or None,
+    )
+    print(json.dumps(result, ensure_ascii=False, indent=2, default=str))
+
+
+def _cmd_multi_agent(args: argparse.Namespace) -> None:
+    ma = MotherAssembly()
+    ma.boot()
+    result = ma.run_multi_agent(args.goal, mode=args.mode)
+    print(json.dumps(result, ensure_ascii=False, indent=2, default=str))
+
+
 def _build_argparser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         description="MotherAssembly — unified MRL AI System entry point"
@@ -517,6 +767,15 @@ def _build_argparser() -> argparse.ArgumentParser:
     s.add_argument("--text", required=True)
     s.add_argument("--label", default="cli")
 
+    ch = sub.add_parser("chat", help="Send a chat message (multi-turn)")
+    ch.add_argument("--message", required=True)
+    ch.add_argument("--sid",    default="", help="Session ID (creates new if omitted)")
+    ch.add_argument("--model",  default="", help="LLM model name")
+
+    ma_cmd = sub.add_parser("multi-agent", help="Run a multi-agent task")
+    ma_cmd.add_argument("--goal", required=True)
+    ma_cmd.add_argument("--mode", default="sequential", choices=["sequential", "round_robin"])
+
     return p
 
 
@@ -524,11 +783,13 @@ def main() -> None:
     parser = _build_argparser()
     args = parser.parse_args()
     dispatch = {
-        "boot":   _cmd_boot,
-        "status": _cmd_status,
-        "run":    _cmd_run,
-        "eval":   _cmd_eval,
-        "seal":   _cmd_seal,
+        "boot":        _cmd_boot,
+        "status":      _cmd_status,
+        "run":         _cmd_run,
+        "eval":        _cmd_eval,
+        "seal":        _cmd_seal,
+        "chat":        _cmd_chat,
+        "multi-agent": _cmd_multi_agent,
     }
     dispatch[args.cmd](args)
 

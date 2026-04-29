@@ -24,6 +24,19 @@ Design principle: **怎麼過去，就怎麼回來** (the path forward is the pa
 | 5 | **FileIndexGovernance** | T/X/Y/Z index, librarian, relation chain | `09_workflow/mrl_librarian.py` |
 | 6 | **PersonaHistory** | System evolution, alignment, belief stabilisation | `ui/streamlit_app/app.py` |
 
+### MRL_AGI v2 additions
+
+| # | New module | Role |
+|---|------------|------|
+| 7 | **ConversationManager** | Multi-turn chat sessions, session persistence |
+| 8 | **LLMGateway** | Unified LLM provider adapter (OpenAI / Anthropic / Local / Mock) |
+| 9 | **ContextManager** | Token budget management, smart context truncation |
+| 10 | **StreamSession** | Real-time streaming output with MRL trace stamps |
+| 11 | **MultiAgentSession** | Parallel / sequential multi-agent coordination |
+| 12 | **TaskScheduler** | Background priority task queue |
+| 13 | **ConfigManager** | Centralised typed configuration (JSON + env override) |
+| 14 | **APIGateway** | REST HTTP API exposing all MRL_AGI capabilities |
+
 ## Directory structure
 
 | Directory | Layer | Purpose |
@@ -57,7 +70,7 @@ Design principle: **怎麼過去，就怎麼回來** (the path forward is the pa
 | `09_workflow/signature.js` | LAW-0 signature law implementation |
 | `09_workflow/seed.js` | SEED(X) compression pipeline |
 
-### Industry-standard modules (新增)
+### Industry-standard modules (v1 — 原有)
 
 | Module | Industry feature | MRL extension |
 |--------|-----------------|---------------|
@@ -68,11 +81,26 @@ Design principle: **怎麼過去，就怎麼回來** (the path forward is the pa
 | `09_workflow/eval_engine.py` | Output scoring / evaluation pipeline | safety scorer enforces L3 LAW deny-list |
 | `09_workflow/plugin_manager.py` | Plugin discovery & lifecycle | plugins must declare TXYZ coordinates (layer + group) |
 
-### MotherAssembly — 組合入口 (the combination)
+### MRL_AGI production modules (v2 — 補全)
+
+Distilled from the three major mainstream AI systems (OpenAI / Anthropic / Google) and integrated with MRL particles:
+
+| Module | Industry feature | MRL extension |
+|--------|-----------------|---------------|
+| `09_workflow/conversation_manager.py` | Multi-turn chat sessions (ChatGPT / Claude / Gemini style) | sessions stamped with origin_signature; sealable into MerkleChain |
+| `09_workflow/llm_adapter.py` | Unified LLM provider gateway (OpenAI · Anthropic · Local · Mock) | every response is an MRL trace-compatible LLMResponse record |
+| `09_workflow/context_manager.py` | Context window management — smart truncation / summarisation | strategy choices: `truncate_oldest` · `sliding_window` · `summarise_oldest` |
+| `09_workflow/streaming.py` | Real-time token-by-token streaming output | StreamChunks are MRL trace-stamped; StreamSession emits a final result record |
+| `09_workflow/multi_agent.py` | Multi-agent coordination (AutoGen / CrewAI pattern) | AgentMessages + WorldModule trajectory compatible; sequential + round-robin modes |
+| `09_workflow/scheduler.py` | Async background task queue (priority-based) | TaskResult records are origin_signature stamped; workers are configurable |
+| `09_workflow/config_manager.py` | Centralised typed configuration (JSON + env-var override) | env prefix `MRL_`; sensitive keys auto-masked in display |
+| `09_workflow/api_gateway.py` | Production REST API gateway (HTTP) | exposes all MRL_AGI capabilities; optional Bearer-token auth |
+
+### MotherAssembly v2 — 組合入口 (the combination)
 
 | Module | Purpose |
 |--------|---------|
-| `09_workflow/mother_assembly.py` | **Unified system entry point** — boots and wires all 7 subsystems together. The combination (組合) is the system's biggest feature. |
+| `09_workflow/mother_assembly.py` | **Unified system entry point** — boots and wires all **12 subsystems** together. Now includes chat, multi-agent, scheduler, LLM gateway, context management, and configuration. |
 | `09_workflow/plugins/` | Plugin directory — drop `*.py` files here following the plugin contract |
 
 ## Design principles
@@ -113,7 +141,7 @@ python 09_workflow/fltnz_parser.py encode --src README.md --dst /tmp/readme.fltn
 # 4. Inspect world state
 python 05_persona/world_module.py snap
 
-# ── MotherAssembly (boots all 7 subsystems at once) ──────────────────────────
+# ── MotherAssembly v2 (boots all 12 subsystems at once) ──────────────────────
 
 # 5. Boot and check status
 python 09_workflow/mother_assembly.py boot
@@ -130,7 +158,64 @@ python 09_workflow/mother_assembly.py eval \
 # 8. Seal text through the full reversible chain + MerkleChain
 python 09_workflow/mother_assembly.py seal --text "Hello, MRL!" --label readme
 
-# ── Individual industry modules ───────────────────────────────────────────────
+# 9. Chat (multi-turn conversation)
+python 09_workflow/mother_assembly.py chat --message "Hello, who are you?"
+# Continue the same session:
+python 09_workflow/mother_assembly.py chat --message "What can you do?" --sid <session_id>
+
+# 10. Multi-agent task
+python 09_workflow/mother_assembly.py multi-agent \
+    --goal "Write a technical summary of the MRL AI System."
+
+# ── REST API gateway ──────────────────────────────────────────────────────────
+
+# 11. Start the API server (default: http://127.0.0.1:7771)
+python 09_workflow/api_gateway.py --port 7771
+
+# Example API calls (once the server is running):
+#   curl http://127.0.0.1:7771/health
+#   curl -X POST http://127.0.0.1:7771/chat \
+#        -H "Content-Type: application/json" \
+#        -d '{"message": "Hello!"}'
+#   curl -X POST http://127.0.0.1:7771/agent/run \
+#        -d '{"goal": "What is 3+4?"}'
+#   curl http://127.0.0.1:7771/tools
+#   curl http://127.0.0.1:7771/config
+
+# ── Individual v2 modules ─────────────────────────────────────────────────────
+
+# Conversation manager
+python 09_workflow/conversation_manager.py new --system "You are MRL_AGI."
+python 09_workflow/conversation_manager.py list
+python 09_workflow/conversation_manager.py add --sid <id> --role user --content "Hello"
+python 09_workflow/conversation_manager.py show --sid <id>
+
+# LLM adapter (mock / OpenAI / Anthropic / local)
+python 09_workflow/llm_adapter.py mock --prompt "Hello from MRL!"
+python 09_workflow/llm_adapter.py list
+
+# Context window management
+python 09_workflow/context_manager.py fit \
+    --messages '[{"role":"user","content":"..."}]' \
+    --max-tokens 4096 --strategy truncate_oldest
+
+# Streaming
+python 09_workflow/streaming.py demo
+python 09_workflow/streaming.py replay --chunks '["Hello"," ","MRL","!"]'
+
+# Multi-agent coordination
+python 09_workflow/multi_agent.py demo
+python 09_workflow/multi_agent.py roles
+
+# Task scheduler
+python 09_workflow/scheduler.py demo
+
+# Configuration
+python 09_workflow/config_manager.py show
+python 09_workflow/config_manager.py get  --key llm.default_model
+python 09_workflow/config_manager.py set  --key llm.default_model --value gpt-4o
+
+# ── Individual v1 industry modules ───────────────────────────────────────────
 
 # Vector store (RAG)
 python 03_memory/vector/vector_store.py add --id doc1 --vec "0.1,0.9,0.3"
@@ -152,6 +237,24 @@ python 09_workflow/eval_engine.py demo
 
 # Plugin discovery
 python 09_workflow/plugin_manager.py discover --dir 09_workflow/plugins
+```
+
+## LLM provider configuration
+
+Set environment variables to enable real LLM calls (optional — Mock adapter works without any keys):
+
+```bash
+export MRL_LLM_DEFAULT_MODEL=gpt-4o          # or claude-3-5-sonnet
+export MRL_LLM_OPENAI_API_KEY=sk-...
+export MRL_LLM_ANTHROPIC_API_KEY=sk-ant-...
+export MRL_LLM_LOCAL_BASE_URL=http://localhost:11434/v1   # Ollama
+```
+
+Or persist to `data/config.json`:
+
+```bash
+python 09_workflow/config_manager.py set --key llm.default_model --value gpt-4o
+python 09_workflow/config_manager.py set --key llm.openai_api_key --value sk-...
 ```
 
 See `04_runtime/runtime_manifest.yaml` for the full install order and recovery protocol.
