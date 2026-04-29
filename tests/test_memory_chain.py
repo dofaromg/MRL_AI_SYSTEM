@@ -111,7 +111,8 @@ class TestMerkleChain:
         entries = chain.read_all()
         # Sort by timestamp as verify() does
         entries.sort(key=lambda x: x["timestamp_ms"])
-        entries[1]["prev"] = "badhash" + "0" * 60
+        # "badhash" is 7 chars; pad to 64 chars total (SHA-256 hex digest length)
+        entries[1]["prev"] = "badhash" + "0" * 57
         with chain.entries_file.open("w", encoding="utf-8") as f:
             for e in entries:
                 f.write(json.dumps(e) + "\n")
@@ -130,7 +131,8 @@ class TestMerkleChain:
 
     def test_rollback_nonexistent_returns_false(self, chain):
         chain.commit({"n": 1})
-        assert chain.rollback("nonexistent_merkle" + "0" * 50) is False
+        # "nonexistent_merkle" is 18 chars; pad to 64 chars total (SHA-256 hex digest length)
+        assert chain.rollback("nonexistent_merkle" + "0" * 46) is False
 
     def test_rollback_empty_chain_returns_false(self, chain):
         assert chain.rollback("anything") is False

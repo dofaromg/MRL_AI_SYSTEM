@@ -44,7 +44,8 @@ class TestLengthScore:
         assert 0.0 <= score < 1.0
 
     def test_very_long_clamped_to_zero(self):
-        # 3× the max should yield 0
+        # max_len=2000; penalty = 1 - (n - max) / max → zero at n = 2*max = 4000,
+        # so n = 3*max + 1 = 6001 guarantees the clamped result is 0.
         score = length_score("a" * 6001, {"min_len": 10, "max_len": 2000})
         assert score == 0.0
 
