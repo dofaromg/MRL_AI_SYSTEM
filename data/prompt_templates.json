@@ -21,6 +21,8 @@
       "description": "Standard system introduction prompt",
       "version": 13,
       "created_at_ms": 1777488133359,
+      "version": 9,
+      "created_at_ms": 1777488069962,
       "variables": [
         "name",
         "role"
@@ -33,6 +35,8 @@
       "description": "Standard task prompt with goal and context",
       "version": 13,
       "created_at_ms": 1777488133359,
+      "version": 9,
+      "created_at_ms": 1777488069963,
       "variables": [
         "context",
         "goal"
@@ -45,6 +49,8 @@
       "description": "Evaluation result summary template",
       "version": 13,
       "created_at_ms": 1777488133359,
+      "version": 9,
+      "created_at_ms": 1777488069963,
       "variables": [
         "composite",
         "label",
