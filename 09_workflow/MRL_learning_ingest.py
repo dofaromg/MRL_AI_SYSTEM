@@ -112,6 +112,22 @@ def _chunk_text(text: str, chunk_chars: int = 1400, overlap: int = 200) -> List[
     return chunks
 
 
+def _chunk_hash(text: str) -> str:
+    return _sha256_text(text.strip())
+
+
+def _is_self_repo_path(p: pathlib.Path) -> bool:
+    try:
+        rp = p.resolve()
+    except Exception:
+        return False
+    try:
+        root = _REPO_ROOT.resolve()
+    except Exception:
+        root = _REPO_ROOT
+    return root == rp or root in rp.parents
+
+
 def _embed_text_simple(text: str, dim: int = 128) -> List[float]:
     """Deterministic, dependency-free embedding.
 
@@ -199,14 +215,22 @@ def ingest_text(
 
     vs = VectorStore()
     vector_ids: List[str] = []
+    chunk_hashes: List[str] = []
+    deduped = 0
     for idx, ch in enumerate(chunks):
-        doc_id = f"learn:{source_id}:{idx:04d}"
+        chash = _chunk_hash(ch)
+        chunk_hashes.append(chash)
+        doc_id = f"learn:chunk:{chash}"
+        if vs.get(doc_id) is not None:
+            deduped += 1
+            continue
         meta = {
             "type": "learning_chunk",
             "source_type": source_type,
             "source_ref": source_ref,
             "source_id": source_id,
             "chunk_index": idx,
+            "chunk_hash": chash,
             "label": label,
             "created_at": created_at,
             "origin_signature": ORIGIN_SIGNATURE,
@@ -220,8 +244,18 @@ def ingest_text(
         "source": {"type": source_type, "ref": source_ref, "id": source_id, "label": label},
         "content": {"sha256": _sha256_text(text), "chars": len(text)},
         "chunks": {"count": len(chunks), "chunk_chars": chunk_chars, "overlap": overlap},
+        "composition": {
+            "source_id": source_id,
+            "chunk_hashes": chunk_hashes,
+            "deduped": deduped,
+        },
         "raw": {"stored": bool(raw_path), "path": raw_path},
-        "vector": {"store": "03_memory/_data/vector_store.json", "count": len(vector_ids), "ids": vector_ids},
+        "vector": {
+            "store": "03_memory/_data/vector_store.json",
+            "count": len(vector_ids),
+            "ids": vector_ids,
+            "id_scheme": "learn:chunk:{sha256}",
+        },
         "seal": {},
     }
     manifest_path = _write_manifest(source_id, manifest)
@@ -245,6 +279,8 @@ def ingest_path(path: str, *, label: str = "", **kwargs: Any) -> Dict[str, Any]:
     p = pathlib.Path(path)
     if not p.exists():
         return {"ok": False, "error": f"path not found: {path}"}
+    if _is_self_repo_path(p):
+        return {"ok": False, "error": "SELF_REPO_BLOCKED"}
     if p.is_dir():
         # minimal safe scan: only small text-like files
         texts: List[Tuple[str, str]] = []
