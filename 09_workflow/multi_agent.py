@@ -101,10 +101,15 @@ import argparse
 import json
 import sys
 import time
+import uuid
+from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, List, Optional
 
 ORIGIN_SIGNATURE = "MrLiouWord"
 MULTI_AGENT_VERSION = "1.0"
+
+# Type alias used by MultiAgentSession
+AgentFn = Callable[["AgentContext"], str]
 
 # ─── Exceptions ───────────────────────────────────────────────────────────────
 
@@ -446,12 +451,13 @@ def _demo() -> None:
     print(json.dumps(transcript, ensure_ascii=False, indent=2, default=str))
 
 
-def _cmd_demo(_args: argparse.Namespace) -> None:
+def _cmd_group_chat_demo(_args: argparse.Namespace) -> None:
+    """Demo using the Group Chat API (Agent/HumanProxyAgent/GroupChat)."""
     _demo()
 
 
 def _cmd_run(args: argparse.Namespace) -> None:
-    """Run a minimal stub group chat from the CLI."""
+    """Run a group chat with named stub agents from the CLI."""
     names = [n.strip() for n in (args.agents or "Planner,Executor").split(",")]
     agents = [Agent(n, gateway=None) for n in names]
     agents.append(HumanProxyAgent("Human", interactive=False, auto_reply="TERMINATE"))
@@ -462,30 +468,8 @@ def _cmd_run(args: argparse.Namespace) -> None:
     print(json.dumps(result, ensure_ascii=False, indent=2, default=str))
 
 
-def _build_argparser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(description="MultiAgent — group-chat orchestrator")
-    sub = p.add_subparsers(dest="cmd", required=True)
-
-    sub.add_parser("demo", help="Run the built-in two-agent stub demo")
-
-    r = sub.add_parser("run", help="Run a group chat with named stub agents")
-    r.add_argument("--goal",       required=True, help="Task description")
-    r.add_argument("--agents",     default="Planner,Executor",
-                   help="Comma-separated agent names (all stub)")
-    r.add_argument("--max-turns",  type=int, default=6, dest="max_turns")
-
-import time
-import uuid
-from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, List, Optional
-
-ORIGIN_SIGNATURE = "MrLiouWord"
-
-# Type alias for a simple agent execution function
-AgentFn = Callable[["AgentContext"], str]
-
-
-# ─── AgentRole ───────────────────────────────────────────────────────────────
+# ─── AgentRole / AgentMessage / AgentContext / MultiAgentSession ─────────────
+# Legacy sequential-API (compatible with MotherAssembly.run_multi_agent)
 
 @dataclass
 class AgentRole:
@@ -838,18 +822,33 @@ def _cmd_roles(_args: argparse.Namespace) -> None:
 
 
 def _build_argparser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(description="multi_agent — multi-agent coordination")
+    p = argparse.ArgumentParser(
+        description="multi_agent — multi-agent orchestration (group-chat + sequential)"
+    )
     sub = p.add_subparsers(dest="cmd", required=True)
-    sub.add_parser("demo", help="Run a 3-agent sequential demo")
-    sub.add_parser("roles", help="List built-in agent role templates")
+
+    sub.add_parser("demo",       help="Run a sequential demo using AgentRole/MultiAgentSession")
+    sub.add_parser("group-chat", help="Run the built-in two-agent group-chat demo")
+    sub.add_parser("roles",      help="List built-in agent role templates")
+
+    r = sub.add_parser("run", help="Run a group chat with named stub agents")
+    r.add_argument("--goal",      required=True, help="Task description")
+    r.add_argument("--agents",    default="Planner,Executor",
+                   help="Comma-separated agent names (all stub)")
+    r.add_argument("--max-turns", type=int, default=6, dest="max_turns")
+
     return p
 
 
 def main() -> None:
     parser = _build_argparser()
     args = parser.parse_args()
-    dispatch = {"demo": _cmd_demo, "run": _cmd_run}
-    dispatch = {"demo": _cmd_demo, "roles": _cmd_roles}
+    dispatch = {
+        "demo":       _cmd_demo,
+        "group-chat": _cmd_group_chat_demo,
+        "run":        _cmd_run,
+        "roles":      _cmd_roles,
+    }
     dispatch[args.cmd](args)
 
 

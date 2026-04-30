@@ -213,3 +213,6 @@ __marimo__/
 data/librarian_index.json
 04_runtime/log/
 09_workflow/log/
+
+# Session data (runtime/user-generated)
+data/sessions/

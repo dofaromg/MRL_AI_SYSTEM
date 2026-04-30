@@ -155,8 +155,9 @@ class Session:
         return msg
 
     def add_user(self, content: str) -> Dict[str, Any]:
+        msg = self._append("user", content)
         self._maybe_prune()
-        return self._append("user", content)
+        return msg
 
     def add_assistant(self, content: str) -> Dict[str, Any]:
         return self._append("assistant", content)
@@ -261,6 +262,13 @@ class Session:
     def _persist_all(self) -> None:
         tmp = self._path.with_suffix(".tmp")
         with tmp.open("w", encoding="utf-8") as f:
+            # Write a metadata header line so load() can restore session config
+            meta = {
+                "_meta":         True,
+                "max_tokens":    self.max_tokens,
+                "created_at_ms": self._created_at_ms,
+            }
+            f.write(json.dumps(meta, ensure_ascii=False) + "\n")
             for msg in self._messages:
                 f.write(json.dumps(msg, ensure_ascii=False) + "\n")
         tmp.replace(self._path)
@@ -276,7 +284,7 @@ class Session:
         sess._store_dir     = store_dir
         sess._messages      = []
         sess._seq           = 0
-        sess._created_at_ms = int(time.time() * 1000)
+        sess._created_at_ms = int(time.time() * 1000)  # fallback; overwritten below
         sess._path          = path
         with path.open("r", encoding="utf-8") as f:
             for line in f:
@@ -284,8 +292,18 @@ class Session:
                 if not line:
                     continue
                 msg = json.loads(line)
+                # A metadata line (written by _persist_all) carries session config
+                if msg.get("_meta"):
+                    sess.max_tokens     = int(msg.get("max_tokens", 4096))
+                    sess._created_at_ms = int(msg.get("created_at_ms", sess._created_at_ms))
+                    continue
                 sess._messages.append(msg)
                 sess._seq = max(sess._seq, msg.get("seq", 0) + 1)
+        # Derive creation time from first message if no metadata line was present
+        if sess._messages:
+            first_ts = sess._messages[0].get("ts_ms")
+            if first_ts and sess._created_at_ms > first_ts:
+                sess._created_at_ms = first_ts
         return sess
 
 
