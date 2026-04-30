@@ -90,7 +90,6 @@ import time
 from typing import Any, Dict, List, Optional
 
 ORIGIN_SIGNATURE = "MrLiouWord"
-ASSEMBLY_VERSION = "1.1"
 ASSEMBLY_VERSION = "2.0"
 
 _REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -130,18 +129,6 @@ class MotherAssembly:
 
     Attributes
     ----------
-    tool_registry    : ToolRegistry
-    template_registry: TemplateRegistry
-    eval_pipeline    : EvalPipeline
-    plugin_manager   : PluginManager
-    vector_store     : VectorStore
-    world            : WorldModule
-    chain            : MerkleChain  (canonical immutable record)
-    llm_gateway      : LLMGateway   (local-only LLM connector)
-    conversation_mgr : ConversationManager
-    guardrail        : GuardrailChain wrapper (standard policy)
-    input_guard      : InputGuardrail
-    output_guard     : OutputGuardrail
     tool_registry       : ToolRegistry
     template_registry   : TemplateRegistry
     eval_pipeline       : EvalPipeline
@@ -154,6 +141,8 @@ class MotherAssembly:
     context_manager     : ContextManager
     scheduler           : TaskScheduler
     config              : ConfigManager
+    input_guard         : InputGuardrail  (v1.1)
+    output_guard        : OutputGuardrail (v1.1)
     """
 
     def __init__(self) -> None:
@@ -165,17 +154,15 @@ class MotherAssembly:
         self.vector_store: Any = None
         self.world: Any = None
         self.chain: Any = None
-        # ── New subsystems (v1.1) ──────────────────────────────────────────────
-        self.llm_gateway: Any = None
-        self.conversation_mgr: Any = None
-        self.input_guard: Any = None
-        self.output_guard: Any = None
         # New modules (v2.0)
         self.conversation_manager: Any = None
         self.llm_gateway: Any = None
         self.context_manager: Any = None
         self.scheduler: Any = None
         self.config: Any = None
+        # New modules (v1.1 guardrail + output_parser)
+        self.input_guard: Any = None
+        self.output_guard: Any = None
         self._boot_log: List[Dict[str, Any]] = []
 
     # ── Boot ──────────────────────────────────────────────────────────────────
@@ -217,16 +204,6 @@ class MotherAssembly:
         # 7 ── PluginManager
         report["subsystems"]["plugin_manager"] = self._boot_plugins()
 
-        # ── New subsystems (v1.1) ──────────────────────────────────────────────
-
-        # 8 ── LLMGateway (local-only)
-        report["subsystems"]["llm_gateway"] = self._boot_llm_gateway()
-
-        # 9 ── ConversationManager
-        report["subsystems"]["conversation_mgr"] = self._boot_conversation()
-
-        # 10 ── Guardrail
-        report["subsystems"]["guardrail"] = self._boot_guardrail()
         # 8 ── ConfigManager (v2.0)
         report["subsystems"]["config_manager"] = self._boot_config()
 
@@ -241,6 +218,9 @@ class MotherAssembly:
 
         # 12 ── TaskScheduler (v2.0)
         report["subsystems"]["scheduler"] = self._boot_scheduler()
+
+        # 13 ── Guardrail (v1.1)
+        report["subsystems"]["guardrail"] = self._boot_guardrail()
 
         self._booted = True
         self._seal_event("boot", report)
@@ -327,13 +307,6 @@ class MotherAssembly:
         except Exception as exc:  # noqa: BLE001
             return f"error: {exc}"
 
-    def _boot_llm_gateway(self) -> str:
-        LLMGateway = _try_import("llm_gateway", "LLMGateway")
-        if LLMGateway is None:
-            return "unavailable"
-        try:
-            self.llm_gateway = LLMGateway()
-            return f"ok (backend={self.llm_gateway.backend}, model={self.llm_gateway.model})"
     def _boot_config(self) -> str:
         ConfigManager = _try_import("config_manager", "ConfigManager")
         if ConfigManager is None:
@@ -345,14 +318,6 @@ class MotherAssembly:
             return f"error: {exc}"
 
     def _boot_conversation(self) -> str:
-        ConversationManager = _try_import("conversation", "ConversationManager")
-        if ConversationManager is None:
-            return "unavailable"
-        try:
-            self.conversation_mgr = ConversationManager(
-                store_dir=_REPO_ROOT / "data" / "sessions",
-                gateway=self.llm_gateway,
-            )
         ConversationManager = _try_import("conversation_manager", "ConversationManager")
         if ConversationManager is None:
             return "unavailable"
@@ -372,14 +337,6 @@ class MotherAssembly:
         except Exception as exc:  # noqa: BLE001
             return f"error: {exc}"
 
-    def _boot_guardrail(self) -> str:
-        InputGuardrail  = _try_import("guardrail", "InputGuardrail")
-        OutputGuardrail = _try_import("guardrail", "OutputGuardrail")
-        if InputGuardrail is None or OutputGuardrail is None:
-            return "unavailable"
-        try:
-            self.input_guard  = InputGuardrail("standard")
-            self.output_guard = OutputGuardrail("standard")
     def _boot_context_manager(self) -> str:
         ContextManager = _try_import("context_manager", "ContextManager")
         if ContextManager is None:
@@ -404,6 +361,21 @@ class MotherAssembly:
             self.scheduler = TaskScheduler(workers=workers)
             self.scheduler.start()
             return f"ok ({workers} worker(s))"
+        except Exception as exc:  # noqa: BLE001
+            return f"error: {exc}"
+
+    def _boot_guardrail(self) -> str:
+        InputGuardrail  = _try_import("guardrail", "InputGuardrail")
+        OutputGuardrail = _try_import("guardrail", "OutputGuardrail")
+        if InputGuardrail is None or OutputGuardrail is None:
+            return "unavailable"
+        try:
+            policy = "standard"
+            if self.config:
+                policy = self.config.get("guardrail.policy", "standard")
+            self.input_guard  = InputGuardrail(policy)
+            self.output_guard = OutputGuardrail(policy)
+            return f"ok (policy={policy})"
         except Exception as exc:  # noqa: BLE001
             return f"error: {exc}"
 
@@ -549,200 +521,11 @@ class MotherAssembly:
         self._seal_event("seal_text", {"label": label})
         return trace
 
-    # ── New public API (v1.1) ─────────────────────────────────────────────────
-
     def chat(
         self,
         message: str,
         *,
         session_id: Optional[str] = None,
-        system_prompt: str = "",
-        max_tokens: int = 512,
-        temperature: float = 0.7,
-        use_guardrail: bool = True,
-    ) -> Dict[str, Any]:
-        """
-        Send *message* through the guardrail → conversation manager → LLM
-        gateway pipeline.
-
-        Creates a new session if *session_id* is None.
-
-        Returns::
-
-            {
-              "ok":         bool,
-              "session_id": str,
-              "reply":      str | None,
-              "violations": [...],
-              "backend":    str,
-              "origin_signature": "MrLiouWord",
-            }
-        """
-        # ── Input guardrail ───────────────────────────────────────────────────
-        violations: List[Dict[str, Any]] = []
-        if use_guardrail and self.input_guard is not None:
-            input_ok, input_viols = self.input_guard.check(message)
-            violations.extend(input_viols)
-            if not input_ok:
-                return {
-                    "ok": False,
-                    "session_id": session_id,
-                    "reply": None,
-                    "violations": violations,
-                    "backend": None,
-                    "origin_signature": ORIGIN_SIGNATURE,
-                }
-
-        # ── Session management ────────────────────────────────────────────────
-        if self.conversation_mgr is None:
-            return {"error": "ConversationManager unavailable", "origin_signature": ORIGIN_SIGNATURE}
-
-        if session_id is None:
-            session_id = self.conversation_mgr.new_session(system_prompt=system_prompt)
-        else:
-            # Ensure the session exists; create if not
-            try:
-                self.conversation_mgr.get(session_id)
-            except FileNotFoundError:
-                session_id = self.conversation_mgr.new_session(
-                    session_id=session_id, system_prompt=system_prompt
-                )
-
-        self.conversation_mgr.add_user(session_id, message)
-
-        # ── LLM call (via conversation manager) ───────────────────────────────
-        reply = self.conversation_mgr.generate_reply(
-            session_id, max_tokens=max_tokens, temperature=temperature
-        )
-
-        # ── Output guardrail ──────────────────────────────────────────────────
-        if use_guardrail and self.output_guard is not None:
-            output_ok, output_viols = self.output_guard.check(reply)
-            violations.extend(output_viols)
-            if not output_ok:
-                # Remove the blocked reply from session history
-                sess = self.conversation_mgr.get(session_id)
-                sess.remove_last_assistant_message()
-                reply_out = None
-                ok = False
-            else:
-                reply_out = reply
-                ok = True
-        else:
-            reply_out = reply
-            ok = True
-
-        backend = self.llm_gateway.backend if self.llm_gateway else "unavailable"
-        self._seal_event("chat", {"session_id": session_id, "ok": ok})
-        return {
-            "ok":               ok,
-            "session_id":       session_id,
-            "reply":            reply_out,
-            "violations":       violations,
-            "backend":          backend,
-            "origin_signature": ORIGIN_SIGNATURE,
-        }
-
-    def multi_agent_run(
-        self,
-        task: str,
-        agent_names: Optional[List[str]] = None,
-        *,
-        max_turns: int = 8,
-        include_human_proxy: bool = False,
-    ) -> Dict[str, Any]:
-        """
-        Run a multi-agent group chat for *task*.
-
-        All agents use the attached LLMGateway.  If gateway is unavailable,
-        stub replies are used automatically.
-
-        Returns the full transcript dict from GroupChatManager.run().
-        """
-        Agent            = _try_import("multi_agent", "Agent")
-        HumanProxyAgent  = _try_import("multi_agent", "HumanProxyAgent")
-        GroupChat        = _try_import("multi_agent", "GroupChat")
-        GroupChatManager = _try_import("multi_agent", "GroupChatManager")
-
-        if Agent is None:
-            return {"error": "multi_agent module unavailable", "origin_signature": ORIGIN_SIGNATURE}
-
-        names = agent_names or ["Planner", "Executor"]
-        agents: List[Any] = [
-            Agent(
-                name,
-                gateway=self.llm_gateway,
-                system_prompt=f"You are {name}, a specialist agent in the MRL AI System.",
-            )
-            for name in names
-        ]
-
-        if include_human_proxy:
-            agents.append(HumanProxyAgent("Human", interactive=False, auto_reply="TERMINATE"))
-
-        gc  = GroupChat(agents, max_turns=max_turns)
-        mgr = GroupChatManager(gc)
-        result = mgr.run(task)
-        self._seal_event("multi_agent_run", {"task": task, "turns": result.get("total_turns")})
-        return result
-
-    def parse_output(self, text: str, parser_type: str = "auto") -> Dict[str, Any]:
-        """
-        Parse structured data from *text*.
-
-        parser_type : "json" | "list" | "kv" | "code" | "table" | "auto"
-            "auto" tries JSON → KV → list in sequence.
-        """
-        parsers_mod = {
-            "json":  ("output_parser", "JSONParser"),
-            "list":  ("output_parser", "ListParser"),
-            "kv":    ("output_parser", "KeyValueParser"),
-            "code":  ("output_parser", "CodeBlockParser"),
-            "table": ("output_parser", "TableParser"),
-        }
-
-        ParserChain = _try_import("output_parser", "ParserChain")
-
-        if parser_type == "auto":
-            if ParserChain is None:
-                return {"error": "output_parser unavailable", "origin_signature": ORIGIN_SIGNATURE}
-            jp = _try_import("output_parser", "JSONParser")
-            kp = _try_import("output_parser", "KeyValueParser")
-            lp = _try_import("output_parser", "ListParser")
-            chain = ParserChain([jp(), kp(), lp()])
-            return chain.parse(text)
-
-        mod, cls_name = parsers_mod.get(parser_type, ("output_parser", "JSONParser"))
-        ParserCls = _try_import(mod, cls_name)
-        if ParserCls is None:
-            return {"error": f"Parser '{parser_type}' unavailable", "origin_signature": ORIGIN_SIGNATURE}
-        return ParserCls().parse(text)
-
-    def guard_check(
-        self,
-        text: str,
-        direction: str = "input",
-        policy: str = "standard",
-    ) -> Dict[str, Any]:
-        """
-        Run a guardrail check on *text*.
-
-        direction : "input" | "output"
-        policy    : "strict" | "standard" | "permissive"
-        """
-        GuardCls = _try_import(
-            "guardrail",
-            "InputGuardrail" if direction == "input" else "OutputGuardrail",
-        )
-        if GuardCls is None:
-            return {"error": "guardrail unavailable", "origin_signature": ORIGIN_SIGNATURE}
-        guard = GuardCls(policy)
-        ok, violations = guard.check(text)
-        return {
-            "ok":               ok,
-            "direction":        direction,
-            "policy":           policy,
-            "violations":       violations,
         model: Optional[str] = None,
         system_prompt: Optional[str] = None,
         max_tokens: int = 1024,
@@ -883,29 +666,11 @@ class MotherAssembly:
 
     def status(self) -> Dict[str, Any]:
         """Return a health-check snapshot of all subsystems."""
-        llm_info = {}
-        if self.llm_gateway is not None:
-            llm_info = {
-                "backend": self.llm_gateway.backend,
-                "model":   self.llm_gateway.model,
-            }
         return {
             "assembly_version": ASSEMBLY_VERSION,
             "origin_signature": ORIGIN_SIGNATURE,
             "booted": self._booted,
             "subsystems": {
-                # original seven
-                "merkle_chain":      self.chain is not None,
-                "world_module":      self.world is not None,
-                "vector_store":      self.vector_store is not None,
-                "tool_registry":     self.tool_registry is not None,
-                "template_registry": self.template_registry is not None,
-                "eval_pipeline":     self.eval_pipeline is not None,
-                "plugin_manager":    self.plugin_manager is not None,
-                # new three (v1.1)
-                "llm_gateway":       self.llm_gateway is not None,
-                "conversation_mgr":  self.conversation_mgr is not None,
-                "guardrail":         self.input_guard is not None,
                 "merkle_chain":         self.chain is not None,
                 "world_module":         self.world is not None,
                 "vector_store":         self.vector_store is not None,
@@ -919,10 +684,111 @@ class MotherAssembly:
                 "llm_gateway":          self.llm_gateway is not None,
                 "context_manager":      self.context_manager is not None,
                 "scheduler":            self.scheduler is not None,
+                # v1.1
+                "guardrail":            self.input_guard is not None,
             },
-            "llm": llm_info,
             "checked_at_ms": int(time.time() * 1000),
         }
+
+    def guard_check(
+        self,
+        text: str,
+        direction: str = "input",
+        policy: str = "standard",
+    ) -> Dict[str, Any]:
+        """
+        Run a guardrail check on *text*.
+
+        direction : "input" | "output"
+        policy    : "strict" | "standard" | "permissive"
+        """
+        GuardCls = _try_import(
+            "guardrail",
+            "InputGuardrail" if direction == "input" else "OutputGuardrail",
+        )
+        if GuardCls is None:
+            return {"error": "guardrail unavailable", "origin_signature": ORIGIN_SIGNATURE}
+        guard = GuardCls(policy)
+        ok, violations = guard.check(text)
+        return {
+            "ok":               ok,
+            "direction":        direction,
+            "policy":           policy,
+            "violations":       violations,
+            "origin_signature": ORIGIN_SIGNATURE,
+        }
+
+    def parse_output(self, text: str, parser_type: str = "auto") -> Dict[str, Any]:
+        """
+        Parse structured data from *text*.
+
+        parser_type : "json" | "list" | "kv" | "code" | "table" | "auto"
+            "auto" tries JSON → KV → list in sequence.
+        """
+        parsers_map = {
+            "json":  ("output_parser", "JSONParser"),
+            "list":  ("output_parser", "ListParser"),
+            "kv":    ("output_parser", "KeyValueParser"),
+            "code":  ("output_parser", "CodeBlockParser"),
+            "table": ("output_parser", "TableParser"),
+        }
+
+        if parser_type == "auto":
+            ParserChain = _try_import("output_parser", "ParserChain")
+            if ParserChain is None:
+                return {"error": "output_parser unavailable", "origin_signature": ORIGIN_SIGNATURE}
+            jp = _try_import("output_parser", "JSONParser")
+            kp = _try_import("output_parser", "KeyValueParser")
+            lp = _try_import("output_parser", "ListParser")
+            chain = ParserChain([jp(), kp(), lp()])
+            return chain.parse(text)
+
+        mod, cls_name = parsers_map.get(parser_type, ("output_parser", "JSONParser"))
+        ParserCls = _try_import(mod, cls_name)
+        if ParserCls is None:
+            return {"error": f"Parser '{parser_type}' unavailable", "origin_signature": ORIGIN_SIGNATURE}
+        return ParserCls().parse(text)
+
+    def multi_agent_run(
+        self,
+        task: str,
+        agent_names: Optional[List[str]] = None,
+        *,
+        max_turns: int = 8,
+        include_human_proxy: bool = False,
+    ) -> Dict[str, Any]:
+        """
+        Run a group-chat multi-agent session for *task* using the GroupChat API.
+
+        All agents use the attached LLMGateway (stub if unavailable).
+        Returns the full transcript dict.
+        """
+        AgentCls            = _try_import("multi_agent", "Agent")
+        HumanProxyAgentCls  = _try_import("multi_agent", "HumanProxyAgent")
+        GroupChatCls        = _try_import("multi_agent", "GroupChat")
+        GroupChatManagerCls = _try_import("multi_agent", "GroupChatManager")
+
+        if AgentCls is None:
+            return {"error": "multi_agent module unavailable", "origin_signature": ORIGIN_SIGNATURE}
+
+        names = agent_names or ["Planner", "Executor"]
+        agents: List[Any] = [
+            AgentCls(
+                name,
+                gateway=self.llm_gateway,
+                system_prompt=f"You are {name}, a specialist agent in the MRL AI System.",
+            )
+            for name in names
+        ]
+
+        if include_human_proxy and HumanProxyAgentCls is not None:
+            agents.append(HumanProxyAgentCls("Human", interactive=False, auto_reply="TERMINATE"))
+
+        gc  = GroupChatCls(agents, max_turns=max_turns)
+        mgr = GroupChatManagerCls(gc)
+        result = mgr.run(task)
+        self._seal_event("multi_agent_run", {"task": task, "turns": result.get("total_turns")})
+        return result
 
     # ── Internal ──────────────────────────────────────────────────────────────
 
@@ -992,16 +858,6 @@ def _cmd_chat(args: argparse.Namespace) -> None:
     ma = MotherAssembly()
     ma.boot()
     result = ma.chat(
-        args.msg,
-        session_id=args.session or None,
-        system_prompt=args.system or "",
-        use_guardrail=not args.no_guardrail,
-    )
-    if result.get("ok"):
-        print(f"[{result.get('backend','?')}] {result['reply']}")
-    else:
-        print("❌ Blocked or error:")
-        print(json.dumps(result, ensure_ascii=False, indent=2, default=str))
         args.message,
         session_id=args.sid or None,
         model=args.model or None,
@@ -1012,12 +868,7 @@ def _cmd_chat(args: argparse.Namespace) -> None:
 def _cmd_multi_agent(args: argparse.Namespace) -> None:
     ma = MotherAssembly()
     ma.boot()
-    names = [n.strip() for n in args.agents.split(",")] if args.agents else None
-    result = ma.multi_agent_run(
-        args.task,
-        agent_names=names,
-        max_turns=args.max_turns,
-    )
+    result = ma.run_multi_agent(args.goal, mode=args.mode)
     print(json.dumps(result, ensure_ascii=False, indent=2, default=str))
 
 
@@ -1043,13 +894,9 @@ def _cmd_parse(args: argparse.Namespace) -> None:
         print(f"  error: {result['error']}")
 
 
-    result = ma.run_multi_agent(args.goal, mode=args.mode)
-    print(json.dumps(result, ensure_ascii=False, indent=2, default=str))
-
-
 def _build_argparser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
-        description="MotherAssembly v1.1 — unified MRL AGI entry point"
+        description="MotherAssembly v2.0 — unified MRL AGI entry point"
     )
     sub = p.add_subparsers(dest="cmd", required=True)
 
@@ -1067,20 +914,14 @@ def _build_argparser() -> argparse.ArgumentParser:
     s.add_argument("--text", required=True)
     s.add_argument("--label", default="cli")
 
-    # ── New commands (v1.1) ───────────────────────────────────────────────────
+    ch = sub.add_parser("chat", help="Send a chat message (multi-turn)")
+    ch.add_argument("--message", required=True)
+    ch.add_argument("--sid",    default="", help="Session ID (creates new if omitted)")
+    ch.add_argument("--model",  default="", help="LLM model name")
 
-    ch = sub.add_parser("chat", help="Send a guarded chat message (local LLM)")
-    ch.add_argument("--msg",          required=True, help="User message")
-    ch.add_argument("--session",      default="",    help="Session ID (omit to create new)")
-    ch.add_argument("--system",       default="",    help="System prompt for new session")
-    ch.add_argument("--no-guardrail", action="store_true",
-                    help="Bypass guardrail checks")
-
-    ma = sub.add_parser("multi-agent", help="Run a multi-agent group chat")
-    ma.add_argument("--task",      required=True)
-    ma.add_argument("--agents",    default="Planner,Executor",
-                    help="Comma-separated agent names")
-    ma.add_argument("--max-turns", type=int, default=8, dest="max_turns")
+    ma_cmd = sub.add_parser("multi-agent", help="Run a multi-agent task")
+    ma_cmd.add_argument("--goal", required=True)
+    ma_cmd.add_argument("--mode", default="sequential", choices=["sequential", "round_robin"])
 
     gd = sub.add_parser("guard", help="Run a guardrail check on text")
     gd.add_argument("--text",      required=True)
@@ -1092,14 +933,6 @@ def _build_argparser() -> argparse.ArgumentParser:
     ps.add_argument("--text", required=True)
     ps.add_argument("--type", default="auto",
                     choices=["auto", "json", "list", "kv", "code", "table"])
-    ch = sub.add_parser("chat", help="Send a chat message (multi-turn)")
-    ch.add_argument("--message", required=True)
-    ch.add_argument("--sid",    default="", help="Session ID (creates new if omitted)")
-    ch.add_argument("--model",  default="", help="LLM model name")
-
-    ma_cmd = sub.add_parser("multi-agent", help="Run a multi-agent task")
-    ma_cmd.add_argument("--goal", required=True)
-    ma_cmd.add_argument("--mode", default="sequential", choices=["sequential", "round_robin"])
 
     return p
 
