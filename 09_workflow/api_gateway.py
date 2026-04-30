@@ -180,6 +180,9 @@ class _Handler(BaseHTTPRequestHandler):
     def _request_id(self) -> str:
         return str(uuid.uuid4())
 
+    def _trace_id(self) -> str:
+        return str(uuid.uuid4())
+
     # ── Auth gate ─────────────────────────────────────────────────────────────
 
     def _require_auth(self, request_id: str) -> bool:
@@ -324,65 +327,113 @@ class _Handler(BaseHTTPRequestHandler):
             _json_response(self, 400, {"error": "'message' is required"}, rid)
             return
 
-        LLMGateway = _try_import("llm_adapter", "LLMGateway")
-        LLMRequest = _try_import("llm_adapter", "LLMRequest")
-        ConvMgr = _try_import("conversation_manager", "ConversationManager")
-        CtxMgr = _try_import("context_manager", "ContextManager")
+        trace_id = self._trace_id()
 
-        model = body.get("model") or (
-            _STATE.cfg.get("llm.default_model", "mock") if _STATE.cfg else "mock"
-        )
-
-        # Build or retrieve session
-        session_id = body.get("session_id")
-        if ConvMgr:
-            mgr = ConvMgr()
-            if not session_id:
-                system = body.get("system", "")
-                if not system and _STATE.cfg:
-                    system = _STATE.cfg.get(
-                        "conversation.default_system_prompt",
-                        "You are MRL_AGI, a helpful AI assistant.",
-                    )
-                session_id = mgr.new_session(system_prompt=system)
-            try:
-                mgr.add_message(session_id, "user", message)
-                history = mgr.get_history(session_id)
-            except KeyError:
-                _json_response(self, 404, {"error": f"Session not found: {session_id}"}, rid)
-                return
-        else:
-            history = [{"role": "user", "content": message}]
-
-        # Trim context
-        if CtxMgr and _STATE.cfg:
-            max_tok = int(_STATE.cfg.get("context.max_tokens", 4096))
-            reserve = int(_STATE.cfg.get("context.reply_reserve", 512))
-            cm = CtxMgr(max_tokens=max_tok, reply_reserve=reserve)
-            history, _ = cm.fit(history)
-
-        # LLM call
-        reply_text = f"[MockAdapter] Echo: {message}"
-        if LLMGateway and LLMRequest:
-            gw = LLMGateway()
-            req = LLMRequest(
-                model=model,
-                messages=[{"role": m["role"], "content": m["content"]} for m in history],
-                max_tokens=int(body.get("max_tokens", 1024)),
-                temperature=float(body.get("temperature", 0.7)),
+        if _STATE.assembly is None:
+            _json_response(
+                self,
+                503,
+                {
+                    "error": "MRL runtime unavailable (MotherAssembly not booted)",
+                    "engine": "mrl_runtime",
+                    "runtime_origin": "local_mother_assembly",
+                    "trace_id": trace_id,
+                },
+                rid,
             )
-            resp = gw.complete(req)
-            reply_text = resp.text if resp.ok else f"[LLM Error] {resp.error}"
+            return
 
-        # Record assistant reply
-        if ConvMgr and session_id:
-            mgr.add_message(session_id, "assistant", reply_text)
+        requested_model = str(body.get("model") or "").strip() or None
+        cfg_default_model = (
+            str(_STATE.cfg.get("llm.default_model", "")) if _STATE.cfg else ""
+        ).strip() or None
+        allow_mock = bool(_STATE.cfg.get("llm.allow_mock", False)) if _STATE.cfg else False
 
-        _json_response(self, 200, {
-            "session_id": session_id,
-            "reply": reply_text,
-            "model": model,
-        }, rid)
+        if requested_model is None:
+            if cfg_default_model is None:
+                _json_response(
+                    self,
+                    400,
+                    {
+                        "error": "'model' is required unless llm.default_model is configured",
+                        "engine": "mrl_runtime",
+                        "runtime_origin": "local_mother_assembly",
+                        "trace_id": trace_id,
+                    },
+                    rid,
+                )
+                return
+            requested_model = cfg_default_model
+
+        if requested_model.startswith("mock") and not allow_mock:
+            _json_response(
+                self,
+                403,
+                {
+                    "error": "MockAdapter is test-only. Set llm.allow_mock=true to enable.",
+                    "engine": "mrl_runtime",
+                    "runtime_origin": "local_mother_assembly",
+                    "trace_id": trace_id,
+                },
+                rid,
+            )
+            return
+
+        session_id = body.get("session_id")
+        system_prompt = body.get("system", "")
+        max_tokens = int(body.get("max_tokens", 1024))
+        temperature = float(body.get("temperature", 0.7))
+
+        try:
+            result = _STATE.assembly.chat(
+                message,
+                session_id=session_id or None,
+                model=requested_model,
+                system_prompt=system_prompt or None,
+                max_tokens=max_tokens,
+                temperature=temperature,
+            )
+        except Exception as exc:  # noqa: BLE001
+            _json_response(
+                self,
+                500,
+                {
+                    "error": "MRL runtime error",
+                    "error_type": type(exc).__name__,
+                    "error_detail": str(exc),
+                    "engine": "mrl_runtime",
+                    "runtime_origin": "local_mother_assembly",
+                    "trace_id": trace_id,
+                },
+                rid,
+            )
+            return
+
+        if isinstance(result, dict) and result.get("error"):
+            _json_response(
+                self,
+                502,
+                {
+                    **result,
+                    "engine": "mrl_runtime",
+                    "runtime_origin": "local_mother_assembly",
+                    "trace_id": trace_id,
+                },
+                rid,
+            )
+            return
+
+        _json_response(
+            self,
+            200,
+            {
+                **(result if isinstance(result, dict) else {"result": result}),
+                "engine": "mrl_runtime",
+                "runtime_origin": "local_mother_assembly",
+                "trace_id": trace_id,
+            },
+            rid,
+        )
 
     def _post_sessions(self, body: Dict[str, Any], rid: str) -> None:
         ConvMgr = _try_import("conversation_manager", "ConversationManager")
@@ -412,11 +463,70 @@ class _Handler(BaseHTTPRequestHandler):
         if not goal:
             _json_response(self, 400, {"error": "'goal' is required"}, rid)
             return
-        if _STATE.assembly:
+
+        trace_id = self._trace_id()
+        if _STATE.assembly is None:
+            _json_response(
+                self,
+                503,
+                {
+                    "error": "MotherAssembly unavailable",
+                    "engine": "mrl_runtime",
+                    "runtime_origin": "local_mother_assembly",
+                    "trace_id": trace_id,
+                },
+                rid,
+            )
+            return
+
+        # This endpoint is the product-grade task orchestrator entry.
+        # For now we run synchronously but return a formal task envelope.
+        task_id = str(uuid.uuid4())
+        started_ms = int(time.time() * 1000)
+        try:
+            status = "RUNNING"
             result = _STATE.assembly.run_agent(goal)
-            _json_response(self, 200, result, rid)
-        else:
-            _json_response(self, 503, {"error": "MotherAssembly unavailable"}, rid)
+            status = "DONE" if not (isinstance(result, dict) and result.get("error")) else "FAILED"
+            ended_ms = int(time.time() * 1000)
+            _json_response(
+                self,
+                200,
+                {
+                    "task_id": task_id,
+                    "status": status,
+                    "result": result,
+                    "error_trace": result.get("error") if isinstance(result, dict) else None,
+                    "engine": "mrl_runtime",
+                    "runtime_origin": "local_mother_assembly",
+                    "trace_id": trace_id,
+                    "started_at_ms": started_ms,
+                    "ended_at_ms": ended_ms,
+                    "elapsed_ms": ended_ms - started_ms,
+                },
+                rid,
+            )
+        except Exception as exc:  # noqa: BLE001
+            ended_ms = int(time.time() * 1000)
+            _json_response(
+                self,
+                500,
+                {
+                    "task_id": task_id,
+                    "status": "FAILED",
+                    "result": None,
+                    "error_trace": {
+                        "error": str(exc),
+                        "error_type": type(exc).__name__,
+                    },
+                    "engine": "mrl_runtime",
+                    "runtime_origin": "local_mother_assembly",
+                    "trace_id": trace_id,
+                    "started_at_ms": started_ms,
+                    "ended_at_ms": ended_ms,
+                    "elapsed_ms": ended_ms - started_ms,
+                },
+                rid,
+            )
 
     def _post_eval(self, body: Dict[str, Any], rid: str) -> None:
         output = body.get("output", "")
