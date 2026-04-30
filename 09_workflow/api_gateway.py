@@ -36,6 +36,10 @@ Security
   If ``require_auth`` is True in config, all requests must include:
     Authorization: Bearer <auth_token>
 
+  Learning endpoints follow mainstream production patterns:
+  - deny-by-default feature flag (learning.enabled)
+  - requires auth (api.require_auth=true) to prevent data exfiltration
+
 Usage
 -----
     python 09_workflow/api_gateway.py serve
@@ -175,6 +179,9 @@ def _require_learning_enabled() -> Tuple[bool, str]:
     enabled = bool(_STATE.cfg.get("learning.enabled", False))
     if not enabled:
         return False, "Learning endpoints disabled"
+    require_auth = bool(_STATE.cfg.get("api.require_auth", False))
+    if not require_auth:
+        return False, "Learning requires api.require_auth=true"
     return True, ""
 
 
