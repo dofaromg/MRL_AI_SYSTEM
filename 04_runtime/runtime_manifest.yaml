@@ -149,6 +149,11 @@ install_order:
       command: "python 05_persona/world_module.py snap"
       validates: "05_persona/world_module.py"
 
+    - step: 6
+      action: "Start MRL API gateway (background)"
+      command: "python 09_workflow/api_gateway.py --host 127.0.0.1 --port 7771"
+      validates: "09_workflow/api_gateway.py"
+
 # ─── Recovery protocol ───────────────────────────────────────────────────────
 recovery:
   description: >-
