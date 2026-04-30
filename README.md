@@ -167,6 +167,12 @@ python 09_workflow/mother_assembly.py chat --message "What can you do?" --sid <s
 python 09_workflow/mother_assembly.py multi-agent \
     --goal "Write a technical summary of the MRL AI System."
 
+# 10.5 Backup before update/upgrade
+python 09_workflow/mother_assembly.py backup --label before-upgrade
+
+# Guarded update entrypoint (creates backup first)
+python 09_workflow/mother_assembly.py update --label auto
+
 # ── REST API gateway ──────────────────────────────────────────────────────────
 
 # 11. Start the API server (default: http://127.0.0.1:7771)

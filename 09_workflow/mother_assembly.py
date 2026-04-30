@@ -85,6 +85,7 @@ from __future__ import annotations
 import argparse
 import json
 import pathlib
+import shutil
 import sys
 import time
 from typing import Any, Dict, List, Optional
@@ -93,6 +94,71 @@ ORIGIN_SIGNATURE = "MrLiouWord"
 ASSEMBLY_VERSION = "2.0"
 
 _REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
+
+
+def _create_backup(backup_root: pathlib.Path, label: str = "auto") -> pathlib.Path:
+    """Create a timestamped backup of key runtime state under backup_root.
+
+    The backup is best-effort: if a path doesn't exist it is skipped.
+    """
+    ts = time.strftime("%Y%m%d-%H%M%S")
+    dest = backup_root / f"backup-{ts}-{label}"
+    dest.mkdir(parents=True, exist_ok=False)
+
+    candidates = [
+        _REPO_ROOT / "data",
+        _REPO_ROOT / "03_memory",
+        _REPO_ROOT / "logs",
+    ]
+    for src in candidates:
+        if not src.exists():
+            continue
+        target = dest / src.name
+        if src.is_dir():
+            shutil.copytree(src, target, dirs_exist_ok=False)
+        else:
+            shutil.copy2(src, target)
+
+    (dest / "backup_manifest.json").write_text(
+        json.dumps(
+            {
+                "origin_signature": ORIGIN_SIGNATURE,
+                "created_at": ts,
+                "label": label,
+                "repo_root": str(_REPO_ROOT),
+                "included": [p.name for p in candidates if p.exists()],
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+    return dest
+
+
+def _cmd_backup(args: argparse.Namespace) -> None:
+    backup_root = (_REPO_ROOT / "backups")
+    path = _create_backup(backup_root=backup_root, label=args.label)
+    print(json.dumps({"ok": True, "backup_path": str(path)}, ensure_ascii=False, indent=2))
+
+
+def _cmd_update(args: argparse.Namespace) -> None:
+    """Guarded update entrypoint.
+
+    This repository doesn't embed a self-updater (git/pip). The purpose of this
+    command is to enforce the safety invariant: backup must happen first.
+    """
+
+    if not args.no_backup:
+        backup_root = (_REPO_ROOT / "backups")
+        path = _create_backup(backup_root=backup_root, label=args.label)
+        print(f"[MRL] Backup created: {path}")
+    else:
+        print("[MRL] WARNING: --no-backup specified; skipping backup")
+
+    raise SystemExit(
+        "Update step is not implemented in-code. Run your upgrade procedure after the backup."
+    )
 
 # ── Module path resolution ────────────────────────────────────────────────────
 # The numeric-prefixed directories are not packages; add them to sys.path.
@@ -776,6 +842,13 @@ def _build_argparser() -> argparse.ArgumentParser:
     ma_cmd.add_argument("--goal", required=True)
     ma_cmd.add_argument("--mode", default="sequential", choices=["sequential", "round_robin"])
 
+    b = sub.add_parser("backup", help="Create a timestamped backup under ./backups")
+    b.add_argument("--label", default="manual", help="Backup label suffix")
+
+    u = sub.add_parser("update", help="Update/upgrade (creates backup first)")
+    u.add_argument("--no-backup", action="store_true", help="Skip creating a backup")
+    u.add_argument("--label", default="auto", help="Backup label suffix")
+
     return p
 
 
@@ -790,6 +863,8 @@ def main() -> None:
         "seal":        _cmd_seal,
         "chat":        _cmd_chat,
         "multi-agent": _cmd_multi_agent,
+        "backup":      _cmd_backup,
+        "update":      _cmd_update,
     }
     dispatch[args.cmd](args)
 
