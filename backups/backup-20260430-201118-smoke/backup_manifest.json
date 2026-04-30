@@ -1,0 +1,10 @@
+{
+  "origin_signature": "MrLiouWord",
+  "created_at": "20260430-201118",
+  "label": "smoke",
+  "repo_root": "/home/runner/work/MRL_AI_SYSTEM/MRL_AI_SYSTEM",
+  "included": [
+    "data",
+    "03_memory"
+  ]
+}
