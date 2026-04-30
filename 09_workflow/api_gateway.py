@@ -169,6 +169,15 @@ def _check_auth(handler: "BaseHTTPRequestHandler") -> bool:
     return auth == expected
 
 
+def _require_learning_enabled() -> Tuple[bool, str]:
+    if _STATE.cfg is None:
+        return False, "ConfigManager unavailable"
+    enabled = bool(_STATE.cfg.get("learning.enabled", False))
+    if not enabled:
+        return False, "Learning endpoints disabled"
+    return True, ""
+
+
 # ─── Request handler ──────────────────────────────────────────────────────────
 
 class _Handler(BaseHTTPRequestHandler):
@@ -556,6 +565,10 @@ class _Handler(BaseHTTPRequestHandler):
             _json_response(self, 503, {"error": "MotherAssembly unavailable"}, rid)
 
     def _post_learn_ingest_path(self, body: Dict[str, Any], rid: str) -> None:
+        ok, err = _require_learning_enabled()
+        if not ok:
+            _json_response(self, 403, {"error": err}, rid)
+            return
         Learner = _try_import("MRL_learning_ingest", "ingest_path")
         if Learner is None:
             _json_response(self, 503, {"error": "Learning ingest unavailable"}, rid)
@@ -573,6 +586,10 @@ class _Handler(BaseHTTPRequestHandler):
         _json_response(self, status, res, rid)
 
     def _post_learn_ingest_url(self, body: Dict[str, Any], rid: str) -> None:
+        ok, err = _require_learning_enabled()
+        if not ok:
+            _json_response(self, 403, {"error": err}, rid)
+            return
         Learner = _try_import("MRL_learning_ingest", "ingest_url")
         if Learner is None:
             _json_response(self, 503, {"error": "Learning ingest unavailable"}, rid)
@@ -591,6 +608,10 @@ class _Handler(BaseHTTPRequestHandler):
         _json_response(self, status, res, rid)
 
     def _post_learn_query(self, body: Dict[str, Any], rid: str) -> None:
+        ok, err = _require_learning_enabled()
+        if not ok:
+            _json_response(self, 403, {"error": err}, rid)
+            return
         Learner = _try_import("MRL_learning_ingest", "query")
         if Learner is None:
             _json_response(self, 503, {"error": "Learning query unavailable"}, rid)
@@ -687,6 +708,9 @@ Endpoints:
   POST /agent/run         {"goal": "..."}
   POST /eval              {"output": "...", "keywords": [...]}
   POST /seal              {"text": "...", "label": "..."}
+  POST /learn/ingest_path  {"path": "...", "label": "..."}
+  POST /learn/ingest_url   {"url": "...", "label": "..."}
+  POST /learn/query        {"q": "...", "k": 5}
   GET  /tools
   POST /tools/{name}      {<kwargs>}
   GET  /templates

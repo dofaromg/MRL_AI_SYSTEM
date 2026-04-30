@@ -199,7 +199,6 @@ def ingest_text(
             "label": label,
             "created_at": created_at,
             "origin_signature": ORIGIN_SIGNATURE,
-            "text": ch,
         }
         vs.add(doc_id, _embed_text_simple(ch), meta)
         vector_ids.append(doc_id)
@@ -279,7 +278,9 @@ def query(q: str, *, k: int = 5) -> Dict[str, Any]:
     hits = vs.query(_embed_text_simple(q), top_k=int(k))
     out = []
     for doc_id, score, meta in hits:
-        out.append({"id": doc_id, "score": score, "meta": meta})
+        safe_meta = dict(meta or {})
+        safe_meta.pop("text", None)
+        out.append({"id": doc_id, "score": score, "meta": safe_meta})
     return {"ok": True, "q": q, "k": int(k), "hits": out}
 
 
@@ -337,4 +338,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
