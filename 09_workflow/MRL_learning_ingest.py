@@ -51,6 +51,14 @@ def _ensure_paths() -> None:
 _ensure_paths()
 
 
+def _require_dl580_persistence() -> Tuple[bool, str]:
+    try:
+        from MRL_host_guard import is_dl580_canonical_host
+    except Exception:  # noqa: BLE001
+        return False, "MRL_host_guard unavailable"
+    return is_dl580_canonical_host()
+
+
 def _sha256_bytes(b: bytes) -> str:
     return hashlib.sha256(b).hexdigest()
 
@@ -177,6 +185,9 @@ def ingest_text(
     overlap: int = 200,
     store_raw: bool = True,
 ) -> Dict[str, Any]:
+    ok_host, err_host = _require_dl580_persistence()
+    if not ok_host:
+        return {"ok": False, "error": f"DL580_ONLY: {err_host}"}
     from vector_store import VectorStore
 
     source_id = _sha256_text(f"{source_type}:{source_ref}:{_sha256_text(text)}")[:24]
@@ -228,6 +239,9 @@ def ingest_text(
 
 
 def ingest_path(path: str, *, label: str = "", **kwargs: Any) -> Dict[str, Any]:
+    ok_host, err_host = _require_dl580_persistence()
+    if not ok_host:
+        return {"ok": False, "error": f"DL580_ONLY: {err_host}"}
     p = pathlib.Path(path)
     if not p.exists():
         return {"ok": False, "error": f"path not found: {path}"}
@@ -256,6 +270,9 @@ def ingest_path(path: str, *, label: str = "", **kwargs: Any) -> Dict[str, Any]:
 
 
 def ingest_url(url: str, *, label: str = "", timeout_s: int = 15, **kwargs: Any) -> Dict[str, Any]:
+    ok_host, err_host = _require_dl580_persistence()
+    if not ok_host:
+        return {"ok": False, "error": f"DL580_ONLY: {err_host}"}
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "MRL_AI_SYSTEM/learning"})
         with urllib.request.urlopen(req, timeout=timeout_s) as resp:
@@ -270,6 +287,9 @@ def ingest_url(url: str, *, label: str = "", timeout_s: int = 15, **kwargs: Any)
 
 
 def query(q: str, *, k: int = 5) -> Dict[str, Any]:
+    ok_host, err_host = _require_dl580_persistence()
+    if not ok_host:
+        return {"ok": False, "error": f"DL580_ONLY: {err_host}"}
     from vector_store import VectorStore
 
     if not q:

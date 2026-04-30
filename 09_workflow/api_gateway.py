@@ -182,6 +182,12 @@ def _require_learning_enabled() -> Tuple[bool, str]:
     require_auth = bool(_STATE.cfg.get("api.require_auth", False))
     if not require_auth:
         return False, "Learning requires api.require_auth=true"
+    OnlyHost = _try_import("MRL_host_guard", "is_dl580_canonical_host")
+    if OnlyHost is None:
+        return False, "Host guard unavailable"
+    ok_host, err_host = OnlyHost()
+    if not ok_host:
+        return False, f"DL580_ONLY: {err_host}"
     return True, ""
 
 
