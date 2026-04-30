@@ -114,6 +114,21 @@ _DEFAULTS: Dict[str, Any] = {
     "eval": {
         "default_threshold": 0.5,
     },
+
+    # Self-optimisation (mainstream pattern: dynamic config, auditable)
+    "self_optimize": {
+        "enabled": False,
+        "apply": False,
+        "last_run_at_ms": 0,
+    },
+
+    # Learning ingest defaults (kept separate; endpoints remain deny-by-default)
+    "learning": {
+        "enabled": False,
+        "chunk_chars": 1400,
+        "overlap": 200,
+        "top_k": 5,
+    },
 }
 
 

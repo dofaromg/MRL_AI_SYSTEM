@@ -159,6 +159,11 @@ install_order:
       command: "python 09_workflow/MRL_learning_ingest.py --help"
       validates: "09_workflow/MRL_learning_ingest.py"
 
+    - step: 8
+      action: "Verify self optimisation CLI"
+      command: "python 09_workflow/MRL_self_optimize.py sense"
+      validates: "09_workflow/MRL_self_optimize.py"
+
 # ─── Recovery protocol ───────────────────────────────────────────────────────
 recovery:
   description: >-
