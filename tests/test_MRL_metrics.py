@@ -8,7 +8,7 @@ import time
 
 import pytest
 
-from metrics import MetricsCollector, record, reset, snapshot
+from MRL_metrics import MetricsCollector, record, reset, snapshot
 
 
 # ─── MetricsCollector ─────────────────────────────────────────────────────────

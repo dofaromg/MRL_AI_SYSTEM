@@ -385,7 +385,7 @@ class MotherAssembly:
             return f"error: {exc}"
 
     def _boot_metrics(self) -> str:
-        MetricsCollector = _try_import("metrics", "MetricsCollector")
+        MetricsCollector = _try_import("MRL_metrics", "MetricsCollector")
         if MetricsCollector is None:
             return "unavailable"
         try:

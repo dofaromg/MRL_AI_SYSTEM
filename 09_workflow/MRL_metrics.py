@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-metrics.py — In-Memory Telemetry Collector
+MRL_metrics.py — In-Memory Telemetry Collector
 origin_signature: MrLiouWord
 layer: L6 REFLECT
 group: Y=1 MotherCore
@@ -21,7 +21,7 @@ Features
 
 Usage (library)
 ---------------
-    from metrics import MetricsCollector
+    from MRL_metrics import MetricsCollector
 
     collector = MetricsCollector()
     collector.record("llm_gateway", latency_ms=120, ok=True)
@@ -29,15 +29,15 @@ Usage (library)
     print(collector.snapshot())
 
     # Global singleton shortcut
-    from metrics import record, snapshot
+    from MRL_metrics import record, snapshot
     record("guardrail", latency_ms=2, ok=True)
     snap = snapshot()
     print(snap["subsystems"]["guardrail"]["avg_latency_ms"])
 
 CLI
 ---
-    python 09_workflow/metrics.py status
-    python 09_workflow/metrics.py reset
+    python 09_workflow/MRL_metrics.py status
+    python 09_workflow/MRL_metrics.py reset
 """
 
 from __future__ import annotations
