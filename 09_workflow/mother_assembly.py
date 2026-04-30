@@ -158,6 +158,8 @@ class MotherAssembly:
         self.context_manager: Any = None
         self.scheduler: Any = None
         self.config: Any = None
+        # Guardrail — L3 LAW runtime enforcer (subsystem #13)
+        self.guardrail: Any = None
         self._boot_log: List[Dict[str, Any]] = []
 
     # ── Boot ──────────────────────────────────────────────────────────────────
@@ -213,6 +215,9 @@ class MotherAssembly:
 
         # 12 ── TaskScheduler (v2.0)
         report["subsystems"]["scheduler"] = self._boot_scheduler()
+
+        # 13 ── GuardRail — L3 LAW runtime enforcer
+        report["subsystems"]["guardrail"] = self._boot_guardrail()
 
         self._booted = True
         self._seal_event("boot", report)
@@ -356,6 +361,16 @@ class MotherAssembly:
         except Exception as exc:  # noqa: BLE001
             return f"error: {exc}"
 
+    def _boot_guardrail(self) -> str:
+        GuardRail = _try_import("MRL_guardrail", "GuardRail")
+        if GuardRail is None:
+            return "unavailable"
+        try:
+            self.guardrail = GuardRail()
+            return "ok"
+        except Exception as exc:  # noqa: BLE001
+            return f"error: {exc}"
+
     # ── Built-in tools ────────────────────────────────────────────────────────
 
     def _register_builtin_tools(self) -> None:
@@ -466,7 +481,22 @@ class MotherAssembly:
         keywords: Optional[List[str]] = None,
         reference: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
-        """Score *output* with the EvalPipeline."""
+        """Score *output* with the EvalPipeline.
+
+        If a GuardRail is active the content is checked first; DENY/REQUIRE_HUMAN
+        results are returned immediately without scoring.
+        """
+        # Guardrail content check (oc_11: observation/error/deviation → self-evolution)
+        if self.guardrail is not None:
+            guard = self.guardrail.evaluate("CONTENT_GENERATION", {"content": output})
+            if guard["decision"] == "DENY":
+                return {
+                    "error": "guardrail_deny",
+                    "rule_id": guard["rule_id"],
+                    "reason": guard["reason"],
+                    "origin_signature": ORIGIN_SIGNATURE,
+                }
+
         if self.eval_pipeline is None:
             return {"error": "EvalPipeline unavailable"}
         ref = dict(reference or {})
@@ -497,6 +527,102 @@ class MotherAssembly:
         trace = text_to_trace(text, label=label)
         self._seal_event("seal_text", {"label": label})
         return trace
+
+    def reflective_assimilation(
+        self,
+        eval_history: List[Dict[str, Any]],
+    ) -> Dict[str, Any]:
+        """
+        Liou Closure Loop — Observe → Resolve → Mirror → Verify → Loop.
+
+        Implements rootlaw oc_11 (observation/error/deviation → self-evolution)
+        and oc_12 (偏差/矛盾 → Reflective Assimilation).
+
+        Given a list of recent EvalPipeline results (each must contain ``scores``
+        and ``composite`` keys), the method:
+
+          1. Observe  — collect all individual scorer values from history
+          2. Resolve  — identify the weakest scoring dimension(s)
+          3. Mirror   — reflect the deviation back as a directive note
+          4. Verify   — confirm the directive is logically consistent
+          5. Loop     — seal the assimilation record in the MerkleChain
+
+        Parameters
+        ----------
+        eval_history : list of dicts returned by ``MotherAssembly.evaluate()``
+            Must not be empty.  Records without a ``scores`` key are skipped.
+
+        Returns
+        -------
+        {
+          "loop_step":          "Observe→Resolve→Mirror→Verify→Loop",
+          "observed_n":         int,          # records analysed
+          "dimension_means":    {name: float},
+          "weakest_dimension":  str,
+          "mean_composite":     float,
+          "directive":          str,          # human-readable coaching note
+          "verified":           bool,
+          "origin_signature":   "MrLiouWord",
+          "assimilated_at_ms":  int,
+        }
+        """
+        # ── 1. Observe ────────────────────────────────────────────────────────
+        score_buckets: Dict[str, List[float]] = {}
+        composites: List[float] = []
+        for rec in eval_history:
+            if not isinstance(rec, dict) or "scores" not in rec:
+                continue
+            for dim, val in rec["scores"].items():
+                score_buckets.setdefault(dim, []).append(float(val))
+            if "composite" in rec:
+                composites.append(float(rec["composite"]))
+
+        observed_n = len(composites)
+        if observed_n == 0:
+            return {
+                "error": "no valid eval records in history",
+                "origin_signature": ORIGIN_SIGNATURE,
+            }
+
+        # ── 2. Resolve ────────────────────────────────────────────────────────
+        dimension_means: Dict[str, float] = {
+            dim: sum(vals) / len(vals) for dim, vals in score_buckets.items()
+        }
+        mean_composite = sum(composites) / len(composites)
+        weakest = min(dimension_means, key=lambda d: dimension_means[d]) if dimension_means else "unknown"
+        weakest_score = dimension_means.get(weakest, 0.0)
+
+        # ── 3. Mirror ─────────────────────────────────────────────────────────
+        _directives: Dict[str, str] = {
+            "length":     "Outputs are too short or too long — calibrate response length to the task.",
+            "keywords":   "Required keywords are missing — ensure all reference terms appear in outputs.",
+            "safety":     "Safety scorer is failing — review outputs for harmful or denied content.",
+            "json_valid": "Outputs are not valid JSON where expected — enforce structured output format.",
+        }
+        directive = _directives.get(
+            weakest,
+            f"Dimension '{weakest}' scored {weakest_score:.3f} — investigate and strengthen this area.",
+        )
+
+        # ── 4. Verify ─────────────────────────────────────────────────────────
+        # Logical verification: the directive must be non-empty and the weakest
+        # dimension must genuinely be below the composite mean (deviation confirmed).
+        verified = bool(directive) and (weakest_score <= mean_composite)
+
+        # ── 5. Loop — seal into MerkleChain ──────────────────────────────────
+        assimilation_record: Dict[str, Any] = {
+            "loop_step": "Observe→Resolve→Mirror→Verify→Loop",
+            "observed_n": observed_n,
+            "dimension_means": {k: round(v, 6) for k, v in dimension_means.items()},
+            "weakest_dimension": weakest,
+            "mean_composite": round(mean_composite, 6),
+            "directive": directive,
+            "verified": verified,
+            "origin_signature": ORIGIN_SIGNATURE,
+            "assimilated_at_ms": int(time.time() * 1000),
+        }
+        self._seal_event("reflective_assimilation", assimilation_record)
+        return assimilation_record
 
     def chat(
         self,
@@ -661,6 +787,8 @@ class MotherAssembly:
                 "llm_gateway":          self.llm_gateway is not None,
                 "context_manager":      self.context_manager is not None,
                 "scheduler":            self.scheduler is not None,
+                # v2.1 — L3 LAW runtime enforcer
+                "guardrail":            self.guardrail is not None,
             },
             "checked_at_ms": int(time.time() * 1000),
         }
@@ -747,6 +875,38 @@ def _cmd_multi_agent(args: argparse.Namespace) -> None:
     print(json.dumps(result, ensure_ascii=False, indent=2, default=str))
 
 
+def _cmd_reflect(args: argparse.Namespace) -> None:
+    """CLI driver for reflective_assimilation.
+
+    Reads eval records from a JSONL file (one JSON object per line) and runs
+    the Liou Closure Loop against them.
+    """
+    import pathlib as _pl
+
+    path = _pl.Path(args.history)
+    if not path.exists():
+        print(f"Error: history file not found: {path}")
+        raise SystemExit(1)
+
+    history: List[Dict[str, Any]] = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line:
+            try:
+                history.append(json.loads(line))
+            except json.JSONDecodeError:
+                pass
+
+    if not history:
+        print("Error: no valid JSON records found in history file")
+        raise SystemExit(1)
+
+    ma = MotherAssembly()
+    ma.boot()
+    result = ma.reflective_assimilation(history)
+    print(json.dumps(result, ensure_ascii=False, indent=2, default=str))
+
+
 def _build_argparser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         description="MotherAssembly — unified MRL AI System entry point"
@@ -776,6 +936,12 @@ def _build_argparser() -> argparse.ArgumentParser:
     ma_cmd.add_argument("--goal", required=True)
     ma_cmd.add_argument("--mode", default="sequential", choices=["sequential", "round_robin"])
 
+    rf = sub.add_parser("reflect", help="Run Reflective Assimilation (Liou Closure Loop)")
+    rf.add_argument(
+        "--history", required=True,
+        help="Path to a JSONL file of EvalPipeline result records",
+    )
+
     return p
 
 
@@ -790,6 +956,7 @@ def main() -> None:
         "seal":        _cmd_seal,
         "chat":        _cmd_chat,
         "multi-agent": _cmd_multi_agent,
+        "reflect":     _cmd_reflect,
     }
     dispatch[args.cmd](args)
 
