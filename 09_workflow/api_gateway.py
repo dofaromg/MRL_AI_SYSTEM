@@ -231,6 +231,9 @@ class _Handler(BaseHTTPRequestHandler):
             "/agent/run":  lambda: self._post_agent_run(body, rid),
             "/eval":       lambda: self._post_eval(body, rid),
             "/seal":       lambda: self._post_seal(body, rid),
+            "/learn/ingest_path": lambda: self._post_learn_ingest_path(body, rid),
+            "/learn/ingest_url":  lambda: self._post_learn_ingest_url(body, rid),
+            "/learn/query":       lambda: self._post_learn_query(body, rid),
             "/templates":  lambda: self._post_templates(body, rid),
             "/config":     lambda: self._post_config(body, rid),
         }
@@ -551,6 +554,55 @@ class _Handler(BaseHTTPRequestHandler):
             _json_response(self, 200, trace, rid)
         else:
             _json_response(self, 503, {"error": "MotherAssembly unavailable"}, rid)
+
+    def _post_learn_ingest_path(self, body: Dict[str, Any], rid: str) -> None:
+        Learner = _try_import("MRL_learning_ingest", "ingest_path")
+        if Learner is None:
+            _json_response(self, 503, {"error": "Learning ingest unavailable"}, rid)
+            return
+        path = str(body.get("path") or "").strip()
+        if not path:
+            _json_response(self, 400, {"error": "path is required"}, rid)
+            return
+        label = str(body.get("label") or "")
+        chunk_chars = int(body.get("chunk_chars") or 1400)
+        overlap = int(body.get("overlap") or 200)
+        store_raw = bool(body.get("store_raw", True))
+        res = Learner(path, label=label, chunk_chars=chunk_chars, overlap=overlap, store_raw=store_raw)
+        status = 200 if res.get("ok") else 400
+        _json_response(self, status, res, rid)
+
+    def _post_learn_ingest_url(self, body: Dict[str, Any], rid: str) -> None:
+        Learner = _try_import("MRL_learning_ingest", "ingest_url")
+        if Learner is None:
+            _json_response(self, 503, {"error": "Learning ingest unavailable"}, rid)
+            return
+        url = str(body.get("url") or "").strip()
+        if not url:
+            _json_response(self, 400, {"error": "url is required"}, rid)
+            return
+        label = str(body.get("label") or "")
+        chunk_chars = int(body.get("chunk_chars") or 1400)
+        overlap = int(body.get("overlap") or 200)
+        store_raw = bool(body.get("store_raw", True))
+        timeout_s = int(body.get("timeout_s") or 15)
+        res = Learner(url, label=label, chunk_chars=chunk_chars, overlap=overlap, store_raw=store_raw, timeout_s=timeout_s)
+        status = 200 if res.get("ok") else 400
+        _json_response(self, status, res, rid)
+
+    def _post_learn_query(self, body: Dict[str, Any], rid: str) -> None:
+        Learner = _try_import("MRL_learning_ingest", "query")
+        if Learner is None:
+            _json_response(self, 503, {"error": "Learning query unavailable"}, rid)
+            return
+        q = str(body.get("q") or "").strip()
+        if not q:
+            _json_response(self, 400, {"error": "q is required"}, rid)
+            return
+        k = int(body.get("k") or 5)
+        res = Learner(q, k=k)
+        status = 200 if res.get("ok") else 400
+        _json_response(self, status, res, rid)
 
     def _post_tool_call(self, tool_name: str, body: Dict[str, Any], rid: str) -> None:
         if _STATE.assembly and _STATE.assembly.tool_registry:

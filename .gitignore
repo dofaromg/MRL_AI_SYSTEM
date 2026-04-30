@@ -1,5 +1,9 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+.python-version
+
+# learning ingest outputs (runtime data)
+data/learning/
 *.py[codz]
 *$py.class
 

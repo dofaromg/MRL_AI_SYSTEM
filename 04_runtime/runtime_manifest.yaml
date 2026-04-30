@@ -154,6 +154,11 @@ install_order:
       command: "python 09_workflow/api_gateway.py --host 127.0.0.1 --port 7771"
       validates: "09_workflow/api_gateway.py"
 
+    - step: 7
+      action: "Verify learning ingest CLI"
+      command: "python 09_workflow/MRL_learning_ingest.py --help"
+      validates: "09_workflow/MRL_learning_ingest.py"
+
 # ─── Recovery protocol ───────────────────────────────────────────────────────
 recovery:
   description: >-
