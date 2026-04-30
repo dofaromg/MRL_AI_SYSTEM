@@ -38,7 +38,7 @@ tiers:
       - "09_workflow/signature.js"
       - "09_workflow/seed.js"
       - "data/relations/module_relations.yaml"
-    health_check: "python 04_runtime/flowcore_loop.py --verify"
+    health_check: "python 04_runtime/flowcore_loop.py cli --help"
     layer: "L0–L7 + MetaEnv"
     core_groups: [1, 2, 3, 4, 5, 6]
 
@@ -50,7 +50,7 @@ tiers:
     required_modules:
       - "00_rootlaw/rootlaw.yaml"
       - "04_runtime/flowcore_loop.py"
-    start_command: "python 04_runtime/flowcore_loop.py serve"
+    start_command: "python 04_runtime/flowcore_loop.py serve --host 127.0.0.1 --port 8787"
     env_vars:
       FLOW_VAULT_ROOT: "path/to/vault"
       FLOW_PORT: "8787"
