@@ -66,7 +66,9 @@ import json
 import time
 import urllib.error
 import urllib.request
-from typing import Any, Dict, Iterator, List, Optional
+from typing import Any, Callable, Dict, Iterator, List, Optional, TypeVar
+
+_T = TypeVar("_T")
 
 ORIGIN_SIGNATURE = "MrLiouWord"
 GATEWAY_VERSION = "1.0"
@@ -114,6 +116,37 @@ def _http_get(url: str, timeout: int = 5) -> Dict[str, Any]:
     req = urllib.request.Request(url, headers={"Accept": "application/json"}, method="GET")
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         return json.loads(resp.read().decode("utf-8"))
+
+
+# ── Retry / backoff ───────────────────────────────────────────────────────────
+
+_RETRY_DELAYS = (0.5, 1.0, 2.0)  # wait times between attempts in seconds
+
+
+def _with_retry(fn: Callable[..., _T], *args: Any, max_retries: int = 3, **kwargs: Any) -> _T:
+    """
+    Invoke *fn* with exponential backoff on transient network errors.
+
+    Only ``urllib.error.URLError`` (connection refused, timeout, DNS failure)
+    triggers a retry.  Any other exception is propagated immediately.
+
+    Parameters
+    ----------
+    fn          : Callable to invoke.
+    *args       : Positional arguments forwarded to *fn*.
+    max_retries : Total number of attempts (default 3).
+    **kwargs    : Keyword arguments forwarded to *fn*.
+    """
+    last_exc: Optional[Exception] = None
+    for attempt in range(max_retries):
+        try:
+            return fn(*args, **kwargs)
+        except urllib.error.URLError as exc:
+            last_exc = exc
+            if attempt < max_retries - 1:
+                delay = _RETRY_DELAYS[min(attempt, len(_RETRY_DELAYS) - 1)]
+                time.sleep(delay)
+    raise last_exc  # type: ignore[misc]
 
 
 # ── Health checks ─────────────────────────────────────────────────────────────
@@ -251,6 +284,28 @@ class LLMGateway:
             return _llamacpp_models(self._llamacpp_base)
         return ["stub-model"]
 
+    def status(self) -> Dict[str, Any]:
+        """
+        Return a health-check dict describing the active backend.
+
+        Returns
+        -------
+        {
+          "backend":          str,   # "ollama" | "llamacpp" | "stub"
+          "model":            str,
+          "is_stub":          bool,  # True when running offline stub
+          "available_models": list,
+          "origin_signature": "MrLiouWord",
+        }
+        """
+        return {
+            "backend":          self._backend,
+            "model":            self._model,
+            "is_stub":          self._backend == "stub",
+            "available_models": self.list_models(),
+            "origin_signature": ORIGIN_SIGNATURE,
+        }
+
     def complete(
         self,
         prompt: str,
@@ -337,7 +392,8 @@ class LLMGateway:
             if stop:
                 payload["options"]["stop"] = stop
 
-            data = _http_post(
+            data = _with_retry(
+                _http_post,
                 f"{self._ollama_base}/api/chat",
                 payload,
                 timeout=self._timeout,
@@ -404,7 +460,8 @@ class LLMGateway:
             if stop:
                 payload["stop"] = stop
 
-            data = _http_post(
+            data = _with_retry(
+                _http_post,
                 f"{self._llamacpp_base}/v1/chat/completions",
                 payload,
                 timeout=self._timeout,

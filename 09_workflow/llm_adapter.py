@@ -430,6 +430,26 @@ class LLMGateway:
     def list_adapters(self) -> List[str]:
         return sorted(self._adapters.keys())
 
+    def status(self) -> Dict[str, Any]:
+        """
+        Return a status dict describing the registered adapters.
+
+        Returns
+        -------
+        {
+          "registered_adapters": list[str],
+          "default_adapter":     str,        # "mock" if nothing else registered
+          "origin_signature":    "MrLiouWord",
+        }
+        """
+        adapters = self.list_adapters()
+        default = adapters[0] if adapters else "none"
+        return {
+            "registered_adapters": adapters,
+            "default_adapter":     default,
+            "origin_signature":    ORIGIN_SIGNATURE,
+        }
+
 
 # ─── CLI ─────────────────────────────────────────────────────────────────────
 

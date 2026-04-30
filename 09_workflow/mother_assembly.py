@@ -163,6 +163,8 @@ class MotherAssembly:
         # New modules (v1.1 guardrail + output_parser)
         self.input_guard: Any = None
         self.output_guard: Any = None
+        # Telemetry (v2.1)
+        self.metrics: Any = None
         self._boot_log: List[Dict[str, Any]] = []
 
     # ── Boot ──────────────────────────────────────────────────────────────────
@@ -221,6 +223,9 @@ class MotherAssembly:
 
         # 13 ── Guardrail (v1.1)
         report["subsystems"]["guardrail"] = self._boot_guardrail()
+
+        # 14 ── Metrics (v2.1)
+        report["subsystems"]["metrics"] = self._boot_metrics()
 
         self._booted = True
         self._seal_event("boot", report)
@@ -376,6 +381,16 @@ class MotherAssembly:
             self.input_guard  = InputGuardrail(policy)
             self.output_guard = OutputGuardrail(policy)
             return f"ok (policy={policy})"
+        except Exception as exc:  # noqa: BLE001
+            return f"error: {exc}"
+
+    def _boot_metrics(self) -> str:
+        MetricsCollector = _try_import("metrics", "MetricsCollector")
+        if MetricsCollector is None:
+            return "unavailable"
+        try:
+            self.metrics = MetricsCollector()
+            return "ok"
         except Exception as exc:  # noqa: BLE001
             return f"error: {exc}"
 
@@ -665,7 +680,50 @@ class MotherAssembly:
         }
 
     def status(self) -> Dict[str, Any]:
-        """Return a health-check snapshot of all subsystems."""
+        """
+        Return a health-check snapshot of all subsystems.
+
+        Extended fields (v2.1)
+        ----------------------
+        llm_backend      : Active LLM backend name ("ollama"|"llamacpp"|"stub"|None).
+        llm_model        : Active model identifier or None.
+        llm_is_stub      : True when the LLM gateway is in offline stub mode.
+        guardrail_policy : Active guardrail policy ("strict"|"standard"|"permissive").
+        session_count    : Number of loaded conversation sessions.
+        metrics_snapshot : Point-in-time telemetry snapshot or None.
+        """
+        # Gather LLM details from the adapter gateway
+        llm_status: Any = False
+        llm_backend: Optional[str] = None
+        llm_model: Optional[str] = None
+        llm_is_stub: bool = True
+        if self.llm_gateway is not None:
+            llm_status = True
+            if hasattr(self.llm_gateway, "status"):
+                llm_status = self.llm_gateway.status()
+            # llm_adapter.LLMGateway uses adapters; llm_gateway.LLMGateway exposes backend
+            if hasattr(self.llm_gateway, "backend"):
+                llm_backend = self.llm_gateway.backend
+                llm_is_stub = (llm_backend == "stub")
+            if hasattr(self.llm_gateway, "model"):
+                llm_model = self.llm_gateway.model
+            if hasattr(self.llm_gateway, "list_adapters"):
+                # llm_adapter gateway — report registered adapters as "backend"
+                adapters = self.llm_gateway.list_adapters()
+                llm_backend = ", ".join(adapters) if adapters else "none"
+                llm_is_stub = adapters == ["mock"]
+
+        guardrail_policy: str = "standard"
+        if self.config is not None:
+            guardrail_policy = self.config.get("guardrail.policy", "standard")
+
+        session_count: int = 0
+        if self.conversation_manager is not None:
+            try:
+                session_count = len(self.conversation_manager.list_sessions())
+            except Exception:  # noqa: BLE001
+                pass
+
         return {
             "assembly_version": ASSEMBLY_VERSION,
             "origin_signature": ORIGIN_SIGNATURE,
@@ -681,14 +739,40 @@ class MotherAssembly:
                 # v2.0
                 "config_manager":       self.config is not None,
                 "conversation_manager": self.conversation_manager is not None,
-                "llm_gateway":          self.llm_gateway is not None,
+                "llm_gateway":          llm_status,
                 "context_manager":      self.context_manager is not None,
                 "scheduler":            self.scheduler is not None,
                 # v1.1
                 "guardrail":            self.input_guard is not None,
+                # v2.1
+                "metrics":              self.metrics is not None,
             },
-            "checked_at_ms": int(time.time() * 1000),
+            # v2.1 enriched fields
+            "llm_backend":      llm_backend,
+            "llm_model":        llm_model,
+            "llm_is_stub":      llm_is_stub,
+            "guardrail_policy": guardrail_policy,
+            "session_count":    session_count,
+            "metrics_snapshot": self.metrics.snapshot() if self.metrics is not None else None,
+            "checked_at_ms":    int(time.time() * 1000),
         }
+
+    def export_conversation(self, session_id: str) -> str:
+        """
+        Export a conversation session as a Markdown string.
+
+        Returns an empty string when *session_id* does not exist or
+        ConversationManager is unavailable.
+
+        Parameters
+        ----------
+        session_id : Session to export.
+        """
+        if self.conversation_manager is None:
+            return ""
+        if not hasattr(self.conversation_manager, "export_markdown"):
+            return ""
+        return self.conversation_manager.export_markdown(session_id)
 
     def guard_check(
         self,
@@ -894,9 +978,23 @@ def _cmd_parse(args: argparse.Namespace) -> None:
         print(f"  error: {result['error']}")
 
 
+def _cmd_export(args: argparse.Namespace) -> None:
+    ma = MotherAssembly()
+    ma.boot()
+    md = ma.export_conversation(args.sid)
+    if md:
+        print(md)
+    else:
+        print(f"Session '{args.sid}' not found or no content.")
+
+
 def _build_argparser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         description="MotherAssembly v2.0 — unified MRL AGI entry point"
+    )
+    p.add_argument(
+        "--version", action="version",
+        version=f"MotherAssembly {ASSEMBLY_VERSION} (origin_signature={ORIGIN_SIGNATURE})",
     )
     sub = p.add_subparsers(dest="cmd", required=True)
 
@@ -934,6 +1032,9 @@ def _build_argparser() -> argparse.ArgumentParser:
     ps.add_argument("--type", default="auto",
                     choices=["auto", "json", "list", "kv", "code", "table"])
 
+    ex = sub.add_parser("export", help="Export a conversation session as Markdown")
+    ex.add_argument("--sid", required=True, help="Session ID to export")
+
     return p
 
 
@@ -950,6 +1051,7 @@ def main() -> None:
         "multi-agent": _cmd_multi_agent,
         "guard":       _cmd_guard,
         "parse":       _cmd_parse,
+        "export":      _cmd_export,
     }
     dispatch[args.cmd](args)
 
