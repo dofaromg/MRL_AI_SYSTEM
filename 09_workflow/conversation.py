@@ -284,7 +284,7 @@ class Session:
         sess._store_dir     = store_dir
         sess._messages      = []
         sess._seq           = 0
-        sess._created_at_ms = int(time.time() * 1000)  # fallback; overwritten below
+        sess._created_at_ms = int(time.time() * 1000)  # fallback; overwritten below if _meta line exists
         sess._path          = path
         with path.open("r", encoding="utf-8") as f:
             for line in f:
