@@ -13,23 +13,54 @@ only the canonical host (DL580) is allowed to perform learning persistence
 operations. All other nodes may treat external inputs as learning materials but
 must not mutate internal knowledge stores.
 
+The system recognises exactly two roles:
+
+  NodeRole.MOTHER
+      Fully trusted primary node.  May mutate internal knowledge stores,
+      seal Merkle events, and persist learning.  Determined by three
+      independent checks (hostname + CIDR + fingerprint file).
+
+  NodeRole.MATERIAL
+      Every other host.  Can read and participate in workflows but all
+      external file data are treated as *materials* — they inform the
+      MOTHER but cannot modify authoritative state.
+
 Checks are performed using a defense-in-depth strategy:
-  A) hostname allowlist
+  A) hostname allowlist (case-insensitive; also accepts Tailscale MagicDNS)
   B) IP/CIDR allowlist (for the local interface or primary outbound IP)
   C) host fingerprint file marker (operator provisioned)
+
+CLI
+---
+    python 09_workflow/MRL_host_guard.py check
+    python 09_workflow/MRL_host_guard.py status
 """
 
 from __future__ import annotations
 
+import argparse
 import ipaddress
+import json
 import os
 import platform
 import socket
 from dataclasses import dataclass
+from enum import Enum
 from typing import Iterable, List, Optional, Tuple
 
 ORIGIN_SIGNATURE = "MrLiouWord"
+HOST_GUARD_VERSION = "1.0"
 
+
+# ─── Node role ────────────────────────────────────────────────────────────────
+
+class NodeRole(str, Enum):
+    """Trust level of the running host."""
+    MOTHER   = "MOTHER"    # canonical DL580 — full persistence rights
+    MATERIAL = "MATERIAL"  # every other host — read-only / materials mode
+
+
+# ─── Configuration ────────────────────────────────────────────────────────────
 
 @dataclass(frozen=True)
 class HostGuardConfig:
@@ -41,12 +72,14 @@ class HostGuardConfig:
 
 DEFAULT_DL580_CONFIG = HostGuardConfig(
     hostname_allowlist=[
-        "win-pbvu i7vk2a6".replace(" ", ""),
+        # bare hostname (case-insensitive match)
+        "win-pbvui7vk2a6",
+        # Tailscale MagicDNS FQDN
         "win-pbvui7vk2a6.tail7de813.ts.net",
     ],
     cidr_allowlist=[
-        "100.78.70.78/32",
-        "127.0.0.1/32",
+        "100.78.70.78/32",   # Tailscale IP
+        "127.0.0.1/32",      # loopback
     ],
     fingerprint_file=r"D:\mrl\config\MRL_host_role.txt",
     fingerprint_value="MRL_DL580_CANONICAL_MOTHER",
@@ -157,3 +190,67 @@ def is_dl580_canonical_host(cfg: HostGuardConfig = DEFAULT_DL580_CONFIG) -> Tupl
 
     return True, "dl580 canonical host verified"
 
+
+# ─── Node role helpers ────────────────────────────────────────────────────────
+
+def get_node_role(cfg: HostGuardConfig = DEFAULT_DL580_CONFIG) -> NodeRole:
+    """Return :class:`NodeRole.MOTHER` when running on the canonical DL580 host,
+    otherwise :class:`NodeRole.MATERIAL`.
+
+    This is the primary entrypoint for callers that need a simple role decision
+    without inspecting the failure reason::
+
+        from MRL_host_guard import get_node_role, NodeRole
+
+        if get_node_role() is NodeRole.MOTHER:
+            persist_learning(data)
+        else:
+            treat_as_material(data)
+    """
+    ok, _ = is_dl580_canonical_host(cfg)
+    return NodeRole.MOTHER if ok else NodeRole.MATERIAL
+
+
+def node_role_detail(cfg: HostGuardConfig = DEFAULT_DL580_CONFIG) -> dict:
+    """Return a structured dict with role, verdict, and diagnostic info."""
+    import time
+    ok, reason = is_dl580_canonical_host(cfg)
+    return {
+        "role": (NodeRole.MOTHER if ok else NodeRole.MATERIAL).value,
+        "verified": ok,
+        "reason": reason,
+        "hostnames": _get_hostname_candidates(),
+        "ips": _get_ip_candidates(),
+        "fingerprint_file": cfg.fingerprint_file,
+        "origin_signature": ORIGIN_SIGNATURE,
+        "checked_at_ms": int(time.time() * 1000),
+    }
+
+
+# ─── CLI ──────────────────────────────────────────────────────────────────────
+
+def main(argv: Optional[List[str]] = None) -> None:
+    parser = argparse.ArgumentParser(
+        prog="MRL_host_guard",
+        description="MRL canonical-host identity verification (DL580 MOTHER node).",
+    )
+    sub = parser.add_subparsers(dest="cmd")
+    sub.add_parser("check",  help="Exit 0 if this is the MOTHER host, else 1.")
+    sub.add_parser("status", help="Print detailed role JSON and exit 0.")
+    args = parser.parse_args(argv)
+
+    detail = node_role_detail()
+    if args.cmd == "check":
+        if detail["verified"]:
+            print(f"[MRL_host_guard] MOTHER: {detail['reason']}")
+        else:
+            print(f"[MRL_host_guard] MATERIAL: {detail['reason']}")
+            raise SystemExit(1)
+    elif args.cmd == "status":
+        print(json.dumps(detail, ensure_ascii=False, indent=2))
+    else:
+        parser.print_help()
+
+
+if __name__ == "__main__":
+    main()

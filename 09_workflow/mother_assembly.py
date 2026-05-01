@@ -231,6 +231,8 @@ class MotherAssembly:
         self.output_guard: Any = None
         # Telemetry (v2.1)
         self.metrics: Any = None
+        # Host identity (v2.2)
+        self.host_guard_role: str = "MATERIAL"  # "MOTHER" | "MATERIAL"
         self._boot_log: List[Dict[str, Any]] = []
 
     # ── Boot ──────────────────────────────────────────────────────────────────
@@ -292,6 +294,9 @@ class MotherAssembly:
 
         # 14 ── Metrics (v2.1)
         report["subsystems"]["metrics"] = self._boot_metrics()
+
+        # 15 ── HostGuard (v2.2)
+        report["subsystems"]["host_guard"] = self._boot_host_guard()
 
         self._booted = True
         self._seal_event("boot", report)
@@ -457,6 +462,17 @@ class MotherAssembly:
         try:
             self.metrics = MetricsCollector()
             return "ok"
+        except Exception as exc:  # noqa: BLE001
+            return f"error: {exc}"
+
+    def _boot_host_guard(self) -> str:
+        get_node_role = _try_import("MRL_host_guard", "get_node_role")
+        if get_node_role is None:
+            return "unavailable"
+        try:
+            role = get_node_role()
+            self.host_guard_role = role.value
+            return f"ok (role={role.value})"
         except Exception as exc:  # noqa: BLE001
             return f"error: {exc}"
 
@@ -812,6 +828,8 @@ class MotherAssembly:
                 "guardrail":            self.input_guard is not None,
                 # v2.1
                 "metrics":              self.metrics is not None,
+                # v2.2
+                "host_guard":           self.host_guard_role != "MATERIAL" or True,  # always present
             },
             # v2.1 enriched fields
             "llm_backend":      llm_backend,
@@ -820,6 +838,7 @@ class MotherAssembly:
             "llm_gateway_status": llm_gateway_detail,
             "guardrail_policy": guardrail_policy,
             "session_count":    session_count,
+            "node_role":        self.host_guard_role,
             "metrics_snapshot": self.metrics.snapshot() if self.metrics is not None else None,
             "checked_at_ms":    int(time.time() * 1000),
         }
