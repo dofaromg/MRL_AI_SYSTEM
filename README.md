@@ -91,7 +91,7 @@ Distilled from the three major mainstream AI systems (OpenAI / Anthropic / Googl
 | `09_workflow/llm_adapter.py` | Unified LLM provider gateway (OpenAI · Anthropic · Local · Mock) | every response is an MRL trace-compatible LLMResponse record |
 | `09_workflow/context_manager.py` | Context window management — smart truncation / summarisation | strategy choices: `truncate_oldest` · `sliding_window` · `summarise_oldest` |
 | `09_workflow/streaming.py` | Real-time token-by-token streaming output | StreamChunks are MRL trace-stamped; StreamSession emits a final result record |
-| `09_workflow/multi_agent.py` | Multi-agent coordination (AutoGen / CrewAI pattern) | AgentMessages + WorldModule trajectory compatible; sequential + round-robin modes |
+| `09_workflow/MRL_multi_agent.py` | Multi-agent coordination (AutoGen / CrewAI pattern) | AgentMessages + WorldModule trajectory compatible; sequential + round-robin modes |
 | `09_workflow/scheduler.py` | Async background task queue (priority-based) | TaskResult records are origin_signature stamped; workers are configurable |
 | `09_workflow/config_manager.py` | Centralised typed configuration (JSON + env-var override) | env prefix `MRL_`; sensitive keys auto-masked in display |
 | `09_workflow/api_gateway.py` | Production REST API gateway (HTTP) | exposes all MRL_AGI capabilities; optional Bearer-token auth |
@@ -210,8 +210,8 @@ python 09_workflow/streaming.py demo
 python 09_workflow/streaming.py replay --chunks '["Hello"," ","MRL","!"]'
 
 # Multi-agent coordination
-python 09_workflow/multi_agent.py demo
-python 09_workflow/multi_agent.py roles
+python 09_workflow/MRL_multi_agent.py demo
+python 09_workflow/MRL_multi_agent.py roles
 
 # Task scheduler
 python 09_workflow/scheduler.py demo

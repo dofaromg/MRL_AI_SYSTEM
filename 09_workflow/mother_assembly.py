@@ -675,11 +675,11 @@ class MotherAssembly:
         mode  : "sequential" | "round_robin"
         rounds: number of rounds (round_robin mode only)
         """
-        MultiAgentSession = _try_import("multi_agent", "MultiAgentSession")
-        AgentRole = _try_import("multi_agent", "AgentRole")
+        MultiAgentSession = _try_import("MRL_multi_agent", "MultiAgentSession")
+        AgentRole = _try_import("MRL_multi_agent", "AgentRole")
 
         if MultiAgentSession is None or AgentRole is None:
-            return {"error": "multi_agent module unavailable"}
+            return {"error": "MRL_multi_agent module unavailable"}
 
         sess = MultiAgentSession(goal=goal)
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-multi_agent.py — Multi-Agent Coordination Framework
+MRL_multi_agent.py — Multi-Agent Coordination Framework
 origin_signature: MrLiouWord
 layer: L7 LOOP
 group: Y=3 FlowAgentRuntime
@@ -21,7 +21,7 @@ Architecture
 
 Usage (library)
 ---------------
-    from multi_agent import MultiAgentSession, AgentRole
+    from MRL_multi_agent import MultiAgentSession, AgentRole
 
     planner = AgentRole("planner", system_prompt="Decompose the goal into sub-tasks.")
     coder   = AgentRole("coder",   system_prompt="Implement the given sub-task.")
@@ -36,8 +36,8 @@ Usage (library)
 
 CLI
 ---
-    python 09_workflow/multi_agent.py demo
-    python 09_workflow/multi_agent.py roles
+    python 09_workflow/MRL_multi_agent.py demo
+    python 09_workflow/MRL_multi_agent.py roles
 """
 
 from __future__ import annotations
@@ -408,7 +408,7 @@ def _cmd_roles(_args: argparse.Namespace) -> None:
 
 
 def _build_argparser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(description="multi_agent — multi-agent coordination")
+    p = argparse.ArgumentParser(description="MRL_multi_agent — multi-agent coordination")
     sub = p.add_subparsers(dest="cmd", required=True)
     sub.add_parser("demo", help="Run a 3-agent sequential demo")
     sub.add_parser("roles", help="List built-in agent role templates")
