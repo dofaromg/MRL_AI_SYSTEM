@@ -1,12 +1,13 @@
 """
-test_mother_assembly.py — Smoke tests for mother_assembly.py
+test_mother_assembly.py — Smoke tests for MRL_mother_assembly.py
 origin_signature: MrLiouWord
+product: MRL_AI_SYSTEM
 """
 from __future__ import annotations
 
 import pytest
 
-from mother_assembly import MotherAssembly, ASSEMBLY_VERSION, ORIGIN_SIGNATURE
+from MRL_mother_assembly import MotherAssembly, ASSEMBLY_VERSION, ORIGIN_SIGNATURE
 
 
 @pytest.fixture(scope="module")

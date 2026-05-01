@@ -51,6 +51,10 @@ CORS
   - deny-by-default feature flag (learning.enabled)
   - requires auth (api.require_auth=true) to prevent data exfiltration
 
+  Learning endpoints follow mainstream production patterns:
+  - deny-by-default feature flag (learning.enabled)
+  - requires auth (api.require_auth=true) to prevent data exfiltration
+
 Usage
 -----
     python 09_workflow/api_gateway.py serve
