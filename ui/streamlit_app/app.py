@@ -68,9 +68,6 @@ search_term = st.sidebar.text_input("🔍 Search sessions by label")
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
-def _signature_present(text: str) -> bool:
-    return ORIGIN_SIGNATURE in text
-
 
 @st.cache_resource
 def _get_conv_mgr() -> Any:
