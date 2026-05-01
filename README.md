@@ -185,6 +185,12 @@ python 09_workflow/mother_assembly.py guard --text "bad content" --policy strict
 python 09_workflow/mother_assembly.py parse --text '{"answer": 42}' --type json
 python 09_workflow/mother_assembly.py parse --text "Name: Alice\nAge: 30" --type kv
 
+# 13. Backup before update/upgrade
+python 09_workflow/mother_assembly.py backup --label before-upgrade
+
+# Guarded update entrypoint (creates backup first)
+python 09_workflow/mother_assembly.py update --label auto
+
 # ── REST API gateway ──────────────────────────────────────────────────────────
 
 # 11. Start the API server (default: http://127.0.0.1:7771)
