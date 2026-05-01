@@ -151,7 +151,7 @@ python 09_workflow/fltnz_parser.py encode --src README.md --dst /tmp/readme.fltn
 # 4. Inspect world state
 python 05_persona/world_module.py snap
 
-# ── MotherAssembly v2 (boots all 14 subsystems at once) ──────────────────────
+# ── MotherAssembly v2 (boots all 15 subsystems at once) ──────────────────────
 
 # 5. Boot and check status
 python 09_workflow/MRL_mother_assembly.py boot
