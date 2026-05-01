@@ -267,17 +267,24 @@ SpeakerFn = Callable[[List[Dict[str, Any]], List[Any]], Any]
 def _round_robin(
     history: List[Dict[str, Any]],
     agents: List[Any],
+    *,
+    include_human: bool = False,
 ) -> Any:
-    """Default speaker selector: cycle through non-human agents."""
-    non_human = [a for a in agents if not getattr(a, "is_human", False)]
-    if not non_human:
-        return agents[0]
+    """Default speaker selector: cycle through agents.
+
+    When *include_human* is False (default), HumanProxyAgents are skipped.
+    When *include_human* is True all agents — including human proxies — are
+    included in the rotation so that REQUIRE_HUMAN flows can be scheduled.
+    """
+    pool = agents if include_human else [a for a in agents if not getattr(a, "is_human", False)]
+    if not pool:
+        pool = agents  # fallback: never return nothing
     last_speaker = history[-1].get("from_agent", "") if history else ""
     idx = next(
-        (i for i, a in enumerate(non_human) if a.name == last_speaker),
+        (i for i, a in enumerate(pool) if a.name == last_speaker),
         -1,
     )
-    return non_human[(idx + 1) % len(non_human)]
+    return pool[(idx + 1) % len(pool)]
 
 
 class GroupChat:
@@ -292,7 +299,11 @@ class GroupChat:
         Hard upper bound on the total number of turns.
     speaker_fn : callable | None
         ``(history, agents) -> agent`` — custom speaker selection.
-        Default = round-robin over non-human agents.
+        Default = round-robin (respects *include_human_proxy*).
+    include_human_proxy : bool
+        When True, HumanProxyAgent instances are included in the default
+        round-robin rotation so that REQUIRE_HUMAN flows can be scheduled.
+        Has no effect when a custom *speaker_fn* is provided.
     """
 
     def __init__(
@@ -300,12 +311,18 @@ class GroupChat:
         agents: List[Any],
         max_turns: int = 10,
         speaker_fn: Optional[SpeakerFn] = None,
+        include_human_proxy: bool = False,
     ) -> None:
         if not agents:
             raise ValueError("GroupChat: agents list must not be empty")
         self.agents = agents
         self.max_turns = max_turns
-        self._speaker_fn = speaker_fn or _round_robin
+        self.include_human_proxy = include_human_proxy
+        if speaker_fn is not None:
+            self._speaker_fn = speaker_fn
+        else:
+            _include = include_human_proxy
+            self._speaker_fn = lambda h, a: _round_robin(h, a, include_human=_include)
         self._messages: List[Dict[str, Any]] = []
         self._turn = 0
         self._agent_map: Dict[str, Any] = {a.name: a for a in agents}

@@ -270,9 +270,8 @@ elif panel == "📜 Sessions":
         sid = sess["session_id"]
         label = sess.get("label") or sid[:8]
         turns = sess.get("turn_count", 0)
-        sig_ok = _signature_present(label + sid)
 
-        with st.expander(f"**{label}** — {turns} turns  {'✅' if sig_ok else ''}"):
+        with st.expander(f"**{label}** — {turns} turns"):
             c1, c2 = st.columns([3, 1])
             c1.caption(f"ID: `{sid}`")
 
@@ -295,11 +294,12 @@ elif panel == "📜 Sessions":
                     content = msg.get("content", "")
                     if role == "system":
                         continue
-                    st.markdown(f"**{role.capitalize()}**: {content[:200]}")
+                    # Show ✅ only when the message carries the real origin_signature
+                    sig_badge = " ✅" if msg.get("origin_signature") == ORIGIN_SIGNATURE else ""
+                    st.markdown(f"**{role.capitalize()}**{sig_badge}: {content[:200]}")
             except KeyError:
                 st.warning("Session data unavailable.")
 
     # Sidebar info
     st.sidebar.divider()
     st.sidebar.caption(f"Showing {len(sessions)} sessions")
-    st.sidebar.write("Signature present:", _signature_present(ORIGIN_SIGNATURE))

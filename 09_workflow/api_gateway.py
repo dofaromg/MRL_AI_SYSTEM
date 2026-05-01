@@ -863,10 +863,12 @@ class _Handler(BaseHTTPRequestHandler):
 
         Request body:
           message    : str  (required)
-          session_id : str  (optional)
           model      : str  (optional)
           system     : str  (optional)
           max_tokens : int  (optional, default 1024)
+
+        Note: this endpoint does not support session continuity.  Use
+        POST /chat for persisted, session-aware conversations.
 
         Response: text/event-stream
           data: {"chunk": "<token_text>"}\n\n
