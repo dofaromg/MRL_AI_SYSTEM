@@ -111,9 +111,10 @@ class TestPersistence:
         store = tmp_path / "conv.json"
         mgr = ConversationManager(store_path=store)
         mgr.new_session()
-        mode = stat.S_IMODE(os.stat(store).st_mode)
-        # File should be restricted to owner read/write only (0o600)
-        assert mode == 0o600
+        if os.name == "posix":
+            mode = stat.S_IMODE(os.stat(store).st_mode)
+            # File should be restricted to owner read/write only (0o600)
+            assert mode == 0o600
 
 
 # ─── export_markdown ─────────────────────────────────────────────────────────

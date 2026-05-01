@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-multi_agent.py — Multi-Agent Orchestrator (AutoGen-style Group Chat)
-multi_agent.py — Multi-Agent Coordination Framework
+multi_agent.py — Multi-Agent Orchestrator & Coordination Framework
 origin_signature: MrLiouWord
 layer: L7 LOOP
 group: Y=3 FlowAgentRuntime
@@ -99,7 +98,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import sys
 import time
 import uuid
 from dataclasses import dataclass, field

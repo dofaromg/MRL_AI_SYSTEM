@@ -100,7 +100,7 @@ Distilled from the three major mainstream AI systems (OpenAI / Anthropic / Googl
 
 | Module | Purpose |
 |--------|---------|
-| `09_workflow/mother_assembly.py` | **Unified system entry point** — boots and wires all **13 subsystems** together. Includes chat, multi-agent, scheduler, LLM gateway, context management, configuration, and guardrail. |
+| `09_workflow/mother_assembly.py` | **Unified system entry point** — boots and wires all **14 subsystems** together. Includes chat, multi-agent, scheduler, LLM gateway, context management, configuration, guardrail, and metrics. |
 | `09_workflow/plugins/` | Plugin directory — drop `*.py` files here following the plugin contract |
 
 ### Safety & parsing modules (v1.1 — 本地安全層)
@@ -151,7 +151,7 @@ python 09_workflow/fltnz_parser.py encode --src README.md --dst /tmp/readme.fltn
 # 4. Inspect world state
 python 05_persona/world_module.py snap
 
-# ── MotherAssembly v2 (boots all 13 subsystems at once) ──────────────────────
+# ── MotherAssembly v2 (boots all 14 subsystems at once) ──────────────────────
 
 # 5. Boot and check status
 python 09_workflow/mother_assembly.py boot

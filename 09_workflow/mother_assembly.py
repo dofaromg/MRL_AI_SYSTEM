@@ -759,14 +759,14 @@ class MotherAssembly:
         metrics_snapshot : Point-in-time telemetry snapshot or None.
         """
         # Gather LLM details from the adapter gateway
-        llm_status: Any = False
+        llm_gateway_alive: bool = self.llm_gateway is not None
+        llm_gateway_detail: Any = None
         llm_backend: Optional[str] = None
         llm_model: Optional[str] = None
         llm_is_stub: bool = True
         if self.llm_gateway is not None:
-            llm_status = True
             if hasattr(self.llm_gateway, "status"):
-                llm_status = self.llm_gateway.status()
+                llm_gateway_detail = self.llm_gateway.status()
             # llm_adapter.LLMGateway uses adapters; llm_gateway.LLMGateway exposes backend
             if hasattr(self.llm_gateway, "backend"):
                 llm_backend = self.llm_gateway.backend
@@ -805,7 +805,7 @@ class MotherAssembly:
                 # v2.0
                 "config_manager":       self.config is not None,
                 "conversation_manager": self.conversation_manager is not None,
-                "llm_gateway":          llm_status,
+                "llm_gateway":          llm_gateway_alive,
                 "context_manager":      self.context_manager is not None,
                 "scheduler":            self.scheduler is not None,
                 # v1.1
@@ -817,6 +817,7 @@ class MotherAssembly:
             "llm_backend":      llm_backend,
             "llm_model":        llm_model,
             "llm_is_stub":      llm_is_stub,
+            "llm_gateway_status": llm_gateway_detail,
             "guardrail_policy": guardrail_policy,
             "session_count":    session_count,
             "metrics_snapshot": self.metrics.snapshot() if self.metrics is not None else None,
@@ -857,7 +858,7 @@ class MotherAssembly:
             "InputGuardrail" if direction == "input" else "OutputGuardrail",
         )
         if GuardCls is None:
-            return {"error": "guardrail unavailable", "origin_signature": ORIGIN_SIGNATURE}
+            return {"ok": False, "error": "guardrail unavailable", "origin_signature": ORIGIN_SIGNATURE}
         guard = GuardCls(policy)
         ok, violations = guard.check(text)
         return {
@@ -886,10 +887,12 @@ class MotherAssembly:
         if parser_type == "auto":
             ParserChain = _try_import("output_parser", "ParserChain")
             if ParserChain is None:
-                return {"error": "output_parser unavailable", "origin_signature": ORIGIN_SIGNATURE}
+                return {"ok": False, "error": "output_parser unavailable", "origin_signature": ORIGIN_SIGNATURE}
             jp = _try_import("output_parser", "JSONParser")
             kp = _try_import("output_parser", "KeyValueParser")
             lp = _try_import("output_parser", "ListParser")
+            if jp is None or kp is None or lp is None:
+                return {"ok": False, "error": "output_parser components unavailable", "origin_signature": ORIGIN_SIGNATURE}
             chain = ParserChain([jp(), kp(), lp()])
             return chain.parse(text)
 
@@ -1026,6 +1029,9 @@ def _cmd_guard(args: argparse.Namespace) -> None:
     ma = MotherAssembly()
     ma.boot()
     result = ma.guard_check(args.text, direction=args.direction, policy=args.policy)
+    if "direction" not in result:
+        print(f"❌ ERROR: {result.get('error', 'unknown error')}")
+        return
     status = "✅ PASS" if result["ok"] else "❌ BLOCK"
     print(f"{status}  direction={result['direction']}  policy={result['policy']}")
     for v in result.get("violations", []):
@@ -1036,6 +1042,9 @@ def _cmd_parse(args: argparse.Namespace) -> None:
     ma = MotherAssembly()
     ma.boot()
     result = ma.parse_output(args.text, parser_type=args.type)
+    if "parser" not in result:
+        print(f"❌ ERROR: {result.get('error', 'unknown error')}")
+        return
     status = "✅ OK" if result["ok"] else "❌ FAIL"
     print(f"{status}  parser={result['parser']}")
     if result["ok"]:
