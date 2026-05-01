@@ -3,6 +3,7 @@
 """MRL_host_guard.py — DL580 canonical host enforcement
 
 origin_signature: MrLiouWord
+product: MRL_AI_SYSTEM
 layer: L3 LAW
 group: Y=1 MotherCore
 
@@ -49,6 +50,7 @@ from enum import Enum
 from typing import Iterable, List, Optional, Tuple
 
 ORIGIN_SIGNATURE = "MrLiouWord"
+PRODUCT_NAME = "MRL_AI_SYSTEM"
 HOST_GUARD_VERSION = "1.0"
 
 
@@ -223,6 +225,7 @@ def node_role_detail(cfg: HostGuardConfig = DEFAULT_DL580_CONFIG) -> dict:
         "ips": _get_ip_candidates(),
         "fingerprint_file": cfg.fingerprint_file,
         "origin_signature": ORIGIN_SIGNATURE,
+        "product_name": PRODUCT_NAME,
         "checked_at_ms": int(time.time() * 1000),
     }
 

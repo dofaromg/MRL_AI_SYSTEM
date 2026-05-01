@@ -3,6 +3,7 @@
 """MRL_learning_ingest.py — Learning ingest pipeline (local/web/git)
 
 origin_signature: MrLiouWord
+product: MRL_AI_SYSTEM
 layer: L6 REFLECT
 group: Y=5 FileIndexGovernance
 
@@ -29,6 +30,7 @@ import uuid
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 ORIGIN_SIGNATURE = "MrLiouWord"
+PRODUCT_NAME = "MRL_AI_SYSTEM"
 
 _REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 _DATA_ROOT = _REPO_ROOT / "data" / "learning"
@@ -181,6 +183,7 @@ def _seal_manifest_summary(source_id: str, manifest: Dict[str, Any]) -> Dict[str
         "manifest_sha256": _sha256_text(json.dumps(manifest, ensure_ascii=False, sort_keys=True)),
         "created_at": manifest.get("created_at"),
         "origin_signature": ORIGIN_SIGNATURE,
+        "product_name": PRODUCT_NAME,
     }
     entry = chain.commit(
         summary,
@@ -234,12 +237,14 @@ def ingest_text(
             "label": label,
             "created_at": created_at,
             "origin_signature": ORIGIN_SIGNATURE,
+            "product_name": PRODUCT_NAME,
         }
         vs.add(doc_id, _embed_text_simple(ch), meta)
         vector_ids.append(doc_id)
 
     manifest: Dict[str, Any] = {
         "origin_signature": ORIGIN_SIGNATURE,
+        "product_name": PRODUCT_NAME,
         "created_at": created_at,
         "source": {"type": source_type, "ref": source_ref, "id": source_id, "label": label},
         "content": {"sha256": _sha256_text(text), "chars": len(text)},

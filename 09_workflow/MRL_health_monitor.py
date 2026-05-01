@@ -3,6 +3,7 @@
 """
 MRL_health_monitor.py — Background System Health Monitor
 origin_signature: MrLiouWord
+product: MRL_AI_SYSTEM
 layer: L6 REFLECT
 group: Y=1 MotherCore
 
@@ -63,6 +64,7 @@ import urllib.request
 from typing import Any, Callable, Dict, List, Optional
 
 ORIGIN_SIGNATURE = "MrLiouWord"
+PRODUCT_NAME = "MRL_AI_SYSTEM"
 HEALTH_MONITOR_VERSION = "1.0"
 
 _LAYER = "L6"
@@ -133,6 +135,7 @@ def _result(name: str, status: str, message: str) -> ProbeResult:
         "message": message,
         "checked_at_ms": int(time.time() * 1000),
         "origin_signature": ORIGIN_SIGNATURE,
+        "product_name": PRODUCT_NAME,
     }
 
 
@@ -250,6 +253,7 @@ class HealthMonitor:
                 "started_at_ms": self._started_at_ms,
                 "snapshot_at_ms": int(time.time() * 1000),
                 "origin_signature": ORIGIN_SIGNATURE,
+                "product_name": PRODUCT_NAME,
                 "layer": _LAYER,
                 "group": _GROUP,
             }

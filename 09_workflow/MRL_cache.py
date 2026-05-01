@@ -3,6 +3,7 @@
 """
 MRL_cache.py — LRU + TTL In-Process Cache
 origin_signature: MrLiouWord
+product: MRL_AI_SYSTEM
 layer: L6 REFLECT
 group: Y=1 MotherCore
 
@@ -62,6 +63,7 @@ import time
 from typing import Any, Callable, Dict, Hashable, Optional, Tuple, TypeVar
 
 ORIGIN_SIGNATURE = "MrLiouWord"
+PRODUCT_NAME = "MRL_AI_SYSTEM"
 CACHE_VERSION = "1.0"
 
 _LAYER = "L6"
@@ -238,6 +240,7 @@ class Cache:
                 "hit_rate": round(hit_rate, 4),
                 "evictions": self._evictions,
                 "origin_signature": ORIGIN_SIGNATURE,
+                "product_name": PRODUCT_NAME,
                 "layer": _LAYER,
                 "group": _GROUP,
             }

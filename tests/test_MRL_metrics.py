@@ -1,6 +1,7 @@
 """
 test_MRL_metrics.py — Smoke tests for MRL_metrics.py
 origin_signature: MrLiouWord
+product: MRL_AI_SYSTEM
 """
 from __future__ import annotations
 
@@ -57,6 +58,7 @@ class TestMetricsCollector:
     def test_snapshot_contains_origin_signature(self):
         snap = self.mc.snapshot()
         assert snap["origin_signature"] == "MrLiouWord"
+        assert snap["product_name"] == "MRL_AI_SYSTEM"
 
     def test_snapshot_has_timestamps(self):
         snap = self.mc.snapshot()

@@ -3,6 +3,7 @@
 """
 flowcore_loop.py - AI Computer Runtime (FlowAgent-compatible)
 origin_signature: MrLiouWord
+product: MRL_AI_SYSTEM
 module_name: FlowCoreLoop
 fusion_state: ai_computer_runtime_v0.1
 intent: "Provide an AI-usable local computer interface: filesystem vault + trace + minimal HTTP API + CLI."
@@ -87,6 +88,7 @@ def fsd_entry(title: str):
 
 VERSION = "0.2.0"
 ORIGIN_SIGNATURE = "MrLiouWord"
+PRODUCT_NAME = "MRL_AI_SYSTEM"
 
 # -------------------------
 # Steering (global strategy wheel)
@@ -307,6 +309,7 @@ class Tracer:
             "ts": now_iso(),
             "persona_id": self.persona_id,
             "origin_signature": ORIGIN_SIGNATURE,
+            "product_name": PRODUCT_NAME,
             "event_type": event_type,
             "payload": payload,
         }
@@ -790,6 +793,7 @@ def cmd_index(vault: Vault, tracer: Tracer, out_path: str, max_files: int):
     with open(out_full, "w", encoding="utf-8") as f:
         json.dump({
             "origin_signature": ORIGIN_SIGNATURE,
+            "product_name": PRODUCT_NAME,
             "module_name": "ArtifactIndex",
             "created_at": now_iso(),
             "vault_root": vault.root_dir,

@@ -3,6 +3,7 @@
 """MRL_self_optimize.py — Self optimisation and growth (config-level)
 
 origin_signature: MrLiouWord
+product: MRL_AI_SYSTEM
 layer: L6 REFLECT
 group: Y=1 MotherCore
 
@@ -30,6 +31,7 @@ import time
 from typing import Any, Dict, Tuple
 
 ORIGIN_SIGNATURE = "MrLiouWord"
+PRODUCT_NAME = "MRL_AI_SYSTEM"
 
 _REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 
@@ -120,6 +122,7 @@ def _seal_change(env: Dict[str, Any], changes: Dict[str, Any]) -> Dict[str, Any]
         "env": env,
         "changes": changes,
         "origin_signature": ORIGIN_SIGNATURE,
+        "product_name": PRODUCT_NAME,
         "ts_ms": int(time.time() * 1000),
     }
     entry = chain.commit(payload, tags=["self_optimize"], layer="L6", meta={"origin_signature": ORIGIN_SIGNATURE})

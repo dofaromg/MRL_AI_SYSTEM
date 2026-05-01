@@ -3,6 +3,7 @@
 """
 MRL_event_bus.py — Lightweight Pub/Sub Event Bus
 origin_signature: MrLiouWord
+product: MRL_AI_SYSTEM
 layer: L6 REFLECT
 group: Y=1 MotherCore
 
@@ -67,6 +68,7 @@ import uuid
 from typing import Any, Callable, Dict, List, Optional
 
 ORIGIN_SIGNATURE = "MrLiouWord"
+PRODUCT_NAME = "MRL_AI_SYSTEM"
 EVENT_BUS_VERSION = "1.0"
 
 _LAYER = "L6"
@@ -174,6 +176,7 @@ class EventBus:
             "payload": payload or {},
             "emitted_at_ms": int(time.time() * 1000),
             "origin_signature": ORIGIN_SIGNATURE,
+            "product_name": PRODUCT_NAME,
             "layer": _LAYER,
             "group": _GROUP,
         }
@@ -225,6 +228,7 @@ class EventBus:
                 "max_history": self._max_history,
                 "async_dispatch": self._async,
                 "origin_signature": ORIGIN_SIGNATURE,
+                "product_name": PRODUCT_NAME,
                 "layer": _LAYER,
                 "group": _GROUP,
             }

@@ -3,6 +3,7 @@
 """
 MRL_metrics.py — In-Memory Telemetry Collector
 origin_signature: MrLiouWord
+product: MRL_AI_SYSTEM
 layer: L6 REFLECT
 group: Y=1 MotherCore
 
@@ -49,6 +50,7 @@ import time
 from typing import Any, Dict, List, Optional
 
 ORIGIN_SIGNATURE = "MrLiouWord"
+PRODUCT_NAME = "MRL_AI_SYSTEM"
 METRICS_VERSION = "1.0"
 
 
@@ -139,6 +141,7 @@ class MetricsCollector:
         with self._lock:
             return {
                 "origin_signature": ORIGIN_SIGNATURE,
+                "product_name": PRODUCT_NAME,
                 "metrics_version": METRICS_VERSION,
                 "created_at_ms": self._created_at_ms,
                 "snapshot_at_ms": int(time.time() * 1000),

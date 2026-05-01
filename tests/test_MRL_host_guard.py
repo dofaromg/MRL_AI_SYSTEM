@@ -1,6 +1,7 @@
 """
 test_MRL_host_guard.py — Unit tests for MRL_host_guard.py
 origin_signature: MrLiouWord
+product: MRL_AI_SYSTEM
 """
 from __future__ import annotations
 
@@ -220,12 +221,13 @@ class TestNodeRoleDetail:
         )
         d = node_role_detail(cfg)
         for key in ("role", "verified", "reason", "hostnames", "ips",
-                    "origin_signature", "checked_at_ms"):
+                    "origin_signature", "product_name", "checked_at_ms"):
             assert key in d, f"missing key: {key}"
 
     def test_origin_signature(self):
         d = node_role_detail()
         assert d["origin_signature"] == "MrLiouWord"
+        assert d["product_name"] == "MRL_AI_SYSTEM"
 
     def test_material_role_when_not_dl580(self):
         cfg = HostGuardConfig(

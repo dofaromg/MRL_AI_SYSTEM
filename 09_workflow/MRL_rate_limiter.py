@@ -3,6 +3,7 @@
 """
 MRL_rate_limiter.py — Sliding-Window API Rate Limiter
 origin_signature: MrLiouWord
+product: MRL_AI_SYSTEM
 layer: L3 LAW
 group: Y=1 MotherCore
 
@@ -54,6 +55,7 @@ import time
 from typing import Any, Deque, Dict, Optional, Tuple
 
 ORIGIN_SIGNATURE = "MrLiouWord"
+PRODUCT_NAME = "MRL_AI_SYSTEM"
 RATE_LIMITER_VERSION = "1.0"
 
 # TXYZ metadata
@@ -159,6 +161,7 @@ class RateLimiter:
                 "total_throttled": self._total_throttled,
                 "enabled": self.limit > 0,
                 "origin_signature": ORIGIN_SIGNATURE,
+                "product_name": PRODUCT_NAME,
                 "layer": _LAYER,
                 "group": _GROUP,
             }
@@ -181,6 +184,7 @@ class RateLimiter:
             "retry_after_s": retry_after,
             "checked_at_ms": int(time.time() * 1000),
             "origin_signature": ORIGIN_SIGNATURE,
+            "product_name": PRODUCT_NAME,
         }
 
 

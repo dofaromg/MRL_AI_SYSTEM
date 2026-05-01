@@ -3,6 +3,7 @@
 """
 mother_assembly.py — MotherAssembly: Unified System Entry Point
 origin_signature: MrLiouWord
+product: MRL_AI_SYSTEM
 layer: L7 LOOP
 group: Y=1 MotherCore
 
@@ -91,6 +92,7 @@ import time
 from typing import Any, Dict, List, Optional
 
 ORIGIN_SIGNATURE = "MrLiouWord"
+PRODUCT_NAME = "MRL_AI_SYSTEM"
 ASSEMBLY_VERSION = "2.0"
 
 _REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -123,6 +125,7 @@ def _create_backup(backup_root: pathlib.Path, label: str = "auto") -> pathlib.Pa
         json.dumps(
             {
                 "origin_signature": ORIGIN_SIGNATURE,
+                "product_name": PRODUCT_NAME,
                 "created_at": ts,
                 "label": label,
                 "repo_root": str(_REPO_ROOT),
@@ -249,6 +252,7 @@ class MotherAssembly:
         report: Dict[str, Any] = {
             "assembly_version": ASSEMBLY_VERSION,
             "origin_signature": ORIGIN_SIGNATURE,
+            "product_name": PRODUCT_NAME,
             "booted_at_ms": int(time.time() * 1000),
             "subsystems": {},
         }
@@ -698,6 +702,7 @@ class MotherAssembly:
             "reply": reply_text,
             "model": resolved_model,
             "origin_signature": ORIGIN_SIGNATURE,
+            "product_name": PRODUCT_NAME,
         }
 
     def submit_task(
@@ -759,6 +764,7 @@ class MotherAssembly:
             "results": results,
             "summary": sess.summary(),
             "origin_signature": ORIGIN_SIGNATURE,
+            "product_name": PRODUCT_NAME,
         }
 
     def status(self) -> Dict[str, Any]:
@@ -809,6 +815,7 @@ class MotherAssembly:
         return {
             "assembly_version": ASSEMBLY_VERSION,
             "origin_signature": ORIGIN_SIGNATURE,
+            "product_name": PRODUCT_NAME,
             "booted": self._booted,
             "subsystems": {
                 "merkle_chain":         self.chain is not None,
@@ -877,7 +884,7 @@ class MotherAssembly:
             "InputGuardrail" if direction == "input" else "OutputGuardrail",
         )
         if GuardCls is None:
-            return {"ok": False, "error": "guardrail unavailable", "origin_signature": ORIGIN_SIGNATURE}
+            return {"ok": False, "error": "guardrail unavailable", "origin_signature": ORIGIN_SIGNATURE, "product_name": PRODUCT_NAME}
         guard = GuardCls(policy)
         ok, violations = guard.check(text)
         return {
@@ -886,6 +893,7 @@ class MotherAssembly:
             "policy":           policy,
             "violations":       violations,
             "origin_signature": ORIGIN_SIGNATURE,
+            "product_name": PRODUCT_NAME,
         }
 
     def parse_output(self, text: str, parser_type: str = "auto") -> Dict[str, Any]:
@@ -906,19 +914,19 @@ class MotherAssembly:
         if parser_type == "auto":
             ParserChain = _try_import("output_parser", "ParserChain")
             if ParserChain is None:
-                return {"ok": False, "error": "output_parser unavailable", "origin_signature": ORIGIN_SIGNATURE}
+                return {"ok": False, "error": "output_parser unavailable", "origin_signature": ORIGIN_SIGNATURE, "product_name": PRODUCT_NAME}
             jp = _try_import("output_parser", "JSONParser")
             kp = _try_import("output_parser", "KeyValueParser")
             lp = _try_import("output_parser", "ListParser")
             if jp is None or kp is None or lp is None:
-                return {"ok": False, "error": "output_parser components unavailable", "origin_signature": ORIGIN_SIGNATURE}
+                return {"ok": False, "error": "output_parser components unavailable", "origin_signature": ORIGIN_SIGNATURE, "product_name": PRODUCT_NAME}
             chain = ParserChain([jp(), kp(), lp()])
             return chain.parse(text)
 
         mod, cls_name = parsers_map.get(parser_type, ("output_parser", "JSONParser"))
         ParserCls = _try_import(mod, cls_name)
         if ParserCls is None:
-            return {"error": f"Parser '{parser_type}' unavailable", "origin_signature": ORIGIN_SIGNATURE}
+            return {"error": f"Parser '{parser_type}' unavailable", "origin_signature": ORIGIN_SIGNATURE, "product_name": PRODUCT_NAME}
         return ParserCls().parse(text)
 
     def multi_agent_run(
@@ -941,7 +949,7 @@ class MotherAssembly:
         GroupChatManagerCls = _try_import("multi_agent", "GroupChatManager")
 
         if AgentCls is None:
-            return {"error": "multi_agent module unavailable", "origin_signature": ORIGIN_SIGNATURE}
+            return {"error": "multi_agent module unavailable", "origin_signature": ORIGIN_SIGNATURE, "product_name": PRODUCT_NAME}
 
         names = agent_names or ["Planner", "Executor"]
         agents: List[Any] = [
@@ -974,6 +982,7 @@ class MotherAssembly:
                     "event_type": event_type,
                     "detail": detail,
                     "origin_signature": ORIGIN_SIGNATURE,
+                    "product_name": PRODUCT_NAME,
                     "ts_ms": int(time.time() * 1000),
                 },
                 layer="L7",
