@@ -328,10 +328,23 @@ class _Handler(BaseHTTPRequestHandler):
         LLMRequest = _try_import("llm_adapter", "LLMRequest")
         ConvMgr = _try_import("conversation_manager", "ConversationManager")
         CtxMgr = _try_import("context_manager", "ContextManager")
+        RuntimeConfig = _try_import("MRL_runtime_config", "RuntimeConfig")
 
         model = body.get("model") or (
             _STATE.cfg.get("llm.default_model", "mock") if _STATE.cfg else "mock"
         )
+
+        # ── Runtime validation: prohibit MockAdapter in production ───────────────
+        if RuntimeConfig:
+            runtime_cfg = RuntimeConfig()
+            try:
+                runtime_cfg.validate_model(model)
+            except RuntimeError as exc:
+                _json_response(self, 403, {
+                    "error": f"Runtime error: {exc}",
+                    "runtime_mode": runtime_cfg.mode.value,
+                }, rid)
+                return
 
         # Build or retrieve session
         session_id = body.get("session_id")
@@ -362,7 +375,10 @@ class _Handler(BaseHTTPRequestHandler):
             history, _ = cm.fit(history)
 
         # LLM call
-        reply_text = f"[MockAdapter] Echo: {message}"
+        reply_text = ""
+        adapter_name = "unknown"
+        runtime_origin = "unknown"
+
         if LLMGateway and LLMRequest:
             gw = LLMGateway()
             req = LLMRequest(
@@ -371,18 +387,37 @@ class _Handler(BaseHTTPRequestHandler):
                 max_tokens=int(body.get("max_tokens", 1024)),
                 temperature=float(body.get("temperature", 0.7)),
             )
-            resp = gw.complete(req)
-            reply_text = resp.text if resp.ok else f"[LLM Error] {resp.error}"
+            try:
+                resp = gw.complete(req)
+                reply_text = resp.text if resp.ok else f"[LLM Error] {resp.error}"
+                adapter_name = gw.adapter_for(model).name()
+            except Exception as exc:  # noqa: BLE001
+                reply_text = f"[Gateway Error] {type(exc).__name__}: {exc}"
+                adapter_name = "error"
+        else:
+            # Fallback only if LLMGateway unavailable (should not happen in production)
+            reply_text = "[ERROR] LLMGateway unavailable"
 
         # Record assistant reply
         if ConvMgr and session_id:
             mgr.add_message(session_id, "assistant", reply_text)
 
-        _json_response(self, 200, {
+        # Build response with runtime metadata
+        response = {
             "session_id": session_id,
             "reply": reply_text,
             "model": model,
-        }, rid)
+            "trace_id": rid,
+            "engine": adapter_name,
+        }
+
+        # Enrich with runtime metadata
+        if RuntimeConfig:
+            runtime_cfg = RuntimeConfig()
+            response["runtime_mode"] = runtime_cfg.mode.value
+            response["runtime_origin"] = runtime_cfg._get_runtime_origin(adapter_name)
+
+        _json_response(self, 200, response, rid)
 
     def _post_sessions(self, body: Dict[str, Any], rid: str) -> None:
         ConvMgr = _try_import("conversation_manager", "ConversationManager")
