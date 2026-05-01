@@ -137,6 +137,8 @@ def _with_retry(fn: Callable[..., _T], *args: Any, max_retries: int = 3, **kwarg
     max_retries : Total number of attempts (default 3).
     **kwargs    : Keyword arguments forwarded to *fn*.
     """
+    if max_retries < 1:
+        raise ValueError("_with_retry: max_retries must be >= 1")
     last_exc: Optional[Exception] = None
     for attempt in range(max_retries):
         try:

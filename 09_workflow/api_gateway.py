@@ -16,6 +16,7 @@ Endpoints
 ---------
   GET  /health                       — health check + subsystem status
   POST /chat                         — single-turn or multi-turn chat completion
+  POST /chat/stream                  — SSE streaming chat completion
   GET  /sessions                     — list conversation sessions
   POST /sessions                     — create a new session
   GET  /sessions/{id}                — get session history
@@ -30,11 +31,21 @@ Endpoints
   POST /templates/{id}/render        — render a template
   GET  /config                       — get full config (secrets masked)
   POST /config                       — set a config key
+  GET  /metrics                      — MRL_metrics telemetry snapshot
+  POST /guard                        — run guardrail check on text
+  POST /export/{sid}                 — export session as Markdown
 
 Security
 --------
   If ``require_auth`` is True in config, all requests must include:
     Authorization: Bearer <auth_token>
+  Rate limiting:
+    Configure api.rate_limit_per_minute (0 = disabled) in config.
+
+CORS
+----
+  All responses include Access-Control-* headers.
+  Allowed origins configured via api.cors_origins (default ["*"]).
 
 Usage
 -----
@@ -51,7 +62,7 @@ import sys
 import time
 import uuid
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urlparse
 
 ORIGIN_SIGNATURE = "MrLiouWord"
@@ -130,6 +141,81 @@ class _GatewayState:
 _STATE = _GatewayState()
 
 
+# ─── CORS helpers ─────────────────────────────────────────────────────────────
+
+def _cors_origins() -> List[str]:
+    """Return the list of allowed CORS origins from config."""
+    if _STATE.cfg:
+        val = _STATE.cfg.get("api.cors_origins", ["*"])
+        if isinstance(val, list):
+            return val
+        return [str(val)]
+    return ["*"]
+
+
+def _add_cors_headers(handler: "BaseHTTPRequestHandler") -> None:
+    """Add Access-Control-* headers to the response."""
+    origins = _cors_origins()
+    origin = handler.headers.get("Origin", "")
+    if "*" in origins:
+        handler.send_header("Access-Control-Allow-Origin", "*")
+    elif origin in origins:
+        handler.send_header("Access-Control-Allow-Origin", origin)
+    handler.send_header(
+        "Access-Control-Allow-Methods",
+        "GET, POST, DELETE, OPTIONS",
+    )
+    handler.send_header(
+        "Access-Control-Allow-Headers",
+        "Content-Type, Authorization, X-Request-Id",
+    )
+    handler.send_header("Access-Control-Max-Age", "86400")
+
+
+# ─── Rate-limit helper ────────────────────────────────────────────────────────
+
+def _get_client_key(handler: "BaseHTTPRequestHandler") -> str:
+    """Derive a client key for rate limiting (IP or auth token)."""
+    by = "ip"
+    if _STATE.cfg:
+        by = str(_STATE.cfg.get("api.rate_limit_by", "ip"))
+    if by == "token":
+        auth = handler.headers.get("Authorization", "")
+        if auth.startswith("Bearer "):
+            return auth[7:]
+    # Fallback to IP
+    return handler.client_address[0]
+
+
+def _check_rate_limit(handler: "BaseHTTPRequestHandler", request_id: str) -> bool:
+    """Return True if the request is allowed; send 429 and return False if throttled."""
+    RateLimiter = _try_import("MRL_rate_limiter", "get_limiter")
+    if RateLimiter is None:
+        return True
+    limiter = RateLimiter()
+    key = _get_client_key(handler)
+    allowed, info = limiter.check(key)
+    if not allowed:
+        retry_after = info.get("retry_after_s") or 60
+        body: Dict[str, Any] = {
+            "error": "Too Many Requests",
+            "retry_after_s": retry_after,
+            "limit": info.get("limit"),
+            "window_seconds": info.get("window_seconds"),
+        }
+        encoded = json.dumps(body, ensure_ascii=False, default=str).encode("utf-8")
+        handler.send_response(429)
+        handler.send_header("Content-Type", "application/json; charset=utf-8")
+        handler.send_header("Content-Length", str(len(encoded)))
+        handler.send_header("Retry-After", str(int(retry_after) + 1))
+        handler.send_header("X-Request-Id", request_id)
+        _add_cors_headers(handler)
+        handler.end_headers()
+        handler.wfile.write(encoded)
+        return False
+    return True
+
+
 # ─── JSON helpers ─────────────────────────────────────────────────────────────
 
 def _json_response(
@@ -146,6 +232,7 @@ def _json_response(
     handler.send_header("Content-Type", "application/json; charset=utf-8")
     handler.send_header("Content-Length", str(len(encoded)))
     handler.send_header("X-Request-Id", request_id)
+    _add_cors_headers(handler)
     handler.end_headers()
     handler.wfile.write(encoded)
 
@@ -180,6 +267,16 @@ class _Handler(BaseHTTPRequestHandler):
     def _request_id(self) -> str:
         return str(uuid.uuid4())
 
+    # ── CORS preflight ────────────────────────────────────────────────────────
+
+    def do_OPTIONS(self) -> None:
+        rid = self._request_id()
+        self.send_response(204)
+        _add_cors_headers(self)
+        self.send_header("Content-Length", "0")
+        self.send_header("X-Request-Id", rid)
+        self.end_headers()
+
     # ── Auth gate ─────────────────────────────────────────────────────────────
 
     def _require_auth(self, request_id: str) -> bool:
@@ -194,6 +291,8 @@ class _Handler(BaseHTTPRequestHandler):
         rid = self._request_id()
         if not self._require_auth(rid):
             return
+        if not _check_rate_limit(self, rid):
+            return
         path = urlparse(self.path).path.rstrip("/")
         routes: Dict[str, Any] = {
             "/health":     self._get_health,
@@ -201,6 +300,7 @@ class _Handler(BaseHTTPRequestHandler):
             "/tools":      self._get_tools,
             "/templates":  self._get_templates,
             "/config":     self._get_config,
+            "/metrics":    self._get_metrics,
         }
         # Dynamic route: /sessions/{id}
         if path.startswith("/sessions/"):
@@ -216,6 +316,8 @@ class _Handler(BaseHTTPRequestHandler):
         rid = self._request_id()
         if not self._require_auth(rid):
             return
+        if not _check_rate_limit(self, rid):
+            return
         path = urlparse(self.path).path.rstrip("/")
         body, err = _read_json_body(self)
         if err:
@@ -224,12 +326,14 @@ class _Handler(BaseHTTPRequestHandler):
 
         routes: Dict[str, Any] = {
             "/chat":       lambda: self._post_chat(body, rid),
+            "/chat/stream": lambda: self._post_chat_stream(body, rid),
             "/sessions":   lambda: self._post_sessions(body, rid),
             "/agent/run":  lambda: self._post_agent_run(body, rid),
             "/eval":       lambda: self._post_eval(body, rid),
             "/seal":       lambda: self._post_seal(body, rid),
             "/templates":  lambda: self._post_templates(body, rid),
             "/config":     lambda: self._post_config(body, rid),
+            "/guard":      lambda: self._post_guard(body, rid),
         }
         # Dynamic: /templates/{id}/render
         if path.startswith("/templates/") and path.endswith("/render"):
@@ -241,6 +345,11 @@ class _Handler(BaseHTTPRequestHandler):
             tname = path.split("/tools/")[1]
             self._post_tool_call(tname, body, rid)
             return
+        # Dynamic: /export/{sid}
+        if path.startswith("/export/"):
+            sid = path.split("/export/")[1]
+            self._post_export(sid, rid)
+            return
 
         fn = routes.get(path)
         if fn:
@@ -251,6 +360,8 @@ class _Handler(BaseHTTPRequestHandler):
     def do_DELETE(self) -> None:
         rid = self._request_id()
         if not self._require_auth(rid):
+            return
+        if not _check_rate_limit(self, rid):
             return
         path = urlparse(self.path).path.rstrip("/")
         if path.startswith("/sessions/"):
@@ -306,6 +417,14 @@ class _Handler(BaseHTTPRequestHandler):
             _json_response(self, 200, {"config": _STATE.cfg.dump(mask_secrets=True)}, rid)
         else:
             _json_response(self, 503, {"error": "ConfigManager unavailable"}, rid)
+
+    def _get_metrics(self, rid: str) -> None:
+        """Return the current MRL_metrics snapshot."""
+        metrics_snapshot = _try_import("MRL_metrics", "snapshot")
+        if metrics_snapshot:
+            _json_response(self, 200, {"metrics": metrics_snapshot()}, rid)
+        else:
+            _json_response(self, 503, {"error": "MRL_metrics unavailable"}, rid)
 
     # ── POST handlers ─────────────────────────────────────────────────────────
 
@@ -485,6 +604,129 @@ class _Handler(BaseHTTPRequestHandler):
             _json_response(self, 200, {"key": key, "value": value}, rid)
         else:
             _json_response(self, 503, {"error": "ConfigManager unavailable"}, rid)
+
+    def _post_guard(self, body: Dict[str, Any], rid: str) -> None:
+        """
+        Run guardrail checks on arbitrary text.
+
+        Request body:
+          text    : str   (required) — text to check
+          stage   : str   (optional) — "input" | "output" (default "input")
+          policy  : str   (optional) — "standard" | "strict" | "permissive"
+        """
+        text = body.get("text", "")
+        if not text:
+            _json_response(self, 400, {"error": "'text' is required"}, rid)
+            return
+        stage = body.get("stage", "input")
+        policy = body.get("policy", "standard")
+
+        InputGuardrail = _try_import("guardrail", "InputGuardrail")
+        OutputGuardrail = _try_import("guardrail", "OutputGuardrail")
+
+        if stage == "output" and OutputGuardrail:
+            g = OutputGuardrail(policy)
+            ok, violations = g.check(text)
+        elif InputGuardrail:
+            g = InputGuardrail(policy)
+            ok, violations = g.check(text)
+        else:
+            _json_response(self, 503, {"error": "Guardrail unavailable"}, rid)
+            return
+
+        _json_response(self, 200, {
+            "ok": ok,
+            "stage": stage,
+            "policy": policy,
+            "violations": violations,
+        }, rid)
+
+    def _post_export(self, session_id: str, rid: str) -> None:
+        """
+        Export a conversation session as Markdown.
+
+        URL: POST /export/{session_id}
+        Response: plain Markdown text in the JSON field "markdown".
+        """
+        ConvMgr = _try_import("conversation_manager", "ConversationManager")
+        if ConvMgr is None:
+            _json_response(self, 503, {"error": "ConversationManager unavailable"}, rid)
+            return
+        mgr = ConvMgr()
+        md = mgr.export_markdown(session_id)
+        if not md:
+            _json_response(self, 404, {"error": f"Session not found: {session_id}"}, rid)
+            return
+        _json_response(self, 200, {"session_id": session_id, "markdown": md}, rid)
+
+    def _post_chat_stream(self, body: Dict[str, Any], rid: str) -> None:
+        """
+        Streaming chat completion via Server-Sent Events (SSE).
+
+        Request body:
+          message    : str  (required)
+          session_id : str  (optional)
+          model      : str  (optional)
+          system     : str  (optional)
+          max_tokens : int  (optional, default 1024)
+
+        Response: text/event-stream
+          data: {"chunk": "<token_text>"}\n\n
+          ...
+          data: [DONE]\n\n
+        """
+        message = body.get("message", "")
+        if not message:
+            _json_response(self, 400, {"error": "'message' is required"}, rid)
+            return
+
+        model = body.get("model") or (
+            _STATE.cfg.get("llm.default_model", "mock") if _STATE.cfg else "mock"
+        )
+        system = body.get("system", "")
+        if not system and _STATE.cfg:
+            system = _STATE.cfg.get(
+                "conversation.default_system_prompt",
+                "You are MRL_AGI, a helpful AI assistant.",
+            )
+
+        messages: List[Dict[str, Any]] = []
+        if system:
+            messages.append({"role": "system", "content": system})
+        messages.append({"role": "user", "content": message})
+
+        LLMGateway = _try_import("llm_gateway", "LLMGateway")
+        max_tokens = int(body.get("max_tokens", 1024))
+
+        # Send SSE response headers
+        self.send_response(200)
+        self.send_header("Content-Type", "text/event-stream; charset=utf-8")
+        self.send_header("Cache-Control", "no-cache")
+        self.send_header("X-Accel-Buffering", "no")
+        self.send_header("X-Request-Id", rid)
+        _add_cors_headers(self)
+        self.end_headers()
+
+        def _send_chunk(data: str) -> None:
+            line = f"data: {data}\n\n"
+            self.wfile.write(line.encode("utf-8"))
+            self.wfile.flush()
+
+        try:
+            if LLMGateway:
+                gw = LLMGateway(model=model if model != "mock" else None)
+                for chunk in gw.stream_chat(messages, max_tokens=max_tokens):
+                    payload = json.dumps({"chunk": chunk}, ensure_ascii=False)
+                    _send_chunk(payload)
+            else:
+                payload = json.dumps(
+                    {"chunk": f"[MockAdapter] Echo: {message}"},
+                    ensure_ascii=False,
+                )
+                _send_chunk(payload)
+            _send_chunk("[DONE]")
+        except BrokenPipeError:
+            pass  # client disconnected — normal for SSE
 
 
 # ─── Server entry point ───────────────────────────────────────────────────────
