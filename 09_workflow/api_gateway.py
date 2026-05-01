@@ -156,10 +156,12 @@ def _cors_origins() -> List[str]:
 def _add_cors_headers(handler: "BaseHTTPRequestHandler") -> None:
     """Add Access-Control-* headers to the response."""
     origins = _cors_origins()
-    origin = handler.headers.get("Origin", "")
+    raw_origin = handler.headers.get("Origin", "")
+    # Sanitise: strip CR/LF to prevent HTTP response-splitting injection
+    origin = raw_origin.replace("\r", "").replace("\n", "").strip()
     if "*" in origins:
         handler.send_header("Access-Control-Allow-Origin", "*")
-    elif origin in origins:
+    elif origin and origin in origins:
         handler.send_header("Access-Control-Allow-Origin", origin)
     handler.send_header(
         "Access-Control-Allow-Methods",

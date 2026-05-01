@@ -1,7 +1,7 @@
 {
   "origin_signature": "MrLiouWord",
-  "total_sessions": 39,
-  "saved_at_ms": 1777605251553,
+  "total_sessions": 50,
+  "saved_at_ms": 1777605361764,
   "sessions": [
     {
       "session_id": "bdb33d7a-1ef0-4f17-bd14-eacea6cf0357",
@@ -1252,6 +1252,330 @@
           "content": "[MockAdapter] Echo: test export",
           "ts_ms": 1777605251553,
           "msg_id": "b7bf9fbd-d3f8-4468-93aa-78734c36ace2",
+          "origin_signature": "MrLiouWord"
+        }
+      ],
+      "origin_signature": "MrLiouWord"
+    },
+    {
+      "session_id": "53b56de4-6991-46c0-8e82-7ff4d1bbcc0c",
+      "label": "",
+      "created_at_ms": 1777605359050,
+      "updated_at_ms": 1777605359053,
+      "turn_count": 2,
+      "messages": [
+        {
+          "role": "user",
+          "content": "test",
+          "ts_ms": 1777605359051,
+          "msg_id": "b6ce2035-eaac-4722-8f37-7b320f74dbae",
+          "origin_signature": "MrLiouWord"
+        },
+        {
+          "role": "assistant",
+          "content": "[MockAdapter] Echo: test",
+          "ts_ms": 1777605359053,
+          "msg_id": "9b45d64d-b363-4042-8eca-80f0ecc8554e",
+          "origin_signature": "MrLiouWord"
+        }
+      ],
+      "origin_signature": "MrLiouWord"
+    },
+    {
+      "session_id": "1e3b0aab-4adf-4a68-855d-6cb1fcd21502",
+      "label": "",
+      "created_at_ms": 1777605359058,
+      "updated_at_ms": 1777605359061,
+      "turn_count": 2,
+      "messages": [
+        {
+          "role": "user",
+          "content": "Hello MRL",
+          "ts_ms": 1777605359059,
+          "msg_id": "4c3be218-7a99-478e-b55f-2f0aa0491951",
+          "origin_signature": "MrLiouWord"
+        },
+        {
+          "role": "assistant",
+          "content": "[MockAdapter] Echo: Hello MRL",
+          "ts_ms": 1777605359061,
+          "msg_id": "81024c0c-eb10-464e-8418-0f2c85aa95eb",
+          "origin_signature": "MrLiouWord"
+        }
+      ],
+      "origin_signature": "MrLiouWord"
+    },
+    {
+      "session_id": "bae0ab9a-db63-426e-88c6-a83257ba6a11",
+      "label": "",
+      "created_at_ms": 1777605359064,
+      "updated_at_ms": 1777605359067,
+      "turn_count": 2,
+      "messages": [
+        {
+          "role": "user",
+          "content": "test session",
+          "ts_ms": 1777605359065,
+          "msg_id": "8ba4e8d7-42b1-46fc-ad7d-d264d0de76a2",
+          "origin_signature": "MrLiouWord"
+        },
+        {
+          "role": "assistant",
+          "content": "[MockAdapter] Echo: test session",
+          "ts_ms": 1777605359067,
+          "msg_id": "5fe907ad-fadc-4ea3-a07a-07f1d612e771",
+          "origin_signature": "MrLiouWord"
+        }
+      ],
+      "origin_signature": "MrLiouWord"
+    },
+    {
+      "session_id": "45211ef4-0261-4f11-b166-8ebb7d55a618",
+      "label": "",
+      "created_at_ms": 1777605359070,
+      "updated_at_ms": 1777605359073,
+      "turn_count": 2,
+      "messages": [
+        {
+          "role": "user",
+          "content": "track me",
+          "ts_ms": 1777605359072,
+          "msg_id": "f9b885e2-9303-40a4-a603-9be2b3ed3f34",
+          "origin_signature": "MrLiouWord"
+        },
+        {
+          "role": "assistant",
+          "content": "[MockAdapter] Echo: track me",
+          "ts_ms": 1777605359073,
+          "msg_id": "c261d326-394d-4337-a796-4da8f4d043eb",
+          "origin_signature": "MrLiouWord"
+        }
+      ],
+      "origin_signature": "MrLiouWord"
+    },
+    {
+      "session_id": "0526b1d6-9d3d-441d-83e1-f7916472b09f",
+      "label": "",
+      "created_at_ms": 1777605359077,
+      "updated_at_ms": 1777605359080,
+      "turn_count": 2,
+      "messages": [
+        {
+          "role": "user",
+          "content": "sig",
+          "ts_ms": 1777605359079,
+          "msg_id": "686c9086-cda9-43c4-a544-ddc93b0fa7b1",
+          "origin_signature": "MrLiouWord"
+        },
+        {
+          "role": "assistant",
+          "content": "[MockAdapter] Echo: sig",
+          "ts_ms": 1777605359080,
+          "msg_id": "1ce1005a-fe30-404c-9962-9d2736cca339",
+          "origin_signature": "MrLiouWord"
+        }
+      ],
+      "origin_signature": "MrLiouWord"
+    },
+    {
+      "session_id": "b86e7e00-5422-4d24-8495-0cc5dc73dddd",
+      "label": "",
+      "created_at_ms": 1777605359095,
+      "updated_at_ms": 1777605359095,
+      "turn_count": 0,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Test system",
+          "ts_ms": 1777605359095,
+          "msg_id": "c2771664-3805-45f0-97c4-a1a5b95dff31",
+          "origin_signature": "MrLiouWord",
+          "meta": {
+            "is_system_prompt": true
+          }
+        }
+      ],
+      "origin_signature": "MrLiouWord"
+    },
+    {
+      "session_id": "2b6d6764-4745-471e-9152-8c28f6b71e10",
+      "label": "",
+      "created_at_ms": 1777605361735,
+      "updated_at_ms": 1777605361738,
+      "turn_count": 2,
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are MRL_AGI, a production-grade private AI assistant. Origin signature: MrLiouWord. Always act in accordance with the Mother Core Assembly laws.",
+          "ts_ms": 1777605361735,
+          "msg_id": "4be69b5c-8e53-4bdd-b9ac-d176765c1572",
+          "origin_signature": "MrLiouWord",
+          "meta": {
+            "is_system_prompt": true
+          }
+        },
+        {
+          "role": "user",
+          "content": "Hello from tests!",
+          "ts_ms": 1777605361736,
+          "msg_id": "137df421-52e4-4090-988d-9c6ae4e5e4a3",
+          "origin_signature": "MrLiouWord"
+        },
+        {
+          "role": "assistant",
+          "content": "[MockAdapter] Echo: Hello from tests!",
+          "ts_ms": 1777605361738,
+          "msg_id": "35ba822b-e19a-4b99-aa1e-116f2fab2f7d",
+          "origin_signature": "MrLiouWord"
+        }
+      ],
+      "origin_signature": "MrLiouWord"
+    },
+    {
+      "session_id": "c0933cdf-225e-46ec-abee-a5303f8dc71f",
+      "label": "",
+      "created_at_ms": 1777605361740,
+      "updated_at_ms": 1777605361743,
+      "turn_count": 2,
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are MRL_AGI, a production-grade private AI assistant. Origin signature: MrLiouWord. Always act in accordance with the Mother Core Assembly laws.",
+          "ts_ms": 1777605361740,
+          "msg_id": "63f19dee-6cfe-468d-824b-6adc3700e056",
+          "origin_signature": "MrLiouWord",
+          "meta": {
+            "is_system_prompt": true
+          }
+        },
+        {
+          "role": "user",
+          "content": "First message",
+          "ts_ms": 1777605361742,
+          "msg_id": "cd5368da-0823-4064-8e15-0dee419bda0a",
+          "origin_signature": "MrLiouWord"
+        },
+        {
+          "role": "assistant",
+          "content": "[MockAdapter] Echo: First message",
+          "ts_ms": 1777605361743,
+          "msg_id": "cfd89d4a-2361-4bbf-8810-6c31f4786e43",
+          "origin_signature": "MrLiouWord"
+        }
+      ],
+      "origin_signature": "MrLiouWord"
+    },
+    {
+      "session_id": "50bff076-81b9-4c2b-9fdd-58f599b1e900",
+      "label": "",
+      "created_at_ms": 1777605361746,
+      "updated_at_ms": 1777605361753,
+      "turn_count": 4,
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are MRL_AGI, a production-grade private AI assistant. Origin signature: MrLiouWord. Always act in accordance with the Mother Core Assembly laws.",
+          "ts_ms": 1777605361746,
+          "msg_id": "5688889d-cb62-49b1-841a-619ff4c693b5",
+          "origin_signature": "MrLiouWord",
+          "meta": {
+            "is_system_prompt": true
+          }
+        },
+        {
+          "role": "user",
+          "content": "Message one",
+          "ts_ms": 1777605361748,
+          "msg_id": "f510d7c3-567c-4173-a270-c68349c95b77",
+          "origin_signature": "MrLiouWord"
+        },
+        {
+          "role": "assistant",
+          "content": "[MockAdapter] Echo: Message one",
+          "ts_ms": 1777605361749,
+          "msg_id": "94ab1f46-e404-4861-89e7-aa2b4955005a",
+          "origin_signature": "MrLiouWord"
+        },
+        {
+          "role": "user",
+          "content": "Message two",
+          "ts_ms": 1777605361751,
+          "msg_id": "007cd770-d385-4d65-b4ad-bac66f982ef6",
+          "origin_signature": "MrLiouWord"
+        },
+        {
+          "role": "assistant",
+          "content": "[MockAdapter] Echo: Message two",
+          "ts_ms": 1777605361753,
+          "msg_id": "9b34c731-631a-4300-b5de-74c334c94725",
+          "origin_signature": "MrLiouWord"
+        }
+      ],
+      "origin_signature": "MrLiouWord"
+    },
+    {
+      "session_id": "beed6b1d-6780-404d-9e5b-8c593f286eb6",
+      "label": "",
+      "created_at_ms": 1777605361755,
+      "updated_at_ms": 1777605361758,
+      "turn_count": 2,
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are MRL_AGI, a production-grade private AI assistant. Origin signature: MrLiouWord. Always act in accordance with the Mother Core Assembly laws.",
+          "ts_ms": 1777605361755,
+          "msg_id": "01e215bf-9a86-4bdb-92bf-74c08bca464f",
+          "origin_signature": "MrLiouWord",
+          "meta": {
+            "is_system_prompt": true
+          }
+        },
+        {
+          "role": "user",
+          "content": "ping",
+          "ts_ms": 1777605361757,
+          "msg_id": "6376aadd-b837-40a0-80dc-74e9fc2db4d4",
+          "origin_signature": "MrLiouWord"
+        },
+        {
+          "role": "assistant",
+          "content": "[MockAdapter] Echo: ping",
+          "ts_ms": 1777605361758,
+          "msg_id": "e5b27d85-e5df-4e86-9cdf-f3a7be9f3f9f",
+          "origin_signature": "MrLiouWord"
+        }
+      ],
+      "origin_signature": "MrLiouWord"
+    },
+    {
+      "session_id": "11279ef4-fc5d-49a9-b74d-20ef77af90b7",
+      "label": "",
+      "created_at_ms": 1777605361761,
+      "updated_at_ms": 1777605361764,
+      "turn_count": 2,
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are MRL_AGI, a production-grade private AI assistant. Origin signature: MrLiouWord. Always act in accordance with the Mother Core Assembly laws.",
+          "ts_ms": 1777605361761,
+          "msg_id": "aa57001e-966c-4425-bd70-5829db8dd892",
+          "origin_signature": "MrLiouWord",
+          "meta": {
+            "is_system_prompt": true
+          }
+        },
+        {
+          "role": "user",
+          "content": "test export",
+          "ts_ms": 1777605361763,
+          "msg_id": "e5ca0a57-9bd5-4b64-b3f5-f3d96d907a55",
+          "origin_signature": "MrLiouWord"
+        },
+        {
+          "role": "assistant",
+          "content": "[MockAdapter] Echo: test export",
+          "ts_ms": 1777605361764,
+          "msg_id": "07da435d-a18c-4c25-b247-3853340f10f5",
           "origin_signature": "MrLiouWord"
         }
       ],
