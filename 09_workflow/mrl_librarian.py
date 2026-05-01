@@ -77,7 +77,7 @@ _PATH_OVERRIDES: Dict[str, Dict[str, Any]] = {
     "09_workflow/agent_planner.py":      {"T": "runnable", "Y": 3, "Z": 2},
     "09_workflow/eval_engine.py":        {"T": "runnable", "Y": 5, "Z": 1},
     "09_workflow/plugin_manager.py":     {"T": "runnable", "Y": 3, "Z": 1},
-    "09_workflow/mother_assembly.py":    {"T": "entry",    "Y": 1, "Z": 2},
+    "09_workflow/MRL_mother_assembly.py":    {"T": "entry",    "Y": 1, "Z": 2},
     "data/relations/module_relations.yaml": {"T": "spec",  "Y": 5, "Z": 2},
     "data/master/master_summary_v1.3.md":   {"T": "spec",  "Y": 1, "Z": 1},
 }

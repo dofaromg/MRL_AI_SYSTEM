@@ -100,7 +100,7 @@ Distilled from the three major mainstream AI systems (OpenAI / Anthropic / Googl
 
 | Module | Purpose |
 |--------|---------|
-| `09_workflow/mother_assembly.py` | **Unified system entry point** — boots and wires all **12 subsystems** together. Now includes chat, multi-agent, scheduler, LLM gateway, context management, and configuration. |
+| `09_workflow/MRL_mother_assembly.py` | **Unified system entry point** — boots and wires all **12 subsystems** together. Now includes chat, multi-agent, scheduler, LLM gateway, context management, and configuration. |
 | `09_workflow/plugins/` | Plugin directory — drop `*.py` files here following the plugin contract |
 
 ## Design principles
@@ -144,34 +144,34 @@ python 05_persona/world_module.py snap
 # ── MotherAssembly v2 (boots all 12 subsystems at once) ──────────────────────
 
 # 5. Boot and check status
-python 09_workflow/mother_assembly.py boot
-python 09_workflow/mother_assembly.py status
+python 09_workflow/MRL_mother_assembly.py boot
+python 09_workflow/MRL_mother_assembly.py status
 
 # 6. Run an agent task
-python 09_workflow/mother_assembly.py run --goal "Summarise the repo structure"
+python 09_workflow/MRL_mother_assembly.py run --goal "Summarise the repo structure"
 
 # 7. Evaluate an output
-python 09_workflow/mother_assembly.py eval \
+python 09_workflow/MRL_mother_assembly.py eval \
     --output "The MRL system uses Merkle chains for immutable tracing." \
     --keywords "MRL,Merkle,tracing"
 
 # 8. Seal text through the full reversible chain + MerkleChain
-python 09_workflow/mother_assembly.py seal --text "Hello, MRL!" --label readme
+python 09_workflow/MRL_mother_assembly.py seal --text "Hello, MRL!" --label readme
 
 # 9. Chat (multi-turn conversation)
-python 09_workflow/mother_assembly.py chat --message "Hello, who are you?"
+python 09_workflow/MRL_mother_assembly.py chat --message "Hello, who are you?"
 # Continue the same session:
-python 09_workflow/mother_assembly.py chat --message "What can you do?" --sid <session_id>
+python 09_workflow/MRL_mother_assembly.py chat --message "What can you do?" --sid <session_id>
 
 # 10. Multi-agent task
-python 09_workflow/mother_assembly.py multi-agent \
+python 09_workflow/MRL_mother_assembly.py multi-agent \
     --goal "Write a technical summary of the MRL AI System."
 
 # 10.5 Backup before update/upgrade
-python 09_workflow/mother_assembly.py backup --label before-upgrade
+python 09_workflow/MRL_mother_assembly.py backup --label before-upgrade
 
 # Guarded update entrypoint (creates backup first)
-python 09_workflow/mother_assembly.py update --label auto
+python 09_workflow/MRL_mother_assembly.py update --label auto
 
 # ── REST API gateway ──────────────────────────────────────────────────────────
 

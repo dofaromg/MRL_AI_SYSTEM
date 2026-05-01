@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-mother_assembly.py — MotherAssembly: Unified System Entry Point
+MRL_mother_assembly.py — MotherAssembly: Unified System Entry Point
 origin_signature: MrLiouWord
 layer: L7 LOOP
 group: Y=1 MotherCore
@@ -52,7 +52,7 @@ Architecture diagram
 
 Usage (library)
 ---------------
-    from mother_assembly import MotherAssembly
+    from MRL_mother_assembly import MotherAssembly
 
     ma = MotherAssembly()
     ma.boot()
@@ -73,11 +73,11 @@ Usage (library)
 
 CLI
 ---
-    python 09_workflow/mother_assembly.py boot
-    python 09_workflow/mother_assembly.py status
-    python 09_workflow/mother_assembly.py run   --goal "What is 3 + 4?"
-    python 09_workflow/mother_assembly.py eval  --output "Hello MRL" --keywords "MRL"
-    python 09_workflow/mother_assembly.py seal  --text "Hello world" --label test
+    python 09_workflow/MRL_mother_assembly.py boot
+    python 09_workflow/MRL_mother_assembly.py status
+    python 09_workflow/MRL_mother_assembly.py run   --goal "What is 3 + 4?"
+    python 09_workflow/MRL_mother_assembly.py eval  --output "Hello MRL" --keywords "MRL"
+    python 09_workflow/MRL_mother_assembly.py seal  --text "Hello world" --label test
 """
 
 from __future__ import annotations
