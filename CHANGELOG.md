@@ -6,7 +6,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
-## [Unreleased] — v2.0.0 (pending merge of PR #12)
+## [Unreleased]
+
+---
+
+## [2.0.0] — 2026-05-04（PR #12 merged to main）
 
 ### Added
 

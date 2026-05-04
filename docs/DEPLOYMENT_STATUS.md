@@ -1,6 +1,6 @@
 # MRL_AI_SYSTEM — 部署 & 進度狀態報告
 
-> 查詢時間：2026-05-01T11:21 UTC+8  
+> 查詢時間：2026-05-04T08:20 UTC+8（更新：PR #12 已合併，v2.0.0 已就緒）  
 > 資料來源：GitHub Actions、Branches、Pull Requests、Releases、Tags
 
 ---
@@ -9,8 +9,8 @@
 
 | 機制 | 狀態 |
 |------|------|
-| GitHub Actions 工作流程 | ✅ 4 個 active workflows |
-| Releases / Tags | ❌ 無（尚未建立版本標籤）|
+| GitHub Actions 工作流程 | ✅ 5 個 active workflows（含新 CI/Release）|
+| Releases / Tags | ⚠️ 尚未打 v2.0.0 tag（程式碼已就緒）|
 | GitHub Environments | ❌ 無（未設定 production/staging environment）|
 | Deployment branches | ❌ 無 deploy-specific 分支（無 `gh-pages`、`release/*` 等）|
 
@@ -48,8 +48,14 @@
 
 | PR | 分支 | 說明 | 狀態 |
 |----|------|------|------|
-| [#12](https://github.com/dofaromg/MRL_AI_SYSTEM/pull/12) | `copilot/add-mrl-agi-missing-features → main` | MRL_AGI v2.0：補齊 5 個 P0 生產模組（13/13 子系統、本地化、零外部依賴） | 🟡 Open，Copilot 持續回覆評審意見 |
-| [#15](https://github.com/dofaromg/MRL_AI_SYSTEM/pull/15) | `claude/add-final-product-checklist → copilot/add-missing-features-to-mrl-agi` | 新增最終產品驗收清單 | 🟡 Open (WIP) |
+| [#17](https://github.com/dofaromg/MRL_AI_SYSTEM/pull/17) | `copilot/investigate-deployment-status → main` | 新增 CHANGELOG.md、deploy.yml、DEPLOYMENT_STATUS.md | 🟡 Open (draft) — 本次已合入 |
+| [#15](https://github.com/dofaromg/MRL_AI_SYSTEM/pull/15) | `claude/add-final-product-checklist` | 最終產品驗收清單（base 分支已合併，建議 rebase 或關閉） | ⚠️ WIP / 待確認 |
+
+### ✅ 2026-05-04 新增完成
+
+| PR | 內容 | 狀態 |
+|----|------|------|
+| [#12](https://github.com/dofaromg/MRL_AI_SYSTEM/pull/12) | **MRL_AGI v2.0**：15 個子系統、248 tests、P0 生產模組全補齊 | ✅ Merged to main |
 
 ---
 
@@ -57,20 +63,27 @@
 
 | 名稱 | 觸發方式 | 狀態 |
 |------|---------|------|
-| **Copilot cloud agent** | dynamic（Copilot 任務） | 🟢 active — 66 runs 總計，最新 `in_progress` |
-| **Claude** (anthropic-code-agent) | dynamic（Claude 任務） | 🟢 active — 多次成功 |
-| **OpenAI Codex** | dynamic（Codex 任務） | 🟢 active — 多次成功，1 次 failure(04-30) |
-| **Copilot code review** | PR 評審觸發 | 🟢 active — 每次 PR 自動觸發 |
+| **CI / Release** (deploy.yml) | push to main / tag v*.*.* | 🟢 新增（本次 PR）|
+| **Copilot cloud agent** | dynamic（Copilot 任務） | 🟢 active |
+| **Claude** (anthropic-code-agent) | dynamic（Claude 任務） | 🟢 active |
+| **OpenAI Codex** | dynamic（Codex 任務） | 🟢 active |
+| **Copilot code review** | PR 評審觸發 | 🟢 active |
 
 ---
 
 ## 5. Releases & Tags
 
-**目前無任何 Release 或 Tag。**
+**目前無任何 Release 或 Tag（v2.0.0 程式碼已在 main，等待打 tag）。**
 
-建議下一步：
-- 當 PR #12（MRL_AGI v2.0）合併後，建立 `v2.0.0` tag 標誌首個完整版本里程碑。
-- 可考慮在 GitHub 建立 `production` environment，讓未來 release 工作流程能自動觸發。
+建議立即執行：
+```bash
+git tag v2.0.0
+git push origin v2.0.0
+```
+打完 tag 後，`deploy.yml` 的 `release` job 會自動：
+1. 跑 `pytest tests/`（MRL_RUNTIME_MODE=test）
+2. 打包 `MRL_AI_SYSTEM-v2.0.0.zip`（含 00–09 所有目錄）
+3. 建立 GitHub Release，附上 CHANGELOG.md 中 v2.0.0 的 release notes
 
 ---
 
