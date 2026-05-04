@@ -120,6 +120,40 @@ def _get_config_manager() -> Any:
     return ConfigManager() if ConfigManager else None
 
 
+@st.cache_resource
+def _get_assembly() -> Any:
+    MotherAssembly = _try_import("MRL_mother_assembly", "MotherAssembly")
+    if MotherAssembly is None:
+        return None
+    ma = MotherAssembly()
+    ma.boot()
+    return ma
+
+
+# ── Module-level constants ────────────────────────────────────────────────────
+
+_STEP_TYPE_ICONS: Dict[str, str] = {
+    "think":   "🤔",
+    "act":     "⚙️",
+    "observe": "👁️",
+    "finish":  "✅",
+}
+
+_JSON_TYPE_DEFAULTS: Dict[str, Any] = {
+    "integer": 0,
+    "number":  0.0,
+    "boolean": False,
+    "string":  "",
+    "array":   [],
+    "object":  {},
+}
+
+
+def _default_value_for_type(param_type: str) -> Any:
+    """Return a sensible default value for a JSON-schema type string."""
+    return _JSON_TYPE_DEFAULTS.get(param_type, "")
+
+
 # ── Panel: Chat ───────────────────────────────────────────────────────────────
 
 if panel == "💬 Chat":
@@ -363,18 +397,11 @@ elif panel == "🔧 Tools":
                 params = schema.get("parameters", {}).get("properties", {})
                 required = schema.get("parameters", {}).get("required", [])
 
-                # Build JSON args editor
-                default_args: Dict[str, Any] = {}
-                for param, spec in params.items():
-                    t = spec.get("type", "string")
-                    if t == "integer":
-                        default_args[param] = 0
-                    elif t == "number":
-                        default_args[param] = 0.0
-                    elif t == "boolean":
-                        default_args[param] = False
-                    else:
-                        default_args[param] = ""
+                # Build JSON args editor using helper for default values
+                default_args: Dict[str, Any] = {
+                    param: _default_value_for_type(spec.get("type", "string"))
+                    for param, spec in params.items()
+                }
 
                 args_text = st.text_area(
                     "Arguments (JSON)",
@@ -445,7 +472,7 @@ elif panel == "📝 Templates":
     st.divider()
 
     templates_raw = reg.list_ids()
-    templates = [reg.get(tid).to_dict() for tid in templates_raw if reg.get(tid) is not None]
+    templates = [t.to_dict() for tid in templates_raw if (t := reg.get(tid)) is not None]
     if not templates:
         st.info("No templates found. Add one above.")
         st.stop()
@@ -524,6 +551,7 @@ elif panel == "⚙️ Config":
                     new_val = json.loads(new_val_str)
                 except (json.JSONDecodeError, ValueError):
                     new_val = new_val_str
+                    st.info("Value interpreted as a plain string (not valid JSON).")
                 cfg.set(key_input, new_val)
                 cfg.save()
                 st.success(f"Key `{key_input}` set to `{new_val}` and saved.")
@@ -540,18 +568,10 @@ elif panel == "⚙️ Config":
 elif panel == "🤖 Agent":
     st.header("🤖 Agent Runner")
 
-    MotherAssembly = _try_import("MRL_mother_assembly", "MotherAssembly")
-    if MotherAssembly is None:
+    ma = _get_assembly()
+    if ma is None:
         st.error("MRL_mother_assembly not available.")
         st.stop()
-
-    @st.cache_resource
-    def _get_assembly() -> Any:
-        ma = MotherAssembly()
-        ma.boot()
-        return ma
-
-    ma = _get_assembly()
 
     goal = st.text_area("Agent goal", height=80, placeholder="e.g. Summarise the MRL system architecture.", key="agent_goal")
 
@@ -590,7 +610,7 @@ elif panel == "🤖 Agent":
             for step in steps:
                 step_type = step.get("type", "?")
                 content = step.get("content", "")
-                icon = {"think": "🤔", "act": "⚙️", "observe": "👁️", "finish": "✅"}.get(step_type, "•")
+                icon = _STEP_TYPE_ICONS.get(step_type, "•")
                 with st.expander(f"{icon} Step {step.get('step', '?')} — {step_type}"):
                     st.markdown(str(content))
                     if step.get("tool"):
