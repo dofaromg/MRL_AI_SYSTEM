@@ -1,10 +1,15 @@
 """
-MRL AI System — Streamlit Dashboard
+MRL AI System — Streamlit Dashboard (Claude.app style)
 origin_signature: MrLiouWord
+
+Layout
+------
+  Left sidebar  : session list (primary) + panel navigation icons
+  Main area     : chat (default) or selected panel
 
 Panels
 ------
-  💬 Chat        — multi-turn conversation via api_gateway
+  💬 Chat        — multi-turn conversation (default)
   🏥 Health      — MotherAssembly status + MRL_health_monitor
   📊 Metrics     — MRL_metrics telemetry snapshot
   📜 Sessions    — browse and export conversation sessions
@@ -17,6 +22,7 @@ Panels
 
 from __future__ import annotations
 
+import datetime
 import json
 import pathlib
 import sys
@@ -39,7 +45,26 @@ for _sub in [
 
 ORIGIN_SIGNATURE = "MrLiouWord"
 
+# ── Module-level constants ────────────────────────────────────────────────────
+
+_STEP_TYPE_ICONS: Dict[str, str] = {
+    "think":   "🤔",
+    "act":     "⚙️",
+    "observe": "👁️",
+    "finish":  "✅",
+}
+
+_JSON_TYPE_DEFAULTS: Dict[str, Any] = {
+    "integer": 0,
+    "number":  0.0,
+    "boolean": False,
+    "string":  "",
+    "array":   [],
+    "object":  {},
+}
+
 # ── Lazy imports (graceful degradation) ──────────────────────────────────────
+
 
 def _try_import(module: str, attr: str) -> Any:
     try:
@@ -50,6 +75,19 @@ def _try_import(module: str, attr: str) -> Any:
         return None
 
 
+def _default_value_for_type(param_type: str) -> Any:
+    """Return a sensible default value for a JSON-schema type string."""
+    return _JSON_TYPE_DEFAULTS.get(param_type, "")
+
+
+def _fmt_ts(ts_ms: int) -> str:
+    """Format a millisecond timestamp to HH:MM string."""
+    try:
+        return datetime.datetime.fromtimestamp(ts_ms / 1000).strftime("%H:%M")
+    except Exception:  # noqa: BLE001
+        return ""
+
+
 # ── Page config ───────────────────────────────────────────────────────────────
 
 st.set_page_config(
@@ -58,30 +96,35 @@ st.set_page_config(
     layout="wide",
 )
 
-# ── Sidebar ───────────────────────────────────────────────────────────────────
+# ── CSS: Claude.app-style layout ─────────────────────────────────────────────
 
-st.sidebar.title("🧠 MRL AI System")
-st.sidebar.caption(f"origin_signature: **{ORIGIN_SIGNATURE}**")
-
-panel = st.sidebar.radio(
-    "Panel",
-    [
-        "💬 Chat",
-        "🏥 Health",
-        "📊 Metrics",
-        "📜 Sessions",
-        "🔧 Tools",
-        "📝 Templates",
-        "⚙️ Config",
-        "🤖 Agent",
-        "🛡️ Guardrail",
-    ],
+st.markdown(
+    """
+<style>
+/* Sidebar session buttons: left-align and wrap text */
+[data-testid="stSidebarContent"] .stButton > button {
+    text-align: left !important;
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    font-size: 0.85rem;
+}
+/* Active session card highlight */
+.session-active > div > button {
+    border-left: 3px solid #7c3aed !important;
+    background-color: rgba(124, 58, 237, 0.08) !important;
+}
+/* Message metadata row */
+.msg-meta { font-size: 0.70rem; color: #888; margin-top: 2px; }
+/* Origin signature badge */
+.sig-badge { font-size: 0.72rem; color: #16a34a; font-weight: 600; }
+/* Eval / trace badge */
+.eval-badge { font-size: 0.72rem; color: #2563eb; }
+</style>
+""",
+    unsafe_allow_html=True,
 )
 
-# Keyword search (used in Sessions panel)
-search_term = st.sidebar.text_input("🔍 Search sessions by label")
-
-# ── Helpers ───────────────────────────────────────────────────────────────────
+# ── Cached resource helpers ───────────────────────────────────────────────────
 
 
 @st.cache_resource
@@ -130,71 +173,215 @@ def _get_assembly() -> Any:
     return ma
 
 
-# ── Module-level constants ────────────────────────────────────────────────────
+# ── Session state initialization ─────────────────────────────────────────────
 
-_STEP_TYPE_ICONS: Dict[str, str] = {
-    "think":   "🤔",
-    "act":     "⚙️",
-    "observe": "👁️",
-    "finish":  "✅",
-}
+if "active_panel" not in st.session_state:
+    st.session_state.active_panel = "chat"
+if "active_sid" not in st.session_state:
+    st.session_state.active_sid = ""
+if "rename_mode" not in st.session_state:
+    st.session_state.rename_mode = False
+if "confirm_delete" not in st.session_state:
+    st.session_state.confirm_delete = False
+if "guard_status" not in st.session_state:
+    st.session_state.guard_status = "green"  # green / yellow / red
 
-_JSON_TYPE_DEFAULTS: Dict[str, Any] = {
-    "integer": 0,
-    "number":  0.0,
-    "boolean": False,
-    "string":  "",
-    "array":   [],
-    "object":  {},
-}
+# ── Sidebar ───────────────────────────────────────────────────────────────────
 
+with st.sidebar:
+    st.markdown("### 🧠 MRL AI System")
+    st.caption(f"origin_signature: **{ORIGIN_SIGNATURE}**")
+    st.divider()
 
-def _default_value_for_type(param_type: str) -> Any:
-    """Return a sensible default value for a JSON-schema type string."""
-    return _JSON_TYPE_DEFAULTS.get(param_type, "")
+    # ── New Chat ──────────────────────────────────────────────────────────────
+    if st.button("📝 New Chat", use_container_width=True, key="btn_new_chat"):
+        _cm = _get_conv_mgr()
+        if _cm:
+            _new_sid = _cm.new_session(
+                system_prompt="You are MRL_AGI, a helpful AI assistant. Origin: MrLiouWord.",
+                label="New Chat",
+            )
+            st.session_state.active_sid = _new_sid
+            st.session_state.active_panel = "chat"
+            st.session_state.rename_mode = False
+            st.session_state.confirm_delete = False
+            st.rerun()
 
+    # ── Search ────────────────────────────────────────────────────────────────
+    sidebar_search = st.text_input(
+        "🔍 Search",
+        placeholder="Search conversations…",
+        key="sidebar_search",
+        label_visibility="collapsed",
+    )
 
-# ── Panel: Chat ───────────────────────────────────────────────────────────────
+    # ── Session list ──────────────────────────────────────────────────────────
+    _cm = _get_conv_mgr()
+    _sessions: List[Dict[str, Any]] = []
+    if _cm:
+        _sessions = _cm.list_sessions()
+        if sidebar_search:
+            _sessions = [
+                s for s in _sessions
+                if sidebar_search.lower() in (s.get("label") or "").lower()
+                or sidebar_search in s["session_id"]
+            ]
 
-if panel == "💬 Chat":
-    st.header("💬 Chat")
+    if _sessions:
+        st.caption(f"{len(_sessions)} conversation(s)")
+        for _sess in _sessions:
+            _sid = _sess["session_id"]
+            _label = (_sess.get("label") or _sid[:8]) or "Untitled"
+            _turns = _sess.get("turn_count", 0)
+            _upd_ms = _sess.get("updated_at_ms", 0)
+            _upd_str = _fmt_ts(_upd_ms) if _upd_ms else ""
+            _is_active = _sid == st.session_state.get("active_sid", "")
 
-    # Session management
+            _btn_label = f"{_label}\n{_turns} turn(s)  {_upd_str}"
+            if _is_active:
+                st.markdown('<div class="session-active">', unsafe_allow_html=True)
+            if st.button(_btn_label, key=f"sess_{_sid}", use_container_width=True):
+                st.session_state.active_sid = _sid
+                st.session_state.active_panel = "chat"
+                st.session_state.rename_mode = False
+                st.session_state.confirm_delete = False
+                st.rerun()
+            if _is_active:
+                st.markdown("</div>", unsafe_allow_html=True)
+    else:
+        st.caption("No conversations. Click **New Chat** to start.")
+
+    st.divider()
+
+    # ── Panel navigation icons ────────────────────────────────────────────────
+    st.caption("**Panels**")
+    _nav_items = [
+        ("🔧", "tools",     "Tools"),
+        ("📝", "templates", "Templates"),
+        ("⚙️", "config",    "Config"),
+        ("🤖", "agent",     "Agent"),
+        ("🛡️", "guardrail", "Guardrail"),
+        ("🏥", "health",    "Health"),
+        ("📊", "metrics",   "Metrics"),
+        ("📜", "sessions",  "Sessions"),
+    ]
+    _nav_cols = st.columns(4)
+    for _i, (_icon, _key, _lbl) in enumerate(_nav_items):
+        if _nav_cols[_i % 4].button(_icon, key=f"nav_{_key}", help=_lbl):
+            st.session_state.active_panel = _key
+            st.rerun()
+
+# ── Main area routing ─────────────────────────────────────────────────────────
+
+active_panel: str = st.session_state.active_panel
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Panel: Chat
+# ─────────────────────────────────────────────────────────────────────────────
+
+if active_panel == "chat":
     conv_mgr = _get_conv_mgr()
     if conv_mgr is None:
         st.error("ConversationManager not available.")
         st.stop()
 
-    # Session selector
-    sessions = conv_mgr.list_sessions()
-    session_labels = {s["session_id"]: (s.get("label") or s["session_id"][:8]) for s in sessions}
-
-    col_new, col_sel = st.columns([1, 3])
-    with col_new:
-        if st.button("＋ New session"):
-            system = "You are MRL_AGI, a helpful AI assistant. Origin: MrLiouWord."
-            new_sid = conv_mgr.new_session(system_prompt=system, label="Chat")
-            st.session_state["active_sid"] = new_sid
-            st.rerun()
-
-    with col_sel:
-        if sessions:
-            chosen = st.selectbox(
-                "Active session",
-                options=[s["session_id"] for s in sessions],
-                format_func=lambda sid: session_labels.get(sid, sid),
-                index=0,
-                key="session_selector",
-            )
-            st.session_state["active_sid"] = chosen
-
     active_sid: str = st.session_state.get("active_sid", "")
 
+    # Welcome screen when no session is active
     if not active_sid:
-        st.info("Create a new session or select an existing one.")
+        st.markdown("## 💬 MRL AI System")
+        st.markdown("Start a new conversation or select one from the sidebar.")
+        if st.button("📝 Start New Chat", key="main_new_chat"):
+            _new_sid = conv_mgr.new_session(
+                system_prompt="You are MRL_AGI, a helpful AI assistant. Origin: MrLiouWord.",
+                label="New Chat",
+            )
+            st.session_state.active_sid = _new_sid
+            st.rerun()
         st.stop()
 
-    # Display history
+    # Resolve current session label
+    sessions_all = conv_mgr.list_sessions()
+    sess_info = next((s for s in sessions_all if s["session_id"] == active_sid), None)
+    current_label = (sess_info.get("label") or active_sid[:8]) if sess_info else active_sid[:8]
+
+    # ── Toolbar ───────────────────────────────────────────────────────────────
+    gw = _get_llm_gateway()
+    gw_status = gw.status() if gw else {}
+    backend_label = gw_status.get("backend", "stub")
+
+    tb_c1, tb_c2, tb_c3, tb_c4, tb_c5, tb_c6 = st.columns([1, 3, 1, 1, 1, 1])
+
+    with tb_c1:
+        st.markdown(
+            f"<div style='padding-top:6px;font-size:0.85rem;color:#666;'>🖥 {backend_label}</div>",
+            unsafe_allow_html=True,
+        )
+
+    with tb_c2:
+        if st.session_state.rename_mode:
+            new_label = st.text_input(
+                "Rename",
+                value=current_label,
+                key="toolbar_rename_input",
+                label_visibility="collapsed",
+            )
+            if st.button("✔ Save", key="toolbar_rename_confirm"):
+                if new_label.strip():
+                    conv_mgr.rename_session(active_sid, new_label.strip())
+                st.session_state.rename_mode = False
+                st.rerun()
+        else:
+            st.markdown(f"### {current_label}")
+
+    with tb_c3:
+        if st.button("✏️", key="toolbar_rename_toggle", help="Rename conversation"):
+            st.session_state.rename_mode = not st.session_state.rename_mode
+            st.rerun()
+
+    with tb_c4:
+        if st.button("📥", key="toolbar_export", help="Export as Markdown"):
+            md = conv_mgr.export_markdown(active_sid)
+            st.download_button(
+                "⬇ .md",
+                data=md,
+                file_name=f"session_{active_sid[:8]}.md",
+                mime="text/markdown",
+                key="toolbar_dl",
+            )
+
+    with tb_c5:
+        if st.button("🗑️", key="toolbar_delete", help="Delete conversation"):
+            st.session_state.confirm_delete = True
+
+    with tb_c6:
+        guard_icon = {"green": "🟢", "yellow": "🟡", "red": "🔴"}.get(
+            st.session_state.guard_status, "🟢"
+        )
+        st.markdown(
+            f"<div style='padding-top:6px;font-size:1.1rem;text-align:center;'>"
+            f"{guard_icon} 🛡️</div>",
+            unsafe_allow_html=True,
+        )
+
+    # Delete confirmation banner
+    if st.session_state.confirm_delete:
+        st.warning("⚠️ Delete this conversation? This cannot be undone.")
+        _d1, _d2, _d3 = st.columns([1, 1, 6])
+        with _d1:
+            if st.button("✅ Confirm", key="confirm_del_yes"):
+                conv_mgr.delete_session(active_sid)
+                st.session_state.active_sid = ""
+                st.session_state.confirm_delete = False
+                st.rerun()
+        with _d2:
+            if st.button("✕ Cancel", key="confirm_del_no"):
+                st.session_state.confirm_delete = False
+                st.rerun()
+
+    st.divider()
+
+    # ── Message history ───────────────────────────────────────────────────────
     try:
         history: List[Dict[str, Any]] = conv_mgr.get_history(active_sid)
     except KeyError:
@@ -204,37 +391,137 @@ if panel == "💬 Chat":
     for msg in history:
         role = msg.get("role", "user")
         content = msg.get("content", "")
+        ts_ms = msg.get("ts_ms", 0)
         if role == "system":
             continue
         with st.chat_message(role):
             st.markdown(content)
+            meta_parts: List[str] = []
+            if ts_ms:
+                meta_parts.append(f'<span class="msg-meta">{_fmt_ts(ts_ms)}</span>')
+            if role == "assistant" and msg.get("origin_signature") == ORIGIN_SIGNATURE:
+                meta_parts.append('<span class="sig-badge">✅ MrLiouWord</span>')
+            eval_score = msg.get("eval_score")
+            trace_id = msg.get("trace_id")
+            if eval_score is not None:
+                meta_parts.append(f'<span class="eval-badge">🔍 {eval_score:.2f}</span>')
+            if trace_id:
+                meta_parts.append(f'<span class="msg-meta">trace: {trace_id}</span>')
+            if meta_parts:
+                st.markdown("&nbsp; ".join(meta_parts), unsafe_allow_html=True)
 
-    # Chat input
-    user_input = st.chat_input("Type your message…")
+    # ── Chat input ────────────────────────────────────────────────────────────
+    user_input = st.chat_input("Message MRL AI…")
     if user_input:
+        # Guardrail pre-check before sending
+        InputGuardrail = _try_import("guardrail", "InputGuardrail")
+        POLICY_STANDARD = _try_import("guardrail", "POLICY_STANDARD")
+        if InputGuardrail and POLICY_STANDARD:
+            _guard = InputGuardrail(policy=POLICY_STANDARD)
+            _ok, _violations = _guard.check(user_input)
+            if not _ok:
+                st.session_state.guard_status = "red"
+                st.error(f"🛡️ Input blocked — {len(_violations)} violation(s)")
+                for _v in _violations:
+                    st.warning(f"**{_v['check']}** [{_v['severity']}]: {_v['reason']}")
+                st.stop()
+            else:
+                st.session_state.guard_status = "green"
+
         conv_mgr.add_message(active_sid, "user", user_input)
         with st.chat_message("user"):
             st.markdown(user_input)
 
         with st.chat_message("assistant"):
-            with st.spinner("Thinking…"):
-                gw = _get_llm_gateway()
-                if gw:
-                    msgs = conv_mgr.get_history(active_sid)
-                    resp = gw.chat(
-                        [{"role": m["role"], "content": m["content"]} for m in msgs],
-                        max_tokens=1024,
-                    )
-                    reply = resp.get("text", "[no reply]")
-                else:
-                    reply = f"[MockAdapter] Echo: {user_input}"
-                conv_mgr.add_message(active_sid, "assistant", reply)
-                st.markdown(reply)
+            if gw:
+                msgs = conv_mgr.get_history(active_sid)
+                msg_list = [{"role": m["role"], "content": m["content"]} for m in msgs]
+                placeholder = st.empty()
+                full_reply = ""
+                for chunk in gw.stream_chat(msg_list, max_tokens=1024):
+                    full_reply += chunk
+                    placeholder.markdown(full_reply + "▌")
+                placeholder.markdown(full_reply)
+                reply = full_reply
+            else:
+                # Simulated word-by-word streaming (mock mode)
+                reply = f"[MockAdapter] Echo: {user_input}"
+                placeholder = st.empty()
+                streamed = ""
+                for word in reply.split():
+                    streamed += word + " "
+                    placeholder.markdown(streamed + "▌")
+                    time.sleep(0.04)
+                placeholder.markdown(streamed.strip())
+
+            # Metadata row under streamed reply
+            now_ts = _fmt_ts(int(time.time() * 1000))
+            st.markdown(
+                f'<span class="sig-badge">✅ MrLiouWord</span>'
+                f'&nbsp;<span class="msg-meta">{now_ts}</span>',
+                unsafe_allow_html=True,
+            )
+
+        conv_mgr.add_message(active_sid, "assistant", reply)
         st.rerun()
 
-# ── Panel: Health ─────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────────
+# Panel: Sessions
+# ─────────────────────────────────────────────────────────────────────────────
 
-elif panel == "🏥 Health":
+elif active_panel == "sessions":
+    st.header("📜 Conversation Sessions")
+
+    conv_mgr = _get_conv_mgr()
+    if conv_mgr is None:
+        st.error("ConversationManager not available.")
+        st.stop()
+
+    sessions = conv_mgr.list_sessions()
+    _srch = st.session_state.get("sidebar_search", "")
+    if _srch:
+        sessions = [
+            s for s in sessions
+            if _srch.lower() in (s.get("label") or "").lower()
+            or _srch in s["session_id"]
+        ]
+
+    st.caption(f"{len(sessions)} session(s) found")
+
+    for sess in sessions:
+        sid = sess["session_id"]
+        label = sess.get("label") or sid[:8]
+        turns = sess.get("turn_count", 0)
+
+        with st.expander(f"**{label}** — {turns} turns"):
+            c1, c2 = st.columns([3, 1])
+            c1.caption(f"ID: `{sid}`")
+            if c2.button("📥 Export MD", key=f"export_{sid}"):
+                md = conv_mgr.export_markdown(sid)
+                st.download_button(
+                    "Download .md",
+                    data=md,
+                    file_name=f"session_{sid[:8]}.md",
+                    mime="text/markdown",
+                    key=f"dl_{sid}",
+                )
+            try:
+                history = conv_mgr.get_history(sid)
+                for msg in history:
+                    role = msg.get("role", "?")
+                    content = msg.get("content", "")
+                    if role == "system":
+                        continue
+                    sig_badge = " ✅" if msg.get("origin_signature") == ORIGIN_SIGNATURE else ""
+                    st.markdown(f"**{role.capitalize()}**{sig_badge}: {content[:200]}")
+            except KeyError:
+                st.warning("Session data unavailable.")
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Panel: Health
+# ─────────────────────────────────────────────────────────────────────────────
+
+elif active_panel == "health":
     st.header("🏥 System Health")
 
     monitor = _get_health_monitor()
@@ -246,10 +533,16 @@ elif panel == "🏥 Health":
 
         probes = status.get("probes", {})
         if probes:
-            cols = st.columns(len(probes))
-            for col, (name, result) in zip(cols, probes.items()):
-                icon = {"ok": "✅", "warn": "⚠️", "error": "❌"}.get(result["status"], "❓")
-                col.metric(name, f"{icon} {result['status']}", result.get("message", ""))
+            cols = st.columns(min(len(probes), 4))
+            for i, (name, result) in enumerate(probes.items()):
+                icon = {"ok": "✅", "warn": "⚠️", "error": "❌"}.get(
+                    result.get("status", ""), "❓"
+                )
+                cols[i % 4].metric(
+                    name,
+                    f"{icon} {result.get('status', '?')}",
+                    result.get("message", ""),
+                )
         else:
             st.info("No probe results yet.")
 
@@ -270,9 +563,16 @@ elif panel == "🏥 Health":
     else:
         st.warning("LLMGateway not available.")
 
-# ── Panel: Metrics ────────────────────────────────────────────────────────────
+    st.divider()
+    if st.toggle("🔄 Auto-refresh (every 10 s)", key="health_auto_refresh"):
+        time.sleep(10)
+        st.rerun()
 
-elif panel == "📊 Metrics":
+# ─────────────────────────────────────────────────────────────────────────────
+# Panel: Metrics
+# ─────────────────────────────────────────────────────────────────────────────
+
+elif active_panel == "metrics":
     st.header("📊 MRL Metrics")
 
     snapshot_fn = _try_import("MRL_metrics", "snapshot")
@@ -301,76 +601,25 @@ elif panel == "📊 Metrics":
     with st.expander("Raw snapshot JSON"):
         st.json(snap)
 
-    if st.button("↺ Reset metrics"):
-        reset_fn = _try_import("MRL_metrics", "reset")
-        if reset_fn:
-            reset_fn()
-            st.success("Metrics reset.")
-            st.rerun()
+    col_reset, _ = st.columns([1, 3])
+    with col_reset:
+        if st.button("↺ Reset metrics"):
+            reset_fn = _try_import("MRL_metrics", "reset")
+            if reset_fn:
+                reset_fn()
+                st.success("Metrics reset.")
+                st.rerun()
 
-# ── Panel: Sessions ───────────────────────────────────────────────────────────
+    st.divider()
+    if st.toggle("🔄 Auto-refresh (every 15 s)", key="metrics_auto_refresh"):
+        time.sleep(15)
+        st.rerun()
 
-elif panel == "📜 Sessions":
-    st.header("📜 Conversation Sessions")
+# ─────────────────────────────────────────────────────────────────────────────
+# Panel: Tools
+# ─────────────────────────────────────────────────────────────────────────────
 
-    conv_mgr = _get_conv_mgr()
-    if conv_mgr is None:
-        st.error("ConversationManager not available.")
-        st.stop()
-
-    sessions = conv_mgr.list_sessions()
-
-    # Filter by search term
-    if search_term:
-        sessions = [
-            s for s in sessions
-            if search_term.lower() in (s.get("label") or "").lower()
-            or search_term in s["session_id"]
-        ]
-
-    st.caption(f"{len(sessions)} session(s) found")
-
-    for sess in sessions:
-        sid = sess["session_id"]
-        label = sess.get("label") or sid[:8]
-        turns = sess.get("turn_count", 0)
-
-        with st.expander(f"**{label}** — {turns} turns"):
-            c1, c2 = st.columns([3, 1])
-            c1.caption(f"ID: `{sid}`")
-
-            # Export as Markdown
-            if c2.button("📥 Export MD", key=f"export_{sid}"):
-                md = conv_mgr.export_markdown(sid)
-                st.download_button(
-                    "Download .md",
-                    data=md,
-                    file_name=f"session_{sid[:8]}.md",
-                    mime="text/markdown",
-                    key=f"dl_{sid}",
-                )
-
-            # Show messages
-            try:
-                history = conv_mgr.get_history(sid)
-                for msg in history:
-                    role = msg.get("role", "?")
-                    content = msg.get("content", "")
-                    if role == "system":
-                        continue
-                    # Show ✅ only when the message carries the real origin_signature
-                    sig_badge = " ✅" if msg.get("origin_signature") == ORIGIN_SIGNATURE else ""
-                    st.markdown(f"**{role.capitalize()}**{sig_badge}: {content[:200]}")
-            except KeyError:
-                st.warning("Session data unavailable.")
-
-    # Sidebar info
-    st.sidebar.divider()
-    st.sidebar.caption(f"Showing {len(sessions)} sessions")
-
-# ── Panel: Tools ──────────────────────────────────────────────────────────────
-
-elif panel == "🔧 Tools":
+elif active_panel == "tools":
     st.header("🔧 Tool Registry")
 
     registry = _get_tool_registry()
@@ -385,7 +634,6 @@ elif panel == "🔧 Tools":
     else:
         st.caption(f"{len(tool_names)} tool(s) registered")
 
-        # Tool selector
         selected_tool = st.selectbox("Select tool", options=tool_names)
 
         if selected_tool:
@@ -395,9 +643,6 @@ elif panel == "🔧 Tools":
                 st.caption(schema.get("description", ""))
 
                 params = schema.get("parameters", {}).get("properties", {})
-                required = schema.get("parameters", {}).get("required", [])
-
-                # Build JSON args editor using helper for default values
                 default_args: Dict[str, Any] = {
                     param: _default_value_for_type(spec.get("type", "string"))
                     for param, spec in params.items()
@@ -440,9 +685,24 @@ elif panel == "🔧 Tools":
                 with st.expander(f"`{name}` — {s.get('description', '')}"):
                     st.json(s)
 
-# ── Panel: Templates ──────────────────────────────────────────────────────────
+        # Recent call history
+        call_log = registry.call_log()
+        if call_log:
+            st.divider()
+            recent = call_log[-10:]
+            st.subheader(f"Recent calls ({len(recent)} of {len(call_log)})")
+            for entry in reversed(recent):
+                status_icon = "✅" if entry.get("ok") else "❌"
+                st.caption(
+                    f"{status_icon} `{entry.get('tool', entry.get('name', '?'))}` — "
+                    f"{entry.get('elapsed_ms', '?')} ms"
+                )
 
-elif panel == "📝 Templates":
+# ─────────────────────────────────────────────────────────────────────────────
+# Panel: Templates
+# ─────────────────────────────────────────────────────────────────────────────
+
+elif active_panel == "templates":
     st.header("📝 Prompt Templates")
 
     reg = _get_template_registry()
@@ -450,7 +710,6 @@ elif panel == "📝 Templates":
         st.error("TemplateRegistry not available.")
         st.stop()
 
-    # ── Add / update template ──────────────────────────────────────────────
     with st.expander("➕ Add / update template"):
         t_id = st.text_input("Template ID", key="tmpl_add_id")
         t_desc = st.text_input("Description", key="tmpl_add_desc")
@@ -479,32 +738,43 @@ elif panel == "📝 Templates":
 
     st.caption(f"{len(templates)} template(s)")
 
-    # ── Render panel ──────────────────────────────────────────────────────
     tmpl_ids = [t["id"] for t in templates]
     render_id = st.selectbox("Select template to render", options=tmpl_ids, key="tmpl_render_sel")
 
     if render_id:
         tmpl_dict = next((t for t in templates if t["id"] == render_id), None)
         if tmpl_dict:
-            st.caption(f"Description: {tmpl_dict.get('description', '—')}")
+            st.caption(
+                f"v{tmpl_dict.get('version', 1)}  —  {tmpl_dict.get('description', '—')}"
+            )
             vars_needed: List[str] = tmpl_dict.get("variables", [])
             var_values: Dict[str, str] = {}
             if vars_needed:
                 st.markdown("**Fill in variables:**")
                 for v in vars_needed:
-                    var_values[v] = st.text_input(f"`{{{v}}}`", key=f"tmpl_var_{render_id}_{v}")
+                    var_values[v] = st.text_input(
+                        f"`{{{v}}}`", key=f"tmpl_var_{render_id}_{v}"
+                    )
             if st.button("🖨️ Render", key=f"render_{render_id}"):
                 try:
                     rendered = reg.render(render_id, var_values)
                     st.subheader("Rendered output")
-                    st.text_area("Result", value=rendered, height=120, disabled=True, key="tmpl_rendered_out")
+                    st.text_area(
+                        "Result",
+                        value=rendered,
+                        height=120,
+                        disabled=True,
+                        key="tmpl_rendered_out",
+                    )
                 except KeyError as exc:
                     st.error(f"Missing variable: {exc}")
 
     st.divider()
     st.subheader("All templates")
     for tmpl in templates:
-        with st.expander(f"`{tmpl['id']}` v{tmpl.get('version', 1)} — {tmpl.get('description', '')}"):
+        with st.expander(
+            f"`{tmpl['id']}` v{tmpl.get('version', 1)} — {tmpl.get('description', '')}"
+        ):
             st.code(tmpl.get("text", ""), language="text")
             col_del, _ = st.columns([1, 3])
             if col_del.button("🗑️ Delete", key=f"del_tmpl_{tmpl['id']}"):
@@ -512,9 +782,11 @@ elif panel == "📝 Templates":
                 st.success(f"Template `{tmpl['id']}` deleted.")
                 st.rerun()
 
-# ── Panel: Config ─────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────────
+# Panel: Config
+# ─────────────────────────────────────────────────────────────────────────────
 
-elif panel == "⚙️ Config":
+elif active_panel == "config":
     st.header("⚙️ System Configuration")
 
     cfg = _get_config_manager()
@@ -522,7 +794,6 @@ elif panel == "⚙️ Config":
         st.error("ConfigManager not available.")
         st.stop()
 
-    # Full config dump (masked)
     dump = cfg.dump(mask_secrets=True)
     st.caption("Sensitive values are masked. Changes are saved to `data/config.json`.")
 
@@ -563,9 +834,11 @@ elif panel == "⚙️ Config":
                 st.success("Config reset to defaults and saved.")
                 st.rerun()
 
-# ── Panel: Agent ──────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────────
+# Panel: Agent
+# ─────────────────────────────────────────────────────────────────────────────
 
-elif panel == "🤖 Agent":
+elif active_panel == "agent":
     st.header("🤖 Agent Runner")
 
     ma = _get_assembly()
@@ -573,7 +846,12 @@ elif panel == "🤖 Agent":
         st.error("MRL_mother_assembly not available.")
         st.stop()
 
-    goal = st.text_area("Agent goal", height=80, placeholder="e.g. Summarise the MRL system architecture.", key="agent_goal")
+    goal = st.text_area(
+        "Agent goal",
+        height=80,
+        placeholder="e.g. Summarise the MRL system architecture.",
+        key="agent_goal",
+    )
 
     col_run, col_multi = st.columns([1, 1])
     with col_run:
@@ -602,7 +880,6 @@ elif panel == "🤖 Agent":
                 st.subheader("Summary")
                 st.markdown(summary)
 
-        # Trajectory / steps
         steps = result.get("trajectory") or result.get("steps") or []
         if steps:
             st.divider()
@@ -624,9 +901,11 @@ elif panel == "🤖 Agent":
     elif (run_single or run_multi) and not goal.strip():
         st.warning("Please enter an agent goal.")
 
-# ── Panel: Guardrail ──────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────────
+# Panel: Guardrail
+# ─────────────────────────────────────────────────────────────────────────────
 
-elif panel == "🛡️ Guardrail":
+elif active_panel == "guardrail":
     st.header("🛡️ Guardrail Checker")
 
     InputGuardrail = _try_import("guardrail", "InputGuardrail")
@@ -645,7 +924,9 @@ elif panel == "🛡️ Guardrail":
         "permissive": POLICY_PERMISSIVE,
     }
 
-    policy_name = st.selectbox("Policy", options=list(policy_map.keys()), index=0, key="guard_policy")
+    policy_name = st.selectbox(
+        "Policy", options=list(policy_map.keys()), index=0, key="guard_policy"
+    )
     policy = policy_map[policy_name]
 
     tab_in, tab_out = st.tabs(["🔍 Input check", "🔍 Output check"])
@@ -663,9 +944,7 @@ elif panel == "🛡️ Guardrail":
                 else:
                     st.error(f"❌ Input blocked — {len(violations)} violation(s)")
                     for v in violations:
-                        st.warning(
-                            f"**{v['check']}** [{v['severity']}]: {v['reason']}"
-                        )
+                        st.warning(f"**{v['check']}** [{v['severity']}]: {v['reason']}")
                 with st.expander("Policy details"):
                     st.json(policy)
 
@@ -682,9 +961,6 @@ elif panel == "🛡️ Guardrail":
                 else:
                     st.error(f"❌ Output blocked — {len(violations)} violation(s)")
                     for v in violations:
-                        st.warning(
-                            f"**{v['check']}** [{v['severity']}]: {v['reason']}"
-                        )
+                        st.warning(f"**{v['check']}** [{v['severity']}]: {v['reason']}")
                 with st.expander("Policy details"):
                     st.json(policy)
-

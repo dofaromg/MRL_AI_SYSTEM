@@ -249,6 +249,15 @@ class ConversationManager:
             return True
         return False
 
+    def rename_session(self, session_id: str, label: str) -> bool:
+        """Rename a session label. Returns True if the session existed."""
+        sess = self._sessions.get(session_id)
+        if sess is None:
+            return False
+        sess.label = label
+        self._save()
+        return True
+
     def get_session(self, session_id: str) -> Optional[ConversationSession]:
         return self._sessions.get(session_id)
 
