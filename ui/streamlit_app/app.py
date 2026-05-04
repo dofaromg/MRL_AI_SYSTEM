@@ -223,15 +223,15 @@ with st.sidebar:
         if sidebar_search:
             _sessions = [
                 s for s in _sessions
-                if sidebar_search.lower() in (s.get("label") or "").lower()
-                or sidebar_search in s["session_id"]
+                if (sidebar_search.lower() in (s.get("label") or "").lower())
+                or (sidebar_search in s["session_id"])
             ]
 
     if _sessions:
         st.caption(f"{len(_sessions)} conversation(s)")
         for _sess in _sessions:
             _sid = _sess["session_id"]
-            _label = (_sess.get("label") or _sid[:8]) or "Untitled"
+            _label = _sess.get("label") or _sid[:8]
             _turns = _sess.get("turn_count", 0)
             _upd_ms = _sess.get("updated_at_ms", 0)
             _upd_str = _fmt_ts(_upd_ms) if _upd_ms else ""
@@ -482,8 +482,8 @@ elif active_panel == "sessions":
     if _srch:
         sessions = [
             s for s in sessions
-            if _srch.lower() in (s.get("label") or "").lower()
-            or _srch in s["session_id"]
+            if (_srch.lower() in (s.get("label") or "").lower())
+            or (_srch in s["session_id"])
         ]
 
     st.caption(f"{len(sessions)} session(s) found")
