@@ -1,0 +1,134 @@
+name: CI / Release
+
+"on":
+  push:
+    branches: [main]
+    tags:
+      - "v*.*.*"
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ──────────────────────────────────────────────
+  # Job 1: Test (every PR + push to main)
+  # ──────────────────────────────────────────────
+  test:
+    name: Run test suite
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pytest pytest-cov
+
+      - name: Run pytest
+        run: python -m pytest tests/ -v --tb=short
+        env:
+          MRL_RUNTIME_MODE: test
+
+  # ──────────────────────────────────────────────
+  # Job 2: Build release package (tags only)
+  # ──────────────────────────────────────────────
+  release:
+    name: Build & publish release
+    needs: test
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pytest
+
+      - name: Run final tests before release
+        run: python -m pytest tests/ -v --tb=short
+        env:
+          MRL_RUNTIME_MODE: test
+
+      - name: Extract version
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
+
+      - name: Build release archive
+        run: |
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          ARCHIVE="MRL_AI_SYSTEM-${VERSION}.zip"
+
+          zip -r "${ARCHIVE}" \
+            00_rootlaw 01_schema 02_principles 03_memory \
+            04_runtime 05_persona 06_trace 07_ingest \
+            08_sources 09_workflow ui \
+            README.md CHANGELOG.md \
+            -x "**/__pycache__/*" \
+               "**/*.pyc" \
+               "**/log/*" \
+               "data/sessions/*" \
+               "data/learning/*" \
+               "backups/*"
+
+          echo "archive=${ARCHIVE}" >> "$GITHUB_OUTPUT"
+        id: build
+
+      - name: Extract release notes from CHANGELOG
+        id: notes
+        run: |
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          python3 - <<'PYEOF'
+          import re, os
+
+          version = os.environ.get("VERSION", "")
+          with open("CHANGELOG.md") as f:
+              content = f.read()
+
+          # Find the section for this version (strip leading 'v' for matching)
+          ver_bare = version.lstrip("v")
+          pattern = rf"## \[{re.escape(ver_bare)}\].*?\n(.*?)(?=\n## |\Z)"
+          m = re.search(pattern, content, re.DOTALL)
+          notes = m.group(1).strip() if m else f"Release {version}"
+
+          with open(os.environ["GITHUB_OUTPUT"], "a") as out:
+              # multi-line output
+              out.write("notes<<EOF\n")
+              out.write(notes + "\n")
+              out.write("EOF\n")
+          PYEOF
+        env:
+          VERSION: ${{ steps.version.outputs.VERSION }}
+
+      - name: Create GitHub Release and upload asset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.version.outputs.VERSION }}
+          NOTES: ${{ steps.notes.outputs.notes }}
+        run: |
+          gh release create "${VERSION}" \
+            --title "MRL_AI_SYSTEM ${VERSION}" \
+            --notes "${NOTES}" \
+            "MRL_AI_SYSTEM-${VERSION}.zip"
