@@ -127,37 +127,44 @@ class JSONParser:
             except (json.JSONDecodeError, ValueError):
                 pass
 
-        # Strategy 3: greedy bracket scan
+        # Strategy 3: greedy bracket scan — iterate all balanced candidates
         for start_char, end_char in [('{', '}'), ('[', ']')]:
-            idx = text.find(start_char)
-            if idx == -1:
-                continue
-            depth = 0
-            in_str = False
-            escape = False
-            for j, ch in enumerate(text[idx:], start=idx):
-                if escape:
-                    escape = False
-                    continue
-                if ch == '\\' and in_str:
-                    escape = True
-                    continue
-                if ch == '"':
-                    in_str = not in_str
-                    continue
-                if in_str:
-                    continue
-                if ch == start_char:
-                    depth += 1
-                elif ch == end_char:
-                    depth -= 1
-                    if depth == 0:
-                        candidate = text[idx:j + 1]
-                        try:
-                            data = json.loads(candidate)
-                            return _result(self.name, text, ok=True, data=data)
-                        except (json.JSONDecodeError, ValueError):
+            search_from = 0
+            while True:
+                idx = text.find(start_char, search_from)
+                if idx == -1:
+                    break
+                depth = 0
+                in_str = False
+                escape = False
+                end_pos = -1
+                for j, ch in enumerate(text[idx:], start=idx):
+                    if escape:
+                        escape = False
+                        continue
+                    if ch == '\\' and in_str:
+                        escape = True
+                        continue
+                    if ch == '"':
+                        in_str = not in_str
+                        continue
+                    if in_str:
+                        continue
+                    if ch == start_char:
+                        depth += 1
+                    elif ch == end_char:
+                        depth -= 1
+                        if depth == 0:
+                            end_pos = j
                             break
+                if end_pos == -1:
+                    break  # no balanced bracket from this position
+                candidate = text[idx:end_pos + 1]
+                try:
+                    data = json.loads(candidate)
+                    return _result(self.name, text, ok=True, data=data)
+                except (json.JSONDecodeError, ValueError):
+                    search_from = end_pos + 1  # continue scanning for next candidate
 
         return _result(self.name, text, ok=False, error="No valid JSON found")
 
