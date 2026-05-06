@@ -287,7 +287,7 @@ ollama pull llama3        # download model once
 ollama serve              # keep running in background
 
 # MRL auto-detects Ollama — no config change needed:
-python 09_workflow/mother_assembly.py chat --message "Explain MRL in one sentence"
+python 09_workflow/MRL_mother_assembly.py chat --message "Explain MRL in one sentence"
 ```
 
 ### Option B — Cloud providers (optional)
