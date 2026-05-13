@@ -418,7 +418,7 @@ class MotherAssembly:
         )
         def divide(a: float, b: float) -> float:
             if b == 0:
-                raise ValueError(f"Division by zero: cannot divide {a} by 0")
+                raise ValueError("Division by zero: cannot divide by 0")
             return a / b
 
         @self.tool_registry.register(
