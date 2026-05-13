@@ -464,7 +464,8 @@ class _Handler(BaseHTTPRequestHandler):
                 rid,
             )
             return
-        if not MIN_TEMPERATURE <= temperature <= MAX_TEMPERATURE:
+        temperature_in_range = MIN_TEMPERATURE <= temperature <= MAX_TEMPERATURE
+        if not temperature_in_range:
             _json_response(
                 self,
                 400,
