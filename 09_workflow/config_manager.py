@@ -73,13 +73,14 @@ _DEFAULTS: Dict[str, Any] = {
         "log_level": "INFO",
     },
     "llm": {
-        "default_model": "mock",
+        "default_model": "local",
         "max_tokens": 1024,
         "temperature": 0.7,
         "stream": False,
         "openai_api_key": "",
         "anthropic_api_key": "",
         "local_base_url": "http://localhost:11434/v1",
+        "allow_mock": False,
     },
     "memory": {
         "vector_store_path": "03_memory/vector/_data",

@@ -321,10 +321,26 @@ class MotherAssembly:
 
     def _boot_llm_gateway(self) -> str:
         LLMGateway = _try_import("llm_adapter", "LLMGateway")
+        LocalAdapter = _try_import("llm_adapter", "LocalAdapter")
+        OpenAIAdapter = _try_import("llm_adapter", "OpenAIAdapter")
+        AnthropicAdapter = _try_import("llm_adapter", "AnthropicAdapter")
         if LLMGateway is None:
             return "unavailable"
         try:
             self.llm_gateway = LLMGateway()
+            if LocalAdapter is not None:
+                local_base_url = "http://localhost:11434/v1"
+                if self.config:
+                    local_base_url = str(self.config.get("llm.local_base_url", local_base_url))
+                self.llm_gateway.register("local", LocalAdapter(base_url=local_base_url))
+            if OpenAIAdapter is not None and self.config:
+                openai_key = str(self.config.get("llm.openai_api_key", "")).strip()
+                if openai_key:
+                    self.llm_gateway.register("openai", OpenAIAdapter(api_key=openai_key))
+            if AnthropicAdapter is not None and self.config:
+                anthropic_key = str(self.config.get("llm.anthropic_api_key", "")).strip()
+                if anthropic_key:
+                    self.llm_gateway.register("anthropic", AnthropicAdapter(api_key=anthropic_key))
             return "ok"
         except Exception as exc:  # noqa: BLE001
             return f"error: {exc}"
@@ -383,6 +399,29 @@ class MotherAssembly:
             return a + b
 
         @self.tool_registry.register(
+            description="Subtract b from a.",
+            parameters={"a": float, "b": float},
+        )
+        def subtract(a: float, b: float) -> float:
+            return a - b
+
+        @self.tool_registry.register(
+            description="Multiply two numbers.",
+            parameters={"a": float, "b": float},
+        )
+        def multiply(a: float, b: float) -> float:
+            return a * b
+
+        @self.tool_registry.register(
+            description="Divide a by b.",
+            parameters={"a": float, "b": float},
+        )
+        def divide(a: float, b: float) -> float:
+            if b == 0:
+                raise ValueError("division by zero")
+            return a / b
+
+        @self.tool_registry.register(
             description="Retrieve world state snapshot.",
         )
         def world_snapshot() -> Dict[str, Any]:
@@ -400,6 +439,18 @@ class MotherAssembly:
             vec = [float(x) for x in query_csv.split(",")]
             hits = self.vector_store.query(vec, top_k=top_k)
             return [{"id": h[0], "score": h[1], "meta": h[2]} for h in hits]
+
+        @self.tool_registry.register(
+            description="Get basic text statistics.",
+            parameters={"text": str},
+        )
+        def text_stats(text: str) -> Dict[str, int]:
+            words = [w for w in text.strip().split() if w]
+            return {
+                "chars": len(text),
+                "words": len(words),
+                "lines": text.count("\n") + 1 if text else 0,
+            }
 
     # ── Built-in templates ────────────────────────────────────────────────────
 
