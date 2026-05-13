@@ -480,7 +480,10 @@ class _Handler(BaseHTTPRequestHandler):
                 temperature=temperature,
             )
         except Exception as exc:  # noqa: BLE001
-            debug_mode = _coerce_bool(_STATE.cfg.get("system.debug", False), default=False) if _STATE.cfg else False
+            debug_mode = _coerce_bool(
+                _STATE.cfg.get("system.debug", False) if _STATE.cfg else False,
+                default=False,
+            )
             _json_response(
                 self,
                 500,

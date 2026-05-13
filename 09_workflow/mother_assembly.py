@@ -418,7 +418,7 @@ class MotherAssembly:
         )
         def divide(a: float, b: float) -> float:
             if b == 0:
-                raise ValueError("division by zero")
+                raise ValueError("Cannot divide by zero")
             return a / b
 
         @self.tool_registry.register(
@@ -449,7 +449,7 @@ class MotherAssembly:
             return {
                 "chars": len(text),
                 "words": len(words),
-                "lines": text.count("\n") + 1 if text else 0,
+                "lines": text.count("\n") + 1 if text.strip() else 0,
             }
 
     # ── Built-in templates ────────────────────────────────────────────────────
