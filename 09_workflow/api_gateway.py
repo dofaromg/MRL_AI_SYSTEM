@@ -56,6 +56,8 @@ from urllib.parse import urlparse
 
 ORIGIN_SIGNATURE = "MrLiouWord"
 GATEWAY_VERSION = "1.0"
+MIN_TEMPERATURE = 0.0
+MAX_TEMPERATURE = 2.0
 
 _REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 
@@ -462,12 +464,12 @@ class _Handler(BaseHTTPRequestHandler):
                 rid,
             )
             return
-        if not 0 <= temperature <= 2:
+        if not MIN_TEMPERATURE <= temperature <= MAX_TEMPERATURE:
             _json_response(
                 self,
                 400,
                 {
-                    "error": "'temperature' must be between 0 and 2",
+                    "error": f"'temperature' must be between {MIN_TEMPERATURE} and {MAX_TEMPERATURE}",
                     "engine": "mrl_runtime",
                     "runtime_origin": "local_mother_assembly",
                     "trace_id": trace_id,
