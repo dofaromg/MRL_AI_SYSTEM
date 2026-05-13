@@ -173,7 +173,12 @@ def _coerce_bool(value: Any, default: bool = False) -> bool:
     if isinstance(value, bool):
         return value
     if isinstance(value, str):
-        return value.strip().lower() in ("1", "true", "yes", "on")
+        normalized = value.strip().lower()
+        if normalized in ("1", "true", "yes", "on"):
+            return True
+        if normalized in ("0", "false", "no", "off"):
+            return False
+        return default
     return default
 
 
@@ -340,6 +345,7 @@ class _Handler(BaseHTTPRequestHandler):
           session_id : str  (optional) — continue an existing session
           model      : str  (optional) — LLM model name (default from config)
           system     : str  (optional) — system prompt (new sessions only)
+          temperature: float (optional, 0~2)
         """
         trace_id = self._trace_id()
         message = body.get("message", "")
