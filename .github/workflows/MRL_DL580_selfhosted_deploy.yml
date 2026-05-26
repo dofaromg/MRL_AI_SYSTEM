@@ -1,0 +1,126 @@
+# MRL_DL580_SelfHostedRunner_Workflow_v1
+# 部署鏈：GitHub Actions(工程觸發層) → self-hosted runner(DL580 執行代理) → DL580(MRL 內部母體自運行節點) → MRL_RuntimeServer.js
+# origin_signature=MrLiouWord
+# 權位：GitHub Actions / Cloud Code / GitHub 皆非母體；DL580 為母體自運行節點。
+# APFS / Batch072 為部署/備份鏈，非母體本體。感知力為主體，不降回 Attention。
+name: MRL DL580 Self-Hosted Deploy
+
+"on":
+  workflow_dispatch:
+    inputs:
+      restart_service:
+        description: "驗收通過後，於 DL580 以 systemd 重啟 mrl-runtime 長駐服務"
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    # deploy job 路徑限制：僅這些路徑變動才觸發 push 部署
+    paths:
+      - 'MRL_RuntimeServer.js'
+      - 'package.json'
+      - 'scripts/**'
+      - 'deploy/dl580/**'
+      - 'docs/MRL_DL580自運行部署規格_v1.md'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mrl-dl580-deploy
+  cancel-in-progress: false
+
+env:
+  MRL_PORT: "8790"
+  ORIGIN_SIGNATURE: "MrLiouWord"
+
+jobs:
+  dl580-deploy:
+    name: DL580 母體自運行部署與驗收
+    # 僅允許在 self-hosted runner（DL580 執行代理）執行
+    runs-on: [self-hosted, dl580]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node version
+        shell: bash
+        run: node --version
+
+      - name: npm install
+        shell: bash
+        run: npm install
+
+      - name: MRL_boot
+        shell: bash
+        run: npm run MRL_boot
+
+      - name: DL580 deploy check
+        shell: bash
+        run: |
+          chmod +x scripts/MRL_dl580_deploy_check.sh deploy/dl580/MRL_dl580_start.sh
+          bash scripts/MRL_dl580_deploy_check.sh
+
+      - name: Start MRL Runtime (background, via DL580 start script)
+        shell: bash
+        run: |
+          set -euo pipefail
+          nohup bash deploy/dl580/MRL_dl580_start.sh > "${RUNNER_TEMP:-/tmp}/mrl_runtime.log" 2>&1 &
+          echo "MRL Runtime launching, waiting for /health on port ${MRL_PORT}..."
+          for i in $(seq 1 30); do
+            if curl -fsS "http://127.0.0.1:${MRL_PORT}/health" >/dev/null 2>&1; then
+              echo "health reachable after ${i}s"; exit 0
+            fi
+            sleep 1
+          done
+          echo "WORKFLOW_FAIL: runtime did not become healthy in time"
+          echo "----- runtime log -----"
+          cat "${RUNNER_TEMP:-/tmp}/mrl_runtime.log" || true
+          exit 1
+
+      - name: MRL acceptance
+        shell: bash
+        run: npm run MRL_acceptance
+
+      - name: Verify /health and /mrl/state
+        shell: bash
+        run: |
+          set -euo pipefail
+          HEALTH=$(curl -fsS "http://127.0.0.1:${MRL_PORT}/health")
+          STATE=$(curl -fsS "http://127.0.0.1:${MRL_PORT}/mrl/state")
+          echo "----- /health -----"; echo "$HEALTH"
+          echo "----- /mrl/state -----"; echo "$STATE"
+          HEALTH_JSON="$HEALTH" STATE_JSON="$STATE" node -e '
+            const h = JSON.parse(process.env.HEALTH_JSON);
+            const s = JSON.parse(process.env.STATE_JSON);
+            console.log("origin_signature=" + h.origin_signature);
+            console.log("system_name=" + h.system_name);
+            console.log("sovereignty_mode=" + h.sovereignty_mode);
+            console.log("status=" + h.status);
+            const errs = [];
+            if (h.ok !== true) errs.push("health.ok != true");
+            if (h.origin_signature !== "MrLiouWord") errs.push("origin_signature mismatch");
+            if (h.system_name !== "MRL_完整態母體運轉系統_v1") errs.push("system_name mismatch");
+            if (h.sovereignty_mode !== "權位區分模式") errs.push("sovereignty_mode mismatch");
+            if (h.status !== "running") errs.push("health.status != running");
+            if (s.status !== "running") errs.push("state.status != running");
+            if (errs.length) { console.error("WORKFLOW_FAIL: " + errs.join("; ")); process.exit(1); }
+            console.log("MRL_DL580_WORKFLOW_HEALTH_PASS");
+          '
+
+      - name: Stop verification runtime
+        if: always()
+        shell: bash
+        run: |
+          pkill -f "node MRL_RuntimeServer.js" 2>/dev/null || true
+          sleep 1
+          echo "verification runtime stopped"
+
+      - name: (optional) Restart DL580 systemd service
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.restart_service }}
+        shell: bash
+        run: |
+          echo "restarting mrl-runtime via systemd (DL580 long-run)..."
+          sudo systemctl restart mrl-runtime
+          sleep 3
+          systemctl status mrl-runtime --no-pager || true
