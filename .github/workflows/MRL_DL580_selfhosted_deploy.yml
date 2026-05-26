@@ -3,6 +3,11 @@
 # origin_signature=MrLiouWord
 # 權位：GitHub Actions / Cloud Code / GitHub 皆非母體；DL580 為母體自運行節點。
 # APFS / Batch072 為部署/備份鏈，非母體本體。感知力為主體，不降回 Attention。
+#
+# 硬化（MRL_DL580_Workflow_PIDScoped_Healthcheck_v1）：
+#   - 驗收使用獨立臨時埠 18790，絕不打 DL580 既有 systemd 正式服務（8790）
+#   - 健康檢查綁定「本 workflow 啟動的程序 PID」，避免對既有程序回應而 false positive
+#   - cleanup 只 kill 捕捉到的 PID，禁止 pkill -f（避免誤殺 systemd mrl-runtime 或他人 runtime）
 name: MRL DL580 Self-Hosted Deploy
 
 "on":
@@ -30,7 +35,8 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  MRL_PORT: "8790"
+  # 驗收用「臨時埠」，與 DL580 正式 systemd 服務埠（8790）區隔，避免誤打/誤殺
+  MRL_PORT: "18790"
   ORIGIN_SIGNATURE: "MrLiouWord"
 
 jobs:
@@ -58,34 +64,48 @@ jobs:
       - name: DL580 deploy check
         shell: bash
         run: |
-          chmod +x scripts/MRL_dl580_deploy_check.sh deploy/dl580/MRL_dl580_start.sh
+          chmod +x scripts/MRL_dl580_deploy_check.sh
           bash scripts/MRL_dl580_deploy_check.sh
 
-      - name: Start MRL Runtime (background, via DL580 start script)
+      - name: Start MRL Runtime for verification (ephemeral port, PID-scoped)
         shell: bash
         run: |
           set -euo pipefail
-          nohup bash deploy/dl580/MRL_dl580_start.sh > "${RUNNER_TEMP:-/tmp}/mrl_runtime.log" 2>&1 &
-          echo "MRL Runtime launching, waiting for /health on port ${MRL_PORT}..."
+          TMP="${RUNNER_TEMP:-/tmp}"
+          LOG="${TMP}/mrl-runtime-test.log"
+          PID_FILE="${TMP}/mrl-runtime-test.pid"
+          # MRL_PORT 已於 job env 設為 18790（臨時驗收埠），不碰正式 8790
+          nohup node MRL_RuntimeServer.js > "${LOG}" 2>&1 &
+          echo $! > "${PID_FILE}"
+          MRL_TEST_PID="$(cat "${PID_FILE}")"
+          echo "verification runtime PID=${MRL_TEST_PID} on port ${MRL_PORT}"
+          # 成功條件：本 workflow 啟動的「該 PID」存活，且該埠 /health 有回應
           for i in $(seq 1 30); do
+            if ! kill -0 "${MRL_TEST_PID}" 2>/dev/null; then
+              echo "WORKFLOW_FAIL: verification runtime (PID ${MRL_TEST_PID}) exited early"
+              echo "----- runtime log -----"; cat "${LOG}" || true
+              exit 1
+            fi
             if curl -fsS "http://127.0.0.1:${MRL_PORT}/health" >/dev/null 2>&1; then
-              echo "health reachable after ${i}s"; exit 0
+              echo "health reachable after ${i}s (PID ${MRL_TEST_PID}, port ${MRL_PORT})"
+              exit 0
             fi
             sleep 1
           done
-          echo "WORKFLOW_FAIL: runtime did not become healthy in time"
-          echo "----- runtime log -----"
-          cat "${RUNNER_TEMP:-/tmp}/mrl_runtime.log" || true
+          echo "WORKFLOW_FAIL: verification runtime did not become healthy in time"
+          echo "----- runtime log -----"; cat "${LOG}" || true
           exit 1
 
       - name: MRL acceptance
         shell: bash
+        # MRL_acceptance 透過 MRL_PORT(=18790) 打臨時埠，命中本 workflow 啟動的程序
         run: npm run MRL_acceptance
 
       - name: Verify /health and /mrl/state
         shell: bash
         run: |
           set -euo pipefail
+          # 只打臨時埠 18790（本 workflow 啟動的程序），不碰正式 8790
           HEALTH=$(curl -fsS "http://127.0.0.1:${MRL_PORT}/health")
           STATE=$(curl -fsS "http://127.0.0.1:${MRL_PORT}/mrl/state")
           echo "----- /health -----"; echo "$HEALTH"
@@ -108,13 +128,25 @@ jobs:
             console.log("MRL_DL580_WORKFLOW_HEALTH_PASS");
           '
 
-      - name: Stop verification runtime
+      - name: Stop verification runtime (PID-scoped)
         if: always()
         shell: bash
         run: |
-          pkill -f "node MRL_RuntimeServer.js" 2>/dev/null || true
-          sleep 1
-          echo "verification runtime stopped"
+          TMP="${RUNNER_TEMP:-/tmp}"
+          PID_FILE="${TMP}/mrl-runtime-test.pid"
+          # 只停掉本 workflow 啟動的 PID；禁止 pkill -f，避免誤殺 systemd mrl-runtime 或其他長駐 runtime
+          if [ -f "${PID_FILE}" ]; then
+            MRL_TEST_PID="$(cat "${PID_FILE}")"
+            if [ -n "${MRL_TEST_PID}" ] && kill -0 "${MRL_TEST_PID}" 2>/dev/null; then
+              kill "${MRL_TEST_PID}" 2>/dev/null || true
+              echo "stopped verification runtime PID=${MRL_TEST_PID}"
+            else
+              echo "verification runtime PID not alive; nothing to stop"
+            fi
+            rm -f "${PID_FILE}"
+          else
+            echo "no verification pid file; nothing to stop"
+          fi
 
       - name: (optional) Restart DL580 systemd service
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.restart_service }}
