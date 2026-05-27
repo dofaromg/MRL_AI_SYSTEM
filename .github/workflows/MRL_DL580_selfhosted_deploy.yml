@@ -8,6 +8,7 @@
 #   - 驗收使用獨立臨時埠 18790，絕不打 DL580 既有 systemd 正式服務（8790）
 #   - 健康檢查綁定「本 workflow 啟動的程序 PID」，避免對既有程序回應而 false positive
 #   - cleanup 只 kill 捕捉到的 PID，禁止 pkill -f（避免誤殺 systemd mrl-runtime 或他人 runtime）
+#   - 驗收走真正的 DL580 啟動入口 deploy/dl580/MRL_dl580_start.sh（部署閘門實測啟動接線，不繞過）
 name: MRL DL580 Self-Hosted Deploy
 
 "on":
@@ -67,18 +68,19 @@ jobs:
           chmod +x scripts/MRL_dl580_deploy_check.sh
           bash scripts/MRL_dl580_deploy_check.sh
 
-      - name: Start MRL Runtime for verification (ephemeral port, PID-scoped)
+      - name: Start MRL Runtime via DL580 entrypoint (ephemeral port, PID-scoped)
         shell: bash
         run: |
           set -euo pipefail
           TMP="${RUNNER_TEMP:-/tmp}"
           LOG="${TMP}/mrl-runtime-test.log"
           PID_FILE="${TMP}/mrl-runtime-test.pid"
+          # 走真正的 DL580 啟動入口（exec node 以同一 PID 取代 shell，故 $! 即最終 runtime PID）
           # MRL_PORT 已於 job env 設為 18790（臨時驗收埠），不碰正式 8790
-          nohup node MRL_RuntimeServer.js > "${LOG}" 2>&1 &
+          nohup bash deploy/dl580/MRL_dl580_start.sh > "${LOG}" 2>&1 &
           echo $! > "${PID_FILE}"
           MRL_TEST_PID="$(cat "${PID_FILE}")"
-          echo "verification runtime PID=${MRL_TEST_PID} on port ${MRL_PORT}"
+          echo "verification runtime (via MRL_dl580_start.sh) PID=${MRL_TEST_PID} on port ${MRL_PORT}"
           # 成功條件：本 workflow 啟動的「該 PID」存活，且該埠 /health 有回應
           for i in $(seq 1 30); do
             if ! kill -0 "${MRL_TEST_PID}" 2>/dev/null; then
