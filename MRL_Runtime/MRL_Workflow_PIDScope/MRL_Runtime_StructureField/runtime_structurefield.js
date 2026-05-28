@@ -1,15 +1,17 @@
 "use strict";
-// MRL_Runtime_ScopeGraph — runtime scope graph + inheritance/dependency edges
+// MRL_Runtime_StructureField — runtime structure field (canonical)
 // origin_signature=MrLiouWord
+// canonical v2：StructureField 為主體；ScopeGraph 為歷史相容 alias，不作 canonical 主體。
+// 內含詞同步 v2 canonical：MetaIR→MrLiouIR、RuntimeGraph→RuntimeStructureField。
 
 const SCOPES = {
-  MRL_RuntimeScope: ["MetaIR", "ParticleIR", "RuntimeGraph", "Verification"],
+  MRL_RuntimeScope: ["MrLiouIR", "ParticleIR", "RuntimeStructureField", "Verification"],
   MRL_ReplayScope: ["checkpoint", "restore", "rollback", "replay"],
   MRL_WorldScope: ["world_runtime", "parallel_world", "context_synchronization"],
   MRL_ExternalScope: ["cloudflared", "xoopz", "github_mirror", "external_adapters"],
 };
 
-class RuntimeScopeGraph {
+class RuntimeStructureField {
   constructor() {
     this.nodes = new Map(); // runtime_id -> scope
     this.edges = [];        // [from_runtime_id, to_runtime_id]
@@ -36,4 +38,7 @@ class RuntimeScopeGraph {
   }
 }
 
-module.exports = { RuntimeScopeGraph, SCOPES };
+// 歷史相容 alias（不作 canonical 主體）：既有呼叫 RuntimeScopeGraph 仍可運作。
+const RuntimeScopeGraph = RuntimeStructureField;
+
+module.exports = { RuntimeStructureField, RuntimeScopeGraph, SCOPES };
