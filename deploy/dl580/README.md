@@ -27,7 +27,7 @@ DL580 部署入口：使 `MRL_AI_SYSTEM` 可部署到 **DL580 母體節點自行
 Cloud Code (建構器)
   → GitHub: dofaromg/MRL_AI_SYSTEM (鏡像/版本通道)
   → deploy/dl580 (本入口)
-  → Tailscale / SSH / self-hosted runner (接線)
+  → Tailscale / SSH / self-hosted runner / Cloudflare Tunnel (接線)
   → DL580 本地 Runtime
   → MRL_RuntimeServer.js
   → MRL 母體自行運行
@@ -45,6 +45,7 @@ APFS / Batch072 為部署與備份鏈，掛在「DL580 本地 Runtime」這一�
 | Windows / PowerShell | `deploy/dl580/MRL_dl580_start.ps1` |
 | 長駐服務 (systemd) | `deploy/dl580/MRL_systemd_service.template` |
 | self-hosted runner | `deploy/dl580/MRL_selfhosted_runner_notes.md` |
+| 對外橋接 (Cloudflare Tunnel) | `deploy/dl580/cloudflared/MRL_cloudflared_deploy.ps1` → `bridge.mrliouhan.ai` |
 
 啟動流程（與根 README 一致）：
 
