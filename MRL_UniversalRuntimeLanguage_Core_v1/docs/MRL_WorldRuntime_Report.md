@@ -4,7 +4,7 @@ origin_signature: `MrLiouWord`
 
 - world_count：`2`
 - synchronization_active：`True`
-- sync.merged_keys：`['graph_hash', 'metair_hash']`
+- sync.merged_keys：`['mrliouir_hash', 'structurefield_hash']`
 
 ## worlds
 
@@ -15,8 +15,8 @@ origin_signature: `MrLiouWord`
       "context_world"
     ],
     "context_keys": [
-      "graph_hash",
-      "metair_hash"
+      "mrliouir_hash",
+      "structurefield_hash"
     ]
   },
   "world_beta": {
@@ -24,8 +24,8 @@ origin_signature: `MrLiouWord`
       "context_world"
     ],
     "context_keys": [
-      "graph_hash",
-      "metair_hash"
+      "mrliouir_hash",
+      "structurefield_hash"
     ]
   }
 }

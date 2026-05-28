@@ -1,23 +1,24 @@
 # MRL_DL580_Runtime
 # origin_signature: MrLiouWord
 # layer: MRL_Runtime (母體自運行節點 = DL580)
-"""DL580 Runtime 編排器：執行正式 Runtime 全管線。
+"""DL580 Runtime 編排器：執行正式 Runtime 全管線（v2 canonical）。
 
-    Input → Observe → Parse → MetaIR → ParticleIR → RuntimeGraph
-          → Verification → Replay → Restore → WorldRuntime → PersistentLoop
+    Input → MrLiouIR → ParticleIR → RuntimeStructureField → ReplayStructureField
+          → RestoreStructureField → Verification → WorldRuntime → PersistentLoop
 
+對外語義：Input → Observe → Parse → MrLiouIR → ParticleIR → StructureField
+          → Verification → Replay → Restore → WorldRuntime → PersistentLoop。
 禁止 Prompt→LLM→Output。run() 回傳 RuntimeResult，供 MRL_Verification 驗收。
 """
 
 from __future__ import annotations
 
-import pathlib
 import tempfile
 from typing import Any, Dict, Optional
 
 from MRL_UniversalRuntimeLanguage_Core_v1 import CANONICAL_PIPELINE, ORIGIN_SIGNATURE
 from MRL_UniversalRuntimeLanguage_Core_v1.MRL_Language import (
-    MRL_MetaIR_Compiler,
+    MRL_MrLiouIR_Compiler,
     MRL_ParticleIR_Engine,
     MRL_PerceptionKernel,
     MRL_UniversalParser_Core,
@@ -25,7 +26,7 @@ from MRL_UniversalRuntimeLanguage_Core_v1.MRL_Language import (
 from MRL_UniversalRuntimeLanguage_Core_v1.MRL_Runtime import (
     MRL_PersistentLoop,
     MRL_ReplayRestore_Core,
-    MRL_RuntimeGraph_Builder,
+    MRL_RuntimeStructureField,
     MRL_Verification,
     MRL_WorldRuntime,
 )
@@ -45,39 +46,39 @@ class MRL_DL580_Runtime:
         parse_result = MRL_UniversalParser_Core.parse(source, lang)
         stages.append("Parse")
 
-        # 3. MetaIR
-        metair = MRL_MetaIR_Compiler.compile_metair(parse_result)
-        stages.append("MetaIR")
+        # 3. MrLiouIR
+        mrliouir = MRL_MrLiouIR_Compiler.compile_mrliouir(parse_result)
+        stages.append("MrLiouIR")
 
         # 4. Observe (Perception)
-        perception = MRL_PerceptionKernel.observe(metair)
+        perception = MRL_PerceptionKernel.observe(mrliouir)
         stages.append("Observe")
 
         # 5. ParticleIR (可逆鏈 + 粒子對映 + roundtrip)
         trace = MRL_ParticleIR_Engine.to_particles(source, label=lang)
         restored_text = MRL_ParticleIR_Engine.from_particles(trace)
         roundtrip = {"exact": restored_text == source, "rhythm": MRL_ParticleIR_Engine.rhythm(source)}
-        particle_map = MRL_ParticleIR_Engine.map_particles(metair)
+        particle_map = MRL_ParticleIR_Engine.map_particles(mrliouir)
         stages.append("ParticleIR")
 
-        # 6. RuntimeGraph
-        graph = MRL_RuntimeGraph_Builder.build(metair, perception["observation_order"])
-        stages.append("RuntimeGraph")
+        # 6. RuntimeStructureField
+        structurefield = MRL_RuntimeStructureField.build(mrliouir, perception["observation_order"])
+        stages.append("RuntimeStructureField")
 
-        # 7. Replay + Restore
-        rr = MRL_ReplayRestore_Core.MRL_ReplayRestore_Core(graph["replay_graph"])
+        # 7. Replay + Restore（消費 replay_structurefield）
+        rr = MRL_ReplayRestore_Core.MRL_ReplayRestore_Core(structurefield["replay_structurefield"])
         rr.execute()
         replay = rr.replay()
         restore = rr.restore()
-        stages.append("Replay")
-        stages.append("Restore")
+        stages.append("ReplayStructureField")
+        stages.append("RestoreStructureField")
 
         # 8. WorldRuntime（雙世界 + context 同步）
         world = MRL_WorldRuntime.MRL_WorldRuntime()
-        world.spawn_world("world_alpha", graph["world_graph"])
-        world.spawn_world("world_beta", graph["world_graph"])
-        world.set_context("world_alpha", "metair_hash", metair["metair_hash"])
-        world.set_context("world_beta", "graph_hash", graph["graph_hash"])
+        world.spawn_world("world_alpha", structurefield["world_structurefield"])
+        world.spawn_world("world_beta", structurefield["world_structurefield"])
+        world.set_context("world_alpha", "mrliouir_hash", mrliouir["mrliouir_hash"])
+        world.set_context("world_beta", "structurefield_hash", structurefield["structurefield_hash"])
         sync = world.synchronize("world_alpha", "world_beta")
         world_report = world.report()
         world_report["sync"] = sync
@@ -85,7 +86,7 @@ class MRL_DL580_Runtime:
 
         # 9. PersistentLoop（落盤 + 重啟存活）
         ploop = MRL_PersistentLoop.MRL_PersistentLoop(self.runtime_dir, loop_id=loop_id)
-        ploop.run(3, payload_fn=lambda: {"graph_hash": graph["graph_hash"]})
+        ploop.run(3, payload_fn=lambda: {"structurefield_hash": structurefield["structurefield_hash"]})
         persistent = {"iteration": ploop.iteration, "survives_restart": ploop.survives_restart()}
         stages.append("PersistentLoop")
 
@@ -94,11 +95,11 @@ class MRL_DL580_Runtime:
             "canonical_pipeline": CANONICAL_PIPELINE,
             "stages_executed": stages,
             "parse": {"lang": parse_result["lang"], "unit_count": parse_result["unit_count"]},
-            "metair": {"node_count": metair["node_count"], "metair_hash": metair["metair_hash"]},
+            "mrliouir": {"node_count": mrliouir["node_count"], "mrliouir_hash": mrliouir["mrliouir_hash"]},
             "perception": perception["field_summary"],
             "particles": {"trace_checksum": trace.get("bundle_checksum"), "map": particle_map},
             "roundtrip": roundtrip,
-            "graph": graph,
+            "structurefield": structurefield,
             "replay": replay,
             "restore": restore,
             "world": world_report,

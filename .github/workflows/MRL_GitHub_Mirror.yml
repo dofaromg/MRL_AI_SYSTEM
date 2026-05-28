@@ -45,7 +45,7 @@ jobs:
           echo "$OUT"
           echo "$OUT" | grep -q "MRL_RUNTIME_ACCEPTANCE_PASS"
 
-      - name: End-to-end civilization run (emit reports + RuntimeGraph)
+      - name: End-to-end civilization run (emit reports + StructureField visualization)
         run: python3 MRL_UniversalRuntimeLanguage_Core_v1/scripts/MRL_runtime_civilization_run.py
 
       - name: Upload runtime reports

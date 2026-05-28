@@ -40,18 +40,20 @@ curl http://127.0.0.1:8790/mrl/state
 
 ## Runtime Civilization Stack
 
-`MRL_UniversalRuntimeLanguage_Core_v1/` 為正式 Runtime 核心（Language → MetaIR →
-ParticleIR → RuntimeGraph → Replay/Restore → Verification → WorldRuntime →
-PersistentLoop）。禁止 Prompt→LLM→Output。
+`MRL_UniversalRuntimeLanguage_Core_v1/` 為正式 Runtime 核心（v2 canonical：Language →
+MrLiouIR → ParticleIR → StructureField → Replay → Restore → Verification →
+WorldRuntime → PersistentLoop）。禁止 Prompt→LLM→Output。
+（`MetaIR`/`Graph` 已降為歷史 alias，正式主體名為 `MrLiouIR`/`StructureField`。）
 
 ```bash
 # 驗收（全通過印出 MRL_RUNTIME_ACCEPTANCE_PASS）
 python3 MRL_UniversalRuntimeLanguage_Core_v1/acceptance/MRL_Runtime_Acceptance_TestSuite.py
-# 端到端執行 + 產出報告/RuntimeGraph
+# 端到端執行 + 產出報告/StructureField 視覺化
 python3 MRL_UniversalRuntimeLanguage_Core_v1/scripts/MRL_runtime_civilization_run.py
 ```
 
 詳見 `MRL_UniversalRuntimeLanguage_Core_v1/README.md`。
+正式命名規範（唯一權威來源）：`docs/MRL_命名規範_v2_MrLiouIR_StructureField.md`。
 
 ## DL580
 

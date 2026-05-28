@@ -110,10 +110,10 @@ def unjump(jumped: List[Dict[str, Any]], permutation: List[int]) -> str:
     return "".join(t["v"] for t in original)  # type: ignore[index]
 
 
-def map_particles(metair: Dict[str, Any]) -> Dict[str, Any]:
+def map_particles(mrliouir: Dict[str, Any]) -> Dict[str, Any]:
     """perception / persona / world 粒子對映（確定性標註）。"""
     mapping: Dict[str, List[str]] = {"perception": [], "persona": [], "world": []}
-    for node in metair.get("nodes", []):
+    for node in mrliouir.get("nodes", []):
         role = node["semantic"]["role"]
         nid = node["node_id"]
         if role in ("definition", "invocation", "control_flow"):

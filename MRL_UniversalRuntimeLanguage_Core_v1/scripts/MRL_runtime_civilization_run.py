@@ -3,9 +3,9 @@
 # origin_signature: MrLiouWord
 """端到端執行 Runtime Civilization Stack，並由實際執行結果產出：
 
-  docs/MRL_RuntimeGraph.mmd      RuntimeGraph 視覺化（mermaid）
-  docs/MRL_RuntimeGraph.dot      RuntimeGraph 視覺化（graphviz dot）
-  docs/MRL_RuntimeGraph.json     RuntimeGraph 結構
+  docs/MRL_StructureField_Visualization.mmd   StructureField 視覺化（mermaid）
+  docs/MRL_StructureField_Visualization.dot   StructureField 視覺化（graphviz dot）
+  docs/MRL_StructureField_Visualization.json  StructureField 結構
   docs/MRL_Verification_Report.md 驗證報告
   docs/MRL_WorldRuntime_Report.md 世界運轉報告
 
@@ -25,7 +25,7 @@ if str(_REPO_ROOT) not in sys.path:
 
 from MRL_UniversalRuntimeLanguage_Core_v1.MRL_Language.MRL_UniversalParser_Core import detect_lang  # noqa: E402
 from MRL_UniversalRuntimeLanguage_Core_v1.MRL_Runtime.MRL_DL580_Runtime import MRL_DL580_Runtime  # noqa: E402
-from MRL_UniversalRuntimeLanguage_Core_v1.MRL_Runtime import MRL_RuntimeGraph_Builder  # noqa: E402
+from MRL_UniversalRuntimeLanguage_Core_v1.MRL_Runtime import MRL_RuntimeStructureField  # noqa: E402
 
 _DOCS = pathlib.Path(__file__).resolve().parents[1] / "docs"
 
@@ -37,20 +37,21 @@ def main() -> int:
 
     runtime = MRL_DL580_Runtime()
     result = runtime.run(source, lang=lang, loop_id="civilization_run")
-    graph = result["graph"]
+    structurefield = result["structurefield"]
     verification = result["verification"]
     world = result["world"]
 
     _DOCS.mkdir(parents=True, exist_ok=True)
 
-    (_DOCS / "MRL_RuntimeGraph.mmd").write_text(
-        MRL_RuntimeGraph_Builder.to_mermaid(graph), encoding="utf-8"
+    # MRL_StructureField_Visualization
+    (_DOCS / "MRL_StructureField_Visualization.mmd").write_text(
+        MRL_RuntimeStructureField.to_mermaid(structurefield), encoding="utf-8"
     )
-    (_DOCS / "MRL_RuntimeGraph.dot").write_text(
-        MRL_RuntimeGraph_Builder.to_dot(graph), encoding="utf-8"
+    (_DOCS / "MRL_StructureField_Visualization.dot").write_text(
+        MRL_RuntimeStructureField.to_dot(structurefield), encoding="utf-8"
     )
-    (_DOCS / "MRL_RuntimeGraph.json").write_text(
-        MRL_RuntimeGraph_Builder.to_json(graph), encoding="utf-8"
+    (_DOCS / "MRL_StructureField_Visualization.json").write_text(
+        MRL_RuntimeStructureField.to_json(structurefield), encoding="utf-8"
     )
 
     # 驗證報告
@@ -61,8 +62,8 @@ def main() -> int:
         "",
         f"- 來源：`{src_path.name}`（lang=`{lang}`）",
         f"- 管線：`{' → '.join(result['stages_executed'])}`",
-        f"- MetaIR node_count：`{result['metair']['node_count']}`",
-        f"- RuntimeGraph：node=`{graph['node_count']}` edge=`{graph['edge_count']}` hash=`{graph['graph_hash'][:12]}`",
+        f"- MrLiouIR node_count：`{result['mrliouir']['node_count']}`",
+        f"- RuntimeStructureField：node=`{structurefield['node_count']}` relation=`{structurefield['relation_count']}` hash=`{structurefield['structurefield_hash'][:12]}`",
         "",
         "## 驗收項",
         "",

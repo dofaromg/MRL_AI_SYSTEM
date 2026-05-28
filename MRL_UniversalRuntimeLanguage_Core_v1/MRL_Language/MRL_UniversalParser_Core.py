@@ -5,7 +5,7 @@
 
 支援語言：python / typescript / cpp / json / markdown / fltnz / flpkg / text。
 
-輸出（確定性，供下游 MetaIR/Replay 使用）：
+輸出（確定性，供下游 MrLiouIR/Replay 使用）：
 
     {
       "lang": "<語言>",
@@ -14,7 +14,7 @@
     }
 
 深度說明（誠實邊界）：對 python/typescript/cpp 為「結構層級」解析（縮排/大括號深度 +
-語句種類辨識），非完整語意編譯器；語意層由 MRL_MetaIR_Compiler 接續推導。
+語句種類辨識），非完整語意編譯器；語意層由 MRL_MrLiouIR_Compiler 接續推導。
 """
 
 from __future__ import annotations

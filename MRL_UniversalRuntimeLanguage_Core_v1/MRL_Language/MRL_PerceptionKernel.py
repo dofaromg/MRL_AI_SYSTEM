@@ -3,9 +3,13 @@
 # layer: MRL_Language
 """感知核心：正式主體詞為 Perception；Attention 僅作歷史層 / Adapter 層。
 
-  MRL_PerceptionField_Core   — 感知場（節點 → 感知權重）
-  MRL_PerceptionWeight_Map   — 權重映射（確定性，依 depth/intent/role）
-  MRL_PerceptionKernel_Router — 路由器（依感知權重決定 runtime 觀察序）
+正式名稱（v2）：
+  MRL_PerceptionKernel           — 入口 / 路由
+  MRL_PerceptionField            — 感知場（節點 → 感知權重）
+  MRL_PerceptionWeight           — 權重映射（確定性，依 depth/intent/role）
+  MRL_PerceptionStructureField   — 感知結構場（感知場套用於 StructureField）
+
+舊名 MRL_PerceptionField_Core / MRL_PerceptionWeight_Map 保留為 compatibility alias。
 """
 
 from __future__ import annotations
@@ -34,7 +38,7 @@ _ROLE_WEIGHT = {
 }
 
 
-class MRL_PerceptionWeight_Map:
+class MRL_PerceptionWeight:
     """確定性感知權重映射。"""
 
     @staticmethod
@@ -46,14 +50,14 @@ class MRL_PerceptionWeight_Map:
         return round(base / (1.0 + 0.1 * depth), 6)
 
 
-class MRL_PerceptionField_Core:
-    """感知場：對 MetaIR 全節點建立 (node_id → weight)。"""
+class MRL_PerceptionField:
+    """感知場：對 MrLiouIR 全節點建立 (node_id → weight)。"""
 
-    def __init__(self, metair: Dict[str, Any]) -> None:
-        self.metair = metair
+    def __init__(self, mrliouir: Dict[str, Any]) -> None:
+        self.mrliouir = mrliouir
         self.field: Dict[str, float] = {
-            n["node_id"]: MRL_PerceptionWeight_Map.weight(n)
-            for n in metair.get("nodes", [])
+            n["node_id"]: MRL_PerceptionWeight.weight(n)
+            for n in mrliouir.get("nodes", [])
         }
 
     def summary(self) -> Dict[str, Any]:
@@ -71,11 +75,11 @@ class MRL_PerceptionField_Core:
 class MRL_PerceptionKernel_Router:
     """路由器：依感知權重產生 runtime 觀察序（高權重優先），保留原序為 tiebreak。"""
 
-    def __init__(self, field: MRL_PerceptionField_Core) -> None:
+    def __init__(self, field: "MRL_PerceptionField") -> None:
         self.field = field
 
     def observation_order(self) -> List[str]:
-        nodes = self.field.metair.get("nodes", [])
+        nodes = self.field.mrliouir.get("nodes", [])
         return [
             n["node_id"]
             for n in sorted(
@@ -85,9 +89,16 @@ class MRL_PerceptionKernel_Router:
         ]
 
 
-def observe(metair: Dict[str, Any]) -> Dict[str, Any]:
+# ── Compatibility aliases（舊名，非 canonical 主體）──
+MRL_PerceptionWeight_Map = MRL_PerceptionWeight
+MRL_PerceptionField_Core = MRL_PerceptionField
+# 感知結構場：感知場套用於 StructureField（目前等同感知場，預留 StructureField 擴展）
+MRL_PerceptionStructureField = MRL_PerceptionField
+
+
+def observe(mrliouir: Dict[str, Any]) -> Dict[str, Any]:
     """Observe 階段入口：建立感知場 + 觀察序。"""
-    field = MRL_PerceptionField_Core(metair)
+    field = MRL_PerceptionField(mrliouir)
     router = MRL_PerceptionKernel_Router(field)
     return {
         "field_summary": field.summary(),

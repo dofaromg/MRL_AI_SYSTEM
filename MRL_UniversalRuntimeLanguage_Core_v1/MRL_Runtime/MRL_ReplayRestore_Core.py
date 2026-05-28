@@ -38,9 +38,9 @@ def _fold(events: List[Dict[str, Any]]) -> Dict[str, Any]:
 
 
 class MRL_ReplayRestore_Core:
-    def __init__(self, replay_graph: List[Dict[str, Any]]) -> None:
-        # event = replay_graph step
-        self.events: List[Dict[str, Any]] = list(replay_graph)
+    def __init__(self, replay_structurefield: List[Dict[str, Any]]) -> None:
+        # event = replay_structurefield step
+        self.events: List[Dict[str, Any]] = list(replay_structurefield)
         self.checkpoints: Dict[int, Dict[str, Any]] = {}
 
     # ── 原始執行：折疊得 state，並沿途留 checkpoint ──

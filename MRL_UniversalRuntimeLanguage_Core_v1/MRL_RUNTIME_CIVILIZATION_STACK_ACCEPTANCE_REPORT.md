@@ -12,20 +12,27 @@ origin_signature: `MrLiouWord`
 
 | 項目 | 指令 | 結果 |
 |---|---|---|
-| Runtime 驗收套件（stdlib） | `python3 MRL_UniversalRuntimeLanguage_Core_v1/acceptance/MRL_Runtime_Acceptance_TestSuite.py` | **6/6 PASS** → `MRL_RUNTIME_ACCEPTANCE_PASS` |
-| 核心 pytest | `python3 -m pytest tests/test_MRL_universal_runtime_core.py -q` | **10 passed** |
-| 端到端執行 + 報告產出 | `python3 MRL_UniversalRuntimeLanguage_Core_v1/scripts/MRL_runtime_civilization_run.py` | `MRL_RUNTIME_ACCEPTANCE_PASS`，產出 `docs/` 報告與 RuntimeGraph |
+| Runtime 驗收套件（stdlib） | `python3 MRL_UniversalRuntimeLanguage_Core_v1/acceptance/MRL_Runtime_Acceptance_TestSuite.py` | **6/6 PASS** → `MRL_RUNTIME_ACCEPTANCE_PASS` + **9/9** → `MRL_CANONICAL_NAMING_VERIFICATION_PASS` |
+| 核心 pytest | `python3 -m pytest tests/test_MRL_universal_runtime_core.py -q` | **14 passed** |
+| 端到端執行 + 報告產出 | `python3 MRL_UniversalRuntimeLanguage_Core_v1/scripts/MRL_runtime_civilization_run.py` | `MRL_RUNTIME_ACCEPTANCE_PASS`，產出 `docs/` 報告與 MRL_StructureField_Visualization |
 
 六項驗收（§10）逐項實跑通過：
 
 | Check | 內容 | 結果 |
 |---|---|---|
-| A | RuntimeGraph build success | PASS |
-| B | Replay exactness（state hash 相等） | PASS |
-| C | Restore exactness（由 checkpoint 續播至尾，hash 相等） | PASS |
+| A | RuntimeStructureField build success | PASS |
+| B | ReplayStructureField exactness（state hash 相等） | PASS |
+| C | RestoreStructureField exactness（由 checkpoint 續播至尾，hash 相等） | PASS |
 | D | PersistentLoop survives restart（新實例自磁碟 checkpoint 接續） | PASS |
 | E | WorldRuntime synchronization active（雙世界 context 一致） | PASS |
 | F | Verification roundtrip exact（fltnz 可逆鏈 txt↔trace 還原一致） | PASS |
+
+Canonical Naming Verification（v2，新增第七類驗收）逐項實跑通過（9/9）：
+無 canonical `MetaIR` / `Graph` / `Attention`（pipeline + name map）；canonical 主體
+`MrLiouIR`/`StructureField`/`Perception` 存在；`MetaIR`/`RuntimeGraph` 僅以 alias 指向單一 canonical 實作。
+→ `MRL_CANONICAL_NAMING_VERIFICATION_PASS`（`MRL_Verification.verify_canonical_naming()`）。
+
+> 唯一命名權威來源：`docs/MRL_命名規範_v2_MrLiouIR_StructureField.md`。
 
 ---
 
@@ -33,12 +40,12 @@ origin_signature: `MrLiouWord`
 
 - **語言輸入**：實測 `python / typescript / cpp / json / markdown / fltnz / text` 之解析；
   py/ts/cpp 為**結構層級**解析（縮排/大括號 + 語句種類辨識）。
-- **確定性**：MetaIR 對相同輸入產生相同 `metair_hash`（replay/verify 之根據），已測。
+- **確定性**：MrLiouIR 對相同輸入產生相同 `mrliouir_hash`（replay/verify 之根據），已測。
 - **可逆性**：ParticleIR `collapse/expand`、`jump/unjump`、全鏈 `to_particles/from_particles` 還原一致，已測。
 - **重啟存活**：以磁碟 checkpoint 模擬 process 重啟（新實例自磁碟接續），已測。
 - **資料層**：`MRL_BaseWorld_DB_Adapter` 以本地 sqlite 鏡像建立 §5 的 7 個邏輯掛接點，已測；
   **未連線**任何 live DB。
-- **全測試套件**：`pytest tests/` = **285 passed, 1 skipped, 1 failed**。
+- **全測試套件**：`pytest tests/` = **289 passed, 1 skipped, 1 failed**。
   唯一 failed = `tests/test_MRL_host_guard.py::...::test_cidr_check_fails_when_no_ip_matches`，
   經實證：**移除本 PR 變更後仍以相同方式失敗** → 為容器網路/IP 環境依賴之既有測試，
   與本 PR 無關，預期於 GitHub `ubuntu-latest` runner 通過。
@@ -90,9 +97,13 @@ CI 閘（PR #35）：
 `MRL_PersistentLoop_Daemon_v1`（規格見 `MRL_PersistentLoop_Daemon_v1_SPEC.md`，**僅規格/準備，尚未實作**）：
 
 ```
-disk checkpoint → restart → replay → restore → verification → runtime graph reload
+disk checkpoint → restart → replay → restore → verification → runtime structurefield reload
 ```
 
 暫不接 live BaseWorld DB、不改遠端 schema、不宣稱 DL580 stable。
+
+> 註：本分支 `MRL_Branch_StructureField_Rename_Alignment_v1` 已套用 v2 canonical 命名
+> （`MetaIR→MrLiouIR`、`Graph→StructureField`，舊名保留為 compatibility alias）；
+> 上述驗收於改名後重跑仍 6/6 PASS。
 
 origin_signature: `MrLiouWord`

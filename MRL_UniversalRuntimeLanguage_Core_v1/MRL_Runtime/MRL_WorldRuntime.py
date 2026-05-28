@@ -21,9 +21,9 @@ class MRL_WorldRuntime:
         self.worlds: Dict[str, Dict[str, Any]] = {}
         self.context: Dict[str, Any] = {}
 
-    def spawn_world(self, name: str, world_graph: Dict[str, str]) -> None:
+    def spawn_world(self, name: str, world_structurefield: Dict[str, str]) -> None:
         members: Dict[str, List[str]] = {}
-        for node_id, world_label in world_graph.items():
+        for node_id, world_label in world_structurefield.items():
             members.setdefault(world_label, []).append(node_id)
         self.worlds[name] = {
             "members": members,

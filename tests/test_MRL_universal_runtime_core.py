@@ -2,16 +2,22 @@
 test_MRL_universal_runtime_core.py — MRL_UniversalRuntimeLanguage_Core_v1 驗收
 origin_signature: MrLiouWord
 
-涵蓋：parser 多語言、MetaIR 確定性、ParticleIR 可逆、Replay/Restore exact、
-PersistentLoop 重啟存活、WorldRuntime 同步、Verification 六項 PASS、DB adapter。
+涵蓋：parser 多語言、MrLiouIR 確定性、ParticleIR 可逆、Replay/Restore exact、
+PersistentLoop 重啟存活、WorldRuntime 同步、Verification 六項 PASS、DB adapter、
+v2 canonical 命名與 compatibility alias。
 """
 from __future__ import annotations
 
 import pytest
 
-from MRL_UniversalRuntimeLanguage_Core_v1 import ORIGIN_SIGNATURE, SOVEREIGNTY
+from MRL_UniversalRuntimeLanguage_Core_v1 import (
+    CANONICAL_PIPELINE,
+    COMPATIBILITY_ALIASES,
+    ORIGIN_SIGNATURE,
+    SOVEREIGNTY,
+)
 from MRL_UniversalRuntimeLanguage_Core_v1.MRL_Language import (
-    MRL_MetaIR_Compiler,
+    MRL_MrLiouIR_Compiler,
     MRL_ParticleIR_Engine,
     MRL_UniversalParser_Core,
 )
@@ -55,12 +61,51 @@ def test_parser_multilang(lang, src):
     assert r["origin_signature"] == "MrLiouWord"
 
 
-def test_metair_deterministic():
+def test_mrliouir_deterministic():
     parsed = MRL_UniversalParser_Core.parse(SAMPLE_PY, "python")
-    a = MRL_MetaIR_Compiler.compile_metair(parsed)
-    b = MRL_MetaIR_Compiler.compile_metair(parsed)
-    assert a["metair_hash"] == b["metair_hash"]
+    a = MRL_MrLiouIR_Compiler.compile_mrliouir(parsed)
+    b = MRL_MrLiouIR_Compiler.compile_mrliouir(parsed)
+    assert a["mrliouir_hash"] == b["mrliouir_hash"]
     assert a["node_count"] > 0
+
+
+def test_v2_canonical_pipeline():
+    # 主線 canonical 不得使用 MetaIR / Graph / Attention
+    joined = " ".join(CANONICAL_PIPELINE)
+    assert "MrLiouIR" in joined and "StructureField" in joined
+    assert "MetaIR" not in joined
+    assert "Graph" not in joined
+
+
+def test_compatibility_aliases():
+    import MRL_UniversalRuntimeLanguage_Core_v1.MRL_Language as L
+    import MRL_UniversalRuntimeLanguage_Core_v1.MRL_Runtime as R
+    # 舊名仍可用，但指向 canonical 單一實作
+    assert L.MRL_MetaIR is L.MRL_MrLiouIR_Compiler
+    assert R.MRL_RuntimeGraph is R.MRL_RuntimeStructureField
+    # 舊 compile_metair 鏡射舊鍵供兼容
+    parsed = MRL_UniversalParser_Core.parse(SAMPLE_PY, "python")
+    legacy = L.MRL_MetaIR_Compiler.compile_metair(parsed)
+    assert legacy["metair_hash"] == legacy["mrliouir_hash"]
+    # 宣告層：COMPATIBILITY_ALIASES 標明 MetaIR/Graph 降級
+    assert COMPATIBILITY_ALIASES["MetaIR"] == "MRL_MrLiouIR"
+    assert COMPATIBILITY_ALIASES["RuntimeGraph"] == "MRL_RuntimeStructureField"
+
+
+def test_runtime_structurefield_alias_keys():
+    from MRL_UniversalRuntimeLanguage_Core_v1.MRL_Runtime import (
+        MRL_RuntimeGraph_Builder,
+        MRL_RuntimeStructureField,
+    )
+    parsed = MRL_UniversalParser_Core.parse(SAMPLE_PY, "python")
+    mr = MRL_MrLiouIR_Compiler.compile_mrliouir(parsed)
+    sf = MRL_RuntimeStructureField.build(mr)
+    assert "structurefield_hash" in sf and "relations" in sf
+    # alias shim 鏡射舊 *graph* 鍵
+    legacy = MRL_RuntimeGraph_Builder.build(mr)
+    assert legacy["graph_hash"] == sf["structurefield_hash"]
+    assert legacy["edges"] == sf["relations"]
+    assert legacy["replay_graph"] == sf["replay_structurefield"]
 
 
 def test_particle_chain_reversible():
@@ -81,6 +126,15 @@ def test_db_adapter_local_emulation():
         "Canon", "Registry", "FLTNZ_Asset", "Memory_Sphere", "Proof", "Trace", "Mirror"
     }
     assert db.status()["prod_schema"]["tables"] == 27
+
+
+def test_canonical_naming_verification():
+    from MRL_UniversalRuntimeLanguage_Core_v1.MRL_Runtime.MRL_Verification import (
+        verify_canonical_naming,
+    )
+    naming = verify_canonical_naming()
+    assert naming["acceptance"] is True, naming["checks"]
+    assert naming["token"] == "MRL_CANONICAL_NAMING_VERIFICATION_PASS"
 
 
 def test_full_pipeline_acceptance_pass(tmp_path):
