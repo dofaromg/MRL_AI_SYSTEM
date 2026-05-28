@@ -29,6 +29,19 @@ SOVEREIGNTY = {
     "attention_is_history_adapter": True,  # Attention 僅作歷史層 / Adapter 層
 }
 
+# Canonical 名稱對接（不得產生平行命名）
+# 左：正式 canonical 模組（單一真實來源）｜右：既有 repo 概念目錄（README 骨架，指向左側實作）
+CANONICAL_NAME_MAP = {
+    "MRL_UniversalParser_Core": "MRL_Language/MRL_UniversalParser_Core.py",
+    "MRL_MetaIR": "MRL_Language/MRL_MetaIR_Compiler.py",
+    "MRL_ParticleIR": "MRL_Language/MRL_ParticleIR_Engine.py（粒子層對應 MRL_Symbolic/MRL_粒子語言層）",
+    "MRL_RuntimeGraph": "MRL_Runtime/MRL_RuntimeGraph_Builder.py（對應 MRL_Runtime/MRL_運轉圖譜）",
+    "MRL_PerceptionKernel": "MRL_Language/MRL_PerceptionKernel.py（對應 MRL_Runtime/MRL_感知力核心）",
+    "MRL_ReplayRestore": "MRL_Runtime/MRL_ReplayRestore_Core.py（對應 MRL_Runtime/MRL_回放回復）",
+    "MRL_Verification": "MRL_Runtime/MRL_Verification.py（對應 MRL_Runtime/MRL_驗證層）",
+    "MRL_WorldRuntime": "MRL_Runtime/MRL_WorldRuntime.py（對應 MRL_Runtime/MRL_多世界同步）",
+}
+
 CANONICAL_PIPELINE = [
     "Input",
     "Observe",
@@ -48,5 +61,6 @@ __all__ = [
     "SYSTEM_NAME",
     "SOVEREIGNTY_MODE",
     "SOVEREIGNTY",
+    "CANONICAL_NAME_MAP",
     "CANONICAL_PIPELINE",
 ]

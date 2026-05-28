@@ -61,6 +61,22 @@ MRL_UniversalRuntimeLanguage_Core_v1/
 
 ---
 
+## Canonical 名稱對接（不得產生平行命名）
+
+正式 canonical 名稱為**單一真實來源**；既有 repo 概念目錄（README 骨架）指向同一實作，
+不另立平行實作。短名為別名（見 `__init__.py` 之 `CANONICAL_NAME_MAP` 與各層 `__init__`）：
+
+| Canonical 名 | 實作 | 既有概念目錄 |
+|---|---|---|
+| `MRL_UniversalParser_Core` | `MRL_Language/MRL_UniversalParser_Core.py` | — |
+| `MRL_MetaIR` | `MRL_Language/MRL_MetaIR_Compiler.py` | — |
+| `MRL_ParticleIR` | `MRL_Language/MRL_ParticleIR_Engine.py` | `MRL_Symbolic/MRL_粒子語言層` |
+| `MRL_RuntimeGraph` | `MRL_Runtime/MRL_RuntimeGraph_Builder.py` | `MRL_Runtime/MRL_運轉圖譜` |
+| `MRL_PerceptionKernel` | `MRL_Language/MRL_PerceptionKernel.py` | `MRL_Runtime/MRL_感知力核心` |
+| `MRL_ReplayRestore` | `MRL_Runtime/MRL_ReplayRestore_Core.py` | `MRL_Runtime/MRL_回放回復` |
+| `MRL_Verification` | `MRL_Runtime/MRL_Verification.py` | `MRL_Runtime/MRL_驗證層` |
+| `MRL_WorldRuntime` | `MRL_Runtime/MRL_WorldRuntime.py` | `MRL_Runtime/MRL_多世界同步` |
+
 ## 執行與驗收
 
 ```bash
