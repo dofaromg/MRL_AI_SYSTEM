@@ -16,6 +16,7 @@ class ScopeIsolation {
   check() {
     const findings = [];
     const ownerScope = new Map(); // runtime_id -> workflow_scope (from ownership rows)
+    const externalOwners = new Set(); // runtime_ids whose ownership/graph scope is external
 
     for (const r of this.core.all()) {
       if (r.restart_update) continue; // restart 補登不視為新 scope 宣告
@@ -24,6 +25,8 @@ class ScopeIsolation {
           scopes: [ownerScope.get(r.runtime_id), r.workflow_scope] });
       }
       ownerScope.set(r.runtime_id, r.workflow_scope);
+      // 規則 3 以 ownership 為準：external scope 即使未登錄 graph 也不得擁有 runtime
+      if (r.workflow_scope === "MRL_ExternalScope") externalOwners.add(r.runtime_id);
     }
 
     for (const [rid, gscope] of this.g.nodes) {
@@ -31,9 +34,11 @@ class ScopeIsolation {
       if (own && own !== gscope) {
         findings.push({ type: "scope_mismatch", runtime_id: rid, owner: own, graph: gscope });
       }
-      if (gscope === "MRL_ExternalScope") {
-        findings.push({ type: "external_ownership", runtime_id: rid });
-      }
+      if (gscope === "MRL_ExternalScope") externalOwners.add(rid);
+    }
+
+    for (const rid of externalOwners) {
+      findings.push({ type: "external_ownership", runtime_id: rid });
     }
 
     this.db.insert("runtime_scope_isolation", { ts: Date.now(), findings_count: findings.length, findings });
