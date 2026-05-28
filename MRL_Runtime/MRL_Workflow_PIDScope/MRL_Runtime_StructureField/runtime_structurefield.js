@@ -1,8 +1,7 @@
 "use strict";
 // MRL_Runtime_StructureField — runtime structure field (canonical)
 // origin_signature=MrLiouWord
-// canonical v2：StructureField 為主體；ScopeGraph 為歷史相容 alias，不作 canonical 主體。
-// 內含詞同步 v2 canonical：MetaIR→MrLiouIR、RuntimeGraph→RuntimeStructureField。
+// canonical v2（硬正名；無相容 alias、無備注殘留）。
 
 const SCOPES = {
   MRL_RuntimeScope: ["MrLiouIR", "ParticleIR", "RuntimeStructureField", "Verification"],
@@ -38,7 +37,4 @@ class RuntimeStructureField {
   }
 }
 
-// 歷史相容 alias（不作 canonical 主體）：既有呼叫 RuntimeScopeGraph 仍可運作。
-const RuntimeScopeGraph = RuntimeStructureField;
-
-module.exports = { RuntimeStructureField, RuntimeScopeGraph, SCOPES };
+module.exports = { RuntimeStructureField, SCOPES };

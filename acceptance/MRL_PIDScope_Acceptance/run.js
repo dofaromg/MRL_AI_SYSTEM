@@ -39,16 +39,16 @@ async function test(name, fn) {
     assert(threw, "anonymous runtime rejected");
   });
 
-  await test("B. Recovery (restart -> runtime graph recoverable)", function () {
-    L.graph.addNode("MRL_Runtime_001", "MRL_RuntimeScope");
-    L.graph.addNode("MRL_Runtime_002", "MRL_WorldScope");
-    L.graph.addEdge("MRL_Runtime_001", "MRL_Runtime_002");
+  await test("B. Recovery (restart -> runtime structure field recoverable)", function () {
+    L.structureField.addNode("MRL_Runtime_001", "MRL_RuntimeScope");
+    L.structureField.addNode("MRL_Runtime_002", "MRL_WorldScope");
+    L.structureField.addEdge("MRL_Runtime_001", "MRL_Runtime_002");
     const cp = L.recovery.checkpoint("before-mutate");
-    L.graph.addNode("MRL_Runtime_003", "MRL_ReplayScope");
-    assert(L.graph.nodes.size === 3, "graph mutated to 3 nodes");
+    L.structureField.addNode("MRL_Runtime_003", "MRL_ReplayScope");
+    assert(L.structureField.nodes.size === 3, "structure field mutated to 3 nodes");
     L.recovery.restore(cp.checkpoint_id);
-    assert(L.graph.nodes.size === 2, "graph restored to 2 nodes");
-    assert(JSON.stringify(L.graph.snapshot()) === JSON.stringify(cp.graph), "graph exact after restore");
+    assert(L.structureField.nodes.size === 2, "structure field restored to 2 nodes");
+    assert(JSON.stringify(L.structureField.snapshot()) === JSON.stringify(cp.structureField), "structure field exact after restore");
   });
 
   await test("C. Replay exactness", function () {

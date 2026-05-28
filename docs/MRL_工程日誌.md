@@ -37,3 +37,41 @@ origin_signature = `MrLiouWord`
 ### 下一步
 
 - 建立 DL580 deploy runner
+
+---
+
+## v4 — RuntimeParticle Compression + StructureField 硬正名
+
+分支：`MRL_Branch_RuntimeParticle_Compression_v4`
+
+### 已完成
+
+- **硬正名（無 alias、無備注殘留）**：移除 v2 階段保留的相容層
+  - `RuntimeScopeGraph` alias 移除；canonical 只剩 `RuntimeStructureField`
+  - facade `.graph` alias 屬性移除；只剩 `.structureField`
+  - 內部參數 `scopeGraph`→`structureField`；checkpoint 欄位 `graph`→`structureField`
+  - acceptance `L.graph`/`cp.graph`→ canonical；grep 確認零 `scopeGraph`/`RuntimeScopeGraph`/`.graph` 殘留
+  - A–F acceptance PASS（`npm run MRL_pidscope_acceptance`）
+- 交付物：
+  - `MRL_Symbolic/MRL_粒子語言層/MRL_Particle_Runtime_Expansion_v4.fltnz`（canonical：structurefield / perception）
+  - `docs/MRL_Claude_Engineering_Handoff_v1.md`（誠實 exists-vs-target）
+  - `docs/MRL_Runtime_Recovery_Checklist_v1.md`（`[x]/[~]/[ ]` 誠實標記）
+
+### 待驗證（回主線條件，未達成 → 不回填母體定義檔/世界模組工程書）
+
+- Runtime loop persistence（durable）
+- Replay exactness（跨 session）
+- Restore chain（durable）
+- DL580 host validation / reboot survival
+
+### 不回填
+
+- 情緒性語句、未驗證人格敘述
+- canonical `MetaIR` / `Graph` / `Attention`（僅 alias / 降級陳述）
+- 把 target 模組寫成已完成
+
+### 下一步
+
+- RuntimeStructureField execution loop
+- Replay / Restore durable acceptance
+- Persistent Runtime convergence

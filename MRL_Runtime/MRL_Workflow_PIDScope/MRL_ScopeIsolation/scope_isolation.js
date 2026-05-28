@@ -3,20 +3,20 @@
 // origin_signature=MrLiouWord
 // 規則：
 //   1. 一個 runtime 只能屬於單一 workflow_scope（多 scope = 污染）
-//   2. graph 節點 scope 必須與 ownership scope 一致（scope_mismatch = 污染）
+//   2. structure field 節點 scope 必須與 ownership scope 一致（scope_mismatch = 污染）
 //   3. MRL_ExternalScope 不得擁有 runtime（external = adapter only）
 
 class ScopeIsolation {
-  constructor(db, scopeGraph, pidScopeCore) {
+  constructor(db, structureField, pidScopeCore) {
     this.db = db;
-    this.g = scopeGraph;
+    this.sf = structureField;
     this.core = pidScopeCore;
   }
 
   check() {
     const findings = [];
     const ownerScope = new Map(); // runtime_id -> workflow_scope (from ownership rows)
-    const externalOwners = new Set(); // runtime_ids whose ownership/graph scope is external
+    const externalOwners = new Set(); // runtime_ids whose ownership/structure-field scope is external
 
     for (const r of this.core.all()) {
       if (r.restart_update) continue; // restart 補登不視為新 scope 宣告
@@ -25,16 +25,16 @@ class ScopeIsolation {
           scopes: [ownerScope.get(r.runtime_id), r.workflow_scope] });
       }
       ownerScope.set(r.runtime_id, r.workflow_scope);
-      // 規則 3 以 ownership 為準：external scope 即使未登錄 graph 也不得擁有 runtime
+      // 規則 3 以 ownership 為準：external scope 即使未登錄 structure field 也不得擁有 runtime
       if (r.workflow_scope === "MRL_ExternalScope") externalOwners.add(r.runtime_id);
     }
 
-    for (const [rid, gscope] of this.g.nodes) {
+    for (const [rid, sfScope] of this.sf.nodes) {
       const own = ownerScope.get(rid);
-      if (own && own !== gscope) {
-        findings.push({ type: "scope_mismatch", runtime_id: rid, owner: own, graph: gscope });
+      if (own && own !== sfScope) {
+        findings.push({ type: "scope_mismatch", runtime_id: rid, owner: own, structureField: sfScope });
       }
-      if (gscope === "MRL_ExternalScope") externalOwners.add(rid);
+      if (sfScope === "MRL_ExternalScope") externalOwners.add(rid);
     }
 
     for (const rid of externalOwners) {

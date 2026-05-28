@@ -3,14 +3,14 @@
 // origin_signature=MrLiouWord
 
 class RuntimeRecovery {
-  constructor(db, scopeGraph) { this.db = db; this.g = scopeGraph; }
+  constructor(db, structureField) { this.db = db; this.sf = structureField; }
 
   checkpoint(label) {
     const cp = {
       type: "checkpoint",
       checkpoint_id: "cp_" + Date.now() + "_" + Math.floor(Math.random() * 1e6),
       label: label || null,
-      graph: this.g.snapshot(),
+      structureField: this.sf.snapshot(),
       ts: Date.now(),
     };
     this.db.insert("runtime_recovery_chain", cp);
@@ -21,7 +21,7 @@ class RuntimeRecovery {
     const cp = this.db.find("runtime_recovery_chain",
       (r) => r.type === "checkpoint" && r.checkpoint_id === checkpoint_id)[0];
     if (!cp) throw new Error("no checkpoint: " + checkpoint_id);
-    this.g.restore(cp.graph);
+    this.sf.restore(cp.structureField);
     return cp;
   }
 
