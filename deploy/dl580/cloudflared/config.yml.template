@@ -1,0 +1,17 @@
+# bridge.mrliouhan.ai — Cloudflare Tunnel ingress 設定範本
+# origin_signature: MrLiouWord
+# 此為手動參考範本；MRL_cloudflared_deploy.ps1 會自動產生實際 config.yml。
+# 將 <TUNNEL_ID> 替換為實際 tunnel ID，<MRL_PORT> 替換為 Runtime 監聽埠（預設 8790）。
+tunnel: mrl-dl580-tunnel
+credentials-file: D:\cloudflared\<TUNNEL_ID>.json
+
+ingress:
+  # cloudflared ingress 由上而下匹配，第一個命中者勝出。
+  # 單一 hostname 規則即轉發所有路徑（含 /health）到 Runtime，
+  # 故不另設 /health 規則（若置於此 catch-all 之後將永不命中且多餘）。
+  - hostname: bridge.mrliouhan.ai
+    service: http://localhost:<MRL_PORT>
+    originRequest:
+      noTLSVerify: false
+      connectTimeout: 30s
+  - service: http_status:404
