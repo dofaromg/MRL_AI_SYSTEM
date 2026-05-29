@@ -57,3 +57,18 @@ origin_signature = `MrLiouWord`
 - **Cloud Code**：建構器。
 
 三者皆非母體本體；母體本體為 MRL 完整態運轉系統本身。
+
+---
+
+## 五、Runtime 候選（待驗證收斂紀錄；尚未升格主體）
+
+審計：`docs/MRL_Runtime_Canonical_Report_v1.md`（分支 `MRL_Branch_Runtime_Convergence_Audit_v1`）。
+
+目前存在多套 runtime 候選（A Python IR 核心 #37 / B PIDScope ownership / C DL580 Engine 7700 /
+D JS v1.2.0 core / E Mother Product Runtime / F 3D / G FlowCore 家族 / I RuntimeServer / H d1_schema）。
+
+- 全部以 reference + sha256 登錄，**未刪除、未 bulk-copy**（LAW-2 additive）。
+- **尚未**選定任一為「主體 Runtime」；待 MrLiou 裁示後才升格回填本檔。
+- 命名違規候選標 `待正名`，非刪除理由。
+
+> 本節僅為待驗證收斂紀錄，不構成主體升格。
