@@ -226,7 +226,13 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         p = self.path.split("?")[0]
         if p in ("/", "/index.html"):
-            return self._send(200, page_html(), "text/html; charset=utf-8")
+            # 產品級入口 (MRL_Product_Entry_UI · Issue #25/#26/#27/#28/#29)。
+            # 找不到產品 UI 才退回舊工程頁 page_html()（#27：正式入口不應是工程測試頁）。
+            app = _REPO / "src" / "mrl_app.html"
+            try:
+                return self._send(200, app.read_text(encoding="utf-8"), "text/html; charset=utf-8")
+            except Exception:  # noqa: BLE001
+                return self._send(200, page_html(), "text/html; charset=utf-8")
         if p == "/health":
             return self._send(200, {"ok": True, **api_state()})
         if p == "/mrl/state":
