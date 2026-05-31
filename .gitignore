@@ -242,3 +242,5 @@ data/MRL_billing.json
 
 MRL_platform.log
 .mrl_mcp_endpoint
+
+data/MRL_persistent_loop_state.json
