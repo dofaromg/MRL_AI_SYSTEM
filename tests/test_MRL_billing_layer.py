@@ -37,3 +37,12 @@ def test_usage_and_audit_ledger():
 
 def test_unknown_plan_rejected():
     assert "error" in _b().register("u1", "nonsense")
+
+
+def test_reject_negative_units():
+    b=_b(); b.register("u","free")
+    assert b.charge("u",-100)["reason"]=="invalid_units"
+
+def test_reject_zero_units():
+    b=_b(); b.register("u","free")
+    assert b.charge("u",0)["reason"]=="invalid_units"

@@ -67,3 +67,13 @@ class TestErrors:
         r = parse_hex("06 03 88 37 03")
         assert r["known"] is False
         assert r["oid"] is not None
+
+
+class TestFirstArcFix:
+    """Codex review:first subidentifier >=80 不可產生無效 arc"""
+    def test_first_byte_120_is_2_40(self):
+        assert parse_hex("06 01 78")["oid"] == "2.40"   # 0x78=120 → 2.40 (非 3.0)
+    def test_first_byte_40_is_1_0(self):
+        assert parse_hex("06 01 28")["oid"] == "1.0"     # 0x28=40 → 1.0
+    def test_secp384r1_unbroken(self):
+        assert parse_hex("06 05 2b 81 04 00 22")["oid"] == "1.3.132.0.34"

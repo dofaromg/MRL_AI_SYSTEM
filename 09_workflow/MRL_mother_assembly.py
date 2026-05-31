@@ -452,7 +452,9 @@ class MotherAssembly:
         openai_key = os.environ.get("OPENAI_API_KEY", "") or _cfg("llm.openai_api_key")
         anthropic_key = os.environ.get("ANTHROPIC_API_KEY", "") or _cfg("llm.anthropic_api_key")
         local_base = os.environ.get("MRL_LLM_LOCAL_BASE_URL", "") or _cfg("llm.local_base_url")
-        local_on = _cfg("llm.enable_local", "") in ("1", "true", "True")
+        # enable_local 可能是 bool True(config 預設型別)或字串;兩者都要認
+        _el = self.config.get("llm.enable_local", False) if self.config else False
+        local_on = (_el is True) or (str(_el).strip().lower() in ("1", "true", "yes"))
 
         if _native is not None:
             try:

@@ -81,6 +81,13 @@ class MRL_BillingLayer:
         m = self._month()
         used = u["usage"].get(m, 0)
 
+        # 拒絕非正數用量(否則 units<=0 會繞過額度檢查、灌水 remaining)
+        if not isinstance(units, int) or units <= 0:
+            return {"allowed": False, "reason": "invalid_units",
+                    "detail": "units must be a positive integer",
+                    "used": used, "quota": quota, "plan": plan,
+                    "origin_signature": ORIGIN_SIGNATURE}
+
         if used + units > quota:
             rec = {"ts": int(time.time()), "result": "quota_exceeded",
                    "used": used, "quota": quota, "kind": kind}
