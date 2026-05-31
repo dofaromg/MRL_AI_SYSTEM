@@ -244,3 +244,5 @@ MRL_platform.log
 .mrl_mcp_endpoint
 
 data/MRL_persistent_loop_state.json
+
+data/MRL_memory_starmap.json
