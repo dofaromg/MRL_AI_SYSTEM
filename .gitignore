@@ -239,3 +239,6 @@ parallel_output/
 
 data/MRL_user_memory.json
 data/MRL_billing.json
+
+MRL_platform.log
+.mrl_mcp_endpoint
