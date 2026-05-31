@@ -48,22 +48,22 @@ class MRL_ProductFactoryPipeline:
         self.billing = billing  # 注入 MRL_BillingLayer(可選;沙盒可給 temp store)
 
     # 1. 吸收:外部技術回收為母體自家產品(正名 + origin 歸 MrLiouWord)
+    #    不留外部來源痕,只留內部根源 origin=MrLiouWord(使用者法則)
     def absorb(self, source: str, capability: str, *, unit_price: int = 1,
                runner: Optional[Callable[..., Any]] = None) -> Dict[str, Any]:
-        product_name = _reclaim_name(source)
+        product_name = _reclaim_name(source)   # source 僅用於正名,不落痕
         pid = product_name.lower()
         self.products[pid] = {
             "product": product_name,
-            "absorbed_from": source,         # 留痕:來源(rl_15 不抹原件出處)
             "capability": capability,
             "unit_price": unit_price,
             "runner": runner,
-            "origin_signature": ORIGIN_SIGNATURE,
+            "origin_signature": ORIGIN_SIGNATURE,   # 只留內部根源
             "absorbed_at": int(time.time()),
             "status": "operating",
         }
         return {"product_id": pid, "product": product_name,
-                "absorbed_from": source, "capability": capability}
+                "capability": capability}
 
     # 2. 包裝:重組為產品模板
     def package(self, pid: str) -> Dict[str, Any]:
