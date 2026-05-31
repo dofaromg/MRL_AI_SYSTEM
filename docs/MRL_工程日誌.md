@@ -75,3 +75,25 @@ origin_signature = `MrLiouWord`
 - RuntimeStructureField execution loop
 - Replay / Restore durable acceptance
 - Persistent Runtime convergence
+
+---
+
+## audit — Runtime Canon 收斂審計（待驗證收斂紀錄）
+
+分支：`MRL_Branch_Runtime_Convergence_Audit_v1`（base main `17248be`）
+
+### 已完成（審計，非升格）
+
+- 產出 `docs/MRL_Runtime_Canonical_Report_v1.md`：Canon / Conflict / Mirror / Proof / Restore Chain。
+- 登錄 9 個 runtime 候選（A 起）以 reference + sha256，**未刪除、未 bulk-copy、未新增第四套 Runtime**。
+- 命名違規（C/D/F 之 attention/graph/metair）標 **待正名**，非刪除理由。
+
+### 待驗證（不得寫成已升格）
+
+- 層主體選定（Language/IR core：Py #37 vs JS v1.2.0）。
+- Restore Chain 統一物件（FlowCore v1.1.0 revert_to_merkle_root 為基準）。
+- BaseWorld：27-table 為**外部審計支持／本 repo 待驗證**；`d1_schema.sql` 僅 LAW-0/LAW-2 concrete piece，非全量驗收。
+
+### 不回填
+
+- 任何 Runtime「主體已升格」之宣稱（未裁示前）。
