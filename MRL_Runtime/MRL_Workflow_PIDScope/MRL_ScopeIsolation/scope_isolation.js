@@ -32,7 +32,7 @@ class ScopeIsolation {
     for (const [rid, sfScope] of this.sf.nodes) {
       const own = ownerScope.get(rid);
       if (own && own !== sfScope) {
-        findings.push({ type: "scope_mismatch", runtime_id: rid, owner: own, structureField: sfScope });
+        findings.push({ type: "scope_mismatch", runtime_id: rid, owner: own, structureField: sfScope, graph: sfScope });
       }
       if (sfScope === "MRL_ExternalScope") externalOwners.add(rid);
     }
