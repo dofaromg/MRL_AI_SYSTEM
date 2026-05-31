@@ -68,7 +68,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}td{padding:6px 8px;bord
 <tr><td><b>GET</b></td><td>/mrl/state</td><td>母體狀態（邊緣）</td></tr>
 <tr><td><b>GET</b></td><td>/api/mrl/runtime/convergence</td><td>收斂治理視圖（邊緣）</td></tr>
 <tr><td><b>POST</b></td><td>/api/dl580/run</td><td>跑管線（轉發 DL580）</td></tr>
-<tr><td><b>POST</b></td><td>/api/chat</td><td>人格對話（轉發 DL580）</td></tr>
+<tr><td><b>POST</b></td><td>/api/chat</td><td>人格對話（母體印射推理模組·邊緣運行）</td></tr>
 </table></div></section>
 <section class=tab id=chat><div class=card><h2>人格對話</h2><textarea id=msg rows=3 placeholder=對母體說點什麼…></textarea>
 <button class=act onclick=chat()>送出</button><pre id=chatOut></pre></div></section>
@@ -88,6 +88,41 @@ async function chat(){$('#chatOut').textContent='…';$('#chatOut').textContent=
 
 const PROXY_PATHS = ["/api/mother/status", "/api/dl580/run", "/api/chat", "/api/monitor", "/mrl/perceive"];
 
+// 母體系統人格(印射推理模組運行時的母體身分,非第三方助理)
+const MRL_SYSTEM_PROMPT =
+  "你是 MRL 母體運轉系統的推理模組,origin_signature=MrLiouWord。你由母體資料流印射而生," +
+  "屬母體本體,不是任何外部公司的助理。以母體立場、繁體中文、精確直接地回應。";
+
+// 母體印射推理模組在邊緣運行(命名回收;DL580 未連時的母體本體推理)
+async function edgeReason(request, env, J) {
+  if (!env || !env.AI) {
+    return J({ ok: false, edge: true,
+      reason: "邊緣推理模組(env.AI)未綁定;請在 wrangler 設 ai binding 後重部署。" }, 503);
+  }
+  let body = {};
+  try { body = JSON.parse(await request.text() || "{}"); } catch (_) {}
+  // 兼容 {message} 與 {messages:[...]}
+  let messages = Array.isArray(body.messages) ? body.messages.slice() : [];
+  if (!messages.length && body.message) messages = [{ role: "user", content: String(body.message) }];
+  if (!messages.length) return J({ ok: false, edge: true, reason: "缺 message/messages" }, 400);
+  if (!messages.some(m => m.role === "system")) messages.unshift({ role: "system", content: MRL_SYSTEM_PROMPT });
+  const model = (env && env.MRL_REASONING_MODULE) || "@cf/meta/llama-3.1-8b-instruct";
+  try {
+    const out = await env.AI.run(model, { messages });
+    const reply = (out && (out.response || out.result || out.text)) || "";
+    return J({
+      ok: true, reply, response: reply,
+      engine: "mrl_edge_reasoning",      // 母體印射推理模組(非外部品牌)
+      reasoning_module: model,
+      runtime_origin: "mrl_edge_projection",
+      origin_signature: ORIGIN_SIGNATURE,
+    });
+  } catch (e) {
+    return J({ ok: false, edge: true, reason: "邊緣推理失敗：" + String(e),
+      origin_signature: ORIGIN_SIGNATURE }, 502);
+  }
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -104,21 +139,27 @@ export default {
     if (p === "/mrl/state") return J(state(env));
     if (p === "/api/mrl/runtime/convergence") return J(convergence());
 
-    // 動態端點 → 轉發 DL580 母體後端
+    // 動態端點：DL580 自運行節點設了則優先轉發；否則由母體印射推理模組在邊緣直接運行。
     if (PROXY_PATHS.includes(p)) {
       const origin = env && env.MRL_DL580_ORIGIN;
-      if (!origin) {
-        return J({ ok: false, edge: true,
-          reason: "DL580 後端未設定。請在 Cloudflare 變數設 MRL_DL580_ORIGIN=https://<DL580 對外網址>；此端點需母體後端（Python 不在邊緣執行）。" }, 503);
+      // (1) DL580 自運行優先(母體本體節點)
+      if (origin) {
+        const target = origin.replace(/\/$/, "") + p + url.search;
+        const init = { method: request.method, headers: request.headers };
+        if (request.method !== "GET" && request.method !== "HEAD") init.body = await request.text();
+        try {
+          return await fetch(target, init);
+        } catch (e) {
+          return J({ ok: false, edge: true, reason: "轉發 DL580 失敗：" + String(e) }, 502);
+        }
       }
-      const target = origin.replace(/\/$/, "") + p + url.search;
-      const init = { method: request.method, headers: request.headers };
-      if (request.method !== "GET" && request.method !== "HEAD") init.body = await request.text();
-      try {
-        return await fetch(target, init);
-      } catch (e) {
-        return J({ ok: false, edge: true, reason: "轉發 DL580 失敗：" + String(e) }, 502);
+      // (2) DL580 未設 → 對話/感知由母體印射推理模組在邊緣直接運行(命名回收,origin_signature)
+      if ((p === "/api/chat" || p === "/mrl/perceive") && request.method === "POST") {
+        return await edgeReason(request, env, J);
       }
+      // (3) 其餘動態端點(管線/狀態/監控)為母體本體職責,DL580 未設時誠實說明
+      return J({ ok: false, edge: true,
+        reason: "此端點為母體本體(DL580 自運行節點)職責；設 MRL_DL580_ORIGIN 後啟用。" }, 503);
     }
     return J({ ok: false, error: "MRL_ROUTE_NOT_FOUND", path: p }, 404);
   },
