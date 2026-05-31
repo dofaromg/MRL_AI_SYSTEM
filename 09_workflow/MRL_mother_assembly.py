@@ -829,6 +829,17 @@ class MotherAssembly:
                     reply_text = rr["reply"]
                     self.conversation_manager.add_message(session_id, "assistant", reply_text)
                     self._seal_event("chat", {"session_id": session_id, "model": "native"})
+                    # 用戶層長期記憶(rl_15):對話後存回,跨 session 記住。優雅降級。
+                    mem_saved = False
+                    try:
+                        UML = _try_import("MRL_UserMemory_Layer_v1", "MRL_UserMemoryLayer")
+                        if UML is not None:
+                            uml = getattr(self, "_user_memory", None) or UML()
+                            self._user_memory = uml
+                            uml.remember(session_id, message, reply_text)
+                            mem_saved = True
+                    except Exception:  # noqa: BLE001
+                        pass
                     return {
                         "session_id": session_id,
                         "reply": reply_text,
@@ -838,6 +849,7 @@ class MotherAssembly:
                         "grounded": rr["grounded"],
                         "reasoning_strategy": rr["reasoning_strategy"],
                         "semantic_preservation": rr["semantic_preservation"],
+                        "long_term_memory_saved": mem_saved,
                         "origin_signature": ORIGIN_SIGNATURE,
                         "product_name": PRODUCT_NAME,
                     }
