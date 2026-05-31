@@ -40,8 +40,25 @@ SEMANTIC_WEIGHTS = {
 }
 
 
+_STOP = {"是", "的", "什麼", "什么", "嗎", "吗", "呢", "了", "有", "在", "和", "與", "与",
+         "請", "请", "問", "问", "我", "你", "他", "它", "這", "这", "那", "之", "為", "为",
+         "要", "怎麼", "怎么", "如何", "可以", "一個", "一个"}
+
+
 def _tokens(text: str) -> List[str]:
-    return [t for t in re.split(r"[^0-9A-Za-z一-鿿]+", (text or "").lower()) if t]
+    # 英數詞 + 中文 bigram(中文檢索靠雙字組合,避免整句被當一坨)
+    raw = re.split(r"[^0-9A-Za-z一-鿿]+", (text or "").lower())
+    out: List[str] = []
+    for w in raw:
+        if not w:
+            continue
+        if re.fullmatch(r"[一-鿿]+", w):          # 純中文 → 出單字 + bigram
+            chars = [c for c in w if c not in _STOP]
+            out.extend(chars)
+            out.extend(chars[i] + chars[i + 1] for i in range(len(chars) - 1))
+        elif w not in _STOP:
+            out.append(w)
+    return out
 
 
 def _hash(x: Any) -> str:

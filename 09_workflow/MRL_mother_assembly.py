@@ -779,19 +779,12 @@ class MotherAssembly:
         if self.conversation_manager is None:
             return {"error": "ConversationManager unavailable"}
 
-        # Resolve model — deny-by-default (rootlaw rl_00): no implicit "mock".
+        # Resolve model. 母體自主:預設用母體自有神經符號推理核心(native),
+        # 完全不靠外部公司。只有 Mr.liou 明確指定外部 model 才走 gateway。
         resolved_model = model or (
             self.config.get("llm.default_model", "") if self.config else ""
-        )
+        ) or "native"
         allow_mock = bool(self.config.get("llm.allow_mock", False)) if self.config else False
-
-        if not resolved_model:
-            return {
-                "error": "no model configured: set llm.default_model or pass model=",
-                "engine": "mrl_runtime",
-                "runtime_origin": "local_mother_assembly",
-                "origin_signature": ORIGIN_SIGNATURE,
-            }
         if resolved_model.startswith("mock") and not allow_mock:
             return {
                 "error": "MockAdapter is test-only; set llm.allow_mock=true to enable. "
@@ -824,6 +817,34 @@ class MotherAssembly:
             {"role": m["role"], "content": m["content"]}
             for m in history
         ]
+
+        # 母體自主真模型:model=native → 用母體自有神經符號推理核心,零外部公司。
+        if resolved_model == "native":
+            NativeCore = _try_import("MRL_Native_Reasoning_Core_v1", "MRL_NativeReasoningCore")
+            if NativeCore is not None:
+                try:
+                    core = getattr(self, "_native_core", None) or NativeCore()
+                    self._native_core = core
+                    rr = core.reason(message)
+                    reply_text = rr["reply"]
+                    self.conversation_manager.add_message(session_id, "assistant", reply_text)
+                    self._seal_event("chat", {"session_id": session_id, "model": "native"})
+                    return {
+                        "session_id": session_id,
+                        "reply": reply_text,
+                        "model": "native",
+                        "engine": rr["engine"],
+                        "external_company": None,
+                        "grounded": rr["grounded"],
+                        "reasoning_strategy": rr["reasoning_strategy"],
+                        "semantic_preservation": rr["semantic_preservation"],
+                        "origin_signature": ORIGIN_SIGNATURE,
+                        "product_name": PRODUCT_NAME,
+                    }
+                except Exception as exc:  # noqa: BLE001
+                    return {"error": f"native core failed: {exc}",
+                            "engine": "mrl_native", "session_id": session_id,
+                            "origin_signature": ORIGIN_SIGNATURE}
 
         # LLM call — no silent fabrication (rootlaw: no_proof_implies_rhetoric).
         # If the gateway / request type is unavailable, return an explicit error
