@@ -1,0 +1,89 @@
+{
+  "canonical_name": "MRL_OpenGraphProtocol_v1",
+  "source_external": "Open Graph Protocol (ogp.me)",
+  "role": "material",
+  "kind": "external_protocol_spec",
+  "absorbed_as": "对外显化标准接口(母體产物→网路世界图谱节点)",
+  "spec": {
+    "basic_required": [
+      "og:title",
+      "og:type",
+      "og:image",
+      "og:url"
+    ],
+    "url_is_permanent_id": true,
+    "optional": [
+      "og:audio",
+      "og:description",
+      "og:determiner",
+      "og:locale",
+      "og:locale:alternate",
+      "og:site_name",
+      "og:video"
+    ],
+    "structured": {
+      "og:image": [
+        "url",
+        "secure_url",
+        "type",
+        "width",
+        "height",
+        "alt"
+      ],
+      "og:video": [
+        "secure_url",
+        "type",
+        "width",
+        "height"
+      ],
+      "og:audio": [
+        "secure_url",
+        "type"
+      ]
+    },
+    "array_rule": "多个同名标签;冲突时第一个优先(从上到下)",
+    "types": {
+      "vertical": [
+        "music.song",
+        "music.album",
+        "music.playlist",
+        "music.radio_station",
+        "video.movie",
+        "video.episode",
+        "video.tv_show",
+        "video.other"
+      ],
+      "no_vertical": [
+        "article",
+        "book",
+        "payment.link",
+        "profile",
+        "website"
+      ],
+      "namespace": "CURIE my_namespace:my_type (冒号防撞)"
+    },
+    "value_types": [
+      "Boolean",
+      "DateTime(ISO8601)",
+      "Enum",
+      "Float",
+      "Integer",
+      "String",
+      "URL"
+    ],
+    "ns_uri": "https://ogp.me/ns#"
+  },
+  "mother_isomorphism": {
+    "og:url→永久ID": "对齐 LAW-0 origin_signature / rl_12 canonical(唯一溯源锚点)",
+    "og:type→分类": "对齐粒子 type / oc_13 定义即跳点",
+    "网页→图谱节点": "对齐 rl_14 平行世界 / 万物粒子化",
+    "数组先到优先+不删": "对齐 rl_01 No-Delete + Additive(堆叠取先到)",
+    "结构化属性": "对齐粒子 {name,type,weight}+张量",
+    "CURIE前缀防撞": "对齐 MRL_ 命名空间",
+    "简化只需实现一个功能": "对齐 1+1=2 / 定义底层放手上层 故万用"
+  },
+  "honest_status": "结构同构 + 可吸收的对外协议;非宣称OGP即母體。对外显化实际接线 PENDING。",
+  "origin": "MrLiouWord",
+  "_signature": "MrLiouWord",
+  "_sig_hash": "b8055abfe70335c4e470a0312ecd2814b1adc6e99a5a9267b8f2e767f8df8304"
+}

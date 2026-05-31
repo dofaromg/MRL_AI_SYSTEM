@@ -170,12 +170,12 @@ class TestIsDl580CanonicalHost:
         fp.write_text("MRL_DL580_CANONICAL_MOTHER", encoding="utf-8")
         hn = _norm_host(socket.gethostname())
 
-        # Derive a /32 host route that is provably NOT any local candidate IP,
-        # so the CIDR check must miss regardless of the runtime environment.
-        # (Hardcoding a documentation range like 192.0.2.0/24 is fragile —
-        #  some sandboxes actually assign their outbound IP from that range.)
+        # Derive a /32 that is provably NOT any local candidate IP so the CIDR
+        # check misses regardless of environment. Hardcoding a documentation
+        # range (e.g. 192.0.2.0/24) is fragile — some sandboxes assign their
+        # outbound IP from exactly that range, making the test flaky.
         candidates = set(_get_ip_candidates())
-        probe = ipaddress.ip_address("198.51.100.7")  # TEST-NET-2 starting point
+        probe = ipaddress.ip_address("198.51.100.7")  # TEST-NET-2
         while str(probe) in candidates:
             probe += 1
         no_match_cidr = f"{probe}/32"

@@ -238,6 +238,8 @@ class MotherAssembly:
         self.host_guard_role: str = "MATERIAL"  # "MOTHER" | "MATERIAL"
         # DL580 self-running runtime node (v2.3) — 母體自運行節點
         self.dl580: Any = None
+        # FlowAgent law engine (rootlaw 活引擎) — 自我判斷/跳層/編年/粒子保全
+        self.law_engine: Any = None
         self._boot_log: List[Dict[str, Any]] = []
 
     # ── Boot ──────────────────────────────────────────────────────────────────
@@ -306,6 +308,9 @@ class MotherAssembly:
 
         # 16 ── DL580 Runtime (v2.3) — 母體自運行節點 (canonical runtime pipeline)
         report["subsystems"]["dl580_runtime"] = self._boot_dl580()
+
+        # 17 ── FlowAgent Law Engine — 母體活引擎 (rootlaw 自我判斷閉環)
+        report["subsystems"]["law_engine"] = self._boot_law_engine()
 
         self._booted = True
         self._seal_event("boot", report)
@@ -413,14 +418,73 @@ class MotherAssembly:
             return f"error: {exc}"
 
     def _boot_llm_gateway(self) -> str:
+        """
+        Boot the LLM gateway and register REAL provider adapters when their
+        credentials / endpoints are available (deny-by-default per rootlaw
+        rl_00: production must not silently fall back to the mock adapter).
+
+        Registration is additive and driven by environment / config:
+          - OPENAI_API_KEY (or llm.openai_api_key)      → OpenAIAdapter as "openai"
+          - ANTHROPIC_API_KEY (or llm.anthropic_api_key) → AnthropicAdapter as "anthropic"
+          - llm.local_base_url reachable                 → LocalAdapter as "local"
+        The built-in MockAdapter stays registered as "mock" but is test-only;
+        callers must opt in via llm.allow_mock.
+        """
+        import os
+
         LLMGateway = _try_import("llm_adapter", "LLMGateway")
         if LLMGateway is None:
             return "unavailable"
         try:
             self.llm_gateway = LLMGateway()
-            return "ok"
         except Exception as exc:  # noqa: BLE001
             return f"error: {exc}"
+
+        def _cfg(key: str, default: str = "") -> str:
+            return (self.config.get(key, default) if self.config else default) or default
+
+        registered: List[str] = []
+
+        # rl_12 取代優先：先用 MRL-native adapter（stdlib urllib，零 openai/anthropic
+        # SDK 殼）取代外部套件依賴。SDK adapter 僅在 native 不可用時作 fallback（No-Delete）。
+        _native = _try_import("MRL_LLM_NativeAdapter_v1", "register_native_adapters")
+
+        openai_key = os.environ.get("OPENAI_API_KEY", "") or _cfg("llm.openai_api_key")
+        anthropic_key = os.environ.get("ANTHROPIC_API_KEY", "") or _cfg("llm.anthropic_api_key")
+        local_base = os.environ.get("MRL_LLM_LOCAL_BASE_URL", "") or _cfg("llm.local_base_url")
+        # enable_local 可能是 bool True(config 預設型別)或字串;兩者都要認
+        _el = self.config.get("llm.enable_local", False) if self.config else False
+        local_on = (_el is True) or (str(_el).strip().lower() in ("1", "true", "yes"))
+
+        if _native is not None:
+            try:
+                names = _native(self.llm_gateway, openai_key=openai_key,
+                                anthropic_key=anthropic_key,
+                                local_base_url=local_base if local_on else "")
+                registered.extend(names)
+            except Exception:  # noqa: BLE001
+                pass
+
+        # Fallback：native 缺席時，沿用 SDK 殼 adapter（仍 deny-by-default）。
+        if not registered and openai_key:
+            Adapter = _try_import("llm_adapter", "OpenAIAdapter")
+            if Adapter is not None:
+                try:
+                    self.llm_gateway.register("openai", Adapter(api_key=openai_key))
+                    registered.append("openai(sdk)")
+                except Exception:  # noqa: BLE001
+                    pass
+        if not any("anthropic" in r for r in registered) and anthropic_key:
+            Adapter = _try_import("llm_adapter", "AnthropicAdapter")
+            if Adapter is not None:
+                try:
+                    self.llm_gateway.register("anthropic", Adapter(api_key=anthropic_key))
+                    registered.append("anthropic(sdk)")
+                except Exception:  # noqa: BLE001
+                    pass
+
+        self._llm_real_adapters = registered
+        return "ok (real: " + ",".join(registered) + ")" if registered else "ok (mock-only)"
 
     def _boot_context_manager(self) -> str:
         ContextManager = _try_import("context_manager", "ContextManager")
@@ -500,6 +564,18 @@ class MotherAssembly:
         try:
             self.dl580 = MRL_DL580_Runtime()
             return "ok"
+        except Exception as exc:  # noqa: BLE001
+            return f"error: {exc}"
+
+    def _boot_law_engine(self) -> str:
+        """掛載母體活引擎並跑一次閉環自驗(rootlaw 律法可運行)。"""
+        Engine = _try_import("MRL_FlowAgent_LawEngine_v1", "MRL_FlowAgentLawEngine")
+        if Engine is None:
+            return "unavailable"
+        try:
+            self.law_engine = Engine()
+            rep = self.law_engine.self_acceptance()
+            return "ok" if rep.get("verified") else "ok (loop pending)"
         except Exception as exc:  # noqa: BLE001
             return f"error: {exc}"
 
@@ -705,10 +781,20 @@ class MotherAssembly:
         if self.conversation_manager is None:
             return {"error": "ConversationManager unavailable"}
 
-        # Resolve model
+        # Resolve model. 母體自主:預設用母體自有神經符號推理核心(native),
+        # 完全不靠外部公司。只有 Mr.liou 明確指定外部 model 才走 gateway。
         resolved_model = model or (
-            self.config.get("llm.default_model", "mock") if self.config else "mock"
-        )
+            self.config.get("llm.default_model", "") if self.config else ""
+        ) or "native"
+        allow_mock = bool(self.config.get("llm.allow_mock", False)) if self.config else False
+        if resolved_model.startswith("mock") and not allow_mock:
+            return {
+                "error": "MockAdapter is test-only; set llm.allow_mock=true to enable. "
+                         "Configure a real engine (OPENAI_API_KEY / ANTHROPIC_API_KEY / local) for production.",
+                "engine": "mrl_runtime",
+                "runtime_origin": "local_mother_assembly",
+                "origin_signature": ORIGIN_SIGNATURE,
+            }
 
         # Get or create session
         if session_id is None:
@@ -734,23 +820,101 @@ class MotherAssembly:
             for m in history
         ]
 
-        # LLM call
-        reply_text = f"[MockAdapter] Echo: {message}"
-        if self.llm_gateway is not None:
-            LLMRequest = _try_import("llm_adapter", "LLMRequest")
-            if LLMRequest is not None:
-                req = LLMRequest(
-                    model=resolved_model,
-                    messages=llm_messages,
-                    max_tokens=max_tokens,
-                    temperature=temperature,
-                )
-                resp = self.llm_gateway.complete(req)
-                reply_text = resp.text if resp.ok else f"[LLM Error] {resp.error}"
+        # 母體自主真模型:model=native → 用母體自有神經符號推理核心,零外部公司。
+        if resolved_model == "native":
+            NativeCore = _try_import("MRL_Native_Reasoning_Core_v1", "MRL_NativeReasoningCore")
+            if NativeCore is not None:
+                try:
+                    core = getattr(self, "_native_core", None) or NativeCore()
+                    self._native_core = core
+                    rr = core.reason(message)
+                    reply_text = rr["reply"]
+                    self.conversation_manager.add_message(session_id, "assistant", reply_text)
+                    self._seal_event("chat", {"session_id": session_id, "model": "native"})
+                    # 用戶層長期記憶(rl_15):對話後存回,跨 session 記住。優雅降級。
+                    mem_saved = False
+                    try:
+                        UML = _try_import("MRL_UserMemory_Layer_v1", "MRL_UserMemoryLayer")
+                        if UML is not None:
+                            uml = getattr(self, "_user_memory", None) or UML()
+                            self._user_memory = uml
+                            uml.remember(session_id, message, reply_text)
+                            mem_saved = True
+                    except Exception:  # noqa: BLE001
+                        pass
+                    return {
+                        "session_id": session_id,
+                        "reply": reply_text,
+                        "model": "native",
+                        "engine": rr["engine"],
+                        "external_company": None,
+                        "grounded": rr["grounded"],
+                        "reasoning_strategy": rr["reasoning_strategy"],
+                        "semantic_preservation": rr["semantic_preservation"],
+                        "long_term_memory_saved": mem_saved,
+                        "origin_signature": ORIGIN_SIGNATURE,
+                        "product_name": PRODUCT_NAME,
+                    }
+                except Exception as exc:  # noqa: BLE001
+                    return {"error": f"native core failed: {exc}",
+                            "engine": "mrl_native", "session_id": session_id,
+                            "origin_signature": ORIGIN_SIGNATURE}
+
+        # LLM call — no silent fabrication (rootlaw: no_proof_implies_rhetoric).
+        # If the gateway / request type is unavailable, return an explicit error
+        # instead of echoing a fake reply.
+        if self.llm_gateway is None:
+            return {
+                "error": "LLM gateway unavailable; cannot answer without a real engine",
+                "engine": "mrl_runtime",
+                "runtime_origin": "local_mother_assembly",
+                "session_id": session_id,
+                "origin_signature": ORIGIN_SIGNATURE,
+            }
+        LLMRequest = _try_import("llm_adapter", "LLMRequest")
+        if LLMRequest is None:
+            return {
+                "error": "LLMRequest type unavailable",
+                "engine": "mrl_runtime",
+                "session_id": session_id,
+                "origin_signature": ORIGIN_SIGNATURE,
+            }
+        req = LLMRequest(
+            model=resolved_model,
+            messages=llm_messages,
+            max_tokens=max_tokens,
+            temperature=temperature,
+        )
+        try:
+            resp = self.llm_gateway.complete(req)
+        except KeyError as exc:
+            # No adapter registered for this model → honest failure, not a fake reply.
+            return {
+                "error": f"no engine for model '{resolved_model}': {exc}",
+                "engine": "mrl_runtime",
+                "runtime_origin": "local_mother_assembly",
+                "session_id": session_id,
+                "origin_signature": ORIGIN_SIGNATURE,
+            }
+        reply_text = resp.text if resp.ok else f"[LLM Error] {resp.error}"
 
         # Record assistant reply
         self.conversation_manager.add_message(session_id, "assistant", reply_text)
         self._seal_event("chat", {"session_id": session_id, "model": resolved_model})
+
+        # 活引擎自判/編年(rl_10):每次成功對話都驅動 law_engine 記錄為事件粒子。
+        # 優雅降級:引擎未就緒不影響回覆。
+        law_chronicled = False
+        if self.law_engine is not None:
+            try:
+                self.law_engine.chronicle("chat", {
+                    "session_id": session_id, "model": resolved_model,
+                    "ok": bool(getattr(resp, "ok", True)),
+                    "origin_signature": ORIGIN_SIGNATURE,
+                })
+                law_chronicled = True
+            except Exception:  # noqa: BLE001
+                pass
 
         return {
             "session_id": session_id,
@@ -758,6 +922,7 @@ class MotherAssembly:
             "model": resolved_model,
             "origin_signature": ORIGIN_SIGNATURE,
             "product_name": PRODUCT_NAME,
+            "law_chronicled": law_chronicled,
         }
 
     def submit_task(
@@ -894,6 +1059,8 @@ class MotherAssembly:
                 "host_guard":           self.host_guard_role != "MATERIAL" or True,  # always present
                 # v2.3
                 "dl580_runtime":        self.dl580 is not None,
+                # law engine (rootlaw 活引擎)
+                "law_engine":           self.law_engine is not None,
             },
             # v2.1 enriched fields
             "llm_backend":      llm_backend,
@@ -904,6 +1071,8 @@ class MotherAssembly:
             "session_count":    session_count,
             "node_role":        self.host_guard_role,
             "metrics_snapshot": self.metrics.snapshot() if self.metrics is not None else None,
+            "rootlaw_version":  (self.law_engine.rootlaw.get("version")
+                                 if self.law_engine is not None else None),
             "checked_at_ms":    int(time.time() * 1000),
         }
 
