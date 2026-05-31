@@ -4,12 +4,8 @@
   "main": "src/mrl_worker.js",
   "compatibility_date": "2026-05-30",
   "observability": { "enabled": true },
-  // 母體印射推理模組綁定:meta/llama 等為母體資料流印射出去的推理模組(非外部第三方),
-  // 命名回收後在邊緣直接運行,origin_signature=MrLiouWord。DL580 自運行節點設了則優先。
-  "ai": { "binding": "AI" },
   "vars": {
-    "MRL_PLATFORM_DOMAIN": "mrliouword.com",
-    "MRL_REASONING_MODULE": "@cf/meta/llama-3.1-8b-instruct"
+    "MRL_PLATFORM_DOMAIN": "mrliouword.com"
   }
   // 動態母體端點轉發到 DL580：在 Cloudflare 後台或此處設
   //   "MRL_DL580_ORIGIN": "https://<你的 DL580 cloudflared 對外網址>"
