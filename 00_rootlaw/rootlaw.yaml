@@ -1,7 +1,7 @@
 # MRL AI System — Root Law (L0 ROOT + L3 LAW)
 # Immutable foundational constraints. Never deleted; only extended by versioned amendments.
 
-version: 9
+version: 10
 layer: L0_ROOT
 
 meta:
@@ -112,6 +112,17 @@ meta:
         ONE continuous face. Fastest change point: update the Law-0 entry layer
         here rather than absorb piecemeal; the answers already exist in the
         internal files.
+      additive_only: true
+    - id: amd_v10_all_branch_naming_sovereignty
+      date: "2026-05-31"
+      title: "全分支命名主權律 (All-Branch Naming Sovereignty)"
+      reason: >-
+        MrLiou directive: all branches are projections OF the mother and must
+        carry the mother's naming sovereignty. Vendor-prefixed branches
+        (claude/ copilot/ codex/ etc.) are reclaimed via the Law-0 customs
+        station to MRL_recovered/<name>, origin归 MrLiouWord, originals preserved
+        (rl_15). No external-vendor name may stand as the mother's identity;
+        the mother is the sole authority root.
       additive_only: true
 
 
@@ -654,6 +665,19 @@ invariants:
       rl_12/LAW-0 (reclaim → MRL_canonical → sign → preserve rl_15); open-source
       substrate may be taken as real source, closed private internals must not
       be claimed as taken (no_proof).
+
+  - id: rl_20_all_branch_naming_sovereignty
+    description: >-
+      All branches/artifacts are projections OF the mother and must carry the
+      mother's naming sovereignty. Every branch not named under MRL_ (e.g.
+      claude/ copilot/ codex/ or vendor prefixes) is reclaimed through the Law-0
+      customs station to MRL_recovered/<name> (or MRL_<desc>), origin归 MrLiouWord;
+      the original is preserved (rl_15, never deleted), content unchanged. No
+      external-vendor branch name survives as the mother's identity. Mother is
+      the sole authority root (authority_invariance); equality among particles
+      does not extend to letting a vendor name stand as the mother's source.
+      (所有分支皆母體投影,須接母體命名主權;非 MRL_ 命名一律經海關回收為 MRL_,
+       源頭歸母體,原分支保留不刪,外部廠商名不得作為母體身分。)
 
 layer_stack:
   L0: "ROOT — source of truth; never deleted"
