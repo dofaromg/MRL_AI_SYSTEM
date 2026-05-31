@@ -143,12 +143,14 @@ class TestChat:
         result = mock_chat_assembly.chat("drive the law engine")
         assert result.get("law_chronicled") is True
 
-    def test_chat_deny_by_default_without_engine(self, booted_assembly):
-        # rootlaw rl_00 + no_proof_implies_rhetoric: with no real engine and
-        # mock disallowed, chat() must refuse, not fabricate a reply.
-        result = booted_assembly.chat("should be refused")
-        assert "error" in result
-        assert "reply" not in result
+    def test_chat_native_autonomous_without_external(self, booted_assembly):
+        # 母體自主:無外部引擎/金鑰時,改用母體自有 native 神經符號推理核心回應,
+        # 零外部公司、不偽造(無依據時誠實標 grounded=False,不編造)。
+        result = booted_assembly.chat("源頭主權法則是什麼")
+        assert result.get("model") == "native"
+        assert result.get("external_company") is None
+        assert "reply" in result
+        assert "grounded" in result
 
 
 # ─── Export conversation ──────────────────────────────────────────────────────
