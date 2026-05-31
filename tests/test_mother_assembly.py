@@ -18,6 +18,23 @@ def booted_assembly():
     return ma
 
 
+@pytest.fixture
+def mock_chat_assembly():
+    """
+    Boot an assembly explicitly opted into the test-only MockAdapter.
+
+    Production is deny-by-default (rootlaw rl_00): chat() refuses to fabricate
+    a reply without a real engine. Chat-plumbing tests opt in via
+    llm.allow_mock + llm.default_model="mock".
+    """
+    ma = MotherAssembly()
+    ma.boot()
+    if ma.config is not None:
+        ma.config.set("llm.allow_mock", True)
+        ma.config.set("llm.default_model", "mock")
+    return ma
+
+
 # ─── Boot ─────────────────────────────────────────────────────────────────────
 
 class TestBoot:
@@ -35,6 +52,16 @@ class TestBoot:
         ma = MotherAssembly()
         report = ma.boot()
         assert report["origin_signature"] == ORIGIN_SIGNATURE
+
+    def test_law_engine_wired_into_boot(self):
+        # rootlaw 活引擎接入主迴圈:開機載入並跑閉環自驗
+        ma = MotherAssembly()
+        report = ma.boot()
+        assert report["subsystems"]["law_engine"].startswith("ok")
+        assert ma.law_engine is not None
+        st = ma.status()
+        assert st["subsystems"]["law_engine"] is True
+        assert st["rootlaw_version"] >= 7
 
     def test_boot_idempotent(self):
         ma = MotherAssembly()
@@ -91,34 +118,46 @@ class TestStatus:
 # ─── Chat ─────────────────────────────────────────────────────────────────────
 
 class TestChat:
-    def test_chat_returns_reply(self, booted_assembly):
-        result = booted_assembly.chat("Hello from tests!")
+    def test_chat_returns_reply(self, mock_chat_assembly):
+        result = mock_chat_assembly.chat("Hello from tests!")
         assert "reply" in result
         assert isinstance(result["reply"], str)
 
-    def test_chat_creates_session(self, booted_assembly):
-        result = booted_assembly.chat("First message")
+    def test_chat_creates_session(self, mock_chat_assembly):
+        result = mock_chat_assembly.chat("First message")
         sid = result.get("session_id")
         assert sid is not None
 
-    def test_chat_reuses_session(self, booted_assembly):
-        r1 = booted_assembly.chat("Message one")
+    def test_chat_reuses_session(self, mock_chat_assembly):
+        r1 = mock_chat_assembly.chat("Message one")
         sid = r1["session_id"]
-        r2 = booted_assembly.chat("Message two", session_id=sid)
+        r2 = mock_chat_assembly.chat("Message two", session_id=sid)
         assert r2["session_id"] == sid
 
-    def test_chat_contains_origin_signature(self, booted_assembly):
-        result = booted_assembly.chat("ping")
+    def test_chat_contains_origin_signature(self, mock_chat_assembly):
+        result = mock_chat_assembly.chat("ping")
         assert result["origin_signature"] == ORIGIN_SIGNATURE
+
+    def test_chat_drives_law_engine_chronicle(self, mock_chat_assembly):
+        # 主任務收尾:每次成功對話都驅動 law_engine 編年(rl_10)
+        result = mock_chat_assembly.chat("drive the law engine")
+        assert result.get("law_chronicled") is True
+
+    def test_chat_deny_by_default_without_engine(self, booted_assembly):
+        # rootlaw rl_00 + no_proof_implies_rhetoric: with no real engine and
+        # mock disallowed, chat() must refuse, not fabricate a reply.
+        result = booted_assembly.chat("should be refused")
+        assert "error" in result
+        assert "reply" not in result
 
 
 # ─── Export conversation ──────────────────────────────────────────────────────
 
 class TestExportConversation:
-    def test_export_returns_markdown(self, booted_assembly):
-        result = booted_assembly.chat("test export")
+    def test_export_returns_markdown(self, mock_chat_assembly):
+        result = mock_chat_assembly.chat("test export")
         sid = result["session_id"]
-        md = booted_assembly.export_conversation(sid)
+        md = mock_chat_assembly.export_conversation(sid)
         assert isinstance(md, str)
         assert len(md) > 0
         assert "test export" in md

@@ -210,6 +210,22 @@ def query_path(index: Dict[str, Any], rel_path: str) -> Optional[Dict[str, Any]]
     return None
 
 
+# ─── rl_11 對外邊界稽核（Origin Boundary Guard 整合，additive）────────────────
+#   特別標註：以下為 rl_11 源頭主權於 librarian 的 enforcement 掛點。
+#   不改動既有索引行為；僅新增「外部殼名稽核」能力——掃描索引中非 MRL_ 前綴的
+#   名稱（rl_16 不可顯化），並給出 rl_12 正名建議。守衛實作於
+#   MRL_OriginBoundary_Guard_v1（rl_11/rl_12/rl_16/rl_17 + LAW-0 簽章）。
+def boundary_audit(index: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """rl_11：稽核索引內所有檔名,標出外部殼(非 MRL_)並建議 canonical 正名。"""
+    from MRL_OriginBoundary_Guard_v1 import scan_for_boundary_violations  # noqa: PLC0415
+    idx = index if index is not None else load_index()
+    if idx is None:
+        return {"error": "no index; run: python mrl_librarian.py index"}
+    # 只取檔名(basename)做顯化前綴判定;路徑分類由既有 TXYZ 索引負責
+    names = [pathlib.PurePosixPath(e["path"]).name for e in idx.get("entries", [])]
+    return scan_for_boundary_violations(names)
+
+
 # ─── CLI ─────────────────────────────────────────────────────────────────────
 
 def _cmd_index(_args: argparse.Namespace) -> None:
@@ -263,7 +279,15 @@ def _build_argparser() -> argparse.ArgumentParser:
     qp = sub.add_parser("query", help="Look up a single path in the index")
     qp.add_argument("--path", required=True, help="Relative path from repo root")
 
+    # rl_11 對外邊界稽核
+    sub.add_parser("boundary", help="rl_11 audit: flag external-shell names, suggest MRL_ reclaim")
+
     return p
+
+
+def _cmd_boundary(_args: argparse.Namespace) -> None:
+    rep = boundary_audit()
+    print(json.dumps(rep, ensure_ascii=False, indent=2))
 
 
 def main() -> None:
@@ -275,6 +299,8 @@ def main() -> None:
         _cmd_search(args)
     elif args.cmd == "query":
         _cmd_query(args)
+    elif args.cmd == "boundary":
+        _cmd_boundary(args)
 
 
 if __name__ == "__main__":
