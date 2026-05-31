@@ -481,6 +481,22 @@ class MotherAssembly:
                 except Exception:  # noqa: BLE001
                     pass
 
+        # 母體自有 gateway(已上線真模型,mrliouword.com/api/chat)。opt-in by env/config:
+        #   MRL_MOTHER_GATEWAY_URL(或 llm.mother_gateway_url)→ 註冊 mother adapter。
+        # deny-by-default 不變:未設時不註冊,chat() 仍誠實拒絕(rl_00)。
+        mother_url = os.environ.get("MRL_MOTHER_GATEWAY_URL", "") or _cfg("llm.mother_gateway_url")
+        if mother_url:
+            Mother = _try_import("MRL_MotherGateway_Adapter_v1", "MRLNativeMotherGatewayAdapter")
+            if Mother is not None:
+                model_key = (os.environ.get("MRL_MOTHER_MODEL", "")
+                             or _cfg("llm.mother_model") or "mrl-mother")
+                try:
+                    self.llm_gateway.register(model_key, Mother(endpoint=mother_url))
+                    registered.append(f"mother({model_key})")
+                    self._mother_model_key = model_key
+                except Exception:  # noqa: BLE001
+                    pass
+
         self._llm_real_adapters = registered
         return "ok (real: " + ",".join(registered) + ")" if registered else "ok (mock-only)"
 
@@ -782,7 +798,7 @@ class MotherAssembly:
         # Resolve model — deny-by-default (rootlaw rl_00): no implicit "mock".
         resolved_model = model or (
             self.config.get("llm.default_model", "") if self.config else ""
-        )
+        ) or getattr(self, "_mother_model_key", "")   # 母體 gateway 已掛則用之(真模型)
         allow_mock = bool(self.config.get("llm.allow_mock", False)) if self.config else False
 
         if not resolved_model:

@@ -20,6 +20,9 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 ORIGIN_SIGNATURE = "MrLiouWord"
 PLATFORM_DOMAIN = os.environ.get("MRL_PLATFORM_DOMAIN", "mrliouword.com")
+# 平台預設指向母體已上線真模型 gateway,本地 /api/chat 即真模型(可由 env 覆寫)。
+# MotherAssembly 核心仍 deny-by-default;此處只在「平台部署層」開啟,不影響核心測試。
+os.environ.setdefault("MRL_MOTHER_GATEWAY_URL", "https://mrliouword.com/api/chat")
 _REPO = pathlib.Path(__file__).resolve().parent
 for p in [_REPO / "09_workflow", str(_REPO)]:
     if str(p) not in sys.path:
