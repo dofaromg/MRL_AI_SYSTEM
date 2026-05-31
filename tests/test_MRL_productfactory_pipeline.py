@@ -19,12 +19,13 @@ def test_reclaim_name_to_mrl():
     assert "MRL_" in _reclaim_name("some-external_tool")
 
 
-def test_absorb_reclaims_and_keeps_origin():
+def test_absorb_reclaims_and_keeps_only_internal_origin():
     f = MRL_ProductFactoryPipeline()
     r = f.absorb("External Thing", "do stuff")
     assert r["product"].startswith("MRL_")
-    assert r["absorbed_from"] == "External Thing"          # rl_15 留痕
+    assert "absorbed_from" not in r                          # 不留外部來源痕
     pid = r["product_id"]
+    assert "absorbed_from" not in f.products[pid]            # 只留內部根源
     assert f.products[pid]["origin_signature"] == "MrLiouWord"
 
 
