@@ -35,8 +35,10 @@ if _HERE not in sys.path:
 from llm_adapter import LLMAdapter, LLMRequest, LLMResponse  # noqa: E402
 
 ORIGIN_SIGNATURE = "MrLiouWord"
-_DEFAULT_URL = "https://mrliouword.com/api/chat"
-_DEFAULT_MODEL_ID = "@cf/meta/llama-3.1-8b-instruct"
+# 零外部依賴:不 baked 任何外部供應商預設端點。端點一律由 env 指向你 DL580
+# 自運行對外網址(OLLAMA / 自架 gateway)。未設則不連,deny-by-default。
+_DEFAULT_URL = os.environ.get("MRL_MOTHER_GATEWAY_URL", "")
+_DEFAULT_MODEL_ID = os.environ.get("MRL_MOTHER_MODEL_ID", "mrl-dl580")
 _DEFAULT_TIMEOUT = 60
 
 

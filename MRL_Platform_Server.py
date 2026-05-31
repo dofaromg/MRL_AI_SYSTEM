@@ -20,9 +20,9 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 ORIGIN_SIGNATURE = "MrLiouWord"
 PLATFORM_DOMAIN = os.environ.get("MRL_PLATFORM_DOMAIN", "mrliouword.com")
-# 平台預設指向母體已上線真模型 gateway,本地 /api/chat 即真模型(可由 env 覆寫)。
-# MotherAssembly 核心仍 deny-by-default;此處只在「平台部署層」開啟,不影響核心測試。
-os.environ.setdefault("MRL_MOTHER_GATEWAY_URL", "https://mrliouword.com/api/chat")
+# 零外部依賴法則:平台**不**預設指向任何外部模型供應商。真模型一律走母體自運行
+# DL580(OLLAMA / OpenAI 相容自架端點)。設了 MRL_MOTHER_GATEWAY_URL(指向你 DL580
+# 對外網址)才接;未設則 deny-by-default,誠實回「DL580 未連」,絕不偷用外部 cf。
 _REPO = pathlib.Path(__file__).resolve().parent
 for p in [_REPO / "09_workflow", str(_REPO)]:
     if str(p) not in sys.path:
