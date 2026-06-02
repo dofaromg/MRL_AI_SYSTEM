@@ -6,7 +6,8 @@
 param(
   [string]$CloudflaredHome = "D:\cloudflared",
   [string]$TunnelName      = "mrl-dl580-tunnel",
-  [string]$Hostname        = "bridge.mrliouhan.ai",
+  [string]$Hostname        = "mrliouword.com",
+
   [int]$MrlPort            = $(if ($env:MRL_PORT) { [int]$env:MRL_PORT } else { 8790 })
 )
 

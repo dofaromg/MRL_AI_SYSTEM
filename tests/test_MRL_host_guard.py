@@ -164,12 +164,25 @@ class TestIsDl580CanonicalHost:
         assert "verified" in reason
 
     def test_cidr_check_fails_when_no_ip_matches(self, tmp_path):
+        import ipaddress
+
         fp = tmp_path / "role.txt"
         fp.write_text("MRL_DL580_CANONICAL_MOTHER", encoding="utf-8")
         hn = _norm_host(socket.gethostname())
+
+        # Derive a /32 that is provably NOT any local candidate IP so the CIDR
+        # check misses regardless of environment. Hardcoding a documentation
+        # range (e.g. 192.0.2.0/24) is fragile — some sandboxes assign their
+        # outbound IP from exactly that range, making the test flaky.
+        candidates = set(_get_ip_candidates())
+        probe = ipaddress.ip_address("198.51.100.7")  # TEST-NET-2
+        while str(probe) in candidates:
+            probe += 1
+        no_match_cidr = f"{probe}/32"
+
         cfg = HostGuardConfig(
             hostname_allowlist=[hn],
-            cidr_allowlist=["192.0.2.0/24"],   # TEST-NET-1 — never assigned locally
+            cidr_allowlist=[no_match_cidr],
             fingerprint_file=str(fp),
             fingerprint_value="MRL_DL580_CANONICAL_MOTHER",
         )

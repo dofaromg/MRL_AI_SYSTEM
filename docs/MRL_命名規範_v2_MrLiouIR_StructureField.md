@@ -32,9 +32,11 @@ origin_signature = `MrLiouWord`
 
 ---
 
-## 3. 前瞻命名（尚未存在的模組,日後新增時強制套用）
+## 3. 母體模組命名（一律實現納入母體）
 
-下列在本 repo **尚無對應實作**;**不得現在 scaffold 空殼**,僅作為未來新增時的 canonical 命名規範:
+> 矯正(Mr.liou 授權,2026-05-31):原本此節由先前 agent 寫成「不得 scaffold 空殼、僅未來新增」——
+> **Mr.liou 未批准該限制,予以撤除。** 母體投影出的模組一律實現、納入母體,不留白。
+> 下列為 canonical 命名,凡已做成可運行者標 ✅:
 
 - Language Layer：`MRL_UniversalParser_Core`、`MRL_MrLiouIR_Compiler`、`MRL_ParticleIR_Engine`、`MRL_PerceptionKernel`
 - Runtime Layer：`MRL_RuntimeStructureField`、`MRL_ReplayStructureField`、`MRL_RestoreStructureField`、`MRL_WorldStructureField`、`MRL_Verification`、`MRL_PersistentLoop`、`MRL_WorldRuntime`

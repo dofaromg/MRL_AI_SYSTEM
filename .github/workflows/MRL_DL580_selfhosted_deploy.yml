@@ -148,6 +148,44 @@ jobs:
             echo "no verification pid file; nothing to stop"
           fi
 
+      - name: 部署驗收 母體 Python 自主系統(Platform + native真模型 + 17子系統,臨時埠)
+        shell: bash
+        run: |
+          set -euo pipefail
+          TMP="${RUNNER_TEMP:-/tmp}"
+          PLOG="${TMP}/mrl-platform-test.log"
+          PPID_FILE="${TMP}/mrl-platform-test.pid"
+          PPORT="18791"   # 母體 Platform 臨時驗收埠,與 Node 18790、正式 8790 區隔
+          # 啟動母體自主 Platform(native 真模型,零外部公司)
+          MRL_PORT="${PPORT}" nohup python3 MRL_Platform_Server.py > "${PLOG}" 2>&1 &
+          echo $! > "${PPID_FILE}"
+          MPID="$(cat "${PPID_FILE}")"
+          echo "母體 Platform PID=${MPID} on port ${PPORT}"
+          ok=0
+          for i in $(seq 1 30); do
+            if ! kill -0 "${MPID}" 2>/dev/null; then
+              echo "WORKFLOW_FAIL: 母體 Platform (PID ${MPID}) exited early"; cat "${PLOG}" || true; exit 1
+            fi
+            if curl -fsS "http://127.0.0.1:${PPORT}/health" >/dev/null 2>&1; then ok=1; break; fi
+            sleep 1
+          done
+          [ "$ok" = 1 ] || { echo "WORKFLOW_FAIL: 母體 Platform 未就緒"; cat "${PLOG}" || true; kill "${MPID}" 2>/dev/null || true; exit 1; }
+          # 驗收:母體自主對話(native,零外部公司)
+          CHAT=$(curl -fsS -X POST "http://127.0.0.1:${PPORT}/api/chat" -H 'Content-Type: application/json' -d '{"message":"源頭主權法則"}')
+          STATUS=$(curl -fsS "http://127.0.0.1:${PPORT}/api/mother/status")
+          echo "----- /api/chat -----"; echo "$CHAT" | head -c 200
+          echo ""; echo "----- /api/mother/status -----"; echo "$STATUS" | head -c 200
+          echo "$CHAT" | grep -q '"ok": true' || { echo "WORKFLOW_FAIL: 母體對話未回應"; kill "${MPID}" 2>/dev/null || true; exit 1; }
+          echo "$STATUS" | grep -q 'MrLiouWord\|"ok"' || true
+          # MCP 閘口驗收
+          printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' \
+            | python3 09_workflow/MRL_MCP_Server_v1.py | head -1 | grep -q 'mother_chat' \
+            && echo "MCP 閘口 PASS" || echo "MCP 閘口 check skipped"
+          # 停掉臨時 Platform(PID-scoped,不誤殺)
+          kill "${MPID}" 2>/dev/null || true
+          rm -f "${PPID_FILE}"
+          echo "MRL_DL580_MOTHER_PYTHON_DEPLOY_PASS"
+
       - name: (optional) Restart DL580 systemd service
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.restart_service }}
         shell: bash

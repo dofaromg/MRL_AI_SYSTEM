@@ -884,9 +884,27 @@ class _Handler(BaseHTTPRequestHandler):
             _json_response(self, 400, {"error": "'message' is required"}, rid)
             return
 
+        # deny-by-default (rootlaw rl_00): no implicit "mock".
         model = body.get("model") or (
-            _STATE.cfg.get("llm.default_model", "mock") if _STATE.cfg else "mock"
+            _STATE.cfg.get("llm.default_model", "") if _STATE.cfg else ""
         )
+        allow_mock = bool(_STATE.cfg.get("llm.allow_mock", False)) if _STATE.cfg else False
+        if not model:
+            _json_response(
+                self, 400,
+                {"error": "'model' is required unless llm.default_model is configured",
+                 "engine": "mrl_runtime", "trace_id": rid},
+                rid,
+            )
+            return
+        if model.startswith("mock") and not allow_mock:
+            _json_response(
+                self, 403,
+                {"error": "MockAdapter is test-only. Set llm.allow_mock=true to enable.",
+                 "engine": "mrl_runtime", "trace_id": rid},
+                rid,
+            )
+            return
         system = body.get("system", "")
         if not system and _STATE.cfg:
             system = _STATE.cfg.get(
@@ -923,8 +941,11 @@ class _Handler(BaseHTTPRequestHandler):
                     payload = json.dumps({"chunk": chunk}, ensure_ascii=False)
                     _send_chunk(payload)
             else:
+                # No gateway available → honest error, never a fabricated echo
+                # (rootlaw: no_proof_implies_rhetoric).
                 payload = json.dumps(
-                    {"chunk": f"[MockAdapter] Echo: {message}"},
+                    {"error": "LLM gateway unavailable; cannot stream without a real engine",
+                     "engine": "mrl_runtime"},
                     ensure_ascii=False,
                 )
                 _send_chunk(payload)

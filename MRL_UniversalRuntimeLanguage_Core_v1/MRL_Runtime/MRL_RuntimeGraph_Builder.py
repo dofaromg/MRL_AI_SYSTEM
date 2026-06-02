@@ -55,4 +55,5 @@ def to_json(graph: Dict[str, Any]) -> str:
     return _sf.to_json(_normalize_legacy(graph))
 
 
+
 __all__ = ["build", "to_mermaid", "to_dot", "to_json", "ORIGIN_SIGNATURE"]

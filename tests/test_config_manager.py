@@ -27,8 +27,13 @@ def _tmp_cfg() -> ConfigManager:
 
 class TestDefaults:
     def test_default_llm_model(self):
+        # deny-by-default (rootlaw rl_00): no implicit "mock" in production config.
         cfg = _tmp_cfg()
-        assert cfg.get("llm.default_model") == "mock"
+        assert cfg.get("llm.default_model") == ""
+
+    def test_default_allow_mock_is_false(self):
+        cfg = _tmp_cfg()
+        assert cfg.get("llm.allow_mock") is False
 
     def test_default_api_host(self):
         cfg = _tmp_cfg()
@@ -83,13 +88,13 @@ class TestPersistence:
         cfg = _tmp_cfg()
         cfg.set("llm.default_model", "changed")
         cfg.reset()
-        assert cfg.get("llm.default_model") == "mock"
+        assert cfg.get("llm.default_model") == ""
 
     def test_corrupt_file_falls_back_to_defaults(self, tmp_path):
         path = tmp_path / "corrupt.json"
         path.write_text("not valid json", encoding="utf-8")
         cfg = ConfigManager(config_path=path)
-        assert cfg.get("llm.default_model") == "mock"
+        assert cfg.get("llm.default_model") == ""
 
 
 # ─── Environment variable overrides ──────────────────────────────────────────
@@ -115,7 +120,7 @@ class TestEnvOverrides:
     def test_env_var_unset_uses_json(self, monkeypatch):
         monkeypatch.delenv("MRL_LLM_DEFAULT_MODEL", raising=False)
         cfg = _tmp_cfg()
-        assert cfg.get("llm.default_model") == "mock"
+        assert cfg.get("llm.default_model") == ""
 
 
 # ─── Secret masking ───────────────────────────────────────────────────────────
@@ -130,8 +135,9 @@ class TestSecretMasking:
 
     def test_non_sensitive_not_masked(self):
         cfg = _tmp_cfg()
+        cfg.set("llm.default_model", "gpt-4o")
         dumped = cfg.dump(mask_secrets=True)
-        assert dumped["llm"]["default_model"] == "mock"
+        assert dumped["llm"]["default_model"] == "gpt-4o"
 
     def test_mask_false_shows_secrets(self):
         cfg = _tmp_cfg()

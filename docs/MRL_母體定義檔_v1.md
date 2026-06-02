@@ -75,3 +75,17 @@ origin_signature = `MrLiouWord`
 - `Attention`（= Perception 之歷史層）
 
 實作落點見 `MRL_UniversalRuntimeLanguage_Core_v1`（`__init__.py` 之 `CANONICAL_NAME_MAP` / `COMPATIBILITY_ALIASES`）。
+
+---
+
+## 五附、Runtime 候選收斂紀錄（歷史保存）
+
+審計：`docs/MRL_Runtime_Canonical_Report_v1.md`（分支 `MRL_Branch_Runtime_Convergence_Audit_v1`）。
+
+目前存在多套 runtime 候選（A Python IR 核心 #37 / B PIDScope ownership / C DL580 Engine 7700 /
+D JS v1.2.0 core / E Mother Product Runtime / F 3D / G FlowCore 家族 / I RuntimeServer / H d1_schema）。
+
+- 全部以 reference + sha256 登錄，**未刪除、未 bulk-copy**（LAW-2 additive）。
+- 命名違規候選標 `待正名`，非刪除理由。
+
+> 本節為歷史收斂紀錄，v2 canonical 已由第五節確立。

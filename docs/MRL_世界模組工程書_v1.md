@@ -42,3 +42,11 @@ origin_signature = `MrLiouWord`
 
 - 世界模組之資料、結構、命名、感知力設計、多世界同步設計、粒子語言、宇宙符號層、回放回復鏈，未經 MrLiou / MRL 授權不得外用。
 - 全構件保留 `origin_signature="MrLiouWord"`。
+
+---
+
+## 五、3D 世界模組候選（待驗證收斂紀錄）
+
+- `MRL_3D_AI_Reconstruction_System_v1`（候選 F，見 `docs/MRL_Runtime_Canonical_Report_v1.md`）登錄為 **WorldModule 3D candidate**。
+- 以 reference + sha256 登錄，**未刪除、未 bulk-copy**；`Attention/Graph` 命名標 **待正名**（→ Perception/StructureField），COLMAP/OpenMVS 為合法外部 adapter。
+- **尚未**驗收、**尚未**升格為世界模組主體；本節僅待驗證收斂紀錄。
