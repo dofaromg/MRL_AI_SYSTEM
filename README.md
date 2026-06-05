@@ -56,15 +56,15 @@ Design principle: **怎麼過去，就怎麼回來** (the path forward is the pa
 
 ## Key modules
 
-### MRL core modules
+### MRLcore modules
 
-| Module | Purpose |
+| mrlModule | mrlPurpose |
 |--------|---------|
-| `09_workflow/mrl_librarian.py` | T/X/Y/Z indexed file librarian — rebuild with `python 09_workflow/mrl_librarian.py index` |
-| `09_workflow/fltnz_parser.py` | Bidirectional txt↔fltnz↔map↔flpkg↔trace reversible chain parser |
-| `05_persona/world_module.py` | World node / state / trajectory / particle-globe coordinate manager |
-| `04_runtime/runtime_manifest.yaml` | TotalCore · Runtime · Container · CLI install & recovery spec |
-| `data/relations/module_relations.yaml` | Canonical relation map linking all modules across core groups |
+| `09_mrlworkflow/mrl_librarian.py` | T/X/Y/Z indexed file librarian — rebuild with `python 09_mrlworkflow/mrl_librarian.py index` |
+| `09_mrlworkflow/mrlfltnz_parser.py` | Bidirectional txt↔fltnz↔map↔flpkg↔trace reversible chain parser |
+| `05_mrlpersona/mrlworld_module.py` | World node / state / trajectory / particle-globe coordinate manager |
+| `04_mrlruntime/mrlruntime_manifest.yaml` | TotalCore · Runtime · Container · CLI install & recovery spec |
+| `mrldata/mrlrelations/mrlmodule_relations.yaml` | Canonical relation map linking all modules across core groups |
 | `03_memory/merkle/memory_chain.py` | Append-only Merkle chain with `verify()` + `rollback()` |
 | `09_workflow/api.js` | L0–L7 layer stack (Node.js, v1.3) |
 | `09_workflow/signature.js` | LAW-0 signature law implementation |
@@ -81,7 +81,7 @@ Design principle: **怎麼過去，就怎麼回來** (the path forward is the pa
 | `09_workflow/eval_engine.py` | Output scoring / evaluation pipeline | safety scorer enforces L3 LAW deny-list |
 | `09_workflow/plugin_manager.py` | Plugin discovery & lifecycle | plugins must declare TXYZ coordinates (layer + group) |
 
-### MRL_AGI production modules (v2 — 補全)
+### MRLAGI production modules (v2 — 補全)
 
 Distilled from the three major mainstream AI systems (OpenAI / Anthropic / Google) and integrated with MRL particles:
 
@@ -103,7 +103,7 @@ Distilled from the three major mainstream AI systems (OpenAI / Anthropic / Googl
 | `09_workflow/MRL_mother_assembly.py` | **Unified system entry point** — boots and wires all **15 subsystems** together. Includes chat, multi-agent, scheduler, LLM gateway, context management, configuration, guardrail, metrics, and host_guard. |
 | `09_workflow/plugins/` | Plugin directory — drop `*.py` files here following the plugin contract |
 
-### Safety & parsing modules (v1.1 — 本地安全層)
+### mrlSafety & mrl modules (v1.1 — 本地安全層)
 
 > 完全本地可控，無任何外部 API 依賴。
 
@@ -124,16 +124,16 @@ Distilled from the three major mainstream AI systems (OpenAI / Anthropic / Googl
 ## Layer stack (L0–L7)
 
 ```
-L0 ROOT     source of truth; never deleted
-L1 SEED     initial constraints / contracts
-L2 PARTICLE content units and state changes
-L3 LAW      explicit rules (Rootlaw + compliance + AUP gates)
-L4 WORLD    aligned models across worlds
-L5 MIRROR   translation of actions/state across worlds
-L6 REFLECT  facts, records, accountability
-L7 LOOP     validate, then roll forward; rollback with proofs
-MetaEnv     variable environment: spawn / scale / snapshot / migrate
-Platform    FluinHub / FlowCoreLoop / partner platforms / 3-D globe / AI chat
+L0 MrlROOT     source of truth; never deleted
+L1 MrlSEED     initial constraints / contracts
+L2 MrlPARTICLE content units and state changes
+L3 MrlLAW      explicit rules (Rootlaw + compliance + AUP gates)
+L4 MrlWORLD    aligned models across worlds
+L5 MrlMIRROR   translation of actions/state across worlds
+L6 MrlRlREFLECT  facts, records, accountability
+L7 MrlLOOP     validate, then roll forward; rollback with proofs
+MRLMetaEnv     variable environment: spawn / scale / snapshot / migrate
+MRLPlatform    FluinHub / FlowCoreLoop / partner platforms / 3-D globe / AI chat
 ```
 
 ## Quick start
