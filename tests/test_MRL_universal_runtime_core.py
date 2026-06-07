@@ -80,9 +80,10 @@ def test_v2_canonical_pipeline():
 def test_compatibility_aliases():
     import MRL_UniversalRuntimeLanguage_Core_v1.MRL_Language as L
     import MRL_UniversalRuntimeLanguage_Core_v1.MRL_Runtime as R
-    # 舊名仍可用，但指向 canonical 單一實作
+    # 舊名仍可用：MetaIR→canonical compiler；RuntimeGraph→compat shim（保留 legacy 契約）
     assert L.MRL_MetaIR is L.MRL_MrLiouIR_Compiler
-    assert R.MRL_RuntimeGraph is R.MRL_RuntimeStructureField
+    assert R.MRL_RuntimeGraph is R.MRL_RuntimeGraph_Builder           # 指向 shim，非 canonical 模組
+    assert R.MRL_RuntimeGraph_Builder._sf is R.MRL_RuntimeStructureField  # shim 委派單一 canonical
     # 舊 compile_metair 鏡射舊鍵供兼容
     parsed = MRL_UniversalParser_Core.parse(SAMPLE_PY, "python")
     legacy = L.MRL_MetaIR_Compiler.compile_metair(parsed)
@@ -106,6 +107,11 @@ def test_runtime_structurefield_alias_keys():
     assert legacy["graph_hash"] == sf["structurefield_hash"]
     assert legacy["edges"] == sf["relations"]
     assert legacy["replay_graph"] == sf["replay_structurefield"]
+    # 回歸：legacy graph 物件（僅 nodes/edges/graph_hash，如舊存檔）餵入 shim viz 不得 KeyError
+    legacy_obj = {"nodes": sf["nodes"], "edges": sf["relations"], "graph_hash": sf["structurefield_hash"]}
+    assert isinstance(MRL_RuntimeGraph_Builder.to_mermaid(legacy_obj), str)
+    assert isinstance(MRL_RuntimeGraph_Builder.to_dot(legacy_obj), str)
+    assert isinstance(MRL_RuntimeGraph_Builder.to_json(legacy_obj), str)
 
 
 def test_particle_chain_reversible():

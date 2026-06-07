@@ -66,6 +66,7 @@ def verify_canonical_naming() -> Dict[str, Any]:
     from MRL_UniversalRuntimeLanguage_Core_v1.MRL_Language import MRL_MetaIR, MRL_MrLiouIR_Compiler
     from MRL_UniversalRuntimeLanguage_Core_v1.MRL_Runtime import (
         MRL_RuntimeGraph,
+        MRL_RuntimeGraph_Builder,
         MRL_RuntimeStructureField,
     )
 
@@ -88,10 +89,14 @@ def verify_canonical_naming() -> Dict[str, Any]:
         all(k in subjects for k in ("MRL_MrLiouIR", "MRL_StructureField", "Perception")),
         ",".join(subjects.keys()))
 
-    # 舊名仍存在但僅作 alias，指向單一 canonical 實作
-    add("alias_MetaIR_points_canonical", MRL_MetaIR is MRL_MrLiouIR_Compiler, "MRL_MetaIR→MrLiouIR")
-    add("alias_RuntimeGraph_points_canonical", MRL_RuntimeGraph is MRL_RuntimeStructureField,
-        "MRL_RuntimeGraph→RuntimeStructureField")
+    # 舊名僅作 compatibility alias 且委派至單一 canonical 實作（不平行）
+    add("alias_MetaIR_points_canonical", MRL_MetaIR is MRL_MrLiouIR_Compiler, "MRL_MetaIR→MrLiouIR_Compiler")
+    # MRL_RuntimeGraph → compat shim（保留 legacy graph_hash/edges 契約）；shim 委派 canonical
+    add("alias_RuntimeGraph_is_compat_shim", MRL_RuntimeGraph is MRL_RuntimeGraph_Builder,
+        "MRL_RuntimeGraph→MRL_RuntimeGraph_Builder(shim)")
+    add("shim_delegates_single_canonical",
+        getattr(MRL_RuntimeGraph_Builder, "_sf", None) is MRL_RuntimeStructureField,
+        "shim viz 委派 MRL_RuntimeStructureField（單一真實來源）")
     add("compat_aliases_declared",
         core.COMPATIBILITY_ALIASES.get("MetaIR") == "MRL_MrLiouIR"
         and core.COMPATIBILITY_ALIASES.get("RuntimeGraph") == "MRL_RuntimeStructureField",

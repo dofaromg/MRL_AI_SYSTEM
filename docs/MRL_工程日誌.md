@@ -40,6 +40,30 @@ origin_signature = `MrLiouWord`
 
 ---
 
+## v2 — Runtime Civilization Stack 核心 + 命名規範對齊
+
+分支：`MRL_Branch_StructureField_Rename_Alignment_v1`（自 PR #35 分出）
+
+### 已完成（實跑驗證）
+
+- 建立 `MRL_UniversalRuntimeLanguage_Core_v1` 可運行核心管線（acceptance 6/6 PASS）。
+- 套用 v2 正式命名規範：`MetaIR → MrLiouIR`（MrLiou 中介語義層）、`Graph → StructureField`（結構場）。
+- `MetaIR / Graph / Attention` 降為歷史名稱 / Adapter / alias，主線 canonical 不再使用。
+- 舊名以 alias shim 模組向後兼容（`MRL_MetaIR_Compiler`、`MRL_RuntimeGraph_Builder`）。
+- 視覺化更名：`Graph Visualization → MRL_StructureField_Visualization`。
+
+### 待驗證 / 不得宣稱完成
+
+- API `/api/mrl/mrliouir/*`、`/api/{runtime,world}/structurefield` 與 DB `*StructureField_Node/Relation`：
+  目前無對應程式，僅命名定錨，不得宣稱已實作。
+- DL580 實機 acceptance、live BaseWorld DB 連線：未驗證。
+
+### 下一步
+
+- `MRL_PersistentLoop_Daemon_v1`（規格已備，待複查後實作）。
+
+---
+
 ## v4 — RuntimeParticle Compression + StructureField 硬正名
 
 分支：`MRL_Branch_RuntimeParticle_Compression_v4`

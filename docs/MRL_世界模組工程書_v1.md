@@ -32,6 +32,9 @@ origin_signature = `MrLiouWord`
 
 - 世界模組與平行世界模組之間，透過 `MRL_Runtime/MRL_多世界同步` 進行場態對齊。
 - 回放回復鏈（`MRL_Runtime/MRL_回放回復`）負責世界狀態之 Replay / Restore。
+- v2 canonical：世界場態以 **StructureField**（結構場）表達（`MRL_WorldStructureField`），
+  非靜態 graph；`WorldGraph` 為歷史 alias。實作見 `MRL_UniversalRuntimeLanguage_Core_v1/MRL_Runtime/MRL_RuntimeStructureField.py`
+  之 `world_structurefield` 與 `MRL_WorldRuntime`。
 
 ---
 

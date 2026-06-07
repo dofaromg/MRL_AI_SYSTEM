@@ -12,6 +12,7 @@ import sys
 _REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 for _sub in [
+    _REPO_ROOT,
     _REPO_ROOT / "09_workflow",
     _REPO_ROOT / "03_memory" / "merkle",
     _REPO_ROOT / "03_memory" / "vector",

@@ -136,6 +136,31 @@ MRLMetaEnv     variable environment: spawn / scale / snapshot / migrate
 MRLPlatform    FluinHub / FlowCoreLoop / partner platforms / 3-D globe / AI chat
 ```
 
+## Runtime Civilization Stack
+
+`MRL_UniversalRuntimeLanguage_Core_v1/` 為正式 Runtime 核心（v2 canonical：Language →
+MrLiouIR → ParticleIR → StructureField → Replay → Restore → Verification →
+WorldRuntime → PersistentLoop）。禁止 Prompt→LLM→Output。
+（`MetaIR`/`Graph` 已降為歷史 alias，正式主體名為 `MrLiouIR`/`StructureField`。）
+
+```bash
+# 驗收（全通過印出 MRL_RUNTIME_ACCEPTANCE_PASS）
+python3 MRL_UniversalRuntimeLanguage_Core_v1/acceptance/MRL_Runtime_Acceptance_TestSuite.py
+# 端到端執行 + 產出報告/StructureField 視覺化
+python3 MRL_UniversalRuntimeLanguage_Core_v1/scripts/MRL_runtime_civilization_run.py
+```
+
+詳見 `MRL_UniversalRuntimeLanguage_Core_v1/README.md`。
+正式命名規範（唯一權威來源）：`docs/MRL_命名規範_v2_MrLiouIR_StructureField.md`。
+
+## DL580
+
+DL580 為 MRL 內部母體自運行主節點（部署主體）。  
+GitHub 為工程鏡像與版本通道（MRL_External_Mirror_Layer）。  
+Cloud Code / Cloudflared / XOOPZ / Claude 為 Adapter / Mirror，不是母體。
+
+對外橋接：`deploy/dl580/cloudflared/` → `https://bridge.mrliouhan.ai`。
+
 ## Quick start
 
 ```bash
