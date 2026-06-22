@@ -45,7 +45,7 @@ APFS / Batch072 為部署與備份鏈，掛在「DL580 本地 Runtime」這一�
 | Windows / PowerShell | `deploy/dl580/MRL_dl580_start.ps1` |
 | 長駐服務 (systemd) | `deploy/dl580/MRL_systemd_service.template` |
 | self-hosted runner | `deploy/dl580/MRL_selfhosted_runner_notes.md` |
-| 對外橋接 (Cloudflare Tunnel) | `deploy/dl580/cloudflared/MRL_cloudflared_deploy.ps1` → `bridge.mrliouhan.ai` |
+| 對外橋接 (Cloudflare Tunnel) | `deploy/dl580/cloudflared/MRL_cloudflared_deploy.ps1` → `bridge.mrliouword.com` (v3.1.0) |
 
 啟動流程（與根 README 一致）：
 
