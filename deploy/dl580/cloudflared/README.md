@@ -1,9 +1,12 @@
-# deploy/dl580/cloudflared — bridge.mrliouhan.ai Cloudflare Tunnel 部署入口
+# deploy/dl580/cloudflared — bridge.mrliouword.com Cloudflare Tunnel 部署入口
 
 origin_signature = `MrLiouWord`
 
 將 DL580 母體節點的 MRL Runtime 透過 Cloudflare Tunnel 對外暴露為
-`https://bridge.mrliouhan.ai`，免開放公網埠、免公網 IP、免處理憑證。
+`https://bridge.mrliouword.com`（v3.1.0，原 v2 使用 bridge.mrliouhan.ai），
+免開放公網埠、免公網 IP、免處理憑證。
+
+完整連線規格見：[MRL_bridge_connection_v3.1.0.md](MRL_bridge_connection_v3.1.0.md)
 
 ---
 

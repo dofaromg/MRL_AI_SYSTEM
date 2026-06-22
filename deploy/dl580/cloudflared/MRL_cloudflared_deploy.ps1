@@ -1,12 +1,14 @@
-# MRL_DL580_Cloudflared_Deploy_v2 — bridge.mrliouhan.ai Cloudflare Tunnel 部署入口 (Windows / PowerShell, D: 路徑版)
+# MRL_DL580_Cloudflared_Deploy_v3 — bridge.mrliouword.com Cloudflare Tunnel 部署入口 (Windows / PowerShell, D: 路徑版)
 # origin_signature=MrLiouWord
 # 權位定位：Cloudflare Tunnel 為「接線 / Adapter」層（對外橋接通道），非 MRL 母體本體。
-#           DL580 為母體自運行節點；bridge.mrliouhan.ai 僅為對外入口 hostname。
+#           DL580 為母體自運行節點；bridge.mrliouword.com 僅為對外入口 hostname。
+# v3.1.0 變更：hostname 由 bridge.mrliouhan.ai → bridge.mrliouword.com
+# 部署後須在 Cloudflare Worker 設環境變數：MRL_DL580_ORIGIN=https://bridge.mrliouword.com
 # Batch 076 路徑改寫：因 C: 槽滿載，cloudflared 主目錄改置於 D:\cloudflared。
 param(
   [string]$CloudflaredHome = "D:\cloudflared",
   [string]$TunnelName      = "mrl-dl580-tunnel",
-  [string]$Hostname        = "mrliouword.com",
+  [string]$Hostname        = "bridge.mrliouword.com",
 
   [int]$MrlPort            = $(if ($env:MRL_PORT) { [int]$env:MRL_PORT } else { 8790 })
 )
