@@ -4,6 +4,7 @@
 > 當下狀態日期：2026-06-29（沙盒模板）
 > 適用範圍：主線回填 / 分支收斂 / 治理層回填紀錄
 > 法則依據：Additive-Only（只新增、只定位、不刪除、不覆蓋）+ no_proof_implies_rhetoric（未驗證不得宣稱完成）
+> 完整實填版：`/home/runner/work/MRL_AI_SYSTEM/MRL_AI_SYSTEM/docs/MRL_主線回填清單_完整版_v1.md`
 
 ---
 
