@@ -22,8 +22,11 @@ const MRL_PROTECTED_NAMES = [
  * @returns {boolean}
  */
 function _assertNoMRLNameOverride(title, sourceId) {
+  const titleLower = title.toLowerCase();
+  const idLower = sourceId.toLowerCase();
   for (const name of MRL_PROTECTED_NAMES) {
-    if (title.includes(name) || sourceId.includes(name)) {
+    const nameLower = name.toLowerCase();
+    if (titleLower.includes(nameLower) || idLower.includes(nameLower)) {
       throw new Error(
         `INTAKE_REJECTED: External source attempted to use protected MRL name "${name}". ` +
         `External sources cannot define or claim MRL namespaces.`

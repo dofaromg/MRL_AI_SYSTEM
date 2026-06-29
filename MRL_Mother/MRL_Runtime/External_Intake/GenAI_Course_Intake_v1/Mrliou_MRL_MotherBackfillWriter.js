@@ -19,19 +19,29 @@ function _resolveBackfillDir() {
 
 /**
  * Additive-only file write: refuses to overwrite an existing file.
+ * Uses the 'wx' exclusive-create flag to atomically fail if the file already
+ * exists, avoiding the TOCTOU race between existsSync and writeFileSync.
+ * All I/O errors are caught and returned as FAIL results rather than thrown.
  * @param {string} filePath - absolute path
  * @param {string} content - file content string
  * @returns {{ written: boolean, reason: string }}
  */
 function _additiveWrite(filePath, content) {
-  if (fs.existsSync(filePath)) {
+  try {
+    fs.writeFileSync(filePath, content, { encoding: 'utf8', flag: 'wx' });
+    return { written: true, reason: 'OK' };
+  } catch (err) {
+    if (err.code === 'EEXIST') {
+      return {
+        written: false,
+        reason: `ADDITIVE_WRITE_BLOCKED: File already exists at "${filePath}". Cannot overwrite mother body files.`
+      };
+    }
     return {
       written: false,
-      reason: `ADDITIVE_WRITE_BLOCKED: File already exists at "${filePath}". Cannot overwrite mother body files.`
+      reason: `WRITE_ERROR: ${err.message}`
     };
   }
-  fs.writeFileSync(filePath, content, 'utf8');
-  return { written: true, reason: 'OK' };
 }
 
 /**
@@ -93,8 +103,10 @@ function writeBackfillRecord(params) {
     sha256: ''
   };
 
-  const jsonString = JSON.stringify(recordContent, null, 2);
-  const sha256 = computeSha256(jsonString);
+  // SHA256 is computed from the canonical form with the sha256 field absent.
+  // To verify: parse the JSON, delete the sha256 key, JSON.stringify, hash, compare.
+  const { sha256: _omit, ...recordForHashing } = recordContent;
+  const sha256 = computeSha256(JSON.stringify(recordForHashing, null, 2));
   recordContent.sha256 = sha256;
 
   const finalJson = JSON.stringify(recordContent, null, 2);
@@ -105,8 +117,10 @@ function writeBackfillRecord(params) {
   const mdFilePath = path.join(backfillDir, `${record_filename_base}.md`);
   const mdResult = _additiveWrite(mdFilePath, mdContent);
 
+  const jsonOk = jsonResult.written || jsonResult.reason.startsWith('ADDITIVE_WRITE_BLOCKED');
+  const mdOk = mdResult.written || mdResult.reason.startsWith('ADDITIVE_WRITE_BLOCKED');
   return {
-    write_status: (jsonResult.written || !jsonResult.written) && (mdResult.written || !mdResult.written) ? 'PASS' : 'FAIL',
+    write_status: jsonOk && mdOk ? 'PASS' : 'FAIL',
     json_file: { path: jsonFilePath, written: jsonResult.written, reason: jsonResult.reason },
     md_file: { path: mdFilePath, written: mdResult.written, reason: mdResult.reason },
     backfill_record: recordContent,

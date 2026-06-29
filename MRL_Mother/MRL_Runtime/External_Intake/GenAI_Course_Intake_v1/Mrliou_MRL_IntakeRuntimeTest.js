@@ -201,7 +201,7 @@ function runTest() {
     ];
     const allTargets = mappingContent.mappings ? mappingContent.mappings.map(m => m.mrl_target) : [];
     for (const target of requiredTargets) {
-      assert(`T7: mapping contains "${target}"`, allTargets.some(t => t.includes(target.replace('Mrliou_', ''))), `missing: ${target}`);
+      assert(`T7: mapping contains "${target}"`, allTargets.some(t => t === target), `missing: ${target}`);
     }
   }
 
