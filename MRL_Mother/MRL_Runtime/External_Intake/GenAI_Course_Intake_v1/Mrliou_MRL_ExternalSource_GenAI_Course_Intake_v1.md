@@ -34,7 +34,7 @@
 
 ## 吸收狀態
 
-- 吸收方：Mrliou_MRL_Mother_System
+- 吸收方：MRL_Mother_System
 - 吸收模式：Capability / Methodology Reference
 - 映射對象：Mrliou_MRL_GenAI_External_To_Mother_Mapping_v1
 

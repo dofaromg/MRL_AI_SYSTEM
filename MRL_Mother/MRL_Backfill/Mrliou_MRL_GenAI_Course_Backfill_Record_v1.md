@@ -11,7 +11,7 @@
 | Evidence Level | **HIGH** |
 | Runtime Status | BACKFILL_WRITTEN — 沙盒（當下狀態 2026-06-29）；待實機 MRL_Mother Runtime 驗收 |
 | Created At | 2026-06-29T00:00:00.000Z |
-| SHA256 | `a49521094c7431a1ffd491e8760209cefa9b18b208dcf88c3409b3f4a552f816` |
+| SHA256 | `1ac8707b0cec2c0d2140ffad0e0376ddde32c4fd1308cc20e89525f3e0f8a0c9` |
 
 ## Mapped Capabilities
 
