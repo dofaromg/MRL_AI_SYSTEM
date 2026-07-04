@@ -1,0 +1,61 @@
+{
+  "_meta": {
+    "schema_version": "1",
+    "description": "Seed manifest — fingerprints and indexes for canonical seed sources. No large blobs stored in repo. All content lives in the sealed Dropbox path; only SHA-256 fingerprints are committed here.",
+    "authority": "08_sources/sources.manifest.yaml",
+    "updated_at": "2026-07-04T00:00:00Z",
+    "updated_by": "system"
+  },
+  "seeds": [
+    {
+      "id": "sealed_spec_v2",
+      "name": "Mrliou世界模組系統_完整規範_v2.docx",
+      "source_ref": "sealed_spec_v2",
+      "layer": "L0",
+      "role": "canonical sealed specification (Immutable)",
+      "storage": "Dropbox:Mrliou_agents/Mrl_FlowAgent/FlowCoreLoop_AIComputer_Runtime_v0/memory/ingest/raw",
+      "fingerprint": {
+        "algorithm": "sha256",
+        "value": "PENDING — recompute from local Dropbox copy and replace this placeholder",
+        "size_bytes": null
+      },
+      "ingest_status": "registered",
+      "tags": ["canonical", "immutable", "spec"]
+    },
+    {
+      "id": "project_structure",
+      "name": "Mrl__Project_Structure.txt",
+      "source_ref": "project_structure",
+      "layer": "L0",
+      "role": "project structure / repo layout",
+      "storage": "Dropbox:Mrliou_agents/Mrl_FlowAgent/FlowCoreLoop_AIComputer_Runtime_v0/memory/ingest/raw",
+      "fingerprint": {
+        "algorithm": "sha256",
+        "value": "PENDING — recompute from local Dropbox copy and replace this placeholder",
+        "size_bytes": null
+      },
+      "ingest_status": "registered",
+      "tags": ["structure", "layout"]
+    },
+    {
+      "id": "universe_report",
+      "name": "MR_L_Universe_Generation_Report_v1.0.txt",
+      "source_ref": "universe_report",
+      "layer": "L0",
+      "role": "world generation framing",
+      "storage": "Dropbox:Mrliou_agents/Mrl_FlowAgent/FlowCoreLoop_AIComputer_Runtime_v0/memory/ingest/raw",
+      "fingerprint": {
+        "algorithm": "sha256",
+        "value": "PENDING — recompute from local Dropbox copy and replace this placeholder",
+        "size_bytes": null
+      },
+      "ingest_status": "registered",
+      "tags": ["world", "generation", "framing"]
+    }
+  ],
+  "instructions": {
+    "fingerprint_update": "Run sha256sum (Linux/macOS) or certutil -hashfile (Windows) against the local Dropbox copy, then replace the 'PENDING' value with the 40-char hex digest. Never store the file content itself in this repo.",
+    "add_seed": "Append a new entry to 'seeds[]'. Assign a unique 'id'. Register the corresponding source in 08_sources/sources.manifest.yaml. Set ingest_status to 'registered' until fingerprint is confirmed.",
+    "deprecate_seed": "Set 'ingest_status' to 'deprecated' and add a 'deprecated_at' field. Do not delete the entry."
+  }
+}
