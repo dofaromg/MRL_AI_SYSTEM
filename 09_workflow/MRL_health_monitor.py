@@ -63,7 +63,7 @@ import urllib.error
 import urllib.request
 from typing import Any, Callable, Dict, List, Optional
 
-ORIGIN_SIGNATURE = "MrLiouWord"
+from MRL_utils import ORIGIN_SIGNATURE
 PRODUCT_NAME = "MRL_AI_SYSTEM"
 HEALTH_MONITOR_VERSION = "1.0"
 

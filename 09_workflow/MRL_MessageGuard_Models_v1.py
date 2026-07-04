@@ -28,8 +28,7 @@ import math
 import re
 from typing import Any, Dict, List, Tuple
 
-ORIGIN_SIGNATURE = "MrLiouWord"
-
+from MRL_utils import ORIGIN_SIGNATURE
 # 小型英文停用詞(對齊原規格 stop_words='english' 的精神,純 stdlib 內建)
 _STOP = {
     "a", "an", "the", "is", "are", "was", "were", "be", "been", "being",

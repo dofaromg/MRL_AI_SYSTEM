@@ -26,9 +26,7 @@ import pathlib
 import time
 from typing import Any, Callable, Dict, List, Optional
 
-ORIGIN_SIGNATURE = "MrLiouWord"
-
-
+from MRL_utils import ORIGIN_SIGNATURE
 def _reclaim_name(source: str) -> str:
     """rl_12 命名正名:外部來源 → MRL 自家產品名。"""
     base = "".join(ch for ch in source if ch.isalnum() or ch in " _-").strip()

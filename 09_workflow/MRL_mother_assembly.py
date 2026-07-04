@@ -91,7 +91,7 @@ import sys
 import time
 from typing import Any, Dict, List, Optional
 
-ORIGIN_SIGNATURE = "MrLiouWord"
+from MRL_utils import ORIGIN_SIGNATURE, _try_import  # noqa: E402
 PRODUCT_NAME = "MRL_AI_SYSTEM"
 ASSEMBLY_VERSION = "2.3"
 
@@ -180,15 +180,7 @@ def _ensure_paths() -> None:
 _ensure_paths()
 
 # ── Lazy imports (graceful degradation if a module is unavailable) ────────────
-
-def _try_import(module: str, attr: str) -> Any:
-    try:
-        import importlib
-        mod = importlib.import_module(module)
-        return getattr(mod, attr)
-    except Exception:  # noqa: BLE001
-        return None
-
+# _try_import is imported from MRL_utils (L0 RootGate canonical).
 
 # ─── MotherAssembly ───────────────────────────────────────────────────────────
 

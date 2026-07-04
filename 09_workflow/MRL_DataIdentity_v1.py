@@ -27,7 +27,7 @@ if _HERE not in sys.path:
 
 from MRL_OriginBoundary_Guard_v1 import embed_signature, verify_signature  # noqa: E402
 
-ORIGIN_SIGNATURE = "MrLiouWord"
+from MRL_utils import ORIGIN_SIGNATURE
 _DATA_FIELDS = ("name", "address", "phone", "email", "mobile")
 _EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 _PHONE_RE = re.compile(r"^\+?[0-9][0-9\-\s]{5,}$")

@@ -16,9 +16,7 @@ from __future__ import annotations
 import json
 from typing import Any, Dict, List, Tuple
 
-ORIGIN_SIGNATURE = "MrLiouWord"
-
-
+from MRL_utils import ORIGIN_SIGNATURE
 class MRL_PingResonanceMap:
     """人格共振圖:節點 + 共振權重邊;Ping 傳播共振。"""
 

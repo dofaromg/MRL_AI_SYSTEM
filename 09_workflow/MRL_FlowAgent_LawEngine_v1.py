@@ -26,7 +26,7 @@ import re
 import time
 from typing import Any, Dict, List, Optional, Tuple
 
-ORIGIN_SIGNATURE = "MrLiouWord"
+from MRL_utils import ORIGIN_SIGNATURE
 _REPO = pathlib.Path(__file__).resolve().parent.parent
 _ROOTLAW = _REPO / "00_rootlaw" / "rootlaw.yaml"
 _CHRONICLE = _REPO / "06_trace" / "chronicle" / "MRL_FlowAgent_Chronicle.jsonl"

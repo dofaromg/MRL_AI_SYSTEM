@@ -63,7 +63,7 @@ import re
 import time
 from typing import Any, Dict, List, Optional
 
-ORIGIN_SIGNATURE = "MrLiouWord"
+from MRL_utils import ORIGIN_SIGNATURE
 GUARDRAIL_VERSION = "1.0"
 
 # ─── Decision constants ───────────────────────────────────────────────────────
