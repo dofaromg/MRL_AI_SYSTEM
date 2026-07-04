@@ -31,7 +31,7 @@ import re
 import time
 from typing import Any, Dict, List, Optional
 
-ORIGIN_SIGNATURE = "MrLiouWord"
+from MRL_utils import ORIGIN_SIGNATURE
 _REPO = pathlib.Path(__file__).resolve().parent.parent
 _RECLAIM_DIR = _REPO / "MRL_ParticleArchive" / "Reclaim"
 THREE_STRIKE = 3

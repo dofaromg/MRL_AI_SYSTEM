@@ -18,8 +18,7 @@ from __future__ import annotations
 
 from typing import Dict, List, Optional, Tuple
 
-ORIGIN_SIGNATURE = "MrLiouWord"
-
+from MRL_utils import ORIGIN_SIGNATURE
 # 已知 OID 對照(可 additive 擴充,No-Delete)
 KNOWN_OIDS: Dict[str, Dict[str, str]] = {
     "1.2.840.10045.3.1.7": {"name": "secp256r1", "alias": "NIST P-256 / prime256v1"},

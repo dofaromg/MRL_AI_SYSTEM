@@ -20,9 +20,7 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Set, Tuple
 
-ORIGIN_SIGNATURE = "MrLiouWord"
-
-
+from MRL_utils import ORIGIN_SIGNATURE
 class MRL_RootLivenessSlotColorEngine:
     """活躍分析 + 干涉圖 + PEO + 貪婪著色,把值配進最少槽位(母體自家實作)。"""
 

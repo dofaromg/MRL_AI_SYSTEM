@@ -27,9 +27,7 @@ import re
 from collections import defaultdict
 from typing import Any, Dict, List
 
-ORIGIN_SIGNATURE = "MrLiouWord"
-
-
+from MRL_utils import ORIGIN_SIGNATURE
 class MRL_LogicalStructureExtractor:
     """邏輯架構提取器（flow-tasks 回收對齊版）。"""
 

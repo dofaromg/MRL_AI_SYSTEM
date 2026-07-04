@@ -20,9 +20,7 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Tuple
 
-ORIGIN_SIGNATURE = "MrLiouWord"
-
-
+from MRL_utils import ORIGIN_SIGNATURE
 class MRL_WorldSyncMultiWorld:
     """N 世界確定性同步:各世界持 versioned context,sync 全序收斂。"""
 

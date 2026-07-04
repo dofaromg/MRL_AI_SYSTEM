@@ -36,7 +36,7 @@ from MRL_FlowAgent_LawEngine_v1 import (  # noqa: E402
     reclaim_name,
 )
 
-ORIGIN_SIGNATURE = "MrLiouWord"
+from MRL_utils import ORIGIN_SIGNATURE
 _REPO = _HERE.parent
 _DEFAULT_OUT = _REPO / "parallel_output"
 

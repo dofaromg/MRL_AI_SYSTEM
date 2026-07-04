@@ -19,7 +19,7 @@ import pathlib
 import time
 from typing import Any, Dict, List, Optional
 
-ORIGIN_SIGNATURE = "MrLiouWord"
+from MRL_utils import ORIGIN_SIGNATURE
 _REPO = pathlib.Path(__file__).resolve().parent.parent
 _STORE = _REPO / "data" / "MRL_user_memory.json"
 

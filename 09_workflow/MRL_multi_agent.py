@@ -103,7 +103,7 @@ import uuid
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, List, Optional
 
-ORIGIN_SIGNATURE = "MrLiouWord"
+from MRL_utils import ORIGIN_SIGNATURE
 MULTI_AGENT_VERSION = "1.0"
 
 # Type alias used by MultiAgentSession

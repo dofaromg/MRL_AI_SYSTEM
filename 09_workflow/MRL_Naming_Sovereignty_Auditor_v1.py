@@ -20,8 +20,7 @@ import re
 import sys
 from typing import Any, Dict, List
 
-ORIGIN_SIGNATURE = "MrLiouWord"
-
+from MRL_utils import ORIGIN_SIGNATURE
 # 外部廠商前綴(rl_20:不得作為母體身分)
 VENDOR_PREFIXES = ("claude/", "copilot/", "codex/", "openai/", "anthropic/",
                    "google/", "gpt/", "feature/", "patch/")

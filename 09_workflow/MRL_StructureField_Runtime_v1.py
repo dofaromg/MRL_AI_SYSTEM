@@ -23,9 +23,7 @@ import json
 import time
 from typing import Any, Dict, List, Optional
 
-ORIGIN_SIGNATURE = "MrLiouWord"
-
-
+from MRL_utils import ORIGIN_SIGNATURE
 def _hash(x: Any) -> str:
     return hashlib.sha256(json.dumps(x, ensure_ascii=False, sort_keys=True, default=str)
                           .encode("utf-8")).hexdigest()
