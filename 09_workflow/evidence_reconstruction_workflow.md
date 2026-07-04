@@ -10,8 +10,8 @@ Method: 先查資料 → 確認檔案存在 → 逐一驗證 → 收斂閉環 �
 Defines the canonical DAG for reconstructing evidence from sources, confirming
 file integrity, validating chain continuity, and closing each audit loop before
 expanding to the next scope. Every step writes to both the Merkle chain
-(`03_memory/merkle/`) and the operational JSONL trace (`06_trace/traces/`)
-before proceeding.
+(`03_memory/_data/memory_chain/`) and the operational JSONL trace
+(`06_trace/traces/_data/`) before proceeding.
 
 ---
 
@@ -51,7 +51,13 @@ before proceeding.
 [S4] 收斂閉環 — Convergence & closure
     │  • Commit verified snapshot entry to Merkle chain (layer L0)
     │  • Write closure record to JSONL trace:
-    │      { event: "reconstruction_closed", scope, merkle_root, verified_count, ts }
+    │      {
+    │        trace_id: "<uuid>", created_at: "<ISO-8601 UTC>",
+    │        persona_id: "<id>", action_id: "<id>", action_type: "workflow_close",
+    │        decision: "ALLOW", rule_hits: [],
+    │        merkle_root: "<sha256>", merkle_prev: "<sha256>",
+    │        event: "reconstruction_closed", scope, verified_count
+    │      }
     │  • Update head pointer in 03_memory/_data/memory_chain/head.txt
     │  • Mark loop as CLOSED in workflow state
     │
@@ -136,6 +142,6 @@ before proceeding.
 | `08_sources/sources.manifest.yaml` | Source enumeration (S1) |
 | `03_memory/flowseed_origin/seed_index.json` | Expected fingerprints (S1, S3) |
 | `03_memory/merkle/memory_chain.py` | Canonical chain commits (S3, S4) |
-| `06_trace/traces/` | Operational JSONL trace (all steps) |
+| `06_trace/traces/_data/` | Operational JSONL trace (all steps) |
 | `07_ingest/allowlist/` | Re-ingest gate for repair (S_REPAIR) |
 | `06_trace/approvals/` | REQUIRE_HUMAN proof storage (S_REPAIR escalation) |
