@@ -65,14 +65,7 @@ _JSON_TYPE_DEFAULTS: Dict[str, Any] = {
 
 # ── Lazy imports (graceful degradation) ──────────────────────────────────────
 
-
-def _try_import(module: str, attr: str) -> Any:
-    try:
-        import importlib
-        mod = importlib.import_module(module)
-        return getattr(mod, attr, None)
-    except Exception:  # noqa: BLE001
-        return None
+from MRL_utils import _try_import  # noqa: E402
 
 
 def _default_value_for_type(param_type: str) -> Any:

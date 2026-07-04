@@ -93,14 +93,7 @@ def _ensure_paths() -> None:
 
 _ensure_paths()
 
-
-def _try_import(module: str, attr: str) -> Any:
-    try:
-        import importlib
-        mod = importlib.import_module(module)
-        return getattr(mod, attr)
-    except Exception:  # noqa: BLE001
-        return None
+from MRL_utils import _try_import  # noqa: E402
 
 
 # ─── Gateway state ────────────────────────────────────────────────────────────
