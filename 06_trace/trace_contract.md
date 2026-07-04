@@ -58,13 +58,18 @@ Merkle input for each entry:
 | Schema | `01_schema/runtime_trace.schema.json` |
 | Location | `06_trace/traces/_data/` (runtime-only, gitignored) |
 | Purpose | Fast operational lookup, debugging, replay without chain overhead |
-| Invariant | Every Merkle entry must have a corresponding operational line |
+| Invariant | Operational line count must be ≥ Merkle entry count (see I-6) |
 
 ---
 
 ## Required fields
 
-Every trace record — regardless of stream — must carry the following fields:
+Every trace record — regardless of stream — must carry the following fields as
+a **semantic minimum**. Note that schema-specific nesting applies:
+`trace_record.schema.json` places fields under `action_request`/`decision`/`merkle`
+sub-objects, while `runtime_trace.schema.json` uses top-level fields. Implementers
+must conform to the target schema's structure while satisfying these minimum
+requirements.
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -73,7 +78,7 @@ Every trace record — regardless of stream — must carry the following fields:
 | `persona_id` | string | ID of the agent persona that triggered the action |
 | `action_id` | string | ID of the action request |
 | `action_type` | string | Action category (`read`, `write`, `external_call`, etc.) |
-| `decision` | string enum | `ALLOW` \| `DENY` \| `REQUIRE_HUMAN` \| `SKIP` |
+| `decision` | string enum | `ALLOW` \| `DENY` \| `REQUIRE_HUMAN` \| `REDACT` |
 | `rule_hits` | string[] | List of rule IDs that matched (from `02_principles/rules.aup_v1.yaml`) |
 | `merkle_root` | string (sha256) | Merkle root for this entry |
 | `merkle_prev` | string (sha256) | Previous Merkle root (`0`×64 for genesis) |

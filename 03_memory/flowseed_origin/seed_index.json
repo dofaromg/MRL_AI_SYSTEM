@@ -54,7 +54,7 @@
     }
   ],
   "instructions": {
-    "fingerprint_update": "Run sha256sum (Linux/macOS) or certutil -hashfile (Windows) against the local Dropbox copy, then replace the 'PENDING' value with the 40-char hex digest. Never store the file content itself in this repo.",
+    "fingerprint_update": "Run sha256sum (Linux/macOS) or certutil -hashfile (Windows) against the local Dropbox copy, then replace the 'PENDING' value with the 64-char hex digest. Never store the file content itself in this repo.",
     "add_seed": "Append a new entry to 'seeds[]'. Assign a unique 'id'. Register the corresponding source in 08_sources/sources.manifest.yaml. Set ingest_status to 'registered' until fingerprint is confirmed.",
     "deprecate_seed": "Set 'ingest_status' to 'deprecated' and add a 'deprecated_at' field. Do not delete the entry."
   }
