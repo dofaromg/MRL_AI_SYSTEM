@@ -10,6 +10,17 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### 產品模組吸收（第三輪復盤交叉比對）
+- `MRL_FireCore_v1_0/` — FireCore 自建 Firebase 替代堆疊（6 個 Cloudflare Worker 模組：
+  auth / store / vault / live / push / trace，含 D1 migrations、DL580 簽章服務、
+  web/iOS SDK 介面）。上傳包 SHA256 與 DELIVERY AUDIT 完全一致
+  （`829932aa…`，58 entries，coverage 100%），交付稽核 JSON 一併封存
+- `MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/` — iOS 3D 掃描 → DL580 重建橋接產品包
+  （SwiftUI App、Node 重建伺服器、安裝/驗收腳本、included 交付包）。
+  內部 CHECKSUMS.sha256 全部 30 檔驗證通過，MANIFEST origin_signature=MrLiouWord
+- 復盤結論：MRL_RuntimeOS v1_4_0 上傳包為 repo 現有版本之**舊快照**
+  （稽核帳本為 repo 版嚴格前綴，repo 多 3 筆較新事件），不需回填
+
 #### CodePartner 強化 v1.2.0（builder 種子回收 + 函式庫吸收）
 - `08_sources/flowagent_codepartner_recovery/liou.builder.seed.persona.sync.json` —
   builder 人格種子原文封存（SHA256 與 MetaCode modules_index 登錄值完全一致，完整性已驗證）
