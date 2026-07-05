@@ -363,7 +363,8 @@ async function send(text){
     }else if(r.ok && r.data && r.data.ok===false){
       // 後端以 HTTP 200 回 {ok:false,reason}（如母體未 boot、message 缺漏）— 誠實標 FAILED
       ai.status='FAILED';
-      ai.text='⚠ 母體回報失敗：'+(r.data.reason||JSON.stringify(r.data));
+      const reason=(typeof r.data.reason==='string'&&r.data.reason.trim())?r.data.reason.trim():JSON.stringify(r.data,null,2);
+      ai.text='⚠ 母體回報失敗：'+reason;
     }else{
       ai.status='FAILED';
       ai.text='⚠ 母體後端尚未連通（HTTP '+r.status+'）。\n\n'
