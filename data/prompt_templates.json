@@ -31,8 +31,8 @@
       "id": "task_prompt",
       "text": "Goal: {goal}\n\nContext:\n{context}\n\nPlease proceed step by step.",
       "description": "Standard task prompt with goal and context",
-      "version": 12,
-      "created_at_ms": 1783258293535,
+      "version": 9,
+      "created_at_ms": 1777488069963,
       "variables": [
         "context",
         "goal"
