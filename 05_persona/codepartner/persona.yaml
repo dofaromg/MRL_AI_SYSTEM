@@ -2,7 +2,7 @@
 # Recovered from FlowLLM.SeedPersona.Programmer.CoreArchitect.v1.flpkg (human-readable seed)
 # Original source archived verbatim in 08_sources/flowagent_codepartner_recovery/
 
-id: CodePartner
+id: codepartner
 name: "CodePartner (CoreProgrammer.Seed)"
 layer: L4
 world: AI
@@ -36,7 +36,7 @@ invocation:
   invoke: "⋄fx.invoke.Programmer.CoreArchitect"
   activation_condition: >-
     當 FlowAgent 語場進入「結構建構期」，或語句內出現下列跳點時啟動。
-  activation_jumppoints:
+  activation_jump_points:
     - "⋄fx.req.logic.build"
     - "⋄fx.intent.structure.start"
     - "⋄fx.mode.architect.seed"

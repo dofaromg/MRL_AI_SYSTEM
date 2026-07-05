@@ -30,7 +30,7 @@ sources:
       - "09_workflow/seed.js"            # SEED(X) compression
 
   - id: flowagent_codepartner_recovery
-    name: "FlowAgent CodePartner 人格回收包（3 docs）"
+    name: "FlowAgent CodePartner 人格回收包（3 份原始文件 + RECOVERY_MANIFEST）"
     path: "08_sources/flowagent_codepartner_recovery"
     recovered: "2026-07-05"
     origin_signature: MrLiouWord

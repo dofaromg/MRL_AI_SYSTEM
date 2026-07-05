@@ -19,7 +19,7 @@ building, and programming phases.
 ⋄fx.invoke.Programmer.CoreArchitect
 ```
 
-啟動跳點 / activation jumppoints:
+啟動跳點 / activation jump points:
 
 ```
 ⋄fx.req.logic.build
