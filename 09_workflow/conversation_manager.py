@@ -43,6 +43,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import pathlib
 import time
 import uuid
@@ -218,6 +219,11 @@ class ConversationManager:
         }
         with self._path.open("w", encoding="utf-8") as f:
             json.dump(payload, f, ensure_ascii=False, indent=2)
+        # Restrict file to owner-only read/write (session data is private)
+        try:
+            os.chmod(self._path, 0o600)
+        except OSError:
+            pass
 
     # ── Session lifecycle ─────────────────────────────────────────────────────
 
@@ -242,6 +248,15 @@ class ConversationManager:
             self._save()
             return True
         return False
+
+    def rename_session(self, session_id: str, label: str) -> bool:
+        """Rename a session label. Returns True if the session existed."""
+        sess = self._sessions.get(session_id)
+        if sess is None:
+            return False
+        sess.label = label
+        self._save()
+        return True
 
     def get_session(self, session_id: str) -> Optional[ConversationSession]:
         return self._sessions.get(session_id)
@@ -306,6 +321,42 @@ class ConversationManager:
             raise KeyError(f"session not found: '{session_id}'")
         sess.clear(keep_system=keep_system)
         self._save()
+
+    def export_markdown(self, session_id: str) -> str:
+        """
+        Export a session as a Markdown-formatted string.
+
+        Each message is rendered as a level-3 heading with the speaker role,
+        followed by the message body.  Returns an empty string when the
+        session does not exist.
+
+        Parameters
+        ----------
+        session_id : ID of the session to export.
+        """
+        sess = self.get_session(session_id)
+        if sess is None:
+            return ""
+        title = sess.label or sess.session_id
+        lines: List[str] = [
+            f"# Conversation: {title}",
+            "",
+            f"- **Session ID**: `{sess.session_id}`",
+            f"- **Turns**: {sess.turn_count}",
+            f"- **Origin**: {ORIGIN_SIGNATURE}",
+            "",
+        ]
+        for msg in sess.history():
+            role = msg["role"].capitalize()
+            content = msg["content"]
+            ts = msg.get("ts_ms", "")
+            lines.append(f"### {role}")
+            if ts:
+                lines.append(f"*{ts}*")
+            lines.append("")
+            lines.append(content)
+            lines.append("")
+        return "\n".join(lines)
 
     def __len__(self) -> int:
         return len(self._sessions)
