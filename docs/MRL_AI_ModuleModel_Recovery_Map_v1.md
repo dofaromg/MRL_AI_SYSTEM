@@ -128,6 +128,9 @@ Input → Observe → Parse → MrLiouIR → ParticleIR → RuntimeStructureFiel
 | `09_workflow/MRL_Tool_Router_v1.py` | BUILDABLE | Tool routing layer |
 | `09_workflow/api_gateway.py` | BUILDABLE | API gateway |
 | `09_workflow/MRL_OID_Parser_v1.py` | BUILDABLE | OID parsing adapter |
+| `src/mrl_worker.js` | CONFIRMED | Cloudflare Worker edge facade (MRL_ExternalScope); static endpoints `/health` `/mrl/state`; proxies dynamic endpoints to `env.MRL_DL580_ORIGIN`; actively deployed (CI pass) |
+| `src/mrl_app_ui.js` | CONFIRMED | Auto-generated from `src/mrl_app.html`; exports `APP_HTML` string; imported by Worker |
+| `src/mrl_app.html` | CONFIRMED | MRL_AI OS product entry UI; `origin_signature=MrLiouWord`; front-end portal only — real execution requires mother backend (DL580/MotherAssembly) |
 
 ---
 
@@ -245,7 +248,7 @@ Input → Observe → Parse → MrLiouIR → ParticleIR → RuntimeStructureFiel
 | MRL_語境同步 implementation | MISSING | README stub only; 待起動 |
 | MRL_多世界同步 implementation | MISSING | README stub in MRL_Runtime; `MRL_WorldSync_MultiWorld_v1.py` in 09_workflow is buildable equivalent |
 | Automatic particle restore pipeline | PENDING | `MRL_ParticleArchive_Manager_v1.py restore()` exists; automation of recovery chain not yet wired |
-| `src/` directory | NOT FOUND | Glob returned no files; target was empty |
+| `src/` directory | CORRECTED | 3 files found: `mrl_worker.js` (Cloudflare Worker edge adapter), `mrl_app_ui.js` (auto-generated APP_HTML export), `mrl_app.html` (product UI portal); classified as CONFIRMED in Section F |
 | Memory Sphere live DB writes | INERT | Attachment point defined in adapter; blocked on BaseWorld authorization |
 
 ---
@@ -339,9 +342,9 @@ Tier 0 (Python runtime core, zero deps)
 
 | Class | Count |
 |-------|-------|
-| CONFIRMED | 28 files / modules |
+| CONFIRMED | 31 files / modules |
 | BUILDABLE | 23 files |
 | REFERENCE_ONLY | 27 files |
 | INERT | 8 files |
 | AUTH_PENDING | 5 files |
-| UNKNOWN / MISSING | 8 items |
+| UNKNOWN / MISSING | 7 items |
