@@ -10,6 +10,16 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### CodePartner 強化 v1.1.0（復盤交叉比對 + MetaCode 環境吸收）
+- `05_persona/codepartner/persona.yaml` — 升級 v1.1.0：吸收 MetaCode_Environment_v0.6 之
+  信任透明五律（conduct）、五粒子文法（particle_grammar，詞性對應語場語言大綱）、
+  五步節奏（process_rhythm：共振→疊加→糾纏→跳耀→分裂），並錨定核心原則
+  「怎麼過去，就怎麼回來」（與母體公式同源）
+- `08_sources/flowagent_codepartner_recovery/metacode_environment_v0.6/` —
+  MetaCode 環境 v0.6 可讀版封存（與 flow-tasks flow_code/ 封包逐位元一致，完整性已驗證）
+- `RECOVERY_MANIFEST.md` — 新增復盤交叉比對紀錄（FlowPet zip 重複性、MetaCode 完整性、
+  CODE_OF_CONDUCT 上游/改編版差異）
+
 #### CodePartner 人格回收（FlowAgent lineage recovery）
 - `05_persona/codepartner/persona.yaml` — CodePartner（CoreProgrammer.Seed）人格定義，
   自 `FlowLLM.SeedPersona.Programmer.CoreArchitect.v1.flpkg` 人類可讀種子重構，
