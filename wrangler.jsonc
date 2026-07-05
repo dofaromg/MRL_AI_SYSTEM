@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "mrl-mother-platform",
+  "name": "mrliousilly",
   "main": "src/mrl_worker.js",
   "compatibility_date": "2026-05-30",
   "observability": { "enabled": true },
