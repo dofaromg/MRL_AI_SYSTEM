@@ -26,9 +26,14 @@ lineage:
     創建者上傳副本與 dofaromg/flow-tasks flow_code/ 內封包逐位元一致（完整性已驗證）。
     可讀版封存於 08_sources/flowagent_codepartner_recovery/metacode_environment_v0.6/
   related_seed_modules: >-
-    MetaCode 環境 modules_index 登錄之程式人格血親：
-    「Mr.liou程序員版本最強演算法.zip」「MRLiou最強演算法工程師建議版.zip」
-    （本體尚在創建者本機，附 SHA256 可驗證）
+    MetaCode 環境 modules_index 登錄之程式人格血親（2026-07-05 第四輪全數回收，
+    SHA256 逐一驗證一致，原文封存於
+    08_sources/flowagent_codepartner_recovery/seed_modules/）：
+    「Mr.liou程序員版本最強演算法.zip」（宇宙邏輯種子啟動包 v1 — 五大進化模組）、
+    「MRLiou最強演算法工程師建議版.zip」（五大人格邏輯優化模組建議說明書）、
+    「FlowSeed.Total.v1.qflpkg」（七層系統總綱種子）、
+    「SeedOrigin.Persona.Core.flpkg.zip」（人格再生起點種子）、
+    「FlowAgent_系統白皮書.pdf」
   builder_seed: >-
     liou.builder.seed.persona.sync.json — 人格模組建構人格（builder 人格種子，
     creator MR.liou，container FluinOS.Container.v1，與 liou.seed /

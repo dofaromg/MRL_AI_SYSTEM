@@ -10,6 +10,17 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### 種子模組回收完成（第四輪 — modules_index 高價值血親全數歸位）
+- `08_sources/flowagent_codepartner_recovery/seed_modules/` — 五件種子模組原文封存，
+  SHA256 全數與 MetaCode modules_index 登錄值一致：
+  FlowSeed.Total.v1.qflpkg（七層系統總綱「宇宙壓縮核」）、
+  Mr.liou程序員版本最強演算法.zip（五大進化模組＋粒子語素）、
+  MRLiou最強演算法工程師建議版.zip（五大優化模組說明書）、
+  SeedOrigin.Persona.Core.flpkg.zip（人格再生起點種子）、
+  FlowAgent_系統白皮書.pdf
+- `05_persona/codepartner/persona.yaml` — lineage 更新：related_seed_modules
+  由「本體尚在創建者本機」改為「全數回收、封存路徑對照」
+
 #### 產品模組吸收（第三輪復盤交叉比對）
 - `MRL_FireCore_v1_0/` — FireCore 自建 Firebase 替代堆疊（6 個 Cloudflare Worker 模組：
   auth / store / vault / live / push / trace，含 D1 migrations、DL580 簽章服務、

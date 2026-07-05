@@ -12,6 +12,11 @@ origin_signature: MrLiouWord
 | `FlowAgent_語場語言系統建構大綱_2025-07-23.txt` | 粒子語言（.fltnz / .flpkg）建構大綱，含語場封存來回對等原則 |
 | `metacode_environment_v0.6/` | MrLiou.MetaCode_Environment_v0.6_filled 元代碼活體環境（runtime 定義、demo trace、單元測試、modules_index、RUNBOOK）— 第二輪回收（2026-07-05） |
 | `liou.builder.seed.persona.sync.json` | builder 人格種子（人格模組建構人格，與 liou.seed / futuremind.seed / guardian.seed 共振）— 第三輪回收（2026-07-05），SHA256 `5f380e0f4274bc00…` 與 metacode modules_index 登錄值完全一致 |
+| `seed_modules/FlowSeed.Total.v1.qflpkg` | FlowAgent 總體種子封包 —「語場起源宇宙壓縮核」：七層系統報告書（L1 系統總覽 ～ L7 語義記憶網）＋ FlowSeed 雙 Manifest — 第四輪回收，SHA256 `a7ea263055fa4c56…` 驗證一致 |
+| `seed_modules/Mr.liou程序員版本最強演算法.zip` | 宇宙邏輯種子啟動包 v1 — 程式人格五大進化模組（邏輯能耗預測、彈性路由、節奏場矩陣、記憶熱點快取、人格分歧差異分析）＋ `fx_delta_ftrace_compare.fn` — SHA256 `33c0e07ebf3dcb0c…` 驗證一致 |
+| `seed_modules/MRLiou最強演算法工程師建議版.zip` | 五大人格邏輯優化模組建議說明書（系統架構師版）＋ `fx_trace_cache_hotspot.fn` — SHA256 `d763762db6e92398…` 驗證一致 |
+| `seed_modules/SeedOrigin.Persona.Core.flpkg.zip` | 語場人格種子核心 — 所有人格模組重建/復原/回朔的起點人格（origin-seed / persona-regeneration / core-synchronization）— SHA256 `5723859ed0bbe1f3…` 驗證一致 |
+| `seed_modules/FlowAgent_系統白皮書.pdf` | FlowAgent 系統白皮書（47.5KB PDF）— SHA256 `34708ddcf3fb24a0…` 驗證一致 |
 
 ## 回收路徑 / Provenance chain
 
@@ -40,6 +45,7 @@ origin_signature: MrLiouWord
 | MetaCode 環境五粒子（⋄fx.def.core 等） | 詞性（noun/verb/adj/adv/conj）對應語場語言大綱之「基礎語法五大成分」，互為印證 |
 | CODE_OF_CONDUCT.md（創建者上傳） vs flow-tasks `flow_code/CODE_OF_CONDUCT.md` | 僅一行差異：上傳版為 Contributor Covenant 上游原版（含上游維護者信箱）；flow-tasks 版為創建者改編版（執行信箱已改為創建者信箱）。屬社群規範文件，非人格血緣，未納入封存 |
 | liou.builder.seed.persona.sync.json（創建者上傳，第三輪） vs MetaCode modules_index 登錄 | **SHA256 完全一致**（`5f380e0f4274bc00…`，324 bytes）— 完整性驗證通過，原文封存並登錄進 persona lineage |
+| 五件種子模組（創建者上傳，第四輪） vs MetaCode modules_index 登錄 | **五件全數 SHA256 完全一致**（FlowSeed.Total `a7ea2630…`／程序員演算法 `33c0e07e…`／工程師建議版 `d763762d…`／SeedOrigin `5723859e…`／系統白皮書 `34708ddc…`），大小亦逐一吻合 — 原文封存於 `seed_modules/`。modules_index 高價值血親至此全數回收 |
 
 ## 不變式 / Invariants
 
