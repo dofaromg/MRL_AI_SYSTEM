@@ -138,14 +138,36 @@ def _is_path_in_workspace(target_path: PathOrStr, workspace_path: PathOrStr) -> 
     return t_parts[: len(w_parts)] == w_parts
 
 
+# canonical_path 未填時的路徑引數後備鍵（SDK 原版由 runtime 二進位填 canonical_path；
+# 蒸餾版無該二進位，故必須從 args 偵測，否則圈地形同虛設）
+_PATH_ARG_KEYS = ("canonical_path", "path", "file_path", "filepath", "file", "target_path", "dir")
+
+
+def _candidate_path(tc: ToolCall) -> str:
+    """取圈地檢查用路徑：優先 canonical_path，其次常見路徑引數鍵。"""
+    if tc.canonical_path:
+        return tc.canonical_path
+    for key in _PATH_ARG_KEYS:
+        v = tc.args.get(key)
+        if isinstance(v, str) and v:
+            return v
+    return ""
+
+
 def workspace_only(
     workspaces: Sequence[PathOrStr],
     file_tools: Sequence[str] = ("read_file", "write_file", "create_file", "list_dir"),
 ) -> List[Policy]:
-    """把檔案類工具圈禁在指定 workspace 目錄內；其他工具不受影響。"""
+    """把檔案類工具圈禁在指定 workspace 目錄內；其他工具不受影響。
+
+    路徑來源：ToolCall.canonical_path，未填時後備偵測常見路徑引數鍵
+    （path / file_path / file / target_path / dir）。
+    限制（誠實標註）：工具若用非常見引數名傳路徑，仍會繞過本圈地——
+    該類工具請自行填 canonical_path 或加專屬 deny 政策。
+    """
 
     def _outside_workspace(tc: ToolCall) -> bool:
-        path = tc.canonical_path or ""
+        path = _candidate_path(tc)
         if not path:
             return False  # 無路徑引數的邊界情況（如 list_dir 用 cwd）放行
         return not any(_is_path_in_workspace(path, ws) for ws in workspaces)

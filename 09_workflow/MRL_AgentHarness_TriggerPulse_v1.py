@@ -101,6 +101,8 @@ def on_file_change(
     poll_seconds: float = 0.5,
 ) -> Trigger:
     """檔案/目錄變更觸發（stdlib mtime 輪詢版；watchfiles 外部依賴已蒸餾去除）。"""
+    if poll_seconds <= 0:
+        raise ValueError(f"poll_seconds 必須為正，收到 {poll_seconds}")
     watch_path = pathlib.Path(path)
 
     async def _trigger(ctx: TriggerContext) -> None:

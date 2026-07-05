@@ -196,6 +196,11 @@ def test_workspace_only_containment():
             assert not (await gate.run(ctx, sibling)).allow  # 防尾綴切片旁路
             # 非檔案工具不受圈地影響
             assert (await gate.run(ctx, ToolCall(name="calc"))).allow
+            # canonical_path 未填時，後備偵測常見路徑引數鍵（圈地不得形同虛設）
+            via_args_out = ToolCall(name="write_file", args={"path": "/etc/passwd"})
+            via_args_in = ToolCall(name="write_file", args={"path": str(pathlib.Path(ws) / "b.txt")})
+            assert not (await gate.run(ctx, via_args_out)).allow
+            assert (await gate.run(ctx, via_args_in)).allow
 
     _run(main())
 
@@ -299,6 +304,17 @@ def test_trigger_every_rejects_nonpositive():
         pass
 
 
+def test_trigger_on_file_change_rejects_nonpositive_poll():
+    async def _noop(ctx, changes):
+        pass
+
+    try:
+        on_file_change("/tmp", _noop, poll_seconds=0)
+        assert False
+    except ValueError:
+        pass
+
+
 # ─── Kernel 端到端 ───────────────────────────────────────────────────────────
 def test_kernel_refuses_tools_without_policy():
     async def main():
@@ -375,6 +391,36 @@ def test_kernel_decide_hook_satisfies_safety_invariant():
         async with Agent(AgentConfig(tools=[t], hooks=[custom_gate])) as agent:
             resp = await agent.chat("TOOL:t")
             assert "t→ok" in resp.text
+
+    _run(main())
+
+
+def test_kernel_session_closed_after_exit():
+    async def main():
+        async with Agent(AgentConfig()) as agent:
+            await agent.chat("hi")
+            assert agent.is_started
+        assert not agent.is_started  # 離場後 session 歸零
+        try:
+            _ = agent.conversation
+            assert False, "關閉後取 conversation 應拋 RuntimeError"
+        except RuntimeError:
+            pass
+
+    _run(main())
+
+
+def test_kernel_tool_usage_accounted_in_tool_rounds():
+    async def main():
+        def add(a: int, b: int) -> int:
+            return a + b
+
+        from MRL_AgentHarness_PolicyGate_v1 import allow_all
+
+        async with Agent(AgentConfig(tools=[add], policies=[allow_all()])) as agent:
+            resp = await agent.chat("TOOL:add a=1 b=1")
+            # 工具呼叫輪 + 總結輪的 prompt 用量都要入帳
+            assert resp.usage.total_tokens >= resp.usage.prompt_tokens > 0
 
     _run(main())
 
