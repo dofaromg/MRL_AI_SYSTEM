@@ -88,7 +88,8 @@ class ModelGateway:
         raise NotImplementedError
 
 
-_TOOL_DIRECTIVE = re.compile(r"TOOL:(\w+)((?:\s+\w+=\S+)*)")
+# 工具名允許 '/'（命名空間工具，如 mcp_srv/read），對齊 PolicyGate 前綴政策
+_TOOL_DIRECTIVE = re.compile(r"TOOL:([\w/]+)((?:\s+\w+=\S+)*)")
 
 
 class EchoGateway(ModelGateway):
@@ -124,6 +125,7 @@ class EchoGateway(ModelGateway):
                         args[k] = json.loads(v)
                     except (ValueError, json.JSONDecodeError):
                         args[k] = v
+                usage.total_tokens = usage.prompt_tokens + usage.response_tokens
                 return GatewayReply(tool_calls=[ToolCall(name=name, args=args)], usage=usage)
 
         if tool_results:
@@ -320,6 +322,10 @@ class Agent:
         if self._trigger_runner is not None:
             await self._trigger_runner.__aexit__(None, None, None)
             self._trigger_runner = None
+        # session 關閉後全數歸零：is_started 回 False，conversation 取用即拋錯
+        self._hook_runner = None
+        self._tool_runner = None
+        self._conversation = None
 
     @property
     def is_started(self) -> bool:
