@@ -43,8 +43,8 @@
       "id": "eval_summary",
       "text": "Output evaluation for '{label}':\n  composite score: {composite}\n  passed: {passed}\n  individual scores: {scores}",
       "description": "Evaluation result summary template",
-      "version": 12,
-      "created_at_ms": 1783258293536,
+      "version": 9,
+      "created_at_ms": 1777488069963,
       "variables": [
         "composite",
         "label",
