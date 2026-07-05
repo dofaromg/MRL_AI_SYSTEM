@@ -11,7 +11,8 @@ building, and programming phases.
 
 | File | Purpose |
 |------|---------|
-| `persona.yaml` | CodePartner 人格定義（依 `05_persona/README.md` 規範格式重構；v1.1.0 吸收 MetaCode 環境 v0.6） |
+| `persona.yaml` | CodePartner 人格定義（依 `05_persona/README.md` 規範格式重構；v1.1.0 吸收 MetaCode 環境 v0.6；v1.2.0 補入 builder 種子與函式庫） |
+| `function_library.yaml` | 資料分析計算欄位函式登錄表（80+ 函式：算術/匯總/條件式/文字/日期/地理區域/其他） |
 
 ## v1.1.0 強化內容 / Strengthened (2026-07-05)
 
@@ -25,6 +26,15 @@ building, and programming phases.
   詞性對應語場語言大綱之基礎語法五大成分
 - **process_rhythm** — 五步節奏：共振 → 疊加 → 糾纏 → 跳耀 → 分裂
 - **principle** — 「怎麼過去，就怎麼回來」（與母體公式同源錨定）
+
+## v1.2.0 強化內容 / Strengthened (2026-07-05)
+
+- **builder 種子回收** — `liou.builder.seed.persona.sync.json`（人格模組建構人格），
+  SHA256 與 MetaCode modules_index 登錄值完全一致，完整性驗證通過；
+  承其 `resonates_with` 共振關係（liou.seed / futuremind.seed / guardian.seed）
+- **函式庫** — 新增 `function_library.yaml`：80+ 個資料分析計算欄位函式
+  （算術、匯總、條件式、文字、日期、地理區域、其他），
+  對應新能力 `data.analytics.field_formulas`
 
 ## 呼叫方式 / Invocation
 

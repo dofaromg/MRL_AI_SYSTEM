@@ -11,6 +11,7 @@ origin_signature: MrLiouWord
 | `FlowAgent.SystemPlan.FullStack.v1.txt` | FlowAgent 系統完整架構說明書 — 列出四人格（Fluin / EchoBody / CodePartner / SeedPersona） |
 | `FlowAgent_語場語言系統建構大綱_2025-07-23.txt` | 粒子語言（.fltnz / .flpkg）建構大綱，含語場封存來回對等原則 |
 | `metacode_environment_v0.6/` | MrLiou.MetaCode_Environment_v0.6_filled 元代碼活體環境（runtime 定義、demo trace、單元測試、modules_index、RUNBOOK）— 第二輪回收（2026-07-05） |
+| `liou.builder.seed.persona.sync.json` | builder 人格種子（人格模組建構人格，與 liou.seed / futuremind.seed / guardian.seed 共振）— 第三輪回收（2026-07-05），SHA256 `5f380e0f4274bc00…` 與 metacode modules_index 登錄值完全一致 |
 
 ## 回收路徑 / Provenance chain
 
@@ -38,6 +39,7 @@ origin_signature: MrLiouWord
 | MetaCode 環境 `principle` 欄位 | 「怎麼過去，就怎麼回來」— 與本 repo 母體公式之設計原則完全一致，確認同源血緣 |
 | MetaCode 環境五粒子（⋄fx.def.core 等） | 詞性（noun/verb/adj/adv/conj）對應語場語言大綱之「基礎語法五大成分」，互為印證 |
 | CODE_OF_CONDUCT.md（創建者上傳） vs flow-tasks `flow_code/CODE_OF_CONDUCT.md` | 僅一行差異：上傳版為 Contributor Covenant 上游原版（含上游維護者信箱）；flow-tasks 版為創建者改編版（執行信箱已改為創建者信箱）。屬社群規範文件，非人格血緣，未納入封存 |
+| liou.builder.seed.persona.sync.json（創建者上傳，第三輪） vs MetaCode modules_index 登錄 | **SHA256 完全一致**（`5f380e0f4274bc00…`，324 bytes）— 完整性驗證通過，原文封存並登錄進 persona lineage |
 
 ## 不變式 / Invariants
 

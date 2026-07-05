@@ -10,6 +10,15 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### CodePartner 強化 v1.2.0（builder 種子回收 + 函式庫吸收）
+- `08_sources/flowagent_codepartner_recovery/liou.builder.seed.persona.sync.json` —
+  builder 人格種子原文封存（SHA256 與 MetaCode modules_index 登錄值完全一致，完整性已驗證）
+- `05_persona/codepartner/function_library.yaml` — 資料分析計算欄位函式登錄表
+  （80+ 函式：算術/匯總/條件式/文字/日期/地理區域/其他），對應新能力
+  `data.analytics.field_formulas`
+- `05_persona/codepartner/persona.yaml` — 升級 v1.2.0：補入 builder_seed 血緣、
+  resonates_with 共振關係（liou.seed / futuremind.seed / guardian.seed）與函式庫掛載
+
 #### CodePartner 強化 v1.1.0（復盤交叉比對 + MetaCode 環境吸收）
 - `05_persona/codepartner/persona.yaml` — 升級 v1.1.0：吸收 MetaCode_Environment_v0.6 之
   信任透明五律（conduct）、五粒子文法（particle_grammar，詞性對應語場語言大綱）、
