@@ -424,7 +424,10 @@ class LLMGateway:
         )
 
     def is_mock_model(self, model: str) -> bool:
-        return model in self._adapters and isinstance(self._adapters[model], MockAdapter)
+        try:
+            return isinstance(self.adapter_for(model), MockAdapter)
+        except KeyError:
+            return False
 
     def complete(self, request: LLMRequest) -> LLMResponse:
         """Route *request* to the appropriate adapter and return the response."""

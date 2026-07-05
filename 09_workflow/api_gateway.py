@@ -472,12 +472,22 @@ class _Handler(BaseHTTPRequestHandler):
           model      : str  (optional) — LLM model name (default from config)
           system     : str  (optional) — system prompt (new sessions only)
         """
+        trace_id = self._trace_id()
+
         message = body.get("message", "")
         if not message:
-            _json_response(self, 400, {"error": "'message' is required"}, rid)
+            _json_response(
+                self,
+                400,
+                {
+                    "error": "'message' is required",
+                    "engine": "mrl_runtime",
+                    "runtime_origin": "local_mother_assembly",
+                    "trace_id": trace_id,
+                },
+                rid,
+            )
             return
-
-        trace_id = self._trace_id()
 
         if _STATE.assembly is None:
             _json_response(
@@ -497,7 +507,7 @@ class _Handler(BaseHTTPRequestHandler):
         cfg_default_model = (
             str(_STATE.cfg.get("llm.default_model", "")) if _STATE.cfg else ""
         ).strip() or None
-        allow_mock = bool(_STATE.cfg.get("llm.allow_mock", False)) if _STATE.cfg else False
+        allow_mock = _STATE.cfg.get("llm.allow_mock", False) if _STATE.cfg else False
 
         if requested_model is None:
             if cfg_default_model is None:
@@ -531,8 +541,36 @@ class _Handler(BaseHTTPRequestHandler):
 
         session_id = body.get("session_id")
         system_prompt = body.get("system", "")
-        max_tokens = int(body.get("max_tokens", 1024))
-        temperature = float(body.get("temperature", 0.7))
+        try:
+            max_tokens = int(body.get("max_tokens", 1024))
+        except (ValueError, TypeError):
+            _json_response(
+                self,
+                400,
+                {
+                    "error": "'max_tokens' must be an integer",
+                    "engine": "mrl_runtime",
+                    "runtime_origin": "local_mother_assembly",
+                    "trace_id": trace_id,
+                },
+                rid,
+            )
+            return
+        try:
+            temperature = float(body.get("temperature", 0.7))
+        except (ValueError, TypeError):
+            _json_response(
+                self,
+                400,
+                {
+                    "error": "'temperature' must be a number",
+                    "engine": "mrl_runtime",
+                    "runtime_origin": "local_mother_assembly",
+                    "trace_id": trace_id,
+                },
+                rid,
+            )
+            return
 
         try:
             result = _STATE.assembly.chat(
@@ -544,25 +582,30 @@ class _Handler(BaseHTTPRequestHandler):
                 temperature=temperature,
             )
         except Exception as exc:  # noqa: BLE001
-            _json_response(
-                self,
-                500,
-                {
-                    "error": "MRL runtime error",
-                    "error_type": type(exc).__name__,
-                    "error_detail": str(exc),
-                    "engine": "mrl_runtime",
-                    "runtime_origin": "local_mother_assembly",
-                    "trace_id": trace_id,
-                },
-                rid,
-            )
+            debug_mode = _STATE.cfg.get("system.debug", False) if _STATE.cfg else False
+            err_body: Dict[str, Any] = {
+                "error": "Internal server error",
+                "engine": "mrl_runtime",
+                "runtime_origin": "local_mother_assembly",
+                "trace_id": trace_id,
+            }
+            if debug_mode:
+                err_body["error_type"] = type(exc).__name__
+                err_body["error_detail"] = str(exc)
+            _json_response(self, 500, err_body, rid)
             return
 
         if isinstance(result, dict) and result.get("error"):
+            error_msg = str(result.get("error", "")).lower()
+            if "not found" in error_msg:
+                error_status = 404
+            elif "unavailable" in error_msg:
+                error_status = 503
+            else:
+                error_status = 502
             _json_response(
                 self,
-                502,
+                error_status,
                 {
                     **result,
                     "engine": "mrl_runtime",
@@ -609,12 +652,22 @@ class _Handler(BaseHTTPRequestHandler):
             _json_response(self, 404, {"error": f"Session not found: {session_id}"}, rid)
 
     def _post_agent_run(self, body: Dict[str, Any], rid: str) -> None:
+        trace_id = self._trace_id()
         goal = body.get("goal", "")
         if not goal:
-            _json_response(self, 400, {"error": "'goal' is required"}, rid)
+            _json_response(
+                self,
+                400,
+                {
+                    "error": "'goal' is required",
+                    "engine": "mrl_runtime",
+                    "runtime_origin": "local_mother_assembly",
+                    "trace_id": trace_id,
+                },
+                rid,
+            )
             return
 
-        trace_id = self._trace_id()
         if _STATE.assembly is None:
             _json_response(
                 self,
