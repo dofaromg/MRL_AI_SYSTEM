@@ -8,6 +8,19 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+#### sdk-python 去重蒸餾吸收（MRL_AgentHarness 系列）
+- `09_workflow/MRL_AgentHarness_Types_v1.py` — AgentHarness 共用型別（ToolCall/ToolResult/HookResult/Step/Decision）
+- `09_workflow/MRL_AgentHarness_HookLattice_v1.py` — Hook 三型格（Inspect/Decide/Transform）+ Session→Turn→Operation 上下文鏈 + 生命週期分發器
+- `09_workflow/MRL_AgentHarness_PolicyGate_v1.py` — 工具呼叫政策閘：9 級優先序桶、fail-closed、workspace 圈地
+- `09_workflow/MRL_AgentHarness_ToolLoop_v1.py` — 並行工具批次執行器（錯誤隔離、ToolContext 注入、tool_registry 橋接）
+- `09_workflow/MRL_AgentHarness_TriggerPulse_v1.py` — 定時/檔變觸發器（watchfiles 外部依賴蒸餾去除，改 stdlib 輪詢）
+- `09_workflow/MRL_AgentHarness_Kernel_v1.py` — Agent session 核心（啟動期安全不變量、EchoGateway 沙盒閘道；OllamaGateway 待起動/待實機）
+- `tests/test_MRL_agentharness_v1.py` — 驗收測試 21 項（pytest 相容 + 獨立執行器）：PASS（沙盒，2026-07-05）
+- `docs/MRL_AgentHarness_吸收報告_v1.md` — 去重蒸餾判定表 + 當下狀態
+- `08_sources/sources.manifest.yaml` — 登錄吸收來源 antigravity_sdk_python_absorption_v1
+
 ---
 
 ## [2.0.0] — 2026-05-04（PR #12 merged to main）

@@ -29,6 +29,21 @@ sources:
       - "09_workflow/signature.js"       # LAW-0 interfaces
       - "09_workflow/seed.js"            # SEED(X) compression
 
+  - id: antigravity_sdk_python_absorption_v1
+    name: "MRL-antigravity-sdk-python（Google Antigravity SDK 鏡像）"
+    path: "github.com/dofaromg/MRL-antigravity-sdk-python"
+    absorbed: "2026-07-05"
+    origin_signature: MrLiouWord
+    role: agent 執行骨架知識源 — 去重蒸餾吸收（hook 三型格、9 級政策閘、並行工具迴圈、觸發器、session 生命週期）
+    dedup_report: "docs/MRL_AgentHarness_吸收報告_v1.md"
+    implementations:
+      - "09_workflow/MRL_AgentHarness_Types_v1.py"        # 共用型別
+      - "09_workflow/MRL_AgentHarness_HookLattice_v1.py"  # Hook 三型格 + 生命週期分發
+      - "09_workflow/MRL_AgentHarness_PolicyGate_v1.py"   # 9 級優先序政策閘（fail-closed）
+      - "09_workflow/MRL_AgentHarness_ToolLoop_v1.py"     # 並行工具批次執行器
+      - "09_workflow/MRL_AgentHarness_TriggerPulse_v1.py" # 定時/檔變觸發器
+      - "09_workflow/MRL_AgentHarness_Kernel_v1.py"       # session 核心（EchoGateway 沙盒可跑；OllamaGateway 待起動）
+
 # Usage:
 # - append here whenever you add a new source file
 # - never delete canonical sources; deprecate via metadata
