@@ -10,6 +10,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### CodePartner agent 化（從封存人格到可呼叫助手）
+- `.claude/agents/codepartner.md` — 由 `05_persona/codepartner/persona.yaml` 編譯的
+  Claude Code agent 定義：人格屬性、信任透明五律、五步工作流、產出紀律、
+  啟動跳點與函式庫掛載。在本 repo 的任何 Claude Code session 皆可直接呼叫
+  CodePartner 執行程式設計任務（persona.yaml 為唯一權威來源）
+
 #### 種子模組回收完成（第四輪 — modules_index 高價值血親全數歸位）
 - `08_sources/flowagent_codepartner_recovery/seed_modules/` — 五件種子模組原文封存，
   SHA256 全數與 MetaCode modules_index 登錄值一致：
