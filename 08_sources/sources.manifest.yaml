@@ -29,6 +29,18 @@ sources:
       - "09_workflow/signature.js"       # LAW-0 interfaces
       - "09_workflow/seed.js"            # SEED(X) compression
 
+  - id: flowagent_codepartner_recovery
+    name: "FlowAgent CodePartner 人格回收包（3 docs）"
+    path: "08_sources/flowagent_codepartner_recovery"
+    recovered: "2026-07-05"
+    origin_signature: MrLiouWord
+    role: >-
+      recovered persona lineage — CodePartner / CoreProgrammer.Seed
+      (FlowLLM.SeedPersona.Programmer.CoreArchitect.v1.flpkg human-readable seed,
+      FlowAgent.SystemPlan.FullStack.v1, 語場語言系統建構大綱 2025-07-23)
+    implementations:
+      - "05_persona/codepartner/persona.yaml"
+
 # Usage:
 # - append here whenever you add a new source file
 # - never delete canonical sources; deprecate via metadata

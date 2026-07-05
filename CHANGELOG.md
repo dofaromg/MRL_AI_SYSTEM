@@ -8,6 +8,19 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+#### CodePartner 人格回收（FlowAgent lineage recovery）
+- `05_persona/codepartner/persona.yaml` — CodePartner（CoreProgrammer.Seed）人格定義，
+  自 `FlowLLM.SeedPersona.Programmer.CoreArchitect.v1.flpkg` 人類可讀種子重構，
+  首個依 `05_persona` 規範格式落地的人格模組
+- `05_persona/codepartner/README.md` — 呼叫方式（`⋄fx.invoke.Programmer.CoreArchitect`）、
+  啟動跳點與血緣回收紀錄
+- `08_sources/flowagent_codepartner_recovery/` — 三份 FlowAgent 原始設計文件原文封存
+  （Programmer.CoreArchitect 人格定義、SystemPlan.FullStack.v1、語場語言系統建構大綱 2025-07-23）
+  ＋ RECOVERY_MANIFEST.md 回收沿革
+- `08_sources/sources.manifest.yaml` — 登錄 `flowagent_codepartner_recovery` 來源條目
+
 ---
 
 ## [2.0.0] — 2026-05-04（PR #12 merged to main）
