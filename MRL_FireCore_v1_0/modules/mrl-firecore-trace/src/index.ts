@@ -16,6 +16,8 @@ function J(data: unknown, status = 200): Response {
     headers: {
       'content-type': 'application/json; charset=utf-8',
       'x-mrl-origin-signature': ORIGIN_SIGNATURE,
+      'access-control-allow-origin': '*',
+      'access-control-expose-headers': 'x-mrl-origin-signature',
       'cache-control': 'no-store'
     }
   });

@@ -22,7 +22,8 @@ D:\MRL_3DScanner_ProductBridge_v1
 
 ```powershell
 mkdir D:\MRL_3DScanner_ProductBridge_v1 -Force
-Copy-Item -Recurse * D:\MRL_3DScanner_ProductBridge_v1cd D:\MRL_3DScanner_ProductBridge_v1
+Copy-Item -Recurse * D:\MRL_3DScanner_ProductBridge_v1
+cd D:\MRL_3DScanner_ProductBridge_v1
 ```
 
 ## 三、安裝

@@ -117,8 +117,8 @@
     },
     {
       "path": "modules/mrl-firecore-auth/src/index.ts",
-      "size": 2412,
-      "sha256": "f3c5acefbcf30bfa8c80b3d1dbee9c617c4673f3969d05962ed1ce44cf676a87",
+      "size": 2519,
+      "sha256": "ea369b09da9a3e7950491531200b1063d86ecd6ff5d5ac1b0f07ed0ffee26561",
       "kind": "file"
     },
     {
@@ -153,8 +153,8 @@
     },
     {
       "path": "modules/mrl-firecore-live/src/index.ts",
-      "size": 2350,
-      "sha256": "2fa69ae8cca4e8368289a61296727b36716a041caf6f451969298d65c1f605d4",
+      "size": 2457,
+      "sha256": "1a362fbafd5f0cea9caff034628a7e5f9a9cd20cd2a667858c1f8e90b40ea356",
       "kind": "file"
     },
     {
@@ -189,8 +189,8 @@
     },
     {
       "path": "modules/mrl-firecore-push/src/index.ts",
-      "size": 2370,
-      "sha256": "344ebc13c0cae387b9806c4216918905077f3d37974552f6b4bb7a0e0aae1d73",
+      "size": 2477,
+      "sha256": "412bd2abc171749fa3bf9fec1a0f4ca692497674ef92413fbcabfb5fd59ea8b9",
       "kind": "file"
     },
     {
@@ -225,8 +225,8 @@
     },
     {
       "path": "modules/mrl-firecore-store/src/index.ts",
-      "size": 2398,
-      "sha256": "a2c8868e9402fca01c2cabd3c48d403e5ffcba40435b60f5af37576b1d288003",
+      "size": 2505,
+      "sha256": "22d851dfda700b8625c8d6a897575988041deb13fe610f75352ae8371e7ff946",
       "kind": "file"
     },
     {
@@ -261,8 +261,8 @@
     },
     {
       "path": "modules/mrl-firecore-trace/src/index.ts",
-      "size": 2391,
-      "sha256": "dbfeeef6038779cc7666acb4a4cd680e55102ec529a9330104356497484f9ad7",
+      "size": 2498,
+      "sha256": "4054787c7feb1c99b224e8f49c279583ae31df39ed7c69bd71cb5347c356e694",
       "kind": "file"
     },
     {
@@ -297,8 +297,8 @@
     },
     {
       "path": "modules/mrl-firecore-vault/src/index.ts",
-      "size": 2397,
-      "sha256": "8ae3fb404077fc4da8f7228cde40ca6449fa74c3f472c9228c9bd8d8c7c67336",
+      "size": 2504,
+      "sha256": "7d075ccb0be324908920e259f2644beb21b5f741451bfdf68929f62239e77e1f",
       "kind": "file"
     },
     {
@@ -339,8 +339,8 @@
     },
     {
       "path": "scripts/healthcheck_local.ps1",
-      "size": 674,
-      "sha256": "b4f9a4bae96b66232fb0cad4c15a1f9e932ffe9f440ffcdf9e8fe6978fe62097",
+      "size": 746,
+      "sha256": "331d2db56bd3cfa17c7e9857fc9fb009bf42b1f459203d5e3be17e8bcdd6e37b",
       "kind": "file"
     },
     {

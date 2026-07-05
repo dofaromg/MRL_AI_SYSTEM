@@ -21,8 +21,8 @@
     },
     {
       "path": "backend/MRL_3D_Reconstruction_Server/server.js",
-      "sha256": "e4b2b204773420f95e12f49837a9a3725da78a8e26ce348ea166e63b35c2b8a3",
-      "size": 7185
+      "sha256": "c36aa38a00018cb922831467e7c87b482f46880268d30e26e55a3b1366355ddc",
+      "size": 7249
     },
     {
       "path": "docs/00_READ_FIRST.md",
@@ -31,8 +31,8 @@
     },
     {
       "path": "docs/01_CLAUDE_BUILD_COMMAND_DL580_PRODUCT_BRIDGE.md",
-      "sha256": "3fefaa438903512c5c99b7fad42e09fb111e35fbb482f2049dd090d178bfcab7",
-      "size": 1771
+      "sha256": "a9f9cd79fd73b4b990cda1260fcc0a50118ef0fc12f64f0d1ba9172015669d6b",
+      "size": 1772
     },
     {
       "path": "docs/02_ACCEPTANCE_MATRIX.md",

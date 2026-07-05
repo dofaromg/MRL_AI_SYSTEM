@@ -16,12 +16,14 @@ const JOBS = path.join(STORAGE, 'jobs');
 const OUTPUTS = path.join(STORAGE, 'outputs');
 const REPORTS = path.join(STORAGE, 'reports');
 const LOGS = path.join(STORAGE, 'logs');
+const TMP = path.join(STORAGE, 'tmp');
 
 await fs.ensureDir(UPLOADS);
 await fs.ensureDir(JOBS);
 await fs.ensureDir(OUTPUTS);
 await fs.ensureDir(REPORTS);
 await fs.ensureDir(LOGS);
+await fs.ensureDir(TMP);
 
 const app = express();
 app.use(cors());
