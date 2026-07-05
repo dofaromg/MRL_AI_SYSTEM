@@ -21,9 +21,7 @@ import json
 import pathlib
 from typing import Any, Dict, List, Optional
 
-ORIGIN_SIGNATURE = "MrLiouWord"
-
-
+from MRL_utils import ORIGIN_SIGNATURE
 def _state_hash(state: Dict[str, Any]) -> str:
     return hashlib.sha256(
         json.dumps(state, ensure_ascii=False, sort_keys=True).encode("utf-8")

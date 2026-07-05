@@ -26,7 +26,6 @@ layer: L0 ROOT (boundary 出入口) + L3 LAW + L6 REFLECT
 """
 from __future__ import annotations
 
-import hashlib
 import json
 import pathlib
 import sys
@@ -39,58 +38,14 @@ if str(_HERE) not in sys.path:
 # rl_12 命名回收實作（單一真實來源,避免重複實作 → No-Delete/Additive 一致）
 from MRL_FlowAgent_LawEngine_v1 import reclaim_name  # noqa: E402
 
-ORIGIN_SIGNATURE = "MrLiouWord"
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# LAW-0 簽章（Python 鏡像，與 09_workflow/signature.js 位元相容）
-#   公式：T(e) = e'  ⟹  signature(e) = signature(e')
-#   相容性：採 JS JSON.stringify 等價的 compact 序列化（無空白、保留 unicode、
-#           維持插入順序），故 _sig_hash 與 signature.js 對同一物件一致。
-# ─────────────────────────────────────────────────────────────────────────────
-def _compact_json(obj: Dict[str, Any]) -> str:
-    """等價 JS JSON.stringify(obj)：compact、ensure_ascii=False、插入序。"""
-    return json.dumps(obj, separators=(",", ":"), ensure_ascii=False)
-
-
-def embed_signature(obj: Dict[str, Any], sig: str = ORIGIN_SIGNATURE) -> Dict[str, Any]:
-    """
-    LAW-0 embedSignature：非破壞性地嵌入母體簽章。
-    新增 _signature 與 _sig_hash = sha256(sig + ":" + compact_json(obj))。
-    """
-    if not isinstance(obj, dict):
-        raise TypeError("embed_signature: obj must be a plain dict")
-    base = _compact_json(obj)
-    sig_hash = hashlib.sha256((sig + ":" + base).encode("utf-8")).hexdigest()
-    return {**obj, "_signature": sig, "_sig_hash": sig_hash}
-
-
-def extract_signature(obj: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-    """LAW-0 extractSignature：讀出已嵌入的簽章資訊；無則 None。"""
-    if not isinstance(obj, dict):
-        return None
-    sig = obj.get("_signature")
-    if not sig:
-        return None
-    return {"signature": sig, "sig_hash": obj.get("_sig_hash")}
-
-
-def verify_signature(obj: Dict[str, Any], expected_sig: str = ORIGIN_SIGNATURE) -> bool:
-    """
-    LAW-0 verifySignature：剝除 _signature/_sig_hash 後重新雜湊比對。
-    簽章存在、簽章者相符、雜湊一致 → True。
-    """
-    if not isinstance(obj, dict):
-        return False
-    sig = obj.get("_signature")
-    stored = obj.get("_sig_hash")
-    if not sig or not stored:
-        return False
-    if sig != expected_sig:
-        return False
-    rest = {k: v for k, v in obj.items() if k not in ("_signature", "_sig_hash")}
-    computed = hashlib.sha256((sig + ":" + _compact_json(rest)).encode("utf-8")).hexdigest()
-    return computed == stored
+# LAW-0 共用工具從 MRL_utils（L0 RootGate 唯一真實來源）匯入並重新匯出
+from MRL_utils import (  # noqa: E402
+    ORIGIN_SIGNATURE,
+    _compact_json,
+    embed_signature,
+    extract_signature,
+    verify_signature,
+)
 
 
 # ─────────────────────────────────────────────────────────────────────────────

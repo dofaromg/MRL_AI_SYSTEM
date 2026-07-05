@@ -67,7 +67,7 @@ import time
 import uuid
 from typing import Any, Callable, Dict, List, Optional
 
-ORIGIN_SIGNATURE = "MrLiouWord"
+from MRL_utils import ORIGIN_SIGNATURE
 PRODUCT_NAME = "MRL_AI_SYSTEM"
 EVENT_BUS_VERSION = "1.0"
 

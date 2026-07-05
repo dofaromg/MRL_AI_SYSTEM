@@ -54,7 +54,7 @@ import threading
 import time
 from typing import Any, Deque, Dict, Optional, Tuple
 
-ORIGIN_SIGNATURE = "MrLiouWord"
+from MRL_utils import ORIGIN_SIGNATURE
 PRODUCT_NAME = "MRL_AI_SYSTEM"
 RATE_LIMITER_VERSION = "1.0"
 

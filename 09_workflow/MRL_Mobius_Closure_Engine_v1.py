@@ -27,9 +27,7 @@ import hashlib
 import json
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
-ORIGIN_SIGNATURE = "MrLiouWord"
-
-
+from MRL_utils import ORIGIN_SIGNATURE
 def _hash(x: Any) -> str:
     """φ:狀態 → 指紋(用於 ≈ 等價判定,§46 hash 版)。"""
     return hashlib.sha256(json.dumps(x, sort_keys=True, ensure_ascii=False, default=str)

@@ -49,7 +49,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Iterable, List, Optional, Tuple
 
-ORIGIN_SIGNATURE = "MrLiouWord"
+from MRL_utils import ORIGIN_SIGNATURE
 PRODUCT_NAME = "MRL_AI_SYSTEM"
 HOST_GUARD_VERSION = "1.0"
 

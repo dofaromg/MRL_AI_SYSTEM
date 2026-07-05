@@ -4,6 +4,7 @@
 > 當下狀態日期：2026-05-31（沙盒）
 > 法則依據：最高律法（rootlaw）— `rl_00 deny-by-default`、`no_proof_implies_rhetoric`（不偽造）、Additive-Only。
 > 收斂原則：**以主線前進；矛盾一律附錄標籤後繼續；最後一起合併上線。**
+> 執行模板：`/home/runner/work/MRL_AI_SYSTEM/MRL_AI_SYSTEM/docs/MRL_主線回填清單模板_v1.md`
 
 ---
 
