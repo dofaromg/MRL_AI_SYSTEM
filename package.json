@@ -8,7 +8,8 @@
     "start": "node MRL_RuntimeServer.js",
     "MRL_boot": "node scripts/MRL_runtime_bootstrap.js",
     "MRL_acceptance": "node scripts/MRL_acceptance_check.js",
-    "MRL_pidscope_acceptance": "node acceptance/MRL_PIDScope_Acceptance/run.js"
+    "MRL_pidscope_acceptance": "node acceptance/MRL_PIDScope_Acceptance/run.js",
+    "build:ui": "node scripts/MRL_build_ui.js"
   },
   "dependencies": {
     "express": "^4.18.3"

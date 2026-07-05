@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<link rel="icon" href="data:,">
 <title>MRL_AI OS · Particle Universe</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>✦</text></svg>">
 <!--
   MRL_AI OS — 產品級入口 (MRL_Product_Entry_UI)
   origin_signature: MrLiouWord
@@ -234,9 +234,11 @@ async function api(method,path,body){
 async function probe(){
   try{
     const r=await fetch('/api/mother/status');
-    let d=null; try{d=await r.json()}catch(e){}
     // HTTP 200 但 available:false（母體未 boot）也視為未連線，不誤標「已連線」
-    CORE_ONLINE=r.ok && !(d&&d.available===false);
+    if(r.ok){
+      let data=null; try{data=await r.json()}catch(e){}
+      CORE_ONLINE=(data&&data.available===false)?false:true;
+    }else{ CORE_ONLINE=false }
   }catch(e){ CORE_ONLINE=false }
   $('#coreDot').className='dot'+(CORE_ONLINE?'':' off');
   $('#engineTag').textContent='engine: '+(CORE_ONLINE?'母體後端已連線':'前端模式（待接 DL580/MotherAssembly）');
@@ -348,6 +350,20 @@ function paintMsgs(){
   });
   m.scrollTop=m.scrollHeight;
 }
+/* ── unwrapReply: dig out a string from any nesting ── */
+function unwrapReply(data){
+  let d=data; let depth=0;
+  while(d&&typeof d==='object'&&depth<8){
+    if(typeof d.reply==='string') return d.reply;
+    if(typeof d.output==='string') return d.output;
+    if(typeof d.text==='string') return d.text;
+    if(typeof d.reply==='object') d=d.reply;
+    else if(typeof d.output==='object') d=d.output;
+    else break;
+    depth++;
+  }
+  return JSON.stringify(data,null,2);
+}
 async function send(text){
   const s=getCur()||newSession();
   s.msgs.push({role:'user',text});
@@ -358,7 +374,7 @@ async function send(text){
     const r=await api('POST','/api/chat',{message:text,session_id:s.id});
     if(r.ok && r.data && r.data.ok!==false){
       ai.text = unwrapReply(r.data);
-      ai.engine = r.data.engine || r.data.via || r.data.route || (CORE_ONLINE?'母體後端':'平台');
+      ai.engine = r.data.engine || r.data.route || r.data.via || (CORE_ONLINE?'母體後端':'平台');
       ai.status='DONE';
     }else if(r.ok && r.data && r.data.ok===false){
       // 後端以 HTTP 200 回 {ok:false,reason}（如母體未 boot、message 缺漏）— 誠實標 FAILED
@@ -367,10 +383,11 @@ async function send(text){
       ai.text='⚠ 母體回報失敗：'+reason;
     }else{
       ai.status='FAILED';
-      ai.text='⚠ 母體後端尚未連通（HTTP '+r.status+'）。\n\n'
+      const reason=(r.data&&(r.data.reason||r.data.error))||('HTTP '+r.status);
+      ai.text='⚠ 母體後端尚未連通（'+reason+'）。\n\n'
             +'此回應需要 MRL 母體後端 (MotherAssembly / DL580 runtime)。\n'
             +'本頁為對外產品入口；接上後端後即可真實對話，不偽造結果。\n'
-            +(r.data&&r.data.reason?('原因：'+r.data.reason):'請在 Cloudflare 設 MRL_DL580_ORIGIN，或在本機啟動 MRL_Platform_Server.py。');
+            +'請在 Cloudflare 設 MRL_DL580_ORIGIN，或在本機啟動 MRL_Platform_Server.py。';
     }
   }catch(e){
     ai.status='FAILED';
@@ -411,13 +428,6 @@ function renderToolStub(t){
   $('#stubGo').onclick=()=>{ const v=$('#stubIn').value.trim(); if(!v)return; const s=getCur()||newSession(); s.label='['+t.name+'] '+v.slice(0,18); send('['+t.id+'] '+v) };
 }
 function needCore(r){ return '⚠ 需母體後端 (HTTP '+r.status+')。\n'+((r.data&&r.data.reason)?('原因：'+r.data.reason):'啟動 MRL_Platform_Server.py 或設定 DL580 origin。') }
-function unwrapReply(d){
-  // 母體 chat 回覆可能巢狀：{reply:{session_id,reply:"文字"}}；逐層取出字串，避免顯示 [object Object]
-  let v=(d.reply!==undefined)?d.reply:(d.output!==undefined?d.output:d.text);
-  while(v&&typeof v==='object'&&v.reply!==undefined) v=v.reply;
-  if(v===undefined||v===null) return JSON.stringify(d,null,2);
-  return (typeof v==='string')?v:JSON.stringify(v,null,2);
-}
 function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])) }
 
 /* ── boot ── */
