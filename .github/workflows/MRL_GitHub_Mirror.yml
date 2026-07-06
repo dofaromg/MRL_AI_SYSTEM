@@ -1,0 +1,56 @@
+# MRL_GitHub_Mirror — Runtime Civilization Stack 驗收閘（GitHub = MRL_External_Mirror_Layer）
+# origin_signature=MrLiouWord
+# 權位：GitHub 為工程鏡像 / 版本通道（Mirror/Adapter），非母體。母體為 DL580 上的 MRL_Mother_Runtime。
+name: MRL GitHub Mirror — Runtime Acceptance
+
+"on":
+  push:
+    branches: [main]
+    paths:
+      - 'MRL_UniversalRuntimeLanguage_Core_v1/**'
+      - '09_workflow/fltnz_parser.py'
+      - 'tests/test_MRL_universal_runtime_core.py'
+      - '.github/workflows/MRL_GitHub_Mirror.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'MRL_UniversalRuntimeLanguage_Core_v1/**'
+      - '09_workflow/fltnz_parser.py'
+      - 'tests/test_MRL_universal_runtime_core.py'
+      - '.github/workflows/MRL_GitHub_Mirror.yml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  runtime-acceptance:
+    name: Runtime Civilization Acceptance
+    runs-on: ubuntu-latest
+    env:
+      ORIGIN_SIGNATURE: "MrLiouWord"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Acceptance suite (stdlib, MRL_RUNTIME_ACCEPTANCE_PASS)
+        run: |
+          set -euo pipefail
+          OUT="$(python3 MRL_UniversalRuntimeLanguage_Core_v1/acceptance/MRL_Runtime_Acceptance_TestSuite.py)"
+          echo "$OUT"
+          echo "$OUT" | grep -q "MRL_RUNTIME_ACCEPTANCE_PASS"
+
+      - name: End-to-end civilization run (emit reports + StructureField visualization)
+        run: python3 MRL_UniversalRuntimeLanguage_Core_v1/scripts/MRL_runtime_civilization_run.py
+
+      - name: Upload runtime reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: MRL_Runtime_Reports
+          path: MRL_UniversalRuntimeLanguage_Core_v1/docs/
+          if-no-files-found: warn

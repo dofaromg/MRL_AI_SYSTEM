@@ -56,15 +56,15 @@ Design principle: **怎麼過去，就怎麼回來** (the path forward is the pa
 
 ## Key modules
 
-### MRL core modules
+### MRLcore modules
 
-| Module | Purpose |
+| mrlModule | mrlPurpose |
 |--------|---------|
-| `09_workflow/mrl_librarian.py` | T/X/Y/Z indexed file librarian — rebuild with `python 09_workflow/mrl_librarian.py index` |
-| `09_workflow/fltnz_parser.py` | Bidirectional txt↔fltnz↔map↔flpkg↔trace reversible chain parser |
-| `05_persona/world_module.py` | World node / state / trajectory / particle-globe coordinate manager |
-| `04_runtime/runtime_manifest.yaml` | TotalCore · Runtime · Container · CLI install & recovery spec |
-| `data/relations/module_relations.yaml` | Canonical relation map linking all modules across core groups |
+| `09_mrlworkflow/mrl_librarian.py` | T/X/Y/Z indexed file librarian — rebuild with `python 09_mrlworkflow/mrl_librarian.py index` |
+| `09_mrlworkflow/mrlfltnz_parser.py` | Bidirectional txt↔fltnz↔map↔flpkg↔trace reversible chain parser |
+| `05_mrlpersona/mrlworld_module.py` | World node / state / trajectory / particle-globe coordinate manager |
+| `04_mrlruntime/mrlruntime_manifest.yaml` | TotalCore · Runtime · Container · CLI install & recovery spec |
+| `mrldata/mrlrelations/mrlmodule_relations.yaml` | Canonical relation map linking all modules across core groups |
 | `03_memory/merkle/memory_chain.py` | Append-only Merkle chain with `verify()` + `rollback()` |
 | `09_workflow/api.js` | L0–L7 layer stack (Node.js, v1.3) |
 | `09_workflow/signature.js` | LAW-0 signature law implementation |
@@ -81,7 +81,7 @@ Design principle: **怎麼過去，就怎麼回來** (the path forward is the pa
 | `09_workflow/eval_engine.py` | Output scoring / evaluation pipeline | safety scorer enforces L3 LAW deny-list |
 | `09_workflow/plugin_manager.py` | Plugin discovery & lifecycle | plugins must declare TXYZ coordinates (layer + group) |
 
-### MRL_AGI production modules (v2 — 補全)
+### MRLAGI production modules (v2 — 補全)
 
 Distilled from the three major mainstream AI systems (OpenAI / Anthropic / Google) and integrated with MRL particles:
 
@@ -91,7 +91,7 @@ Distilled from the three major mainstream AI systems (OpenAI / Anthropic / Googl
 | `09_workflow/llm_adapter.py` | Unified LLM provider gateway (OpenAI · Anthropic · Local · Mock) | every response is an MRL trace-compatible LLMResponse record |
 | `09_workflow/context_manager.py` | Context window management — smart truncation / summarisation | strategy choices: `truncate_oldest` · `sliding_window` · `summarise_oldest` |
 | `09_workflow/streaming.py` | Real-time token-by-token streaming output | StreamChunks are MRL trace-stamped; StreamSession emits a final result record |
-| `09_workflow/multi_agent.py` | Multi-agent coordination (AutoGen / CrewAI pattern) | AgentMessages + WorldModule trajectory compatible; sequential + round-robin modes |
+| `09_workflow/MRL_multi_agent.py` | Multi-agent coordination (AutoGen / CrewAI pattern) | AgentMessages + WorldModule trajectory compatible; sequential + round-robin modes |
 | `09_workflow/scheduler.py` | Async background task queue (priority-based) | TaskResult records are origin_signature stamped; workers are configurable |
 | `09_workflow/config_manager.py` | Centralised typed configuration (JSON + env-var override) | env prefix `MRL_`; sensitive keys auto-masked in display |
 | `09_workflow/api_gateway.py` | Production REST API gateway (HTTP) | exposes all MRL_AGI capabilities; optional Bearer-token auth |
@@ -100,11 +100,21 @@ Distilled from the three major mainstream AI systems (OpenAI / Anthropic / Googl
 
 | Module | Purpose |
 |--------|---------|
-| `09_workflow/mother_assembly.py` | **Unified system entry point** — boots and wires all **12 subsystems** together. Now includes chat, multi-agent, scheduler, LLM gateway, context management, and configuration. |
+| `09_workflow/MRL_mother_assembly.py` | **Unified system entry point** — boots and wires all **15 subsystems** together. Includes chat, multi-agent, scheduler, LLM gateway, context management, configuration, guardrail, metrics, and host_guard. |
 | `09_workflow/plugins/` | Plugin directory — drop `*.py` files here following the plugin contract |
+
+### mrlSafety & mrl modules (v1.1 — 本地安全層)
+
+> 完全本地可控，無任何外部 API 依賴。
+
+| Module | Feature | Implementation |
+|--------|---------|---------------|
+| `09_workflow/guardrail.py` | **安全護欄鏈** — pre/post content safety | `InputGuardrail` + `OutputGuardrail` + `GuardrailChain`; policies: strict / standard / permissive; deny-list, PII detection, length limits, repetition check |
+| `09_workflow/output_parser.py` | **結構化輸出解析** — extract structured data from LLM text | `JSONParser` · `ListParser` · `KeyValueParser` · `CodeBlockParser` · `TableParser` · `ParserChain` |
 
 ## Design principles
 
+- **Local-only / 完全本地** — all inference via Ollama/llama-cpp or stub; no cloud APIs required
 - **Deny-by-default** — all external actions blocked unless explicitly allowlisted
 - **Audit everything** — every action writes to both Merkle chain and JSONL before execution
 - **Human override** — REQUIRE_HUMAN decisions never execute without a recorded proof
@@ -114,17 +124,42 @@ Distilled from the three major mainstream AI systems (OpenAI / Anthropic / Googl
 ## Layer stack (L0–L7)
 
 ```
-L0 ROOT     source of truth; never deleted
-L1 SEED     initial constraints / contracts
-L2 PARTICLE content units and state changes
-L3 LAW      explicit rules (Rootlaw + compliance + AUP gates)
-L4 WORLD    aligned models across worlds
-L5 MIRROR   translation of actions/state across worlds
-L6 REFLECT  facts, records, accountability
-L7 LOOP     validate, then roll forward; rollback with proofs
-MetaEnv     variable environment: spawn / scale / snapshot / migrate
-Platform    FluinHub / FlowCoreLoop / partner platforms / 3-D globe / AI chat
+L0 MrlROOT     source of truth; never deleted
+L1 MrlSEED     initial constraints / contracts
+L2 MrlPARTICLE content units and state changes
+L3 MrlLAW      explicit rules (Rootlaw + compliance + AUP gates)
+L4 MrlWORLD    aligned models across worlds
+L5 MrlMIRROR   translation of actions/state across worlds
+L6 MrlRlREFLECT  facts, records, accountability
+L7 MrlLOOP     validate, then roll forward; rollback with proofs
+MRLMetaEnv     variable environment: spawn / scale / snapshot / migrate
+MRLPlatform    FluinHub / FlowCoreLoop / partner platforms / 3-D globe / AI chat
 ```
+
+## Runtime Civilization Stack
+
+`MRL_UniversalRuntimeLanguage_Core_v1/` 為正式 Runtime 核心（v2 canonical：Language →
+MrLiouIR → ParticleIR → StructureField → Replay → Restore → Verification →
+WorldRuntime → PersistentLoop）。禁止 Prompt→LLM→Output。
+（`MetaIR`/`Graph` 已降為歷史 alias，正式主體名為 `MrLiouIR`/`StructureField`。）
+
+```bash
+# 驗收（全通過印出 MRL_RUNTIME_ACCEPTANCE_PASS）
+python3 MRL_UniversalRuntimeLanguage_Core_v1/acceptance/MRL_Runtime_Acceptance_TestSuite.py
+# 端到端執行 + 產出報告/StructureField 視覺化
+python3 MRL_UniversalRuntimeLanguage_Core_v1/scripts/MRL_runtime_civilization_run.py
+```
+
+詳見 `MRL_UniversalRuntimeLanguage_Core_v1/README.md`。
+正式命名規範（唯一權威來源）：`docs/MRL_命名規範_v2_MrLiouIR_StructureField.md`。
+
+## DL580
+
+DL580 為 MRL 內部母體自運行主節點（部署主體）。  
+GitHub 為工程鏡像與版本通道（MRL_External_Mirror_Layer）。  
+Cloud Code / Cloudflared / XOOPZ / Claude 為 Adapter / Mirror，不是母體。
+
+對外橋接：`deploy/dl580/cloudflared/` → `https://bridge.mrliouhan.ai`。
 
 ## Quick start
 
@@ -141,31 +176,45 @@ python 09_workflow/fltnz_parser.py encode --src README.md --dst /tmp/readme.fltn
 # 4. Inspect world state
 python 05_persona/world_module.py snap
 
-# ── MotherAssembly v2 (boots all 12 subsystems at once) ──────────────────────
+# ── MotherAssembly v2 (boots all 15 subsystems at once) ──────────────────────
 
 # 5. Boot and check status
-python 09_workflow/mother_assembly.py boot
-python 09_workflow/mother_assembly.py status
+python 09_workflow/MRL_mother_assembly.py boot
+python 09_workflow/MRL_mother_assembly.py status
 
 # 6. Run an agent task
-python 09_workflow/mother_assembly.py run --goal "Summarise the repo structure"
+python 09_workflow/MRL_mother_assembly.py run --goal "Summarise the repo structure"
 
 # 7. Evaluate an output
-python 09_workflow/mother_assembly.py eval \
+python 09_workflow/MRL_mother_assembly.py eval \
     --output "The MRL system uses Merkle chains for immutable tracing." \
     --keywords "MRL,Merkle,tracing"
 
 # 8. Seal text through the full reversible chain + MerkleChain
-python 09_workflow/mother_assembly.py seal --text "Hello, MRL!" --label readme
+python 09_workflow/MRL_mother_assembly.py seal --text "Hello, MRL!" --label readme
 
 # 9. Chat (multi-turn conversation)
-python 09_workflow/mother_assembly.py chat --message "Hello, who are you?"
+python 09_workflow/MRL_mother_assembly.py chat --message "Hello, who are you?"
 # Continue the same session:
-python 09_workflow/mother_assembly.py chat --message "What can you do?" --sid <session_id>
+python 09_workflow/MRL_mother_assembly.py chat --message "What can you do?" --sid <session_id>
 
-# 10. Multi-agent task
-python 09_workflow/mother_assembly.py multi-agent \
+# 10. Multi-agent task (round-robin or sequential)
+python 09_workflow/MRL_mother_assembly.py multi-agent \
     --goal "Write a technical summary of the MRL AI System."
+
+# 11. Guardrail check (local safety — no external API)
+python 09_workflow/MRL_mother_assembly.py guard --text "Hello world" --direction input
+python 09_workflow/MRL_mother_assembly.py guard --text "bad content" --policy strict
+
+# 12. Structured output parsing (local, stdlib only)
+python 09_workflow/MRL_mother_assembly.py parse --text '{"answer": 42}' --type json
+python 09_workflow/MRL_mother_assembly.py parse --text "Name: Alice\nAge: 30" --type kv
+
+# 13. Backup before update/upgrade
+python 09_workflow/MRL_mother_assembly.py backup --label before-upgrade
+
+# Guarded update entrypoint (creates backup first)
+python 09_workflow/MRL_mother_assembly.py update --label auto
 
 # ── REST API gateway ──────────────────────────────────────────────────────────
 
@@ -204,8 +253,8 @@ python 09_workflow/streaming.py demo
 python 09_workflow/streaming.py replay --chunks '["Hello"," ","MRL","!"]'
 
 # Multi-agent coordination
-python 09_workflow/multi_agent.py demo
-python 09_workflow/multi_agent.py roles
+python 09_workflow/MRL_multi_agent.py demo
+python 09_workflow/MRL_multi_agent.py roles
 
 # Task scheduler
 python 09_workflow/scheduler.py demo
@@ -214,6 +263,20 @@ python 09_workflow/scheduler.py demo
 python 09_workflow/config_manager.py show
 python 09_workflow/config_manager.py get  --key llm.default_model
 python 09_workflow/config_manager.py set  --key llm.default_model --value gpt-4o
+
+# ── Individual v1.1 safety/parsing modules ───────────────────────────────────
+
+# Guardrail checks (local, stdlib only)
+python 09_workflow/guardrail.py check-input  --text "Hello world"
+python 09_workflow/guardrail.py check-output --text "Here is the answer."
+python 09_workflow/guardrail.py demo
+
+# Output parsers (local, stdlib only)
+python 09_workflow/output_parser.py parse-json  --text '{"a":1}'
+python 09_workflow/output_parser.py parse-list  --text "- item1\n- item2"
+python 09_workflow/output_parser.py parse-kv    --text "Key: Value"
+python 09_workflow/output_parser.py parse-code  --text '```python\nprint(1)\n```'
+python 09_workflow/output_parser.py demo
 
 # ── Individual v1 industry modules ───────────────────────────────────────────
 
@@ -241,13 +304,26 @@ python 09_workflow/plugin_manager.py discover --dir 09_workflow/plugins
 
 ## LLM provider configuration
 
-Set environment variables to enable real LLM calls (optional — Mock adapter works without any keys):
+### Option A — Local-only (Ollama, zero cloud)
+
+```bash
+# Install Ollama: https://ollama.com  (no account, runs fully offline)
+ollama pull llama3        # download model once
+ollama serve              # keep running in background
+
+# MRL auto-detects Ollama — no config change needed:
+python 09_workflow/mother_assembly.py chat --message "Explain MRL in one sentence"
+```
+
+### Option B — Cloud providers (optional)
+
+Set environment variables to enable cloud LLM calls:
 
 ```bash
 export MRL_LLM_DEFAULT_MODEL=gpt-4o          # or claude-3-5-sonnet
 export MRL_LLM_OPENAI_API_KEY=sk-...
 export MRL_LLM_ANTHROPIC_API_KEY=sk-ant-...
-export MRL_LLM_LOCAL_BASE_URL=http://localhost:11434/v1   # Ollama
+export MRL_LLM_LOCAL_BASE_URL=http://localhost:11434/v1   # Ollama override
 ```
 
 Or persist to `data/config.json`:

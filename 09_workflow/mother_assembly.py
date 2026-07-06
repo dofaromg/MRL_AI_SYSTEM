@@ -328,20 +328,31 @@ class MotherAssembly:
             return "unavailable"
         try:
             self.llm_gateway = LLMGateway()
+            errors = []
+            # 各 adapter 獨立註冊：單一失敗不阻斷其他 adapter（review PR#77）
             if LocalAdapter is not None:
-                local_base_url = "http://localhost:11434/v1"
-                if self.config:
-                    local_base_url = str(self.config.get("llm.local_base_url", local_base_url))
-                self.llm_gateway.register("local", LocalAdapter(base_url=local_base_url))
+                try:
+                    local_base_url = "http://localhost:11434/v1"
+                    if self.config:
+                        local_base_url = str(self.config.get("llm.local_base_url", local_base_url))
+                    self.llm_gateway.register("local", LocalAdapter(base_url=local_base_url))
+                except Exception as exc:  # noqa: BLE001
+                    errors.append(f"local: {exc}")
             if OpenAIAdapter is not None and self.config:
-                openai_key = str(self.config.get("llm.openai_api_key", "")).strip()
-                if openai_key:
-                    self.llm_gateway.register("openai", OpenAIAdapter(api_key=openai_key))
+                try:
+                    openai_key = str(self.config.get("llm.openai_api_key", "")).strip()
+                    if openai_key:
+                        self.llm_gateway.register("openai", OpenAIAdapter(api_key=openai_key))
+                except Exception as exc:  # noqa: BLE001
+                    errors.append(f"openai: {exc}")
             if AnthropicAdapter is not None and self.config:
-                anthropic_key = str(self.config.get("llm.anthropic_api_key", "")).strip()
-                if anthropic_key:
-                    self.llm_gateway.register("anthropic", AnthropicAdapter(api_key=anthropic_key))
-            return "ok"
+                try:
+                    anthropic_key = str(self.config.get("llm.anthropic_api_key", "")).strip()
+                    if anthropic_key:
+                        self.llm_gateway.register("anthropic", AnthropicAdapter(api_key=anthropic_key))
+                except Exception as exc:  # noqa: BLE001
+                    errors.append(f"anthropic: {exc}")
+            return "ok" if not errors else f"partial: {'; '.join(errors)}"
         except Exception as exc:  # noqa: BLE001
             return f"error: {exc}"
 
@@ -577,10 +588,17 @@ class MotherAssembly:
         if self.conversation_manager is None:
             return {"error": "ConversationManager unavailable"}
 
-        # Resolve model
-        resolved_model = model or (
-            self.config.get("llm.default_model", "mock") if self.config else "mock"
-        )
+        # Resolve model — deny-by-default（rootlaw rl_00）：不隱式退回 mock
+        resolved_model = str(model or (
+            self.config.get("llm.default_model", "") if self.config else ""
+        )).strip()
+        if not resolved_model:
+            return {"error": "'model' is required unless llm.default_model is configured"}
+        allow_mock = False
+        if self.config:
+            allow_mock = str(self.config.get("llm.allow_mock", False)).strip().lower() in ("1", "true", "yes", "on")
+        if resolved_model.startswith("mock") and not allow_mock:
+            return {"error": "MockAdapter is test-only. Set llm.allow_mock=true to enable."}
 
         # Get or create session
         if session_id is None:
@@ -606,19 +624,46 @@ class MotherAssembly:
             for m in history
         ]
 
-        # LLM call
-        reply_text = f"[MockAdapter] Echo: {message}"
-        if self.llm_gateway is not None:
-            LLMRequest = _try_import("llm_adapter", "LLMRequest")
-            if LLMRequest is not None:
-                req = LLMRequest(
-                    model=resolved_model,
-                    messages=llm_messages,
-                    max_tokens=max_tokens,
-                    temperature=temperature,
-                )
-                resp = self.llm_gateway.complete(req)
-                reply_text = resp.text if resp.ok else f"[LLM Error] {resp.error}"
+        # LLM call — deny-by-default（rootlaw rl_00）：gateway 不可用或呼叫失敗時
+        # 以 top-level error 誠實回報，不以 Mock 偽造回覆（fail closed）。
+        if self.llm_gateway is None:
+            return {
+                "error": "LLM gateway unavailable (not booted)",
+                "session_id": session_id,
+                "model": resolved_model,
+                "origin_signature": ORIGIN_SIGNATURE,
+            }
+        LLMRequest = _try_import("llm_adapter", "LLMRequest")
+        if LLMRequest is None:
+            return {
+                "error": "llm_adapter module unavailable",
+                "session_id": session_id,
+                "model": resolved_model,
+                "origin_signature": ORIGIN_SIGNATURE,
+            }
+        req = LLMRequest(
+            model=resolved_model,
+            messages=llm_messages,
+            max_tokens=max_tokens,
+            temperature=temperature,
+        )
+        try:
+            resp = self.llm_gateway.complete(req)
+        except Exception as exc:  # noqa: BLE001 — 例如未註冊模型的 KeyError
+            return {
+                "error": f"LLM error: {exc}",
+                "session_id": session_id,
+                "model": resolved_model,
+                "origin_signature": ORIGIN_SIGNATURE,
+            }
+        if not resp.ok:
+            return {
+                "error": f"LLM error: {resp.error}",
+                "session_id": session_id,
+                "model": resolved_model,
+                "origin_signature": ORIGIN_SIGNATURE,
+            }
+        reply_text = resp.text
 
         # Record assistant reply
         self.conversation_manager.add_message(session_id, "assistant", reply_text)
