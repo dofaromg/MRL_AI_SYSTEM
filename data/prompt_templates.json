@@ -31,8 +31,6 @@
       "id": "task_prompt",
       "text": "Goal: {goal}\n\nContext:\n{context}\n\nPlease proceed step by step.",
       "description": "Standard task prompt with goal and context",
-      "version": 254,
-      "created_at_ms": 1783324470886,
       "version": 249,
       "created_at_ms": 1783324440811,
       "variables": [
@@ -45,8 +43,6 @@
       "id": "eval_summary",
       "text": "Output evaluation for '{label}':\n  composite score: {composite}\n  passed: {passed}\n  individual scores: {scores}",
       "description": "Evaluation result summary template",
-      "version": 254,
-      "created_at_ms": 1783324470887,
       "version": 249,
       "created_at_ms": 1783324440812,
       "variables": [
