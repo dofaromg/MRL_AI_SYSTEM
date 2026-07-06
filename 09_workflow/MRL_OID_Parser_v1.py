@@ -18,8 +18,7 @@ from __future__ import annotations
 
 from typing import Dict, List, Optional, Tuple
 
-ORIGIN_SIGNATURE = "MrLiouWord"
-
+from MRL_utils import ORIGIN_SIGNATURE
 # 已知 OID 對照(可 additive 擴充,No-Delete)
 KNOWN_OIDS: Dict[str, Dict[str, str]] = {
     "1.2.840.10045.3.1.7": {"name": "secp256r1", "alias": "NIST P-256 / prime256v1"},
@@ -49,14 +48,24 @@ def decode_oid_bytes(data: bytes) -> str:
     """
     if not data:
         raise ValueError("empty OID value")
-    first = data[0]
-    nodes: List[int] = [first // 40, first % 40]
+    # 先 base-128 解出所有 subidentifier(第一個也可能多 byte)
+    subids: List[int] = []
     value = 0
-    for b in data[1:]:
+    for b in data:
         value = (value << 7) | (b & 0x7F)
-        if not (b & 0x80):          # 高位 0 = 此節點結束
-            nodes.append(value)
+        if not (b & 0x80):          # 高位 0 = 此 subidentifier 結束
+            subids.append(value)
             value = 0
+    if not subids:
+        raise ValueError("no subidentifier decoded")
+    # 第一 subidentifier 拆成前兩節點:<80 → X.Y(X=v//40,Y=v%40);>=80 → 2.(v-80)
+    # (避免 v>=80 時 v//40 產生無效的第一節點 3)
+    f = subids[0]
+    if f < 80:
+        nodes: List[int] = [f // 40, f % 40]
+    else:
+        nodes = [2, f - 80]
+    nodes.extend(subids[1:])
     return ".".join(str(n) for n in nodes)
 
 

@@ -24,6 +24,9 @@ PLATFORM_DOMAIN = os.environ.get("MRL_PLATFORM_DOMAIN", "mrliouword.com")
 # DL580(OLLAMA / OpenAI 相容自架端點)。設了 MRL_MOTHER_GATEWAY_URL(指向你 DL580
 # 對外網址)才接;未設則 deny-by-default,誠實回「DL580 未連」,絕不偷用外部 cf。
 _REPO = pathlib.Path(__file__).resolve().parent
+_GATEWAY_MANIFEST = json.loads(
+    (_REPO / "data" / "MRL_runtime_gateway_manifest.json").read_text(encoding="utf-8")
+)
 for p in [_REPO / "09_workflow", str(_REPO)]:
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
@@ -31,6 +34,7 @@ for p in [_REPO / "09_workflow", str(_REPO)]:
 # 母體 crown（優雅降級：未就緒不致整站掛掉）
 _MA = None
 _MA_ERR = None
+_MCP = None
 
 
 def _mother():
@@ -48,6 +52,16 @@ def _mother():
     return _MA
 
 
+def _mcp():
+    """惰性建立 MCP bridge（重用既有 stdio MCP server 核心）。"""
+    global _MCP
+    if _MCP is not None:
+        return _MCP
+    from MRL_MCP_Server_v1 import MRL_MCPServer
+    _MCP = MRL_MCPServer()
+    return _MCP
+
+
 def _subsystem_summary(rep_subs):
     # status() 回布林、boot() 報告回 "ok"/"unavailable" 字串 —— 兩者皆計入。
     ok = sum(1 for v in rep_subs.values()
@@ -57,26 +71,16 @@ def _subsystem_summary(rep_subs):
 
 # ── API handlers（回傳 dict）─────────────────────────────────────────────────
 def api_state():
-    return {
-        "origin_signature": ORIGIN_SIGNATURE,
-        "system_name": "MRL_完整態母體運轉系統_v1",
-        "platform": PLATFORM_DOMAIN,
-        "sovereignty_mode": "權位區分模式",
-        "status": "running",
-        "attention_policy": "Attention 為歷史層；正式主體為感知力(Perception)",
+    state = {
+        k: v for k, v in _GATEWAY_MANIFEST.items()
+        if k not in {"convergence_view", "perception"}
     }
+    state["platform"] = PLATFORM_DOMAIN
+    return state
 
 
 def api_convergence():
-    return {
-        "status": "SPEC_READY", "implementation": "READ_ONLY_API_ACTIVE",
-        "active": {"runtime_core": "LOCAL_ACCEPTANCE", "naming_alignment": "LOCAL_ACCEPTANCE",
-                   "pid_scope": "DECLARED_ACTIVE", "entry_gateway": "DECLARED_ACTIVE"},
-        "pending": {"persistent_loop_daemon": "PENDING", "replay_restore_runtime": "PENDING",
-                    "world_sync": "PENDING", "baseworld_db": "PENDING",
-                    "dl580_reboot_survival": "PENDING"},
-        "note": "唯讀治理視圖；不啟動 daemon、不宣稱 pending 完成。",
-    }
+    return dict(_GATEWAY_MANIFEST["convergence_view"])
 
 
 def api_mother_status():
@@ -123,9 +127,25 @@ def api_chat(body):
     except Exception:  # noqa: BLE001
         pass
     return {"ok": True, "via": "perceive_flow", "input": msg,
-            "flow": ["世界狀態", "感知力場", "語境同步", "記憶拉取", "人格共振",
-                     "運轉組裝", "世界投影", "回放", "回復", "驗證", "重新同步"],
+            "flow": _GATEWAY_MANIFEST["perception"]["flow"],
             "note": "真模型未配置（待實機 OLLAMA_HOST/endpoint）；此為感知力流程路由。"}
+
+
+def api_mcp(body):
+    """HTTP bridge: 把 JSON-RPC request 轉發到既有 MCP 核心。"""
+    if not isinstance(body, dict):
+        return {"jsonrpc": "2.0", "id": None,
+                "error": {"code": -32600, "message": "invalid request: object required"}}
+    try:
+        resp = _mcp().handle(body)
+    except Exception as exc:  # noqa: BLE001
+        return {"jsonrpc": "2.0", "id": body.get("id"),
+                "error": {"code": -32603, "message": f"{type(exc).__name__}: {exc}"}}
+    if resp is None:
+        return {"jsonrpc": "2.0", "id": body.get("id"),
+                "result": {"accepted": True, "notification": True,
+                           "origin_signature": ORIGIN_SIGNATURE}}
+    return resp
 
 
 def api_monitor():
@@ -143,6 +163,7 @@ API_DOCS = [
     ("GET", "/api/mother/status", "MotherAssembly 子系統健康"),
     ("POST", "/api/dl580/run", "跑 DL580 canonical 管線，回驗收 {source,lang}"),
     ("POST", "/api/chat", "人格對話 {message}"),
+    ("POST", "/api/mcp", "MCP JSON-RPC bridge {jsonrpc,id,method,params}"),
     ("GET", "/api/monitor", "即時監控聚合"),
     ("POST", "/mrl/perceive", "感知力核心流程 {..}"),
 ]
@@ -229,7 +250,13 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         p = self.path.split("?")[0]
         if p in ("/", "/index.html"):
-            return self._send(200, page_html(), "text/html; charset=utf-8")
+            # 產品級入口 (MRL_Product_Entry_UI · Issue #25/#26/#27/#28/#29)。
+            # 找不到產品 UI 才退回舊工程頁 page_html()（#27：正式入口不應是工程測試頁）。
+            app = _REPO / "src" / "mrl_app.html"
+            try:
+                return self._send(200, app.read_text(encoding="utf-8"), "text/html; charset=utf-8")
+            except Exception:  # noqa: BLE001
+                return self._send(200, page_html(), "text/html; charset=utf-8")
         if p == "/health":
             return self._send(200, {"ok": True, **api_state()})
         if p == "/mrl/state":
@@ -249,9 +276,14 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(200, api_dl580_run(b))
         if p == "/api/chat":
             return self._send(200, api_chat(b))
+        if p == "/api/mcp":
+            return self._send(200, api_mcp(b))
         if p == "/mrl/perceive":
-            return self._send(200, {"ok": True, "route": "MRL_感知力核心", "input": b,
-                                    "sovereignty": "MRL 主體；外部僅 Adapter"})
+            return self._send(200, {"ok": True,
+                                    "route": _GATEWAY_MANIFEST["perception"]["route"],
+                                    "input": b,
+                                    "flow": _GATEWAY_MANIFEST["perception"]["flow"],
+                                    "sovereignty": _GATEWAY_MANIFEST["perception"]["sovereignty"]})
         return self._send(404, {"ok": False, "error": "MRL_ROUTE_NOT_FOUND", "path": p})
 
 

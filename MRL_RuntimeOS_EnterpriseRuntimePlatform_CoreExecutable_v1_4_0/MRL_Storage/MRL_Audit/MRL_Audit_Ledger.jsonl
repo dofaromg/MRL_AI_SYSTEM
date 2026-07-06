@@ -67,3 +67,6 @@
 {"origin_signature":"MrLiouWord","event":"MRL_RUNTIME_MESH_EXECUTION","level":"info","ts":"2026-05-10T19:23:58.851Z","execution_id":"MRL_MESH_EXEC_1778441038851","plan_id":"MRL_MESH_PLAN_1778441038849"}
 {"origin_signature":"MrLiouWord","event":"MRL_PIPELINE_RUN","level":"info","ts":"2026-05-10T19:23:58.852Z","filename":"job_acceptance.fpp","particle_count":9,"verification_pass":true}
 {"origin_signature":"MrLiouWord","event":"MRL_JOB_FINISHED","level":"info","ts":"2026-05-10T19:23:58.852Z","job_id":"MRL_JOB_1778441038846_d6a02bc0","status":"completed"}
+{"origin_signature":"MrLiouWord","event":"MRL_SERVER_STARTED","level":"info","ts":"2026-06-28T13:21:09.580Z","url":"http://0.0.0.0:8788"}
+{"origin_signature":"MrLiouWord","event":"MRL_SERVER_STARTED","level":"info","ts":"2026-06-28T13:21:41.395Z","url":"http://0.0.0.0:8788"}
+{"origin_signature":"MrLiouWord","event":"MRL_FILE_INGEST","level":"info","ts":"2026-06-28T13:22:25.320Z","mrl_type":"MRL_File_Ingest_Record","filename":"bridge_test_message.txt","size":69,"sha256":"fc59c7affa504f96c1c2454ecc37ba8218327015bfd7b7119d9c19fbfff470e5","created_at":"2026-06-28T13:22:25.320Z"}

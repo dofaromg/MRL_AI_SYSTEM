@@ -57,3 +57,35 @@ origin_signature = `MrLiouWord`
 - **Cloud Code**：建構器。
 
 三者皆非母體本體；母體本體為 MRL 完整態運轉系統本身。
+
+---
+
+## 五、正式中介層與運轉場命名（v2 canonical）
+
+正式主體命名：
+
+- **MrLiouIR**（`MRL_MrLiouIR`）：MrLiou 中介語義層 / MRL 母體正式中介表示層。
+- **StructureField**（`MRL_StructureField` / `MRL_RuntimeStructureField`）：結構場 / 高維動態運轉場。
+- **Perception**：正式主體詞。
+
+降級為歷史名稱 / Adapter / alias（不得作 canonical 主體命名）：
+
+- `MetaIR`（= MrLiouIR Adapter）
+- `Graph` / `RuntimeGraph`（= StructureField Adapter）
+- `Attention`（= Perception 之歷史層）
+
+實作落點見 `MRL_UniversalRuntimeLanguage_Core_v1`（`__init__.py` 之 `CANONICAL_NAME_MAP` / `COMPATIBILITY_ALIASES`）。
+
+---
+
+## 五附、Runtime 候選收斂紀錄（歷史保存）
+
+審計：`docs/MRL_Runtime_Canonical_Report_v1.md`（分支 `MRL_Branch_Runtime_Convergence_Audit_v1`）。
+
+目前存在多套 runtime 候選（A Python IR 核心 #37 / B PIDScope ownership / C DL580 Engine 7700 /
+D JS v1.2.0 core / E Mother Product Runtime / F 3D / G FlowCore 家族 / I RuntimeServer / H d1_schema）。
+
+- 全部以 reference + sha256 登錄，**未刪除、未 bulk-copy**（LAW-2 additive）。
+- 命名違規候選標 `待正名`，非刪除理由。
+
+> 本節為歷史收斂紀錄，v2 canonical 已由第五節確立。

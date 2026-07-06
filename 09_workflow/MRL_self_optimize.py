@@ -30,7 +30,7 @@ import shutil
 import time
 from typing import Any, Dict, Tuple
 
-ORIGIN_SIGNATURE = "MrLiouWord"
+from MRL_utils import ORIGIN_SIGNATURE
 PRODUCT_NAME = "MRL_AI_SYSTEM"
 
 _REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent

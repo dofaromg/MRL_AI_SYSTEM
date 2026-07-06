@@ -42,7 +42,7 @@ if _HERE not in sys.path:
 # MRL-native dataclasses / base（非外部殼，屬母體本體）
 from llm_adapter import LLMAdapter, LLMRequest, LLMResponse  # noqa: E402
 
-ORIGIN_SIGNATURE = "MrLiouWord"
+from MRL_utils import ORIGIN_SIGNATURE
 _DEFAULT_TIMEOUT = 60
 
 

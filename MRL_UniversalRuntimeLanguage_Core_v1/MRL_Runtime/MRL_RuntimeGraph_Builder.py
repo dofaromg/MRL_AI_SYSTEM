@@ -10,12 +10,10 @@ from __future__ import annotations
 
 from typing import Any, Dict
 
+from . import MRL_RuntimeStructureField as _sf
 from .MRL_RuntimeStructureField import (  # noqa: F401
     ORIGIN_SIGNATURE,
     build as _build_structurefield,
-    to_dot,
-    to_json,
-    to_mermaid,
 )
 
 
@@ -30,6 +28,32 @@ def build(mrliouir: Dict[str, Any], observation_order=None) -> Dict[str, Any]:
     sf["restore_graph"] = sf["restore_structurefield"]
     sf["world_graph"] = sf["world_structurefield"]
     return sf
+
+
+def _normalize_legacy(obj: Dict[str, Any]) -> Dict[str, Any]:
+    """接受 legacy graph 物件（可能只有 edges/graph_hash，如舊存檔 MRL_RuntimeGraph.json）
+    → 補上 canonical 鍵（relations/structurefield_hash）供 StructureField viz 使用，避免 KeyError。"""
+    o = dict(obj)
+    if "relations" not in o and "edges" in o:
+        o["relations"] = o["edges"]
+    if "structurefield_hash" not in o and "graph_hash" in o:
+        o["structurefield_hash"] = o["graph_hash"]
+    o.setdefault("nodes", [])
+    return o
+
+
+def to_mermaid(graph: Dict[str, Any], max_nodes: int = 60) -> str:
+    """[alias] 接受 canonical 或 legacy(edges) 物件；先正規化再委派 canonical to_mermaid。"""
+    return _sf.to_mermaid(_normalize_legacy(graph), max_nodes)
+
+
+def to_dot(graph: Dict[str, Any]) -> str:
+    return _sf.to_dot(_normalize_legacy(graph))
+
+
+def to_json(graph: Dict[str, Any]) -> str:
+    return _sf.to_json(_normalize_legacy(graph))
+
 
 
 __all__ = ["build", "to_mermaid", "to_dot", "to_json", "ORIGIN_SIGNATURE"]

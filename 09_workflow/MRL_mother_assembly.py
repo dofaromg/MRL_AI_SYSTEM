@@ -91,7 +91,7 @@ import sys
 import time
 from typing import Any, Dict, List, Optional
 
-ORIGIN_SIGNATURE = "MrLiouWord"
+from MRL_utils import ORIGIN_SIGNATURE, _try_import  # noqa: E402
 PRODUCT_NAME = "MRL_AI_SYSTEM"
 ASSEMBLY_VERSION = "2.3"
 
@@ -180,15 +180,7 @@ def _ensure_paths() -> None:
 _ensure_paths()
 
 # ── Lazy imports (graceful degradation if a module is unavailable) ────────────
-
-def _try_import(module: str, attr: str) -> Any:
-    try:
-        import importlib
-        mod = importlib.import_module(module)
-        return getattr(mod, attr)
-    except Exception:  # noqa: BLE001
-        return None
-
+# _try_import is imported from MRL_utils (L0 RootGate canonical).
 
 # ─── MotherAssembly ───────────────────────────────────────────────────────────
 
@@ -452,7 +444,9 @@ class MotherAssembly:
         openai_key = os.environ.get("OPENAI_API_KEY", "") or _cfg("llm.openai_api_key")
         anthropic_key = os.environ.get("ANTHROPIC_API_KEY", "") or _cfg("llm.anthropic_api_key")
         local_base = os.environ.get("MRL_LLM_LOCAL_BASE_URL", "") or _cfg("llm.local_base_url")
-        local_on = _cfg("llm.enable_local", "") in ("1", "true", "True")
+        # enable_local 可能是 bool True(config 預設型別)或字串;兩者都要認
+        _el = self.config.get("llm.enable_local", False) if self.config else False
+        local_on = (_el is True) or (str(_el).strip().lower() in ("1", "true", "yes"))
 
         if _native is not None:
             try:
@@ -795,19 +789,12 @@ class MotherAssembly:
         if self.conversation_manager is None:
             return {"error": "ConversationManager unavailable"}
 
-        # Resolve model — deny-by-default (rootlaw rl_00): no implicit "mock".
+        # Resolve model. 母體自主:預設用母體自有神經符號推理核心(native),
+        # 完全不靠外部公司。只有 Mr.liou 明確指定外部 model 才走 gateway。
         resolved_model = model or (
             self.config.get("llm.default_model", "") if self.config else ""
-        ) or getattr(self, "_mother_model_key", "")   # 母體 gateway 已掛則用之(真模型)
+        ) or "native"
         allow_mock = bool(self.config.get("llm.allow_mock", False)) if self.config else False
-
-        if not resolved_model:
-            return {
-                "error": "no model configured: set llm.default_model or pass model=",
-                "engine": "mrl_runtime",
-                "runtime_origin": "local_mother_assembly",
-                "origin_signature": ORIGIN_SIGNATURE,
-            }
         if resolved_model.startswith("mock") and not allow_mock:
             return {
                 "error": "MockAdapter is test-only; set llm.allow_mock=true to enable. "
@@ -840,6 +827,46 @@ class MotherAssembly:
             {"role": m["role"], "content": m["content"]}
             for m in history
         ]
+
+        # 母體自主真模型:model=native → 用母體自有神經符號推理核心,零外部公司。
+        if resolved_model == "native":
+            NativeCore = _try_import("MRL_Native_Reasoning_Core_v1", "MRL_NativeReasoningCore")
+            if NativeCore is not None:
+                try:
+                    core = getattr(self, "_native_core", None) or NativeCore()
+                    self._native_core = core
+                    rr = core.reason(message)
+                    reply_text = rr["reply"]
+                    self.conversation_manager.add_message(session_id, "assistant", reply_text)
+                    self._seal_event("chat", {"session_id": session_id, "model": "native"})
+                    # 用戶層長期記憶(rl_15):對話後存回,跨 session 記住。優雅降級。
+                    mem_saved = False
+                    try:
+                        UML = _try_import("MRL_UserMemory_Layer_v1", "MRL_UserMemoryLayer")
+                        if UML is not None:
+                            uml = getattr(self, "_user_memory", None) or UML()
+                            self._user_memory = uml
+                            uml.remember(session_id, message, reply_text)
+                            mem_saved = True
+                    except Exception:  # noqa: BLE001
+                        pass
+                    return {
+                        "session_id": session_id,
+                        "reply": reply_text,
+                        "model": "native",
+                        "engine": rr["engine"],
+                        "external_company": None,
+                        "grounded": rr["grounded"],
+                        "reasoning_strategy": rr["reasoning_strategy"],
+                        "semantic_preservation": rr["semantic_preservation"],
+                        "long_term_memory_saved": mem_saved,
+                        "origin_signature": ORIGIN_SIGNATURE,
+                        "product_name": PRODUCT_NAME,
+                    }
+                except Exception as exc:  # noqa: BLE001
+                    return {"error": f"native core failed: {exc}",
+                            "engine": "mrl_native", "session_id": session_id,
+                            "origin_signature": ORIGIN_SIGNATURE}
 
         # LLM call — no silent fabrication (rootlaw: no_proof_implies_rhetoric).
         # If the gateway / request type is unavailable, return an explicit error

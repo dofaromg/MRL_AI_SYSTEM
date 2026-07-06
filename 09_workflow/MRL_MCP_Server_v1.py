@@ -25,7 +25,7 @@ import json
 import sys
 from typing import Any, Dict, List, Optional
 
-ORIGIN_SIGNATURE = "MrLiouWord"
+from MRL_utils import ORIGIN_SIGNATURE
 PROTOCOL_VERSION = "2024-11-05"
 SERVER_NAME = "MRL_Mother_MCP"
 SERVER_VERSION = "1.0.0"

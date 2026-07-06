@@ -87,7 +87,7 @@ def fsd_entry(title: str):
         return {"error": str(e)}
 
 VERSION = "0.2.0"
-ORIGIN_SIGNATURE = "MrLiouWord"
+from MRL_utils import ORIGIN_SIGNATURE
 PRODUCT_NAME = "MRL_AI_SYSTEM"
 
 # -------------------------
