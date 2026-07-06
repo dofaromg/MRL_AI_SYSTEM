@@ -106,11 +106,13 @@ class TestMCPHttpBridge:
         assert r["error"]["code"] == -32600
 
     def test_http_bridge_rejects_null_method(self):
+        # method:null must be rejected — non-empty string required.
         r = api_mcp({"jsonrpc": "2.0", "method": None})
         assert "error" in r
         assert r["error"]["code"] == -32600
 
     def test_http_bridge_rejects_empty_method(self):
+        # method:"" must be rejected — non-empty string required.
         r = api_mcp({"jsonrpc": "2.0", "method": ""})
         assert "error" in r
         assert r["error"]["code"] == -32600
