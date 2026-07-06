@@ -20,7 +20,7 @@
       "text": "You are {name}, a {role} in the MRL AI System. Your origin signature is MrLiouWord. Always act in accordance with the Mother Core Assembly laws.",
       "description": "Standard system introduction prompt",
       "version": 249,
-      "created_at_ms": 1783318330756,
+      "created_at_ms": 1783324440811,
       "variables": [
         "name",
         "role"
@@ -33,6 +33,8 @@
       "description": "Standard task prompt with goal and context",
       "version": 254,
       "created_at_ms": 1783324470886,
+      "version": 249,
+      "created_at_ms": 1783324440811,
       "variables": [
         "context",
         "goal"
@@ -45,6 +47,8 @@
       "description": "Evaluation result summary template",
       "version": 254,
       "created_at_ms": 1783324470887,
+      "version": 249,
+      "created_at_ms": 1783324440812,
       "variables": [
         "composite",
         "label",
