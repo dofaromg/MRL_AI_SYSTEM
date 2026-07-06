@@ -98,3 +98,14 @@ class TestMCPHttpBridge:
         r = api_mcp({"jsonrpc": "2.0", "method": "notifications/initialized"})
         assert r["result"]["notification"] is True
         assert r["result"]["origin_signature"] == "MrLiouWord"
+
+    def test_http_bridge_rejects_missing_method(self):
+        # Empty body (e.g. JSON parse error fallback from _body()) must return error, not a stub.
+        r = api_mcp({})
+        assert "error" in r
+        assert r["error"]["code"] == -32600
+
+    def test_http_bridge_rejects_non_dict(self):
+        r = api_mcp("not a dict")
+        assert "error" in r
+        assert r["error"]["code"] == -32600

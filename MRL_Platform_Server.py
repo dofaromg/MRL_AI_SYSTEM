@@ -15,6 +15,7 @@ import json
 import os
 import pathlib
 import sys
+import threading
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
@@ -32,6 +33,7 @@ for p in [_REPO / "09_workflow", str(_REPO)]:
 _MA = None
 _MA_ERR = None
 _MCP = None
+_MCP_LOCK = threading.Lock()
 
 
 def _mother():
@@ -50,12 +52,11 @@ def _mother():
 
 
 def _mcp():
-    """惰性建立 MCP bridge（重用既有 stdio MCP server 核心）。"""
+    """惰性建立 MCP bridge（重用既有 stdio MCP server 核心）。呼叫方須持 _MCP_LOCK。"""
     global _MCP
-    if _MCP is not None:
-        return _MCP
-    from MRL_MCP_Server_v1 import MRL_MCPServer
-    _MCP = MRL_MCPServer()
+    if _MCP is None:
+        from MRL_MCP_Server_v1 import MRL_MCPServer
+        _MCP = MRL_MCPServer()
     return _MCP
 
 
@@ -133,8 +134,12 @@ def api_mcp(body):
     if not isinstance(body, dict):
         return {"jsonrpc": "2.0", "id": None,
                 "error": {"code": -32600, "message": "invalid request: object required"}}
+    if "method" not in body:
+        return {"jsonrpc": "2.0", "id": body.get("id"),
+                "error": {"code": -32600, "message": "invalid request: method required"}}
     try:
-        resp = _mcp().handle(body)
+        with _MCP_LOCK:
+            resp = _mcp().handle(body)
     except Exception as exc:  # noqa: BLE001
         return {"jsonrpc": "2.0", "id": body.get("id"),
                 "error": {"code": -32603, "message": f"{type(exc).__name__}: {exc}"}}
