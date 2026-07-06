@@ -173,7 +173,7 @@ td,th{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left}
       <div class="navsec">母體 / Core</div>
       <div id="navcore"></div>
     </div>
-    <div class="foot"><span>MrLiouWord</span><span id="footver">v1.6</span></div>
+    <div class="foot"><span>MrLiouWord</span><span id="footver">v1.7</span></div>
   </aside>
 
   <main>
@@ -234,6 +234,7 @@ async function api(method,path,body){
 async function probe(){
   try{
     const r=await fetch('/api/mother/status');
+    // HTTP 200 但 available:false（母體未 boot）也視為未連線，不誤標「已連線」
     if(r.ok){
       let data=null; try{data=await r.json()}catch(e){}
       CORE_ONLINE=(data&&data.available===false)?false:true;
@@ -375,6 +376,11 @@ async function send(text){
       ai.text = unwrapReply(r.data);
       ai.engine = r.data.engine || r.data.route || r.data.via || (CORE_ONLINE?'母體後端':'平台');
       ai.status='DONE';
+    }else if(r.ok && r.data && r.data.ok===false){
+      // 後端以 HTTP 200 回 {ok:false,reason}（如母體未 boot、message 缺漏）— 誠實標 FAILED
+      ai.status='FAILED';
+      const reason=(typeof r.data.reason==='string'&&r.data.reason.trim())?r.data.reason.trim():JSON.stringify(r.data,null,2);
+      ai.text='⚠ 母體回報失敗：'+reason;
     }else{
       ai.status='FAILED';
       const reason=(r.data&&(r.data.reason||r.data.error))||('HTTP '+r.status);

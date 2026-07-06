@@ -237,6 +237,10 @@ data/conversations.json
 # 平行世界人格模擬器執行期產物
 parallel_output/
 
+# runtime endpoint marker (server boot 產物，保留磁碟不版控)
+.mrl_mcp_endpoint
+# runtime user memory (保留磁碟不版控)
+data/MRL_user_memory.json
 data/MRL_user_memory.json
 data/MRL_billing.json
 

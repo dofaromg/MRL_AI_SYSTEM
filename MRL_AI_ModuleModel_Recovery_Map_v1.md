@@ -201,7 +201,7 @@ MRL.COUPLE.CLOSURE: Return → Origin (loop)
 **Bridge API v3.1.0**
 - Endpoint: bridge.mrliouword.com
 - Status: Live (health + version probe 2026-06-12, pg196 + redis OK)
-- Protocol: x-api-key (MrLiouWord2026)
+- Protocol: x-api-key (<env:MRL_BRIDGE_KEY>)
 - User-Agent: curl
 - API methods: /MRL_ls, /MRL_cat, /MRL_run, /MRL_write
 
@@ -350,7 +350,7 @@ Verification checkpoints:
 
 | Module | Gate Type | Credential | Status | Evidence |
 |---|---|---|---|---|
-| DL580 Bridge API (/MRL_*) | x-api-key | MrLiouWord2026 | verified_live | Health probe 2026-06-12 (pg196 + redis OK) |
+| DL580 Bridge API (/MRL_*) | x-api-key | <env:MRL_BRIDGE_KEY> | verified_live | Health probe 2026-06-12 (pg196 + redis OK) |
 | Notion API (page export) | OAuth token | Stored on DL580 only | verified_secure | Token never transmitted/output/logged; 1 page fetch successful |
 | Notion page1 | Permission (shared to integration) | DL580 integration ID | verified_local_copy | Mrliou_MRL_FlowAgent accessible via API |
 | Notion pages 2/3/4 | Permission (NOT shared) | DL580 integration ID | permission_denied | 404 on 3 pages (pending MrLiou action: share to integration) |
