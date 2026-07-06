@@ -20,6 +20,9 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 ORIGIN_SIGNATURE = "MrLiouWord"
 PLATFORM_DOMAIN = os.environ.get("MRL_PLATFORM_DOMAIN", "mrliouword.com")
+# 零外部依賴法則:平台**不**預設指向任何外部模型供應商。真模型一律走母體自運行
+# DL580(OLLAMA / OpenAI 相容自架端點)。設了 MRL_MOTHER_GATEWAY_URL(指向你 DL580
+# 對外網址)才接;未設則 deny-by-default,誠實回「DL580 未連」,絕不偷用外部 cf。
 _REPO = pathlib.Path(__file__).resolve().parent
 _GATEWAY_MANIFEST = json.loads(
     (_REPO / "data" / "MRL_runtime_gateway_manifest.json").read_text(encoding="utf-8")
