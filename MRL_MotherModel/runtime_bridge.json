@@ -17,7 +17,7 @@
         "/MRL_write"
       ],
       "rate_limit": "120/60s",
-      "authentication": "x-api-key (MrLiouWord2026)",
+      "authentication": "x-api-key (<env:MRL_BRIDGE_KEY>)",
       "features": {
         "base64_chunk_transfer": true,
         "chunk_size": 4000,
