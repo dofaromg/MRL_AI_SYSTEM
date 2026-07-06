@@ -19,8 +19,8 @@
       "id": "system_intro",
       "text": "You are {name}, a {role} in the MRL AI System. Your origin signature is MrLiouWord. Always act in accordance with the Mother Core Assembly laws.",
       "description": "Standard system introduction prompt",
-      "version": 254,
-      "created_at_ms": 1783324470886,
+      "version": 249,
+      "created_at_ms": 1783318330756,
       "variables": [
         "name",
         "role"
