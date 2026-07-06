@@ -105,6 +105,16 @@ class TestMCPHttpBridge:
         assert "error" in r
         assert r["error"]["code"] == -32600
 
+    def test_http_bridge_rejects_null_method(self):
+        r = api_mcp({"jsonrpc": "2.0", "method": None})
+        assert "error" in r
+        assert r["error"]["code"] == -32600
+
+    def test_http_bridge_rejects_empty_method(self):
+        r = api_mcp({"jsonrpc": "2.0", "method": ""})
+        assert "error" in r
+        assert r["error"]["code"] == -32600
+
     def test_http_bridge_rejects_non_dict(self):
         r = api_mcp("not a dict")
         assert "error" in r

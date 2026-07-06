@@ -134,7 +134,7 @@ def api_mcp(body):
     if not isinstance(body, dict):
         return {"jsonrpc": "2.0", "id": None,
                 "error": {"code": -32600, "message": "invalid request: object required"}}
-    if "method" not in body:
+    if not isinstance(body.get("method"), str) or not body["method"]:
         return {"jsonrpc": "2.0", "id": body.get("id"),
                 "error": {"code": -32600, "message": "invalid request: method required"}}
     try:
