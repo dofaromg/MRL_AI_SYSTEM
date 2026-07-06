@@ -51,9 +51,13 @@ def test_adapter_defaults_and_origin():
     assert a.name() == "MRLNativeMotherGatewayAdapter"
 
 
-# ── live e2e（端點可達才跑）──
-@pytest.mark.skipif(not _reachable(), reason="母體 gateway 端點不可達（離線/沙盒）")
+# ── live e2e（明確 opt-in 才跑，避免在收集階段打網路拖慢/卡住離線 CI）──
+# 設 MRL_LIVE_E2E=1 才嘗試；reachability 檢查移到函式內，離線時 collection 不打網路。
+@pytest.mark.skipif(os.environ.get("MRL_LIVE_E2E") != "1",
+                    reason="live e2e 需 opt-in：設 MRL_LIVE_E2E=1 才跑")
 def test_live_real_generation():
+    if not _reachable():
+        pytest.skip("母體 gateway 端點不可達（離線/沙盒）")
     a = MRLNativeMotherGatewayAdapter()
     resp = a.complete(LLMRequest(
         model="mrl-mother",

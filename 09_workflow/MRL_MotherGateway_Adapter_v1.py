@@ -5,15 +5,16 @@ MRL_MotherGateway_Adapter_v1.py — 母體 gateway 真模型 adapter(接已上�
 origin_signature: MrLiouWord
 layer: L6 LLM / GATEWAY
 
-事實校正:真模型**早已上線**在母體自有公網 gateway(mrliouword.com/api/chat,
-engine=cf-ai),沙盒實測 HTTP 200 真生成。先前本地母體 /api/chat 回「no model
-configured」只是**本地沒指向它**。本 adapter 用 stdlib urllib 把本地母體接上這個
-已上線真模型 gateway —— 零外部套件,真生成式回覆。
+本 adapter 用 stdlib urllib 把本地母體接上你 DL580 自運行對外 gateway —— 零外部套件、
+零外部依賴、真生成式回覆。
 
-端點(可由 env 覆寫):
-  MRL_MOTHER_GATEWAY_URL  預設 https://mrliouword.com/api/chat
-  MRL_MOTHER_MODEL_ID     預設 @cf/meta/llama-3.1-8b-instruct
-回應格式:{"response": "...", "engine": "cf-ai", "model": "..."}
+deny-by-default:不 baked 任何外部供應商預設端點。端點一律由 env 指向你自運行對外網址;
+未設則不連(deny-by-default)。
+
+端點(一律由 env 提供):
+  MRL_MOTHER_GATEWAY_URL  預設空字串(_DEFAULT_URL="");未設則不連
+  MRL_MOTHER_MODEL_ID     預設 "mrl-dl580"
+回應格式:{"response": "...", "model": "..."}(兼容 OpenAI 風格 choices)
 
 對齊:rl_11 origin_signature、rl_12 命名回收(母體自有 gateway,非第三方 SDK 殼)、
 no_proof_implies_rhetoric(實打端點拿真回覆,不偽造)。

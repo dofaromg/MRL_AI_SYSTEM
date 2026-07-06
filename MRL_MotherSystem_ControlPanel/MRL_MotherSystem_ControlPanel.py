@@ -5,10 +5,16 @@ origin_signature: MrLiouWord
 完成 Manus 未竟任務:在已銜接的神經位置建聚集點面板,映射各區域現狀,寫入即同步。
 純 stdlib,跑在 DL580,聚合本機所有母體神經線服務。
 """
-import json, urllib.request, http.server, socketserver, datetime, threading
+import json, os, urllib.request, http.server, socketserver, datetime, threading
 
 ORIGIN = "MrLiouWord"
-PANEL_PORT = 7950
+PANEL_PORT = int(os.environ.get("MRL_PANEL_PORT", "7950"))
+# 安全預設:只綁 127.0.0.1(本機);DL580 實機要對外時設 MRL_PANEL_BIND=0.0.0.0 才 opt-in。
+PANEL_BIND = os.environ.get("MRL_PANEL_BIND", "127.0.0.1")
+# 後端 x-api-key 一律由環境變數提供,不 baked 明碼;未設則拒絕呼叫後端(deny-by-default)。
+BACKEND_KEY = os.environ.get("MRL_BACKEND_KEY", "")
+# CORS 預設關閉;需要跨源時設 MRL_PANEL_CORS=<允許來源>(或 * 自負風險)。
+PANEL_CORS = os.environ.get("MRL_PANEL_CORS", "")
 
 # 母體神經線(區域):port -> (顯示名, health 路徑)
 REGIONS = [
@@ -51,9 +57,11 @@ def aggregate():
             "nodes": nodes, "timestamp": datetime.datetime.utcnow().isoformat() + "Z"}
 
 def chat_real(message):
+    if not BACKEND_KEY:
+        raise RuntimeError("MRL_BACKEND_KEY 未設定:拒絕呼叫後端(deny-by-default,不 baked 明碼 key)")
     body = json.dumps({"message": message, "max_tokens": 256}).encode("utf-8")
     req = urllib.request.Request("http://127.0.0.1:7500/MRL_chat", data=body, method="POST",
-        headers={"x-api-key": "MrLiouWord2026", "Content-Type": "application/json"})
+        headers={"x-api-key": BACKEND_KEY, "Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=140) as r:
         return json.loads(r.read().decode("utf-8", "replace"))
 
@@ -106,7 +114,10 @@ class H(http.server.BaseHTTPRequestHandler):
     def _send(self, code, body, ctype="application/json; charset=utf-8"):
         b = body.encode("utf-8") if isinstance(body, str) else body
         self.send_response(code); self.send_header("Content-Type", ctype)
-        self.send_header("Access-Control-Allow-Origin", "*"); self.end_headers(); self.wfile.write(b)
+        # CORS 預設關閉;僅在 MRL_PANEL_CORS 有設時才送 header(避免對外時被任意網頁跨站呼叫)。
+        if PANEL_CORS:
+            self.send_header("Access-Control-Allow-Origin", PANEL_CORS)
+        self.end_headers(); self.wfile.write(b)
     def log_message(self, *a): pass
     def do_GET(self):
         p = self.path.split("?")[0]
@@ -125,5 +136,5 @@ class H(http.server.BaseHTTPRequestHandler):
 class TS(socketserver.ThreadingMixIn, http.server.HTTPServer): daemon_threads = True
 
 if __name__ == "__main__":
-    print("MRL_MotherSystem_ControlPanel on :%d origin=%s" % (PANEL_PORT, ORIGIN))
-    TS(("0.0.0.0", PANEL_PORT), H).serve_forever()
+    print("MRL_MotherSystem_ControlPanel on %s:%d origin=%s" % (PANEL_BIND, PANEL_PORT, ORIGIN))
+    TS((PANEL_BIND, PANEL_PORT), H).serve_forever()
