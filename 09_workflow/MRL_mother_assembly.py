@@ -482,7 +482,8 @@ class MotherAssembly:
         if mother_url:
             Mother = _try_import("MRL_MotherGateway_Adapter_v1", "MRLNativeMotherGatewayAdapter")
             if Mother is not None:
-                model_key = (os.environ.get("MRL_MOTHER_MODEL", "")
+                model_key = (os.environ.get("MRL_MOTHER_MODEL_KEY", "")
+                             or os.environ.get("MRL_MOTHER_MODEL", "")
                              or _cfg("llm.mother_model") or "mrl-mother")
                 try:
                     self.llm_gateway.register(model_key, Mother(endpoint=mother_url))
