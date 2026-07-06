@@ -62,3 +62,19 @@ Phase 1 的輸出會告訴你 Phase 2/3 需要的環境變數
   放行後需重測，不是永久結論。
 - 腳本每一 phase 以實際回應為準；沒實跑的項目一律維持「待驗證」。
 - key 輪替完成的判準：**舊 key 被拒 + 新 key 回 NEWKEY（實機）**，缺一不可。
+
+---
+
+## Session re-test log（additive；只追加不覆蓋）
+
+| 日期（環境） | 檢查 | 實測結果 | 判讀 |
+|-------------|------|---------|------|
+| 2026-07-06（雲端 session） | `MRL_BRIDGE_KEY` | 未設（`<unset>`） | key 走環境變數，尚未提供 → 無法過 Phase 0 `need_key` |
+| 2026-07-06（雲端 session） | `curl https://bridge.mrliouword.com/health` | `CONNECT tunnel failed, response 403` | egress 政策擋 |
+| 2026-07-06（雲端 session） | `curl https://mrliouword.com/health` | `CONNECT tunnel failed, response 403` | egress 政策擋（根網域也擋）|
+| 2026-07-06（雲端 session） | agent proxy `/__agentproxy/status` | `recentRelayFailures`：`connect_rejected`「gateway answered 403 to CONNECT (policy denial or upstream failure)」，host `bridge.mrliouword.com:443` 與 `mrliouword.com:443` | **403 來自 gateway 的 CONNECT 拒絕，是本地 egress 政策，不是 DL580 / tunnel / 7700 的問題** |
+
+> 判讀強化：403 出現在 **CONNECT tunnel 建立階段**（proxy relay `connect_rejected`），
+> 代表封包還沒離開雲端環境就被本地政策擋下——與 DL580 本體、cloudflared tunnel、
+> 7700 服務狀態無關。修法唯一路徑仍是上方「放行步驟」把 `mrliouword.com`
+> （含子網域）加進 egress 白名單，放行後重跑 `scripts/MRL_bridge_recovery_run.sh all`。
