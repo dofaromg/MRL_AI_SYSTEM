@@ -17,6 +17,7 @@
 #   MRL_7700_TASK     — 7700 的 schtasks 工作名稱（若已註冊開機自啟）
 #   MRL_7700_HOME     — 7700 app 的工作目錄（例 D:\mrl\asi），用 node app\server.js 直啟
 #   MRL_BRIDGE_TASK   — bridge 服務的 schtasks 工作名稱（key 輪替後重啟用）
+#   MRL_BRIDGE_CONFIG — bridge 設定檔在 DL580 上的絕對路徑（Phase 3 key 輪替必要）
 #   MRL_TIMEOUT       — 每個指令的 curl timeout 秒數（預設 60）
 #
 # 約定（CLAUDE.md）：實跑過才算 PASS；本腳本每一步都印出實際回應，不預設成功。
@@ -44,13 +45,15 @@ mrl_run() {
   curl -sS --max-time "${TIMEOUT}" --get "${BRIDGE}/MRL_run" \
     --data-urlencode "key=${MRL_BRIDGE_KEY}" \
     --data-urlencode "cmd=${cmd}"
+  local rc=$?
   echo
+  return $rc
 }
 
 phase0() {
   hr "Phase 0：bridge 連通性"
   echo "--- GET ${BRIDGE}/health"
-  curl -sS --max-time "${TIMEOUT}" "${BRIDGE}/health" || {
+  curl -sSf --max-time "${TIMEOUT}" "${BRIDGE}/health" || {
     echo "[FAIL] bridge 連不到 — 若是 CONNECT tunnel 403，代表雲端網路白名單尚未放行 mrliouword.com。" >&2
     echo "       放行步驟見 deploy/dl580/MRL_network_whitelist_recovery_v1.md" >&2
     exit 2
@@ -113,12 +116,22 @@ phase3() {
       echo "[NOTE] 未設 MRL_BRIDGE_TASK — 請手動重啟 bridge 服務讓新 key 生效。"
     fi
     echo "--- 驗證：舊 key 應被拒絕"
-    curl -sS --max-time "${TIMEOUT}" --get "${BRIDGE}/MRL_run" \
-      --data-urlencode "key=${MRL_BRIDGE_KEY}" --data-urlencode "cmd=echo OLDKEY"; echo
+    OLD_STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --max-time "${TIMEOUT}" --get "${BRIDGE}/MRL_run" \
+      --data-urlencode "key=${MRL_BRIDGE_KEY}" --data-urlencode "cmd=echo OLDKEY")
+    echo "    舊 key HTTP status: ${OLD_STATUS}"
+    if [ "${OLD_STATUS}" -lt 400 ] 2>/dev/null; then
+      echo "[FAIL] 舊 key 仍被接受（HTTP ${OLD_STATUS}）— 輪替失敗，請確認 bridge 是否已重啟。" >&2
+      exit 3
+    fi
     echo "--- 驗證：新 key 應可用"
-    curl -sS --max-time "${TIMEOUT}" --get "${BRIDGE}/MRL_run" \
-      --data-urlencode "key=${NEW_KEY}" --data-urlencode "cmd=echo NEWKEY"; echo
-    echo "[NOTE] 舊 key 被拒 + 新 key 回 NEWKEY 才算輪替 PASS（實機）。之後 export MRL_BRIDGE_KEY=<新key>。"
+    NEW_STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --max-time "${TIMEOUT}" --get "${BRIDGE}/MRL_run" \
+      --data-urlencode "key=${NEW_KEY}" --data-urlencode "cmd=echo NEWKEY")
+    echo "    新 key HTTP status: ${NEW_STATUS}"
+    if [ "${NEW_STATUS}" -ge 400 ] 2>/dev/null; then
+      echo "[FAIL] 新 key 被拒（HTTP ${NEW_STATUS}）— 請確認設定檔更新是否成功。" >&2
+      exit 3
+    fi
+    echo "[PASS] 舊 key 被拒（HTTP ${OLD_STATUS}）+ 新 key 可用（HTTP ${NEW_STATUS}）— 輪替 PASS。之後 export MRL_BRIDGE_KEY=${NEW_KEY}。"
   else
     echo "[SKIP] 未設 MRL_BRIDGE_CONFIG（bridge 設定檔在 DL580 上的路徑）。"
     echo "       先用 Phase 1b 的 node 命令列找出 bridge server 讀 key 的位置，再："
