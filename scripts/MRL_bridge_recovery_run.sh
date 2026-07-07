@@ -90,6 +90,9 @@ phase2() {
     # 先收掉佔著 7700 的舊行程（只殺該埠 PID，不動其他 node）
     mrl_run "for /f \"tokens=5\" %p in ('netstat -ano ^| findstr :7700 ^| findstr LISTENING') do taskkill /PID %p /F"
     ENTRY_7700="${MRL_7700_ENTRY:-app\\server.js}"
+    case "${ENTRY_7700}" in
+      *"'"*|*'"'*) echo "[FAIL] MRL_7700_ENTRY 不得含引號字元（防止注入遠端 PowerShell 指令）。" >&2; return 1 ;;
+    esac
     mrl_run "powershell -NoProfile -Command \"Start-Process node -ArgumentList '${ENTRY_7700}' -WorkingDirectory '${MRL_7700_HOME}' -WindowStyle Hidden\""
   else
     echo "[SKIP] 未設 MRL_7700_TASK 或 MRL_7700_HOME — 先跑 Phase 1 取得後再來。"
