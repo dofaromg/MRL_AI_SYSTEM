@@ -5,7 +5,7 @@
 // （SyntaxError 啟動即死），以本零依賴版重寫（Node 內建 http，不需 express）。
 // /health 回應契約維持原樣：{"status":"PASS","origin":"MrLiouWord"}
 // 部署時若 D:\mrl\asi-engine\package.json 標 "type":"module"，
-// 將 require 行改為 import http from "node:http"; 其餘相同。
+// 將 require 行改為 import * as http from "node:http"; 其餘相同。
 const http = require("node:http");
 const srv = http.createServer((req, res) => {
   if (req.url.split("?")[0] === "/health") {

@@ -92,7 +92,7 @@ Phase 1 的輸出會告訴你 Phase 2/3 需要的環境變數
 |------|---------|------|
 | `netstat -ano \| findstr :7700` | 無輸出 | 7700 無人監聽，服務死亡 |
 | node 行程列表 | 有 bridge（`D:\mrl\bridge\server.js`）等 9 個行程，**無 ASI Engine** | 行程整個不在，非卡住 |
-| `schtasks \MRL_ASI_Engine` | `Last Result: 1`；`Task To Run: node D:\mrl\asi-engine\server.js`；`Start In: N/A`；`Run As User: SYSTEM` | 排程存在但每次啟動即失敗 |
+| `schtasks /query /tn "MRL_ASI_Engine" /v /fo LIST` | `Last Result: 1`；`Task To Run: node D:\mrl\asi-engine\server.js`；`Start In: N/A`；`Run As User: SYSTEM` | 排程存在但每次啟動即失敗 |
 | 前景實跑 `D:\MrlToolchain\node\node.exe server.js` | `SyntaxError: Invalid or unexpected token`（第 1 行） | **根因：`D:\mrl\asi-engine\server.js` 檔案引號毀損**（疑為寫入時 shell 吞引號），Node 啟動即死 |
 | 次要問題 | 排程用裸 `node`（SYSTEM PATH 無此指令）、無工作目錄 | 排程定義脆弱 |
 
@@ -111,7 +111,7 @@ Phase 1 的輸出會告訴你 Phase 2/3 需要的環境變數
 
 | 判準 | 實測結果 | 狀態 |
 |------|---------|------|
-| `netstat :7700` | `TCP 0.0.0.0:7700 LISTENING`（PID 13864）+ `[::]:7700 LISTENING` | **PASS（實機）** |
+| `netstat -ano \| findstr :7700` | `TCP 0.0.0.0:7700 LISTENING`（PID 13864）+ `[::]:7700 LISTENING` | **PASS（實機）** |
 | `curl http://127.0.0.1:7700/health` | `{"status":"PASS","origin":"MrLiouWord"}` | **PASS（實機）** |
 | 再次前景跑 server.js | `EADDRINUSE :::7700` | 反向確認：埠已被正式服務佔用（預期行為）|
 
