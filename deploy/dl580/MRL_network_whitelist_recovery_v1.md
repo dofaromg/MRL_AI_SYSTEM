@@ -148,12 +148,12 @@ query，SHA-256 後與檔內 `API_KEY_HASH` 比對。原檔第 28 行以**明碼
 |------|---------|------|
 | 曝光之第一輪 key | `HTTP 403` 拒絕 | **PASS（實機）** |
 | 第二輪新 key | `{"ok":true,"cmd":"echo NEWKEY","output":"NEWKEY","_v":"3.1.0"}` | **PASS（實機）** |
-| 原始明碼舊 key（MrLiouWord2026） | `HTTP 403` 拒絕（首測誤打 `gcurl.exe` 未跑，2026-07-08 補實跑） | **PASS（實機）** |
+| 原始明碼舊 key（已作廢，值不記錄） | `HTTP 403` 拒絕（首測誤打 `gcurl.exe` 未跑，2026-07-08 補實跑） | **PASS（實機）** |
 
 > **Phase 3 結論（實機 2026-07-08）**：兩把舊 key 皆 403 被拒 + 新 key 回 NEWKEY
 > ——依驗收約定「舊拒新通、缺一不可」，**key 輪替 PASS（實機）**。
 > 新 key 僅存於使用者密碼管理器；server.js 僅存 SHA-256 雜湊，明碼不落地。
-
+>
 > 待辦：若官網 Worker / 控制面板 / 其他模組存有舊 bridge key，輪替後會 401/403，
 > 需同步更新該處 secret。
 >
@@ -162,6 +162,11 @@ query，SHA-256 後與檔內 `API_KEY_HASH` 比對。原檔第 28 行以**明碼
 > 第一輪 key 即因此曝光）。建議在 DL580 的 `D:\mrl\bridge\server.js` 移除 `?key=`
 > 路徑、只留 header 驗證——需先確認既有呼叫方（官網 Worker / 面板 / 排程）皆已
 > 改用 header 再動手。`scripts/MRL_bridge_recovery_run.sh` 已改為 header 驗證。
+>
+> 安全加固待辦 2：`MRL_run` 目前以 GET query 收 `cmd`，Phase 3 的設定檔替換指令
+> 會讓 key 內容隨 `cmd` 進入 URL / 行程參數。建議 bridge handler 改收 POST body
+> 後，腳本 `mrl_run` 同步改為 POST——此為 DL580 伺服器端契約變更，需與既有
+> 呼叫方一併調整，暫列待辦不在本 PR 內處理。
 
 ### Phase 4 — 官網端點（實機 2026-07-07/08）
 

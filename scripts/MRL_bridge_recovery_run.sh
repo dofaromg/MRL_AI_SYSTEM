@@ -125,7 +125,12 @@ phase3() {
     OLD_STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --max-time "${TIMEOUT}" --get "${BRIDGE}/MRL_run" \
       -H "x-api-key: ${MRL_BRIDGE_KEY}" --data-urlencode "cmd=echo OLDKEY")
     echo "    舊 key HTTP status: ${OLD_STATUS}"
-    if [ "${OLD_STATUS}" -lt 400 ] 2>/dev/null; then
+    case "${OLD_STATUS}" in
+      ''|*[!0-9]*)
+        echo "[FAIL] 無法取得舊 key 驗證的 HTTP status（'${OLD_STATUS}'）— 連線可能失敗，不得視為輪替成功。" >&2
+        exit 3 ;;
+    esac
+    if [ "${OLD_STATUS}" -lt 400 ]; then
       echo "[FAIL] 舊 key 仍被接受（HTTP ${OLD_STATUS}）— 輪替失敗，請確認 bridge 是否已重啟。" >&2
       exit 3
     fi
@@ -133,7 +138,12 @@ phase3() {
     NEW_STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --max-time "${TIMEOUT}" --get "${BRIDGE}/MRL_run" \
       -H "x-api-key: ${NEW_KEY}" --data-urlencode "cmd=echo NEWKEY")
     echo "    新 key HTTP status: ${NEW_STATUS}"
-    if [ "${NEW_STATUS}" -ge 400 ] 2>/dev/null; then
+    case "${NEW_STATUS}" in
+      ''|*[!0-9]*)
+        echo "[FAIL] 無法取得新 key 驗證的 HTTP status（'${NEW_STATUS}'）— 連線可能失敗，不得視為輪替成功。" >&2
+        exit 3 ;;
+    esac
+    if [ "${NEW_STATUS}" -ge 400 ]; then
       echo "[FAIL] 新 key 被拒（HTTP ${NEW_STATUS}）— 請確認設定檔更新是否成功。" >&2
       exit 3
     fi
