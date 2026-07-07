@@ -123,3 +123,41 @@ Phase 1 的輸出會告訴你 Phase 2/3 需要的環境變數
 > 當下狀態 2026-07-06：**Phase 1 / Phase 2 完成（實機 PASS，由排程拉起、開機自啟路徑已修）**。
 > 待辦：Phase 3 bridge key 輪替（舊 key 已曝光，待作廢）、Phase 4 官網 OAuth 驗證、
 > 追查 `\MRL_Watchdog` 為何未自動救回 7700。
+
+---
+
+## 實機記錄：Phase 3 key 輪替 / Phase 4 官網驗證（2026-07-08，DL580 實機）
+
+### Phase 3 — bridge key 輪替
+
+bridge 驗證機制（`D:\mrl\bridge\server.js`）：請求帶 `x-api-key` header 或 `?key=`
+query，SHA-256 後與檔內 `API_KEY_HASH` 比對。原檔第 28 行以**明碼**硬寫舊 key。
+
+輪替過程（additive：每輪均先備份 `server.js.bak_keyrotate*_20260708`）：
+
+1. **第一輪**：改為只存新 key 的 SHA-256 雜湊（明碼自此不落地）、bridge 重啟成功
+   （`/health` 回新 boot 時間）。但新 key 經 `Write-Host` 顯示於螢幕並隨截圖進入
+   對話 → **視同曝光作廢**，執行第二輪。
+2. **第二輪**：新 key 僅進剪貼簿（螢幕不顯示）→ `API_KEY_HASH` 換為第二輪雜湊
+   → 收掉舊行程、`Start-Process` 重啟 bridge。
+
+驗證（實機 2026-07-08）：
+
+| 判準 | 實測結果 | 狀態 |
+|------|---------|------|
+| 曝光之第一輪 key | `HTTP 403` 拒絕 | **PASS（實機）** |
+| 第二輪新 key | `{"ok":true,"cmd":"echo NEWKEY","output":"NEWKEY","_v":"3.1.0"}` | **PASS（實機）** |
+| 原始明碼舊 key（MrLiouWord2026） | 驗收指令誤打（`gcurl.exe`）未實跑 | **待驗證**（邏輯上同一雜湊比對必拒，依約定不標 PASS，補跑一行即結） |
+
+> 待辦：若官網 Worker / 控制面板 / 其他模組存有舊 bridge key，輪替後會 401/403，
+> 需同步更新該處 secret。
+
+### Phase 4 — 官網端點（實機 2026-07-07/08）
+
+| 端點 | 實測 | 狀態 |
+|------|------|------|
+| `/login` | HTTP 200 | PASS（實機，端點層） |
+| `/auth/login` | HTTP 200 | PASS（實機，端點層） |
+| `/api/auth/session` | HTTP 200 | PASS（實機，端點層） |
+| SPA 頁面本體 | 正常送達（聊天頁 HTML/JS） | PASS（實機） |
+| OAuth session 真登入 | 以使用者瀏覽器實登為最終判準 | 待驗證（實機瀏覽器） |
