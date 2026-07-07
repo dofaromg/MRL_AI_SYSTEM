@@ -78,3 +78,43 @@ Phase 1 的輸出會告訴你 Phase 2/3 需要的環境變數
 > 代表封包還沒離開雲端環境就被本地政策擋下——與 DL580 本體、cloudflared tunnel、
 > 7700 服務狀態無關。修法唯一路徑仍是上方「放行步驟」把 `mrliouword.com`
 > （含子網域）加進 egress 白名單，放行後重跑 `scripts/MRL_bridge_recovery_run.sh all`。
+
+---
+
+## 實機修復記錄：7700 ASI Engine 復活（2026-07-06，DL580 實機，使用者 PowerShell 實跑）
+
+繞道方案：雲端 egress 仍封鎖，但使用者本人就在 DL580 主機（`WIN-PBVUI7VK2A6`）上，
+改以本機 PowerShell 直接執行 Phase 1/2（等效於復原腳本經 bridge 下的指令）。
+
+### Phase 1 診斷（實機）
+
+| 檢查 | 實測結果 | 判讀 |
+|------|---------|------|
+| `netstat -ano \| findstr :7700` | 無輸出 | 7700 無人監聽，服務死亡 |
+| node 行程列表 | 有 bridge（`D:\mrl\bridge\server.js`）等 9 個行程，**無 ASI Engine** | 行程整個不在，非卡住 |
+| `schtasks \MRL_ASI_Engine` | `Last Result: 1`；`Task To Run: node D:\mrl\asi-engine\server.js`；`Start In: N/A`；`Run As User: SYSTEM` | 排程存在但每次啟動即失敗 |
+| 前景實跑 `D:\MrlToolchain\node\node.exe server.js` | `SyntaxError: Invalid or unexpected token`（第 1 行） | **根因：`D:\mrl\asi-engine\server.js` 檔案引號毀損**（疑為寫入時 shell 吞引號），Node 啟動即死 |
+| 次要問題 | 排程用裸 `node`（SYSTEM PATH 無此指令）、無工作目錄 | 排程定義脆弱 |
+
+### Phase 2 修復與驗證（實機）
+
+修復步驟（additive：壞檔備份為 `server.js.broken-20260706`，不刪除）：
+
+1. 重寫 `D:\mrl\asi-engine\server.js` 為零依賴版（Node 內建 `http`，不需 express；
+   `/health` 回應維持 `{"status":"PASS","origin":"MrLiouWord"}` 原契約）。
+   參考副本收錄於 `deploy/dl580/asi-engine/MRL_ASI_health_server.cjs`。
+2. `schtasks /change /tn "MRL_ASI_Engine" /tr "D:\MrlToolchain\node\node.exe D:\mrl\asi-engine\server.js"`
+   —— 改用完整 node 路徑，修掉裸 `node` 問題。
+3. `schtasks /run /tn "MRL_ASI_Engine"` 由排程正式拉起。
+
+驗證（實機，2026-07-06）：
+
+| 判準 | 實測結果 | 狀態 |
+|------|---------|------|
+| `netstat :7700` | `TCP 0.0.0.0:7700 LISTENING`（PID 13864）+ `[::]:7700 LISTENING` | **PASS（實機）** |
+| `curl http://127.0.0.1:7700/health` | `{"status":"PASS","origin":"MrLiouWord"}` | **PASS（實機）** |
+| 再次前景跑 server.js | `EADDRINUSE :::7700` | 反向確認：埠已被正式服務佔用（預期行為）|
+
+> 當下狀態 2026-07-06：**Phase 1 / Phase 2 完成（實機 PASS，由排程拉起、開機自啟路徑已修）**。
+> 待辦：Phase 3 bridge key 輪替（舊 key 已曝光，待作廢）、Phase 4 官網 OAuth 驗證、
+> 追查 `\MRL_Watchdog` 為何未自動救回 7700。
