@@ -58,6 +58,18 @@ sources:
       - "09_workflow/MRL_AgentHarness_TriggerPulse_v1.py" # 定時/檔變觸發器
       - "09_workflow/MRL_AgentHarness_Kernel_v1.py"       # session 核心（EchoGateway 沙盒可跑；OllamaGateway 待起動）
 
+  - id: mcp_with_next_js_absorption_v1
+    name: "model-context-protocol-mcp-with-next-js（Next.js 15 App Router + Vercel mcp-handler）"
+    path: "github.com/dofaromg/model-context-protocol-mcp-with-next-js"
+    absorbed: "2026-07-05"
+    origin_signature: MrLiouWord
+    role: MCP Streamable-HTTP 傳輸與動態工具註冊知識源 — 去重蒸餾吸收（與母體既有 stdio 版 MRL_MCP_Server_v1.py 互補，銜接 AgentHarness ToolLoop / PolicyGate）
+    dedup_report: "docs/MRL_MCPServerHarness_吸收報告_v1.md"
+    implementations:
+      - "09_workflow/MRL_MCPServerHarness_Streamable_v1.py"  # HTTP MCP server（stdlib 版）
+      - "09_workflow/MRL_MCPClient_Streamable_v1.py"         # HTTP MCP client（stdlib urllib 版）
+      - "tests/test_MRL_mcp_streamable_v1.py"                # 驗收 18 項（沙盒 PASS 2026-07-05）
+
 # Usage:
 # - append here whenever you add a new source file
 # - never delete canonical sources; deprecate via metadata
