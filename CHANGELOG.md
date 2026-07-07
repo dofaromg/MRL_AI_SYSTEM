@@ -10,6 +10,14 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### mcp-with-next-js 去重蒸餾吸收（MRL_MCPServerHarness 系列）
+- `09_workflow/MRL_MCPServerHarness_Streamable_v1.py` — MCP server：Streamable-HTTP transport（純 stdlib http.server + JSON-RPC 2.0），動態 `register_tool()` API，可選 `tool_loop` 銜接 `MRL_AgentHarness_ToolLoop_v1`、`policy_gate` 銜接 `MRL_AgentHarness_PolicyGate_v1`
+- `09_workflow/MRL_MCPClient_Streamable_v1.py` — MCP client：純 stdlib urllib，蒸餾自外部 repo 的 `@modelcontextprotocol/sdk` node client
+- `tests/test_MRL_mcp_streamable_v1.py` — 驗收測試 18 項（pytest 相容 + 獨立執行器）：PASS（沙盒 loopback，2026-07-05）
+- `docs/MRL_MCPServerHarness_吸收報告_v1.md` — 去重蒸餾判定表 + 當下狀態（含實機/SSE 待驗證項目誠實標記）
+- `08_sources/sources.manifest.yaml` — 登錄吸收來源 `mcp_with_next_js_absorption_v1`
+- 蒸餾去除外部依賴：`mcp-handler` / `next` / `react` / `zod` / `redis` — 全部替換為 stdlib 等價實作
+
 #### LLM 模型開發計劃收斂（DOF-11「開發」）
 - `docs/MRL_LLM模型開發計劃_v1.md` — 把分散的 LLM 子系統模組
   （`llm_gateway` / `llm_adapter` / `MRL_LLM_NativeAdapter_v1` /
