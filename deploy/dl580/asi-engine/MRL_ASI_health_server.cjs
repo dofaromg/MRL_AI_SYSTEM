@@ -8,7 +8,7 @@
 // 將 require 行改為 import * as http from "node:http"; 其餘相同。
 const http = require("node:http");
 const srv = http.createServer((req, res) => {
-  if (req.url.split("?")[0] === "/health") {
+  if (req.method === "GET" && (req.url || "").split("?")[0] === "/health") {
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ status: "PASS", origin: "MrLiouWord" }));
   } else {

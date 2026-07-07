@@ -107,6 +107,11 @@ Phase 1 的輸出會告訴你 Phase 2/3 需要的環境變數
    —— 改用完整 node 路徑，修掉裸 `node` 問題。
 3. `schtasks /run /tn "MRL_ASI_Engine"` 由排程正式拉起。
 
+> 路徑對齊註記：本文件前段與面板沿用的 `app\server.js` 為歷史紀錄路徑；
+> **實機實際啟動檔為 `D:\mrl\asi-engine\server.js`**（排程已改完整路徑直啟）。
+> 若改用 `scripts/MRL_bridge_recovery_run.sh` Phase 2 的 `MRL_7700_HOME` 直啟路徑，
+> 需設 `MRL_7700_ENTRY=server.js`（腳本預設仍為 `app\server.js`）對齊進入點。
+
 驗證（實機，2026-07-06）：
 
 | 判準 | 實測結果 | 狀態 |

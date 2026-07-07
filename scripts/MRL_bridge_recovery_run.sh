@@ -15,7 +15,8 @@
 #
 # 可選環境變數（Phase 1 的診斷輸出會告訴你該填什麼）：
 #   MRL_7700_TASK     — 7700 的 schtasks 工作名稱（若已註冊開機自啟）
-#   MRL_7700_HOME     — 7700 app 的工作目錄（例 D:\mrl\asi），用 node app\server.js 直啟
+#   MRL_7700_HOME     — 7700 app 的工作目錄（例 D:\mrl\asi），用 node <MRL_7700_ENTRY> 直啟
+#   MRL_7700_ENTRY    — 7700 進入點檔名（預設 app\server.js；DL580 實機為 server.js）
 #   MRL_BRIDGE_TASK   — bridge 服務的 schtasks 工作名稱（key 輪替後重啟用）
 #   MRL_BRIDGE_CONFIG — bridge 設定檔在 DL580 上的絕對路徑（Phase 3 key 輪替必要）
 #   MRL_TIMEOUT       — 每個指令的 curl timeout 秒數（預設 60）
@@ -88,7 +89,8 @@ phase2() {
   elif [ -n "${MRL_7700_HOME:-}" ]; then
     # 先收掉佔著 7700 的舊行程（只殺該埠 PID，不動其他 node）
     mrl_run "for /f \"tokens=5\" %p in ('netstat -ano ^| findstr :7700 ^| findstr LISTENING') do taskkill /PID %p /F"
-    mrl_run "powershell -NoProfile -Command \"Start-Process node -ArgumentList 'app\\server.js' -WorkingDirectory '${MRL_7700_HOME}' -WindowStyle Hidden\""
+    ENTRY_7700="${MRL_7700_ENTRY:-app\\server.js}"
+    mrl_run "powershell -NoProfile -Command \"Start-Process node -ArgumentList '${ENTRY_7700}' -WorkingDirectory '${MRL_7700_HOME}' -WindowStyle Hidden\""
   else
     echo "[SKIP] 未設 MRL_7700_TASK 或 MRL_7700_HOME — 先跑 Phase 1 取得後再來。"
     return 0
