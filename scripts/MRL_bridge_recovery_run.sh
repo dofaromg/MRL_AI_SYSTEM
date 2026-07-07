@@ -43,8 +43,9 @@ need_key() {
 mrl_run() {
   local cmd="$1"
   echo "--- DL580> ${cmd}"
+  # key 走 x-api-key header，不進 URL（避免落 log / 歷史 / 截圖）
   curl -sS --max-time "${TIMEOUT}" --get "${BRIDGE}/MRL_run" \
-    --data-urlencode "key=${MRL_BRIDGE_KEY}" \
+    -H "x-api-key: ${MRL_BRIDGE_KEY}" \
     --data-urlencode "cmd=${cmd}"
   local rc=$?
   echo
@@ -122,7 +123,7 @@ phase3() {
     fi
     echo "--- 驗證：舊 key 應被拒絕"
     OLD_STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --max-time "${TIMEOUT}" --get "${BRIDGE}/MRL_run" \
-      --data-urlencode "key=${MRL_BRIDGE_KEY}" --data-urlencode "cmd=echo OLDKEY")
+      -H "x-api-key: ${MRL_BRIDGE_KEY}" --data-urlencode "cmd=echo OLDKEY")
     echo "    舊 key HTTP status: ${OLD_STATUS}"
     if [ "${OLD_STATUS}" -lt 400 ] 2>/dev/null; then
       echo "[FAIL] 舊 key 仍被接受（HTTP ${OLD_STATUS}）— 輪替失敗，請確認 bridge 是否已重啟。" >&2
@@ -130,7 +131,7 @@ phase3() {
     fi
     echo "--- 驗證：新 key 應可用"
     NEW_STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --max-time "${TIMEOUT}" --get "${BRIDGE}/MRL_run" \
-      --data-urlencode "key=${NEW_KEY}" --data-urlencode "cmd=echo NEWKEY")
+      -H "x-api-key: ${NEW_KEY}" --data-urlencode "cmd=echo NEWKEY")
     echo "    新 key HTTP status: ${NEW_STATUS}"
     if [ "${NEW_STATUS}" -ge 400 ] 2>/dev/null; then
       echo "[FAIL] 新 key 被拒（HTTP ${NEW_STATUS}）— 請確認設定檔更新是否成功。" >&2

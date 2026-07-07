@@ -109,8 +109,9 @@ Phase 1 的輸出會告訴你 Phase 2/3 需要的環境變數
 
 > 路徑對齊註記：本文件前段與面板沿用的 `app\server.js` 為歷史紀錄路徑；
 > **實機實際啟動檔為 `D:\mrl\asi-engine\server.js`**（排程已改完整路徑直啟）。
-> 若改用 `scripts/MRL_bridge_recovery_run.sh` Phase 2 的 `MRL_7700_HOME` 直啟路徑，
-> 需設 `MRL_7700_ENTRY=server.js`（腳本預設仍為 `app\server.js`）對齊進入點。
+> `scripts/MRL_bridge_recovery_run.sh` Phase 2 的直啟進入點由 `MRL_7700_ENTRY`
+> 環境變數控制（未設時沿用歷史預設 `app\server.js`）；在 DL580 實機上請設
+> `MRL_7700_ENTRY=server.js` 與排程一致，其他部署維持各自實際進入點即可。
 
 驗證（實機，2026-07-06）：
 
@@ -126,7 +127,7 @@ Phase 1 的輸出會告訴你 Phase 2/3 需要的環境變數
 
 ---
 
-## 實機記錄：Phase 3 key 輪替 / Phase 4 官網驗證（2026-07-08，DL580 實機）
+## 實機記錄：Phase 3 key 輪替 / Phase 4 官網驗證（2026-07-08 台北時間；UTC 2026-07-07T17–18Z，DL580 實機）
 
 ### Phase 3 — bridge key 輪替
 
@@ -141,16 +142,26 @@ query，SHA-256 後與檔內 `API_KEY_HASH` 比對。原檔第 28 行以**明碼
 2. **第二輪**：新 key 僅進剪貼簿（螢幕不顯示）→ `API_KEY_HASH` 換為第二輪雜湊
    → 收掉舊行程、`Start-Process` 重啟 bridge。
 
-驗證（實機 2026-07-08）：
+驗證（實機 2026-07-08 台北時間；bridge 回應 `_t` 為 `2026-07-07T18:35:58Z`）：
 
 | 判準 | 實測結果 | 狀態 |
 |------|---------|------|
 | 曝光之第一輪 key | `HTTP 403` 拒絕 | **PASS（實機）** |
 | 第二輪新 key | `{"ok":true,"cmd":"echo NEWKEY","output":"NEWKEY","_v":"3.1.0"}` | **PASS（實機）** |
-| 原始明碼舊 key（MrLiouWord2026） | 驗收指令誤打（`gcurl.exe`）未實跑 | **待驗證**（邏輯上同一雜湊比對必拒，依約定不標 PASS，補跑一行即結） |
+| 原始明碼舊 key（MrLiouWord2026） | `HTTP 403` 拒絕（首測誤打 `gcurl.exe` 未跑，2026-07-08 補實跑） | **PASS（實機）** |
+
+> **Phase 3 結論（實機 2026-07-08）**：兩把舊 key 皆 403 被拒 + 新 key 回 NEWKEY
+> ——依驗收約定「舊拒新通、缺一不可」，**key 輪替 PASS（實機）**。
+> 新 key 僅存於使用者密碼管理器；server.js 僅存 SHA-256 雜湊，明碼不落地。
 
 > 待辦：若官網 Worker / 控制面板 / 其他模組存有舊 bridge key，輪替後會 401/403，
 > 需同步更新該處 secret。
+>
+> 安全加固待辦（採 CodeRabbit 建議）：bridge 目前同時接受 `x-api-key` header 與
+> `?key=` query 兩種驗證路徑；key 進 URL 會落入 log / 瀏覽器歷史 / 截圖（本次
+> 第一輪 key 即因此曝光）。建議在 DL580 的 `D:\mrl\bridge\server.js` 移除 `?key=`
+> 路徑、只留 header 驗證——需先確認既有呼叫方（官網 Worker / 面板 / 排程）皆已
+> 改用 header 再動手。`scripts/MRL_bridge_recovery_run.sh` 已改為 header 驗證。
 
 ### Phase 4 — 官網端點（實機 2026-07-07/08）
 
