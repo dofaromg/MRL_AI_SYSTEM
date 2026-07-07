@@ -10,6 +10,14 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### LLM 模型開發計劃收斂（DOF-11「開發」）
+- `docs/MRL_LLM模型開發計劃_v1.md` — 把分散的 LLM 子系統模組
+  （`llm_gateway` / `llm_adapter` / `MRL_LLM_NativeAdapter_v1` /
+  `MRL_MotherGateway_Adapter_v1` / `context_manager` / `streaming` /
+  `guardrail` / `config_manager` / 真模型 P0）收斂成單一開發主線，
+  含資產盤點、M1–M4 階段計劃與誠實狀態彙總（沙盒／實機／待驗證）。
+  Additive-only：只新增計劃書，不改動既有模組。
+
 #### CodePartner agent 化（從封存人格到可呼叫助手）
 - `.claude/agents/codepartner.md` — 由 `05_persona/codepartner/persona.yaml` 編譯的
   Claude Code agent 定義：人格屬性、信任透明五律、五步工作流、產出紀律、

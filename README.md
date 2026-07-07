@@ -304,6 +304,9 @@ python 09_workflow/plugin_manager.py discover --dir 09_workflow/plugins
 
 ## LLM provider configuration
 
+> LLM 子系統的開發主線、階段里程碑與誠實狀態彙總見
+> [`docs/MRL_LLM模型開發計劃_v1.md`](docs/MRL_LLM模型開發計劃_v1.md)。
+
 ### Option A — Local-only (Ollama, zero cloud)
 
 ```bash
