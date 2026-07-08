@@ -1,0 +1,438 @@
+{
+  "meta": {
+    "id": "metacode-965deb0b5b336f79a8fae0d0",
+    "version": "1.0.0-reconstructed"
+  },
+  "particles": [
+    {
+      "id": "mrl-particle::math::MindField::cd532e2d7c402a71e1df385ed20a583bb795846bf765d6acd999730f80f3e6b0",
+      "domain": "math",
+      "field": "MindField",
+      "tags": [
+        "math",
+        "hausdorff",
+        "dimension",
+        "fractal"
+      ],
+      "cap": {
+        "axes": {
+          "zoom": 0.85,
+          "surprisal": 0.15,
+          "conf": 0.95,
+          "mag": 1
+        }
+      },
+      "tensor": {
+        "particles": [
+          "math",
+          "hausdorff",
+          "dimension",
+          "fractal"
+        ],
+        "rhythm": "10:1",
+        "persona": "math"
+      },
+      "amplify": {
+        "N": 200,
+        "eta": 0.95,
+        "mag": 1,
+        "conf": 0.95,
+        "present": 185.25
+      },
+      "created_seq": 1
+    },
+    {
+      "id": "mrl-particle::storage::MatterField::c24bdd75c805c7adc7adf18cd609079d4735aff3c1b6f3df6a2f0163f34d05cc",
+      "domain": "storage",
+      "field": "MatterField",
+      "tags": [
+        "storage",
+        "nand",
+        "slc",
+        "1bit"
+      ],
+      "cap": {
+        "axes": {
+          "zoom": 0.6,
+          "surprisal": 0.2,
+          "conf": 0.98,
+          "mag": 1
+        }
+      },
+      "tensor": {
+        "particles": [
+          "storage",
+          "nand",
+          "slc",
+          "1bit"
+        ],
+        "rhythm": "5:1",
+        "persona": "storage"
+      },
+      "amplify": {
+        "N": 50,
+        "eta": 0.95,
+        "mag": 1,
+        "conf": 0.98,
+        "present": 47.025
+      },
+      "created_seq": 5
+    },
+    {
+      "id": "mrl-particle::storage::MatterField::4e3358f8ea65d6e24724a3a78c53b10e5caf20e7b221b13db4ea3f028223699e",
+      "domain": "storage",
+      "field": "MatterField",
+      "tags": [
+        "storage",
+        "nand",
+        "mlc",
+        "2bit"
+      ],
+      "cap": {
+        "axes": {
+          "zoom": 0.62,
+          "surprisal": 0.25,
+          "conf": 0.92,
+          "mag": 1
+        }
+      },
+      "tensor": {
+        "particles": [
+          "storage",
+          "nand",
+          "mlc",
+          "2bit"
+        ],
+        "rhythm": "10:1",
+        "persona": "storage"
+      },
+      "amplify": {
+        "N": 100,
+        "eta": 0.85,
+        "mag": 1,
+        "conf": 0.92,
+        "present": 81.6
+      },
+      "created_seq": 7
+    },
+    {
+      "id": "mrl-particle::storage::MatterField::e9948da887fdf3b0af9bd7155ef7f64f004c08d0dde56a8000fd07d5d747642d",
+      "domain": "storage",
+      "field": "MatterField",
+      "tags": [
+        "storage",
+        "nand",
+        "tlc",
+        "3bit"
+      ],
+      "cap": {
+        "axes": {
+          "zoom": 0.64,
+          "surprisal": 0.3,
+          "conf": 0.88,
+          "mag": 1
+        }
+      },
+      "tensor": {
+        "particles": [
+          "storage",
+          "nand",
+          "tlc",
+          "3bit"
+        ],
+        "rhythm": "3:1",
+        "persona": "storage"
+      },
+      "amplify": {
+        "N": 150,
+        "eta": 0.75,
+        "mag": 1,
+        "conf": 0.88,
+        "present": 105.75
+      },
+      "created_seq": 9
+    },
+    {
+      "id": "mrl-particle::compute::WaveField::5ab71da8ace35d157beeaa73b152a0cb7a4b3077efd98c1f35f7f62eb9b098b3",
+      "domain": "compute",
+      "field": "WaveField",
+      "tags": [
+        "compute",
+        "cpu",
+        "serial",
+        "x86"
+      ],
+      "cap": {
+        "axes": {
+          "zoom": 0.7,
+          "surprisal": 0.1,
+          "conf": 0.99,
+          "mag": 1
+        }
+      },
+      "tensor": {
+        "particles": [
+          "compute",
+          "cpu",
+          "serial",
+          "x86"
+        ],
+        "rhythm": "2:1",
+        "persona": "compute"
+      },
+      "amplify": {
+        "N": 16,
+        "eta": 0.88,
+        "mag": 1,
+        "conf": 0.99,
+        "present": 14.0096
+      },
+      "created_seq": 15
+    },
+    {
+      "id": "mrl-particle::compute::WaveField::adc3171a65131ddf4d7ff4776513163d66954a584b5f1e1a5232cf5de75b0531",
+      "domain": "compute",
+      "field": "WaveField",
+      "tags": [
+        "compute",
+        "gpu",
+        "parallel",
+        "cuda"
+      ],
+      "cap": {
+        "axes": {
+          "zoom": 0.72,
+          "surprisal": 0.15,
+          "conf": 0.95,
+          "mag": 1
+        }
+      },
+      "tensor": {
+        "particles": [
+          "compute",
+          "gpu",
+          "parallel",
+          "cuda"
+        ],
+        "rhythm": "102:1",
+        "persona": "compute"
+      },
+      "amplify": {
+        "N": 5120,
+        "eta": 0.65,
+        "mag": 1,
+        "conf": 0.95,
+        "present": 3244.7999999999997
+      },
+      "created_seq": 17
+    },
+    {
+      "id": "mrl-particle::unknown::MindField::0f696a79b891b5657a0d8a5feefd497a9f0b18e2190a7b98d017914563a86599",
+      "domain": "unknown",
+      "field": "MindField",
+      "tags": [
+        "mystery"
+      ],
+      "cap": {
+        "axes": {
+          "zoom": 0.7,
+          "surprisal": 0.25,
+          "conf": 0.9,
+          "mag": 1
+        }
+      },
+      "tensor": {
+        "particles": [
+          "mystery"
+        ],
+        "rhythm": "1:1",
+        "persona": "unknown"
+      },
+      "amplify": {
+        "N": 1,
+        "eta": 0.8,
+        "mag": 1,
+        "conf": 0.9,
+        "present": 0.76
+      },
+      "created_seq": 21
+    }
+  ],
+  "links": [
+    {
+      "from": "mrl-particle::storage::MatterField::c24bdd75c805c7adc7adf18cd609079d4735aff3c1b6f3df6a2f0163f34d05cc",
+      "to": "mrl-particle::storage::MatterField::4e3358f8ea65d6e24724a3a78c53b10e5caf20e7b221b13db4ea3f028223699e",
+      "relation": "evolves-to",
+      "seq": 11
+    },
+    {
+      "from": "mrl-particle::storage::MatterField::4e3358f8ea65d6e24724a3a78c53b10e5caf20e7b221b13db4ea3f028223699e",
+      "to": "mrl-particle::storage::MatterField::e9948da887fdf3b0af9bd7155ef7f64f004c08d0dde56a8000fd07d5d747642d",
+      "relation": "evolves-to",
+      "seq": 13
+    },
+    {
+      "from": "mrl-particle::compute::WaveField::5ab71da8ace35d157beeaa73b152a0cb7a4b3077efd98c1f35f7f62eb9b098b3",
+      "to": "mrl-particle::compute::WaveField::adc3171a65131ddf4d7ff4776513163d66954a584b5f1e1a5232cf5de75b0531",
+      "relation": "complementary",
+      "seq": 19
+    }
+  ],
+  "cycles": [
+    {
+      "seq": 3,
+      "kind": "evolve",
+      "id": "mrl-particle::math::MindField::cd532e2d7c402a71e1df385ed20a583bb795846bf765d6acd999730f80f3e6b0",
+      "before": 89.7,
+      "after": 136.0125,
+      "delta": {
+        "N": 150,
+        "eta": 0.93
+      }
+    },
+    {
+      "seq": 24,
+      "kind": "evolve",
+      "id": "mrl-particle::math::MindField::cd532e2d7c402a71e1df385ed20a583bb795846bf765d6acd999730f80f3e6b0",
+      "before": 136.0125,
+      "after": 185.25,
+      "delta": {
+        "N": 200,
+        "eta": 0.95
+      }
+    },
+    {
+      "seq": 26,
+      "kind": "propagate",
+      "id": "mrl-particle::math::MindField::cd532e2d7c402a71e1df385ed20a583bb795846bf765d6acd999730f80f3e6b0",
+      "affected": 0
+    }
+  ],
+  "journal": [
+    {
+      "seq": 2,
+      "type": "create",
+      "detail": {
+        "id": "mrl-particle::math::MindField::cd532e2d7c402a71e1df385ed20a583bb795846bf765d6acd999730f80f3e6b0",
+        "domain": "math",
+        "present": 89.7
+      }
+    },
+    {
+      "seq": 4,
+      "type": "evolve",
+      "detail": {
+        "id": "mrl-particle::math::MindField::cd532e2d7c402a71e1df385ed20a583bb795846bf765d6acd999730f80f3e6b0",
+        "before": 89.7,
+        "after": 136.0125
+      }
+    },
+    {
+      "seq": 6,
+      "type": "create",
+      "detail": {
+        "id": "mrl-particle::storage::MatterField::c24bdd75c805c7adc7adf18cd609079d4735aff3c1b6f3df6a2f0163f34d05cc",
+        "domain": "storage",
+        "present": 47.025
+      }
+    },
+    {
+      "seq": 8,
+      "type": "create",
+      "detail": {
+        "id": "mrl-particle::storage::MatterField::4e3358f8ea65d6e24724a3a78c53b10e5caf20e7b221b13db4ea3f028223699e",
+        "domain": "storage",
+        "present": 81.6
+      }
+    },
+    {
+      "seq": 10,
+      "type": "create",
+      "detail": {
+        "id": "mrl-particle::storage::MatterField::e9948da887fdf3b0af9bd7155ef7f64f004c08d0dde56a8000fd07d5d747642d",
+        "domain": "storage",
+        "present": 105.75
+      }
+    },
+    {
+      "seq": 12,
+      "type": "link",
+      "detail": {
+        "from": "mrl-particle::storage::MatterField::c24bdd75c805c7adc7adf18cd609079d4735aff3c1b6f3df6a2f0163f34d05cc",
+        "to": "mrl-particle::storage::MatterField::4e3358f8ea65d6e24724a3a78c53b10e5caf20e7b221b13db4ea3f028223699e",
+        "relation": "evolves-to"
+      }
+    },
+    {
+      "seq": 14,
+      "type": "link",
+      "detail": {
+        "from": "mrl-particle::storage::MatterField::4e3358f8ea65d6e24724a3a78c53b10e5caf20e7b221b13db4ea3f028223699e",
+        "to": "mrl-particle::storage::MatterField::e9948da887fdf3b0af9bd7155ef7f64f004c08d0dde56a8000fd07d5d747642d",
+        "relation": "evolves-to"
+      }
+    },
+    {
+      "seq": 16,
+      "type": "create",
+      "detail": {
+        "id": "mrl-particle::compute::WaveField::5ab71da8ace35d157beeaa73b152a0cb7a4b3077efd98c1f35f7f62eb9b098b3",
+        "domain": "compute",
+        "present": 14.0096
+      }
+    },
+    {
+      "seq": 18,
+      "type": "create",
+      "detail": {
+        "id": "mrl-particle::compute::WaveField::adc3171a65131ddf4d7ff4776513163d66954a584b5f1e1a5232cf5de75b0531",
+        "domain": "compute",
+        "present": 3244.7999999999997
+      }
+    },
+    {
+      "seq": 20,
+      "type": "link",
+      "detail": {
+        "from": "mrl-particle::compute::WaveField::5ab71da8ace35d157beeaa73b152a0cb7a4b3077efd98c1f35f7f62eb9b098b3",
+        "to": "mrl-particle::compute::WaveField::adc3171a65131ddf4d7ff4776513163d66954a584b5f1e1a5232cf5de75b0531",
+        "relation": "complementary"
+      }
+    },
+    {
+      "seq": 22,
+      "type": "create",
+      "detail": {
+        "id": "mrl-particle::unknown::MindField::0f696a79b891b5657a0d8a5feefd497a9f0b18e2190a7b98d017914563a86599",
+        "domain": "unknown",
+        "present": 0.76
+      }
+    },
+    {
+      "seq": 23,
+      "type": "match",
+      "detail": {
+        "id": "mrl-particle::unknown::MindField::0f696a79b891b5657a0d8a5feefd497a9f0b18e2190a7b98d017914563a86599",
+        "decision": "spawn",
+        "score": 0.58
+      }
+    },
+    {
+      "seq": 25,
+      "type": "evolve",
+      "detail": {
+        "id": "mrl-particle::math::MindField::cd532e2d7c402a71e1df385ed20a583bb795846bf765d6acd999730f80f3e6b0",
+        "before": 136.0125,
+        "after": 185.25
+      }
+    },
+    {
+      "seq": 27,
+      "type": "propagate",
+      "detail": {
+        "id": "mrl-particle::math::MindField::cd532e2d7c402a71e1df385ed20a583bb795846bf765d6acd999730f80f3e6b0",
+        "affected": 0
+      }
+    }
+  ]
+}

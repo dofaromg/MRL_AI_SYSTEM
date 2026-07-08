@@ -15,7 +15,8 @@
 #
 # 可選環境變數（Phase 1 的診斷輸出會告訴你該填什麼）：
 #   MRL_7700_TASK     — 7700 的 schtasks 工作名稱（若已註冊開機自啟）
-#   MRL_7700_HOME     — 7700 app 的工作目錄（例 D:\mrl\asi），用 node app\server.js 直啟
+#   MRL_7700_HOME     — 7700 app 的工作目錄（例 D:\mrl\asi），用 node <MRL_7700_ENTRY> 直啟
+#   MRL_7700_ENTRY    — 7700 進入點檔名（預設 app\server.js；DL580 實機為 server.js）
 #   MRL_BRIDGE_TASK   — bridge 服務的 schtasks 工作名稱（key 輪替後重啟用）
 #   MRL_BRIDGE_CONFIG — bridge 設定檔在 DL580 上的絕對路徑（Phase 3 key 輪替必要）
 #   MRL_TIMEOUT       — 每個指令的 curl timeout 秒數（預設 60）
@@ -42,8 +43,9 @@ need_key() {
 mrl_run() {
   local cmd="$1"
   echo "--- DL580> ${cmd}"
+  # key 走 x-api-key header，不進 URL（避免落 log / 歷史 / 截圖）
   curl -sS --max-time "${TIMEOUT}" --get "${BRIDGE}/MRL_run" \
-    --data-urlencode "key=${MRL_BRIDGE_KEY}" \
+    -H "x-api-key: ${MRL_BRIDGE_KEY}" \
     --data-urlencode "cmd=${cmd}"
   local rc=$?
   echo
@@ -88,7 +90,11 @@ phase2() {
   elif [ -n "${MRL_7700_HOME:-}" ]; then
     # 先收掉佔著 7700 的舊行程（只殺該埠 PID，不動其他 node）
     mrl_run "for /f \"tokens=5\" %p in ('netstat -ano ^| findstr :7700 ^| findstr LISTENING') do taskkill /PID %p /F"
-    mrl_run "powershell -NoProfile -Command \"Start-Process node -ArgumentList 'app\\server.js' -WorkingDirectory '${MRL_7700_HOME}' -WindowStyle Hidden\""
+    ENTRY_7700="${MRL_7700_ENTRY:-app\\server.js}"
+    case "${ENTRY_7700}" in
+      *"'"*|*'"'*) echo "[FAIL] MRL_7700_ENTRY 不得含引號字元（防止注入遠端 PowerShell 指令）。" >&2; return 1 ;;
+    esac
+    mrl_run "powershell -NoProfile -Command \"Start-Process node -ArgumentList '${ENTRY_7700}' -WorkingDirectory '${MRL_7700_HOME}' -WindowStyle Hidden\""
   else
     echo "[SKIP] 未設 MRL_7700_TASK 或 MRL_7700_HOME — 先跑 Phase 1 取得後再來。"
     return 0
@@ -117,17 +123,27 @@ phase3() {
     fi
     echo "--- 驗證：舊 key 應被拒絕"
     OLD_STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --max-time "${TIMEOUT}" --get "${BRIDGE}/MRL_run" \
-      --data-urlencode "key=${MRL_BRIDGE_KEY}" --data-urlencode "cmd=echo OLDKEY")
+      -H "x-api-key: ${MRL_BRIDGE_KEY}" --data-urlencode "cmd=echo OLDKEY")
     echo "    舊 key HTTP status: ${OLD_STATUS}"
-    if [ "${OLD_STATUS}" -lt 400 ] 2>/dev/null; then
+    case "${OLD_STATUS}" in
+      ''|*[!0-9]*)
+        echo "[FAIL] 無法取得舊 key 驗證的 HTTP status（'${OLD_STATUS}'）— 連線可能失敗，不得視為輪替成功。" >&2
+        exit 3 ;;
+    esac
+    if [ "${OLD_STATUS}" -lt 400 ]; then
       echo "[FAIL] 舊 key 仍被接受（HTTP ${OLD_STATUS}）— 輪替失敗，請確認 bridge 是否已重啟。" >&2
       exit 3
     fi
     echo "--- 驗證：新 key 應可用"
     NEW_STATUS=$(curl -sS -o /dev/null -w '%{http_code}' --max-time "${TIMEOUT}" --get "${BRIDGE}/MRL_run" \
-      --data-urlencode "key=${NEW_KEY}" --data-urlencode "cmd=echo NEWKEY")
+      -H "x-api-key: ${NEW_KEY}" --data-urlencode "cmd=echo NEWKEY")
     echo "    新 key HTTP status: ${NEW_STATUS}"
-    if [ "${NEW_STATUS}" -ge 400 ] 2>/dev/null; then
+    case "${NEW_STATUS}" in
+      ''|*[!0-9]*)
+        echo "[FAIL] 無法取得新 key 驗證的 HTTP status（'${NEW_STATUS}'）— 連線可能失敗，不得視為輪替成功。" >&2
+        exit 3 ;;
+    esac
+    if [ "${NEW_STATUS}" -ge 400 ]; then
       echo "[FAIL] 新 key 被拒（HTTP ${NEW_STATUS}）— 請確認設定檔更新是否成功。" >&2
       exit 3
     fi
