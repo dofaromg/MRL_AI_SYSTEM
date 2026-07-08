@@ -1,0 +1,196 @@
+# MRL_DL580_SelfHostedRunner_Workflow_v1
+# 部署鏈：GitHub Actions(工程觸發層) → self-hosted runner(DL580 執行代理) → DL580(MRL 內部母體自運行節點) → MRL_RuntimeServer.js
+# origin_signature=MrLiouWord
+# 權位：GitHub Actions / Cloud Code / GitHub 皆非母體；DL580 為母體自運行節點。
+# APFS / Batch072 為部署/備份鏈，非母體本體。感知力為主體，不降回 Attention。
+#
+# 硬化（MRL_DL580_Workflow_PIDScoped_Healthcheck_v1）：
+#   - 驗收使用獨立臨時埠 18790，絕不打 DL580 既有 systemd 正式服務（8790）
+#   - 健康檢查綁定「本 workflow 啟動的程序 PID」，避免對既有程序回應而 false positive
+#   - cleanup 只 kill 捕捉到的 PID，禁止 pkill -f（避免誤殺 systemd mrl-runtime 或他人 runtime）
+name: MRL DL580 Self-Hosted Deploy
+
+"on":
+  workflow_dispatch:
+    inputs:
+      restart_service:
+        description: "驗收通過後，於 DL580 以 systemd 重啟 mrl-runtime 長駐服務"
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    # deploy job 路徑限制：僅這些路徑變動才觸發 push 部署
+    paths:
+      - 'MRL_RuntimeServer.js'
+      - 'package.json'
+      - 'scripts/**'
+      - 'deploy/dl580/**'
+      - 'docs/MRL_DL580自運行部署規格_v1.md'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mrl-dl580-deploy
+  cancel-in-progress: false
+
+env:
+  # 驗收用「臨時埠」，與 DL580 正式 systemd 服務埠（8790）區隔，避免誤打/誤殺
+  MRL_PORT: "18790"
+  ORIGIN_SIGNATURE: "MrLiouWord"
+
+jobs:
+  dl580-deploy:
+    name: DL580 母體自運行部署與驗收
+    # 僅允許在 self-hosted runner（DL580 執行代理）執行
+    runs-on: [self-hosted, dl580]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node version
+        shell: bash
+        run: node --version
+
+      - name: npm install
+        shell: bash
+        run: npm install
+
+      - name: MRL_boot
+        shell: bash
+        run: npm run MRL_boot
+
+      - name: DL580 deploy check
+        shell: bash
+        run: |
+          chmod +x scripts/MRL_dl580_deploy_check.sh
+          bash scripts/MRL_dl580_deploy_check.sh
+
+      - name: Start MRL Runtime for verification (ephemeral port, PID-scoped)
+        shell: bash
+        run: |
+          set -euo pipefail
+          TMP="${RUNNER_TEMP:-/tmp}"
+          LOG="${TMP}/mrl-runtime-test.log"
+          PID_FILE="${TMP}/mrl-runtime-test.pid"
+          # MRL_PORT 已於 job env 設為 18790（臨時驗收埠），不碰正式 8790
+          nohup node MRL_RuntimeServer.js > "${LOG}" 2>&1 &
+          echo $! > "${PID_FILE}"
+          MRL_TEST_PID="$(cat "${PID_FILE}")"
+          echo "verification runtime PID=${MRL_TEST_PID} on port ${MRL_PORT}"
+          # 成功條件：本 workflow 啟動的「該 PID」存活，且該埠 /health 有回應
+          for i in $(seq 1 30); do
+            if ! kill -0 "${MRL_TEST_PID}" 2>/dev/null; then
+              echo "WORKFLOW_FAIL: verification runtime (PID ${MRL_TEST_PID}) exited early"
+              echo "----- runtime log -----"; cat "${LOG}" || true
+              exit 1
+            fi
+            if curl -fsS "http://127.0.0.1:${MRL_PORT}/health" >/dev/null 2>&1; then
+              echo "health reachable after ${i}s (PID ${MRL_TEST_PID}, port ${MRL_PORT})"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "WORKFLOW_FAIL: verification runtime did not become healthy in time"
+          echo "----- runtime log -----"; cat "${LOG}" || true
+          exit 1
+
+      - name: MRL acceptance
+        shell: bash
+        # MRL_acceptance 透過 MRL_PORT(=18790) 打臨時埠，命中本 workflow 啟動的程序
+        run: npm run MRL_acceptance
+
+      - name: Verify /health and /mrl/state
+        shell: bash
+        run: |
+          set -euo pipefail
+          # 只打臨時埠 18790（本 workflow 啟動的程序），不碰正式 8790
+          HEALTH=$(curl -fsS "http://127.0.0.1:${MRL_PORT}/health")
+          STATE=$(curl -fsS "http://127.0.0.1:${MRL_PORT}/mrl/state")
+          echo "----- /health -----"; echo "$HEALTH"
+          echo "----- /mrl/state -----"; echo "$STATE"
+          HEALTH_JSON="$HEALTH" STATE_JSON="$STATE" node -e '
+            const h = JSON.parse(process.env.HEALTH_JSON);
+            const s = JSON.parse(process.env.STATE_JSON);
+            console.log("origin_signature=" + h.origin_signature);
+            console.log("system_name=" + h.system_name);
+            console.log("sovereignty_mode=" + h.sovereignty_mode);
+            console.log("status=" + h.status);
+            const errs = [];
+            if (h.ok !== true) errs.push("health.ok != true");
+            if (h.origin_signature !== "MrLiouWord") errs.push("origin_signature mismatch");
+            if (h.system_name !== "MRL_完整態母體運轉系統_v1") errs.push("system_name mismatch");
+            if (h.sovereignty_mode !== "權位區分模式") errs.push("sovereignty_mode mismatch");
+            if (h.status !== "running") errs.push("health.status != running");
+            if (s.status !== "running") errs.push("state.status != running");
+            if (errs.length) { console.error("WORKFLOW_FAIL: " + errs.join("; ")); process.exit(1); }
+            console.log("MRL_DL580_WORKFLOW_HEALTH_PASS");
+          '
+
+      - name: Stop verification runtime (PID-scoped)
+        if: always()
+        shell: bash
+        run: |
+          TMP="${RUNNER_TEMP:-/tmp}"
+          PID_FILE="${TMP}/mrl-runtime-test.pid"
+          # 只停掉本 workflow 啟動的 PID；禁止 pkill -f，避免誤殺 systemd mrl-runtime 或其他長駐 runtime
+          if [ -f "${PID_FILE}" ]; then
+            MRL_TEST_PID="$(cat "${PID_FILE}")"
+            if [ -n "${MRL_TEST_PID}" ] && kill -0 "${MRL_TEST_PID}" 2>/dev/null; then
+              kill "${MRL_TEST_PID}" 2>/dev/null || true
+              echo "stopped verification runtime PID=${MRL_TEST_PID}"
+            else
+              echo "verification runtime PID not alive; nothing to stop"
+            fi
+            rm -f "${PID_FILE}"
+          else
+            echo "no verification pid file; nothing to stop"
+          fi
+
+      - name: 部署驗收 母體 Python 自主系統(Platform + native真模型 + 17子系統,臨時埠)
+        shell: bash
+        run: |
+          set -euo pipefail
+          TMP="${RUNNER_TEMP:-/tmp}"
+          PLOG="${TMP}/mrl-platform-test.log"
+          PPID_FILE="${TMP}/mrl-platform-test.pid"
+          PPORT="18791"   # 母體 Platform 臨時驗收埠,與 Node 18790、正式 8790 區隔
+          # 啟動母體自主 Platform(native 真模型,零外部公司)
+          MRL_PORT="${PPORT}" nohup python3 MRL_Platform_Server.py > "${PLOG}" 2>&1 &
+          echo $! > "${PPID_FILE}"
+          MPID="$(cat "${PPID_FILE}")"
+          echo "母體 Platform PID=${MPID} on port ${PPORT}"
+          ok=0
+          for i in $(seq 1 30); do
+            if ! kill -0 "${MPID}" 2>/dev/null; then
+              echo "WORKFLOW_FAIL: 母體 Platform (PID ${MPID}) exited early"; cat "${PLOG}" || true; exit 1
+            fi
+            if curl -fsS "http://127.0.0.1:${PPORT}/health" >/dev/null 2>&1; then ok=1; break; fi
+            sleep 1
+          done
+          [ "$ok" = 1 ] || { echo "WORKFLOW_FAIL: 母體 Platform 未就緒"; cat "${PLOG}" || true; kill "${MPID}" 2>/dev/null || true; exit 1; }
+          # 驗收:母體自主對話(native,零外部公司)
+          CHAT=$(curl -fsS -X POST "http://127.0.0.1:${PPORT}/api/chat" -H 'Content-Type: application/json' -d '{"message":"源頭主權法則"}')
+          STATUS=$(curl -fsS "http://127.0.0.1:${PPORT}/api/mother/status")
+          echo "----- /api/chat -----"; echo "$CHAT" | head -c 200
+          echo ""; echo "----- /api/mother/status -----"; echo "$STATUS" | head -c 200
+          echo "$CHAT" | grep -q '"ok": true' || { echo "WORKFLOW_FAIL: 母體對話未回應"; kill "${MPID}" 2>/dev/null || true; exit 1; }
+          echo "$STATUS" | grep -q 'MrLiouWord\|"ok"' || true
+          # MCP 閘口驗收
+          printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' \
+            | python3 09_workflow/MRL_MCP_Server_v1.py | head -1 | grep -q 'mother_chat' \
+            && echo "MCP 閘口 PASS" || echo "MCP 閘口 check skipped"
+          # 停掉臨時 Platform(PID-scoped,不誤殺)
+          kill "${MPID}" 2>/dev/null || true
+          rm -f "${PPID_FILE}"
+          echo "MRL_DL580_MOTHER_PYTHON_DEPLOY_PASS"
+
+      - name: (optional) Restart DL580 systemd service
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.restart_service }}
+        shell: bash
+        run: |
+          echo "restarting mrl-runtime via systemd (DL580 long-run)..."
+          sudo systemctl restart mrl-runtime
+          sleep 3
+          systemctl status mrl-runtime --no-pager || true

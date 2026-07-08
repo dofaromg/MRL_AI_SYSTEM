@@ -73,13 +73,17 @@ _DEFAULTS: Dict[str, Any] = {
         "log_level": "INFO",
     },
     "llm": {
-        "default_model": "local",
+        # deny-by-default (rootlaw rl_00): no implicit mock in production.
+        # Set a real model (e.g. "gpt-4o", "claude-3-5-sonnet") or enable a
+        # local engine; "mock" requires allow_mock=true and is test-only.
+        "default_model": "",
         "max_tokens": 1024,
         "temperature": 0.7,
         "stream": False,
         "openai_api_key": "",
         "anthropic_api_key": "",
         "local_base_url": "http://localhost:11434/v1",
+        "enable_local": False,
         "allow_mock": False,
     },
     "memory": {
@@ -114,6 +118,21 @@ _DEFAULTS: Dict[str, Any] = {
     },
     "eval": {
         "default_threshold": 0.5,
+    },
+
+    # Self-optimisation (mainstream pattern: dynamic config, auditable)
+    "self_optimize": {
+        "enabled": False,
+        "apply": False,
+        "last_run_at_ms": 0,
+    },
+
+    # Learning ingest defaults (kept separate; endpoints remain deny-by-default)
+    "learning": {
+        "enabled": False,
+        "chunk_chars": 1400,
+        "overlap": 200,
+        "top_k": 5,
     },
 }
 
