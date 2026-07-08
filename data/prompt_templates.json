@@ -45,8 +45,6 @@
       "description": "Evaluation result summary template",
       "version": 9,
       "created_at_ms": 1777488069963,
-      "version": 244,
-      "created_at_ms": 1783270369116,
       "variables": [
         "composite",
         "label",
