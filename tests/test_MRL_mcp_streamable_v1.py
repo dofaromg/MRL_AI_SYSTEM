@@ -252,6 +252,12 @@ def test_policy_verdict_no_event_loop_leak():
             warnings.simplefilter("always", ResourceWarning)
             for _ in range(30):
                 client.call_tool("echo", {"message": "x"})
+            # 硬化：若 coroutine 鏈有引用循環，refcount finalize 會遞延到 cyclic GC，
+            # 導致 ResourceWarning 晚於 assert 才發出 → 誤判為無洩漏。強制 collect
+            # 讓 cycle-hidden leaks 也被捕捉到。
+            import gc
+
+            gc.collect()
         leaked = [w for w in caught if "unclosed event loop" in str(w.message).lower()]
         assert not leaked, f"洩漏 {len(leaked)} 個未關閉 event loop"
 
