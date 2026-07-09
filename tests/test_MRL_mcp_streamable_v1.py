@@ -231,8 +231,8 @@ def test_empty_batch_returns_invalid_request():
 def test_policy_verdict_no_event_loop_leak():
     """_policy_verdict 對每個 async policy_gate.run 建的 event loop 都必須 close，否則洩漏。
 
-    連呼 100 次 tools/call，比對執行前後 process 的活躍 event loop 數量，
-    確認 asyncio 內部 policy 不會累積未關閉 loop。
+    連呼 30 次 tools/call，攔截 `warnings.catch_warnings` 內的
+    `ResourceWarning: unclosed event loop`；出現即代表 loop 洩漏。
     """
     import warnings
 
