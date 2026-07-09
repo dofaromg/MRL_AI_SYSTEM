@@ -45,7 +45,6 @@ from __future__ import annotations
 
 import inspect
 import json
-import socket
 import threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from typing import Any, Awaitable, Callable, Dict, List, Optional, Tuple, Union
@@ -311,7 +310,11 @@ class MCPStreamableServer:
         if inspect.iscoroutine(coro):
             import asyncio
 
-            return asyncio.new_event_loop().run_until_complete(coro)
+            loop = asyncio.new_event_loop()
+            try:
+                return loop.run_until_complete(coro)
+            finally:
+                loop.close()
         return coro
 
     def _run_via_tool_loop(self, name: str, args: Dict[str, Any]) -> Any:
@@ -388,6 +391,17 @@ class _MCPRequestHandler(BaseHTTPRequestHandler):
         # 支援單一訊息或批次陣列（JSON-RPC 2.0 §6）
         mcp_server: MCPStreamableServer = self.server.mcp_server  # type: ignore[attr-defined]
         if isinstance(message, list):
+            # §6：empty batch 不是合法請求，必須回 Invalid Request（-32600）而非 204
+            if not message:
+                self._send_json(
+                    200,
+                    {
+                        "jsonrpc": "2.0",
+                        "id": None,
+                        "error": make_error(_ERR_INVALID_REQUEST, "batch 不得為空陣列"),
+                    },
+                )
+                return
             responses = [
                 r for r in (mcp_server.handle_message(m) for m in message) if r is not None
             ]
@@ -420,18 +434,12 @@ class _MCPRequestHandler(BaseHTTPRequestHandler):
 
 
 # ── 便利入口：serve_forever / serve_in_thread ────────────────────────────────
-def _pick_free_port() -> int:
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.bind(("127.0.0.1", 0))
-        return s.getsockname()[1]
-
-
 def make_http_server(
     mcp_server: MCPStreamableServer, host: str = "127.0.0.1", port: int = 0
 ) -> HTTPServer:
-    """把 MCPStreamableServer 掛到 HTTPServer；port=0 表示自動挑空 port。"""
-    if port == 0:
-        port = _pick_free_port()
+    """把 MCPStreamableServer 掛到 HTTPServer；port=0 表示 OS 原子分配空 port
+    （避免 TOCTOU race 與 host 不一致問題）。實際 port 由 httpd.server_address[1] 取。
+    """
     httpd = HTTPServer((host, port), _MCPRequestHandler)
     httpd.mcp_server = mcp_server  # type: ignore[attr-defined]
     return httpd
