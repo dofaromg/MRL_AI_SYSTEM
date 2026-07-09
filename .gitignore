@@ -256,3 +256,4 @@ data/particles/MRLsmall.*.jsonl
 data/links/MRLsmall.*.jsonl
 data/cycles/MRLsmall.*.jsonl
 data/journal/MRLsmall.*.jsonl
+data/MetaCode.export.*.json
