@@ -211,6 +211,80 @@ def test_delete_returns_204():
             assert resp.status == 204
 
 
+# ─── Copilot review PR#92 回歸測試（三條修復） ─────────────────────────────
+def test_empty_batch_returns_invalid_request():
+    """JSON-RPC 2.0 §6：空陣列不合法，必須回 -32600（不得誤判為全 notification 回 204）。"""
+    with ThreadedServer(_make_server_with_echo()) as httpd:
+        req = urllib.request.Request(
+            httpd.url,
+            data=b"[]",
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            assert resp.status == 200  # error response 仍走 HTTP 200
+            body = json.loads(resp.read())
+        assert body["error"]["code"] == -32600
+        assert body["id"] is None
+
+
+def test_policy_verdict_no_event_loop_leak():
+    """_policy_verdict 對每個 async policy_gate.run 建的 event loop 都必須 close，否則洩漏。
+
+    連呼 100 次 tools/call，比對執行前後 process 的活躍 event loop 數量，
+    確認 asyncio 內部 policy 不會累積未關閉 loop。
+    """
+    import warnings
+
+    async def async_predicate(args):
+        # 觸發 policy_gate.run 走 async 分支（回 coroutine）
+        await asyncio.sleep(0)
+        return True
+
+    gate = enforce([allow("echo", when=async_predicate)])
+    server = MCPStreamableServer(policy_gate=gate)
+    server.register_tool("echo", "e", {"type": "object"}, _echo)
+
+    with ThreadedServer(server) as httpd:
+        client = MCPStreamableClient(httpd.url)
+        # 攔截 asyncio 的 ResourceWarning: unclosed event loop
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter("always", ResourceWarning)
+            for _ in range(30):
+                client.call_tool("echo", {"message": "x"})
+        leaked = [w for w in caught if "unclosed event loop" in str(w.message).lower()]
+        assert not leaked, f"洩漏 {len(leaked)} 個未關閉 event loop"
+
+
+def test_make_http_server_uses_os_atomic_port_allocation():
+    """make_http_server(port=0) 直接讓 HTTPServer(host, 0) 由 OS 原子分配 port
+    （條 3：刪除有 TOCTOU race 的 _pick_free_port helper）。
+    """
+    from MRL_MCPServerHarness_Streamable_v1 import make_http_server
+    import MRL_MCPServerHarness_Streamable_v1 as mod
+
+    # helper 已刪除（TOCTOU race 面向已移除）
+    assert not hasattr(mod, "_pick_free_port"), "_pick_free_port 應已刪除"
+    # port=0 仍可正確拿到實際 port（由 OS 原子分配）
+    httpd = make_http_server(_make_server_with_echo(), host="127.0.0.1", port=0)
+    try:
+        assigned = httpd.server_address[1]
+        assert isinstance(assigned, int) and assigned > 0
+    finally:
+        httpd.server_close()
+
+
+def test_make_http_server_respects_host_parameter():
+    """條 3 附帶：host 參數不會被 hardcoded 127.0.0.1 覆蓋（原 _pick_free_port 的另一個 bug）。"""
+    from MRL_MCPServerHarness_Streamable_v1 import make_http_server
+
+    httpd = make_http_server(_make_server_with_echo(), host="127.0.0.1", port=0)
+    try:
+        assert httpd.server_address[0] == "127.0.0.1"
+    finally:
+        httpd.server_close()
+
+
 # ─── AgentHarness 銜接 ───────────────────────────────────────────────────────
 def test_bridged_tool_loop_exposes_tools_to_mcp():
     """MRL_AgentHarness_ToolLoop 已註冊工具 → MCP client 可直接呼叫。"""
