@@ -38,7 +38,7 @@ group: Y=3 FlowAgentRuntime
   - `zod`                          → 直接用 JSON Schema dict
   - `redis` (SSE session state)    → 不需要（disableSse=True，無會話）
 
-依賴：Python stdlib only（http.server, json, socket, threading, urllib.parse）。
+依賴：Python stdlib only（http.server, json, threading）。
 CLI：python3 09_workflow/MRL_MCPServerHarness_Streamable_v1.py --port 8765
 """
 from __future__ import annotations
