@@ -35,7 +35,11 @@ for _p in (str(_HERE.parents[1] / "09_workflow"), str(_HERE.parent)):
 
 try:
     from MRL_utils import ORIGIN_SIGNATURE, embed_signature, verify_signature  # noqa: E402
-except Exception:  # pragma: no cover - fallback only when MRL_utils unavailable
+except ModuleNotFoundError as _exc:  # pragma: no cover - standalone fallback only
+    # 只在「MRL_utils 本身不存在」時退回;若是 MRL_utils 內部缺依賴/其他失敗,
+    # 不得靜默遮蔽(否則會繞過單一真實來源仍回報驗章通過)。
+    if _exc.name != "MRL_utils":
+        raise
     import hashlib as _hashlib
     import json as _json
 

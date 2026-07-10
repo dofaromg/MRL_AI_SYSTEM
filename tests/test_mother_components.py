@@ -8,6 +8,7 @@ origin_signature: MrLiouWord"""
 import pathlib
 import sys
 import unittest
+from unittest.mock import patch
 
 _ROOT = pathlib.Path(__file__).resolve().parent.parent
 _MOTHER = _ROOT / "MRL_Mother"
@@ -73,6 +74,10 @@ class TestMotherComponents(unittest.TestCase):
         self.assertFalse(c.verify_origin(ORIGIN_SIGNATURE))
         # and a genuine one verifies against the canonical origin
         self.assertTrue(MRL_AI().verify_origin(ORIGIN_SIGNATURE))
+        # observability: if the LAW-0 verifier says no, verify_origin must fail even for a
+        # canonical component — proving it actually invokes verify_signature (not bare ==).
+        with patch("mrl_mother_component.verify_signature", return_value=False):
+            self.assertFalse(MRL_AI().verify_origin(ORIGIN_SIGNATURE))
 
     def test_honest_status_not_completed_claim(self):
         # The component must NOT parrot a \"completed_running\" achievement claim;
