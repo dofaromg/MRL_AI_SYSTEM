@@ -1,7 +1,7 @@
 # MRL_ParticleTeam_MCP_v1 — 吸收註記（Adapter）
 
 origin_signature: `MrLiouWord`
-source: `particleteammcp.ts`（MR.liou;byte source-of-record 於使用者端）
+source: `particleteammcp.ts`（MR.liou;byte source-of-record 於使用者端;blob `9e2eccb3`）
 held_as: `MRL_Adapter_Layer/MRL_ParticleTeam_MCP_v1.ts`
 
 ## 是什麼
@@ -15,10 +15,13 @@ MR.liou 自撰的**多代理協作 MCP Server**（Cloudflare Worker / TypeScript
 - MCP tools:`team_dispatch / team_status / agent_direct / team_consensus`;另有 `/mcp`、`/sse`、
   `/dispatch`、`/health` HTTP 端點。
 
-## 吸收方式（誠實）
+## 吸收方式（誠實保真度）
 
-- **原碼保留**為 adapter,除「空行尾端空白正規化」外逐字保留（功能等價;差異僅 blank-line 尾空白,
-  已用 `git diff` 佐證）。原檔為 byte source-of-record。
+- **功能碼逐字保留**:所有 interface / AI_TEAM 提示詞 / TASK_AGENT_MAPPING / TEAM_TOOLS /
+  `TeamCoordinator` 各方法 / MCP handler 皆與原碼一致。
+- **非逐字之處**:檔頭註解的 ASCII 藝術框線寬度、空行尾端空白經重繪/正規化,
+  個別 CJK 異體字可能不同（如 敘/敍）。不影響編譯或行為。
+- **位元組精確以原檔為準**（blob `9e2eccb35b4e602da22bc07edba3dfade13ed264`）;本 adapter 為可讀保存本。
 - **未**接入 `MotherAssembly`、**未**部署、**未**端到端驗證（需 `ANTHROPIC_API_KEY` + runtime）。
 
 ## 主權註記（rl_11 / rl_13 / rl_19）
