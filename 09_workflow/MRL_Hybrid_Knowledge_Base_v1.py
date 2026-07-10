@@ -254,18 +254,20 @@ class ConsistencyManager:
 
         # ② 顯式否定對:同 subject、同 object、同 base predicate,但一正一負
         seen: Dict[Tuple[str, str, str], bool] = {}  # (subject, object, base) -> polarity
+        reported: set = set()   # 同一 (s,o,base) 只回報一次(多個相異否定謂詞不重覆觸發)
         for f in facts:
             pos, base = _pred_polarity(f["predicate"])
             key = (f["subject"], f["object"], base)
-            if key in seen and seen[key] != pos:
+            if key in seen and seen[key] != pos and key not in reported:
                 out.append({
                     "type": "negation_conflict",
                     "subject": f["subject"],
                     "object": f["object"],
                     "base_predicate": base,
                 })
+                reported.add(key)
             else:
-                seen[key] = pos
+                seen.setdefault(key, pos)
         return out
 
     def redundancies(self) -> List[Dict[str, Any]]:

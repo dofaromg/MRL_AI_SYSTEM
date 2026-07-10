@@ -117,6 +117,33 @@ class TestHybridKnowledgeBase(unittest.TestCase):
         kinds = {c["type"] for c in rep["contradictions"]}
         self.assertIn("negation_conflict", kinds)
 
+    def test_negation_conflict_reported_once(self):
+        """多個相異否定謂詞(不是/非是)對同一 (s,o,base) 只回報一次,不重覆。"""
+        kb = self._kb()
+        kb.incremental_update("貓", "是", "哺乳類")
+        kb.incremental_update("貓", "不是", "哺乳類")
+        kb.incremental_update("貓", "非是", "哺乳類")
+        rep = kb.refine_knowledge()
+        neg = [c for c in rep["contradictions"] if c["type"] == "negation_conflict"]
+        self.assertEqual(len(neg), 1, "same (subject,object,base) negation must dedupe")
+
+    def test_concurrent_incremental_update_is_thread_safe(self):
+        """RLock 序列化並發 incremental_update:20 執行緒各寫一筆 → 恰 20 筆(不交錯毀損)。"""
+        import threading
+        kb = self._kb()
+
+        def worker(i):
+            kb.incremental_update(f"s{i}", "是", "x")
+
+        threads = [threading.Thread(target=worker, args=(i,)) for i in range(20)]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
+        self.assertEqual(len(kb), 20)
+        # 並發後仍可 refine(只讀)且不改 len
+        self.assertEqual(kb.refine_knowledge()["total_facts"], 20)
+
     def test_redundancy_detects_casing_whitespace_dup(self):
         kb = self._kb()
         kb.incremental_update("Alice", "knows", "Bob")
