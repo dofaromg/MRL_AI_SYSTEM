@@ -26,7 +26,7 @@
       "reclaim_rule": "rl_12 (external -> MRL_ canonical); mechanical form MRL_particleteammcp_ts",
       "type": "runnable code — multi-agent MCP orchestrator (Cloudflare Worker, TypeScript)",
       "author": "MR.liou",
-      "held_as": "MRL_Adapter_Layer/MRL_ParticleTeam_MCP_v1.ts (verbatim except trailing-whitespace-on-blank-lines normalized) + .NOTES.md",
+      "held_as": "MRL_Adapter_Layer/MRL_ParticleTeam_MCP_v1.ts (functional code verbatim; header ASCII-art box + trailing whitespace normalized; individual variant glyphs may differ; original blob 9e2eccb3 = byte source-of-record) + .NOTES.md",
       "source_of_record_blob_sha": "9e2eccb35b4e602da22bc07edba3dfade13ed264",
       "sovereignty_notes": [
         "Cloudflare-Worker shaped; per DL580-local-first, should be re-homed to DL580 runtime (Adapter, not default cloud).",
