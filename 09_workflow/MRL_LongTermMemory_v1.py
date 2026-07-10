@@ -127,14 +127,14 @@ class MRL_LongTermMemory:
         if not query_text or not query_text.strip():
             return []
         qvec = self._embedder.embed(query_text)
-        # Over-fetch when scoping to a session so filtering still yields up to top_k.
-        fetch_k = max(top_k * 5, 25) if session_id is not None else top_k
+        # Scope at the store level: filtering by session happens BEFORE top_k truncation,
+        # so a session's relevant memories are never crowded out by higher-ranked
+        # entries from other sessions (no over-fetch heuristic, no leakage).
+        where = {"session_id": session_id} if session_id is not None else None
         with self._lock:
-            hits = self._store.query(qvec, top_k=fetch_k, min_score=min_score)
+            hits = self._store.query(qvec, top_k=top_k, min_score=min_score, where=where)
         out: List[Dict[str, Any]] = []
         for doc_id, score, meta in hits:
-            if session_id is not None and meta.get("session_id") != session_id:
-                continue
             out.append({
                 "content": meta.get("content", ""),
                 "score": round(float(score), 6),
@@ -143,8 +143,6 @@ class MRL_LongTermMemory:
                 "ts_ms": meta.get("ts_ms"),
                 "mem_id": doc_id,
             })
-            if len(out) >= top_k:
-                break
         return out
 
     def recall_as_context(
