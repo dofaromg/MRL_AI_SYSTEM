@@ -5,7 +5,9 @@ source: Notion 匯出 × 4（神經符號協同推理系統;byte source-of-recor
 status: **設計規格（DESIGN）**;碼多為草稿/stub,基準數字為**願景非實測**
 
 > 母體對「神經符號協同推理系統」設計集的 canonical 吸收。此系統掛在 **FlowSeed 七層架構**
-> 上,對齊本 repo 的 MRL layer stack（L0..L7）。以下為忠實摘要 + canonical 命名 + 誠實標記。
+> (Layer1–Layer7)上,其 Layer 1–7 對映本 repo MRL **八層** layer stack 的 L1–L7
+> (`L0..L7` 共八層,L0=ROOT 為母體根,不在 FlowSeed 七層對映內)。以下為忠實摘要 +
+> canonical 命名 + 誠實標記。
 > **不得**把設計時的基準數字當成已達成成果（`no_proof_implies_rhetoric`）。
 
 ## 系統結構（四構件）
@@ -29,14 +31,14 @@ status: **設計規格（DESIGN）**;碼多為草稿/stub,基準數字為**願�
 
 1. **基準數字為願景,非實測**:實驗文件中的
    `推理準確率 94.3% / NeuroSymbolicBench 89.7% / GPT-5、Claude-3 對比 / 4×A100 / 量子模擬加速卡`
-   等,**無可重現的實驗產物**,屬設計時的目標/敍述。依 `no_proof_implies_rhetoric`,
+   等,**無可重現的實驗產物**,屬設計時的目標/敘述。依 `no_proof_implies_rhetoric`,
    一律當成**設計目標**,不得宣稱為已達成成果。
 2. **碼為設計草稿**:三份構件的 Python/PyTorch 皆為骨架,多處明示 `# 實現略...`;
    直接執行不成系統,屬 `[待實作]`。
-3. **硬體/軟體環境為敍述**（Ubuntu 25.04、TensorFlow 4.2、SymbolicAI 3.1.2、
+3. **硬體/軟體環境為敘述**（Ubuntu 25.04、TensorFlow 4.2、SymbolicAI 3.1.2、
    NeuroSymbolic++ 2.0.1 等)未經本 repo 驗證,列為原文引述。
 
-## 構件 API 索引（自原文擷取,便日後真做時對照）
+## 構件 API 索引（自原文擷取,便於日後真做時對照）
 
 - **MRL_Symbolic_Reasoning_Core_v1**:`LogicSystemManager(switch_system/translate_between_systems)`、
   `InferenceEngineCollection(execute_inference)`、`UncertaintyHandler(process/get_trace)`、
@@ -53,5 +55,5 @@ status: **設計規格（DESIGN）**;碼多為草稿/stub,基準數字為**願�
 
 ---
 下一步（若要真做,建議逐構件獨立 PR):先接 `MRL_Hybrid_Knowledge_Base_v1` 到既有
-`vector_store` + `MRL_LongTermMemory_v1`（已有神經側可運行基礎）,再逐步補符號側與映射引擎;
+`vector_store` + `MRL_LongTermMemory_v1`（已有神經側可運行基礎),再逐步補符號側與映射引擎;
 每步附回歸測試,基準改以**真實可重現**的沙盒數字取代願景數字。
