@@ -211,6 +211,111 @@ class TestPostChat:
         _, body = srv.post("/chat", {"message": "sig"})
         assert body.get("origin_signature") == "MrLiouWord"
 
+    def test_rejects_non_integral_max_tokens(self, srv):
+        class _AssemblyOk:
+            def chat(self, *args, **kwargs):
+                return {"reply": "ok"}
+
+        original_assembly = _STATE.assembly
+        try:
+            _STATE.assembly = _AssemblyOk()
+            status, body = srv.post("/chat", {"message": "test", "model": "x", "max_tokens": 1.9})
+        finally:
+            _STATE.assembly = original_assembly
+        assert status == 400
+        assert body.get("error") == "'max_tokens' must be an integer"
+        assert isinstance(body.get("trace_id"), str) and body["trace_id"]
+
+    def test_rejects_boolean_max_tokens(self, srv):
+        class _AssemblyOk:
+            def chat(self, *args, **kwargs):
+                return {"reply": "ok"}
+
+        original_assembly = _STATE.assembly
+        try:
+            _STATE.assembly = _AssemblyOk()
+            status, body = srv.post("/chat", {"message": "test", "model": "x", "max_tokens": True})
+        finally:
+            _STATE.assembly = original_assembly
+        assert status == 400
+        assert body.get("error") == "'max_tokens' must be an integer"
+        assert isinstance(body.get("trace_id"), str) and body["trace_id"]
+
+    def test_rejects_boolean_temperature(self, srv):
+        class _AssemblyOk:
+            def chat(self, *args, **kwargs):
+                return {"reply": "ok"}
+
+        original_assembly = _STATE.assembly
+        try:
+            _STATE.assembly = _AssemblyOk()
+            status, body = srv.post("/chat", {"message": "test", "model": "x", "temperature": False})
+        finally:
+            _STATE.assembly = original_assembly
+        assert status == 400
+        assert body.get("error") == "'temperature' must be a finite number"
+        assert isinstance(body.get("trace_id"), str) and body["trace_id"]
+
+    def test_rejects_non_finite_temperature(self, srv):
+        class _AssemblyOk:
+            def chat(self, *args, **kwargs):
+                return {"reply": "ok"}
+
+        original_assembly = _STATE.assembly
+        try:
+            _STATE.assembly = _AssemblyOk()
+            status, body = srv.post("/chat", {"message": "test", "model": "x", "temperature": float("nan")})
+        finally:
+            _STATE.assembly = original_assembly
+        assert status == 400
+        assert body.get("error") == "'temperature' must be a finite number"
+        assert isinstance(body.get("trace_id"), str) and body["trace_id"]
+
+    def test_chat_error_not_found_maps_to_404(self, srv):
+        class _AssemblyNotFound:
+            def chat(self, *args, **kwargs):
+                return {"error": "model not found"}
+
+        original_assembly = _STATE.assembly
+        try:
+            _STATE.assembly = _AssemblyNotFound()
+            status, body = srv.post("/chat", {"message": "test", "model": "x"})
+        finally:
+            _STATE.assembly = original_assembly
+        assert status == 404
+        assert body.get("error") == "model not found"
+        assert isinstance(body.get("trace_id"), str) and body["trace_id"]
+
+    def test_chat_error_unavailable_maps_to_503(self, srv):
+        class _AssemblyUnavailable:
+            def chat(self, *args, **kwargs):
+                return {"error": "service unavailable"}
+
+        original_assembly = _STATE.assembly
+        try:
+            _STATE.assembly = _AssemblyUnavailable()
+            status, body = srv.post("/chat", {"message": "test", "model": "x"})
+        finally:
+            _STATE.assembly = original_assembly
+        assert status == 503
+        assert body.get("error") == "service unavailable"
+        assert isinstance(body.get("trace_id"), str) and body["trace_id"]
+
+    def test_chat_error_default_maps_to_502(self, srv):
+        class _AssemblyOtherError:
+            def chat(self, *args, **kwargs):
+                return {"error": "gateway failed"}
+
+        original_assembly = _STATE.assembly
+        try:
+            _STATE.assembly = _AssemblyOtherError()
+            status, body = srv.post("/chat", {"message": "test", "model": "x"})
+        finally:
+            _STATE.assembly = original_assembly
+        assert status == 502
+        assert body.get("error") == "gateway failed"
+        assert isinstance(body.get("trace_id"), str) and body["trace_id"]
+
 
 # ─── POST /guard ───────────────────────────────────────────────────────────────
 

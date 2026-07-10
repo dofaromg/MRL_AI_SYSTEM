@@ -65,6 +65,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import pathlib
 import sys
 import time
@@ -541,9 +542,8 @@ class _Handler(BaseHTTPRequestHandler):
 
         session_id = body.get("session_id")
         system_prompt = body.get("system", "")
-        try:
-            max_tokens = int(body.get("max_tokens", 1024))
-        except (ValueError, TypeError):
+        max_tokens_raw = body.get("max_tokens", 1024)
+        if isinstance(max_tokens_raw, bool):
             _json_response(
                 self,
                 400,
@@ -557,13 +557,68 @@ class _Handler(BaseHTTPRequestHandler):
             )
             return
         try:
-            temperature = float(body.get("temperature", 0.7))
+            max_tokens = int(max_tokens_raw)
         except (ValueError, TypeError):
             _json_response(
                 self,
                 400,
                 {
-                    "error": "'temperature' must be a number",
+                    "error": "'max_tokens' must be an integer",
+                    "engine": "mrl_runtime",
+                    "runtime_origin": "local_mother_assembly",
+                    "trace_id": trace_id,
+                },
+                rid,
+            )
+            return
+        if isinstance(max_tokens_raw, float) and not max_tokens_raw.is_integer():
+            _json_response(
+                self,
+                400,
+                {
+                    "error": "'max_tokens' must be an integer",
+                    "engine": "mrl_runtime",
+                    "runtime_origin": "local_mother_assembly",
+                    "trace_id": trace_id,
+                },
+                rid,
+            )
+            return
+        temperature_raw = body.get("temperature", 0.7)
+        if isinstance(temperature_raw, bool):
+            _json_response(
+                self,
+                400,
+                {
+                    "error": "'temperature' must be a finite number",
+                    "engine": "mrl_runtime",
+                    "runtime_origin": "local_mother_assembly",
+                    "trace_id": trace_id,
+                },
+                rid,
+            )
+            return
+        try:
+            temperature = float(temperature_raw)
+        except (ValueError, TypeError):
+            _json_response(
+                self,
+                400,
+                {
+                    "error": "'temperature' must be a finite number",
+                    "engine": "mrl_runtime",
+                    "runtime_origin": "local_mother_assembly",
+                    "trace_id": trace_id,
+                },
+                rid,
+            )
+            return
+        if not math.isfinite(temperature):
+            _json_response(
+                self,
+                400,
+                {
+                    "error": "'temperature' must be a finite number",
                     "engine": "mrl_runtime",
                     "runtime_origin": "local_mother_assembly",
                     "trace_id": trace_id,
