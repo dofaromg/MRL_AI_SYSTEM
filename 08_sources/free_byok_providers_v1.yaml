@@ -1,0 +1,294 @@
+# Free BYOK Models — Provider Catalog v1
+# origin_signature: MrLiouWord
+# absorbed: 2026-07-10
+# source: github.com/velo4705/awesome-free-byok-models (PR sindresorhus/awesome#4325)
+# verified: 2026-07-10 — All 38 providers live-tested by upstream maintainer
+# law: 母體整合法則（Additive-Only）
+#
+# 所有 Base URL 均相容 OpenAI Chat Completions API（POST /chat/completions）
+# 使用方式：帶 Authorization: ****** 標頭，JSON body 同 OpenAI spec
+#
+# 欄位說明：
+#   quota     — 免費層每日/每分鐘配額（自動補充）
+#   base_url  — OpenAI-compatible endpoint
+#   note      — 特殊注意事項（若有）
+# --------------------------------------------------------------------------
+
+meta:
+  title: "Awesome Free BYOK Models"
+  upstream: "https://github.com/velo4705/awesome-free-byok-models"
+  verified_date: "2026-07-10"
+  provider_count: 38
+  protocol: "OpenAI Chat Completions (POST /chat/completions)"
+
+# ── Top 10 模型排行（依編碼能力排序）────────────────────────────────────────
+top_models:
+  - rank: 1
+    model: "openai/gpt-oss-120b"
+    provider: "Groq API"
+    context: "128K"
+    latency: "~0.5s"
+    rating: "★★★★★"
+    note: "120B @ sub-300ms, 14,400 RPD. 速度+質量+配額三全"
+  - rank: 2
+    model: "models/gemini-3.1-flash-lite"
+    provider: "Google Gemini"
+    context: "1M"
+    latency: "varies"
+    rating: "★★★★★"
+    note: "1,500 RPD 免費；可餵整個 repo"
+  - rank: 3
+    model: "deepseek-v4-flash-free"
+    provider: "OpenCode Zen"
+    context: "1M"
+    latency: "varies"
+    rating: "★★★★★"
+    note: "500 RPD / 1M TPD；多輪推理不失憶"
+  - rank: 4
+    model: "qwen/qwen3-32b"
+    provider: "Groq API"
+    context: "256K"
+    latency: "~0.5s"
+    rating: "★★★★☆"
+    note: "同 Groq 配額池，需要大上下文時切換"
+  - rank: 5
+    model: "intern-latest"
+    provider: "Intern AI"
+    context: "256K"
+    latency: "<1s"
+    rating: "★★★★☆"
+    note: "每月 90M tokens；指向最新模型"
+  - rank: 6
+    model: "mistral-code-agent-latest"
+    provider: "Mistral AI"
+    context: "varies"
+    latency: "<1s"
+    rating: "★★★★☆"
+    note: "帶工具呼叫的 Agentic coding；50k TPM"
+  - rank: 7
+    model: "deepseek-v4-flash"
+    provider: "Navy API"
+    context: "varies"
+    latency: "varies"
+    rating: "★★★★☆"
+    note: "250k TPD；快速穩定"
+  - rank: 8
+    model: "deepseek-v3.2"
+    provider: "MNN AI"
+    context: "varies"
+    latency: "varies"
+    rating: "★★★★☆"
+    note: "$1 月額度；輕量日常編碼"
+  - rank: 9
+    model: "deepseek-v4-pro"
+    provider: "Void AI"
+    context: "varies"
+    latency: "varies"
+    rating: "★★★★☆"
+    note: "100 RPM / 125k 日額度；最難多檔問題備用"
+  - rank: 10
+    model: "gpt-5.4"
+    provider: "Navy API"
+    context: "varies"
+    latency: "varies"
+    rating: "★★★★☆"
+    note: "250k TPD / 20 RPM；乾淨直接輸出"
+
+# ── 38 個供應商完整目錄 ──────────────────────────────────────────────────────
+providers:
+  - name: "AION Labs"
+    dashboard: "https://www.aionlabs.ai"
+    base_url: "https://api.aionlabs.ai/v1"
+    quota: "15 RPM / 20,000 TPD"
+
+  - name: "Agnes AI"
+    dashboard: "https://www.agnes-ai.com"
+    base_url: "https://apihub.agnes-ai.com/v1"
+    quota: "20 RPM / 1,000 RPD"
+
+  - name: "AnyAPI AI"
+    dashboard: "https://anyapi.ai"
+    base_url: "https://api.anyapi.ai/v1"
+    quota: "100,000 tokens/day / No Credit Card"
+
+  - name: "Auriko"
+    dashboard: "https://www.auriko.ai"
+    base_url: "https://api.auriko.ai/v1"
+    quota: "500 RPM (BYOK) / 1,000,000 tokens/month (BYOK)"
+
+  - name: "Cerebras AI"
+    dashboard: "https://cloud.cerebras.ai"
+    base_url: "https://api.cerebras.ai/v1"
+    quota: "5 RPM / 250 RPD / 30,000 TPM"
+    note: "Wafer-Scale Engine；2500+ tokens/s 推理速度業界最快"
+
+  - name: "Cloudflare Workers AI"
+    dashboard: "https://dash.cloudflare.com"
+    base_url: "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/v1/chat/completions"
+    quota: "150–1,500 RPM / 100,000 RPD / 13,000 TPD"
+    note: "需替換 {account_id}；/chat/completions 用 messages 欄位（非 /run/{model} 的 prompt 欄位）"
+
+  - name: "Cohere AI"
+    dashboard: "https://dashboard.cohere.com"
+    base_url: "https://api.cohere.com/v2"
+    quota: "20 RPM / 1,000 API calls per month"
+
+  - name: "ElectronHub"
+    dashboard: "https://electronhub.ai"
+    base_url: "https://api.electronhub.ai/v1"
+    quota: "5 RPM / $0.25 Weekly Credits"
+
+  - name: "FastRouter"
+    dashboard: "https://fastrouter.ai"
+    base_url: "https://api.fastrouter.ai/api/v1"
+    quota: "10 RPD per model / No Billing Credits Required"
+
+  - name: "GitHub Models"
+    dashboard: "https://github.com/marketplace/models"
+    base_url: "https://models.inference.ai.azure.com"
+    quota: "10–15 RPM / 50–150 RPD"
+    note: "⚠️ 2026-07-30 全面停用 — 勿新建工作流程依賴此端點"
+    status: "retiring_2026-07-30"
+
+  - name: "Google Gemini"
+    dashboard: "https://aistudio.google.com"
+    base_url: "https://generativelanguage.googleapis.com/v1beta"
+    quota: "15–30 RPM / 1,500 RPD / 1M TPM / Uncapped TPD"
+    note: "Flash-lite 約 500 RPD；標準模型低至 20 RPD；適合單檔快速任務"
+
+  - name: "Groq API"
+    dashboard: "https://console.groq.com"
+    base_url: "https://api.groq.com/openai/v1"
+    quota: "30 RPM / 14,400 RPD / 18,000 TPM"
+    note: "業界最低串流延遲；無需信用卡；首選速度提供商"
+
+  - name: "HelixMind"
+    dashboard: "https://helixmind.online"
+    base_url: "https://helixmind.online/v1"
+    quota: "3 RPM / 50 RPD"
+
+  - name: "HelyxAI"
+    dashboard: "https://helyxai.space"
+    base_url: "https://helyxai.space/v1"
+    quota: "100,000 TPD / 1,000,000 Monthly Tokens"
+
+  - name: "Hugging Face Inference API"
+    dashboard: "https://huggingface.co/inference-api"
+    base_url: "https://router.huggingface.co/v1"
+    quota: "$0.10/month credits (~650K tokens)"
+
+  - name: "Intern AI"
+    dashboard: "https://internlm.intern-ai.org.cn"
+    base_url: "https://chat.intern-ai.org.cn/api/v1/"
+    quota: "30 RPM / 300,000 TPM / 90,000,000 tokens/month (3,000,000 TPD)"
+
+  - name: "Kilo Code"
+    dashboard: "https://app.kilo.ai"
+    base_url: "https://api.kilo.ai/api/gateway"
+    quota: "5 RPM / 200 RPD"
+
+  - name: "LLM7.IO"
+    dashboard: "https://llm7.io"
+    base_url: "https://api.llm7.io/v1"
+    quota: "40 RPM / 2,400 RPD / 1,000,000 TPD"
+
+  - name: "LLMGateway"
+    dashboard: "https://llmgateway.io"
+    base_url: "https://api.llmgateway.io/v1"
+    quota: "5 requests per 10 minutes / $0 per 1M tokens"
+
+  - name: "LiteRouter"
+    dashboard: "https://literouter.com"
+    base_url: "https://api.literouter.com/v1"
+    quota: "1 Concurrent Request / 15,000 TPD / Uncapped RPD"
+
+  - name: "MNN AI"
+    dashboard: "https://mnnai.ru"
+    base_url: "https://api2.mnnai.ru/v1"
+    quota: "10 RPM / $1 Monthly Credits"
+
+  - name: "MegaNova AI"
+    dashboard: "https://meganova.ai"
+    base_url: "https://api.meganova.ai/v1"
+    quota: "60 RPM / 550 RPD / 200,000 TPM"
+
+  - name: "Mistral AI"
+    dashboard: "https://console.mistral.ai"
+    base_url: "https://api.mistral.ai/v1"
+    quota: "~2–30 RPM / 50,000 TPM shared pool"
+
+  - name: "Mixlayer"
+    dashboard: "https://www.mixlayer.com"
+    base_url: "https://models.mixlayer.ai/v1"
+    quota: "20 RPM / Can be rate-limited (daily usage)"
+
+  - name: "Naga AI"
+    dashboard: "https://naga.ac"
+    base_url: "https://api.naga.ac/v1"
+    quota: "10 RPM / 100 RPD"
+
+  - name: "Navy API"
+    dashboard: "https://api.navy"
+    base_url: "https://api.navy/v1"
+    quota: "20 RPM / 250,000 TPD"
+
+  - name: "NVIDIA NIM"
+    dashboard: "https://build.nvidia.com"
+    base_url: "https://integrate.api.nvidia.com/v1"
+    quota: "40 RPM / Uncapped TPD"
+
+  - name: "Ollama Cloud"
+    dashboard: "https://ollama.com"
+    base_url: "https://api.ollama.com"
+    quota: "1 Instance / 5-Hour Session Usage / 7-day Weekly Usage"
+
+  - name: "OpenCode Zen"
+    dashboard: "https://opencode.ai/zen"
+    base_url: "https://opencode.ai/zen/v1"
+    quota: "30 RPM / 500 RPD / 1,000,000 TPD"
+
+  - name: "OpenRouter"
+    dashboard: "https://openrouter.ai"
+    base_url: "https://openrouter.ai/api/v1"
+    quota: "20 RPM / 50 RPD"
+    note: "可存取多廠商免費模型（Poolside、NVIDIA、Google 等）"
+
+  - name: "Routeway AI"
+    dashboard: "https://routeway.ai"
+    base_url: "https://api.routeway.ai/v1"
+    quota: "5 RPM / 200 RPD / 300,000 TPD"
+
+  - name: "Poixe AI"
+    dashboard: "https://poixe.com"
+    base_url: "https://api.poixe.com/v1/"
+    quota: "10,000 RPD / 10,000,000 TPD"
+
+  - name: "Poolside"
+    dashboard: "https://poolside.ai"
+    base_url: "https://inference.poolside.ai/v1"
+    quota: "20 RPM / 200 RPD / 150,000 TPM / 1,000,000 TPD"
+
+  - name: "SambaNova AI"
+    dashboard: "https://cloud.sambanova.ai"
+    base_url: "https://api.sambanova.ai/v1"
+    quota: "20 RPM / 20 RPD / 200,000 TPD"
+
+  - name: "TokenReply"
+    dashboard: "https://tokenreply.com"
+    base_url: "https://api.tokenreply.com/v1"
+    quota: "3 RPM / 40 Weekly Model Calls / Free Models Only"
+
+  - name: "UnoRouter"
+    dashboard: "https://unorouter.com"
+    base_url: "https://api.unorouter.com/v1"
+    quota: "1 RPM per unique model / Upstream rate limits apply"
+
+  - name: "Void AI"
+    dashboard: "https://voidai.app"
+    base_url: "https://api.voidai.app/v1"
+    quota: "100 RPM / 125,000 Daily Credits"
+
+  - name: "Z.AI (Zhipu AI)"
+    dashboard: "https://z.ai"
+    base_url: "https://api.z.ai/api/paas/v4"
+    quota: "1 Concurrent Request / Uncapped TPD"

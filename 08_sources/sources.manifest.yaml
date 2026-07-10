@@ -70,6 +70,21 @@ sources:
       - "09_workflow/MRL_MCPClient_Streamable_v1.py"         # HTTP MCP client（stdlib urllib 版）
       - "tests/test_MRL_mcp_streamable_v1.py"                # 驗收 18 項（沙盒 PASS 2026-07-05）
 
+  - id: free_byok_models_absorption_v1
+    name: "Awesome Free BYOK Models（sindresorhus/awesome PR #4325）"
+    path: "08_sources/free_byok_providers_v1.yaml"
+    upstream: "github.com/velo4705/awesome-free-byok-models"
+    absorbed: "2026-07-10"
+    origin_signature: MrLiouWord
+    role: >-
+      38 個永久免費、自動補充配額的 LLM API 供應商目錄（OpenAI-compatible）——
+      涵蓋 base_url、免費配額邊界、Top 10 模型排行（編碼能力評分）。
+      為母體 ModelGateway 可插拔架構提供 OpenAIGateway 實作所需知識基礎。
+      GitHub Models 條目標記為 retiring_2026-07-30，勿新建依賴。
+    dedup_report: "docs/MRL_FreeBYOK_吸收報告_v1.md"
+    implementations:
+      - "08_sources/free_byok_providers_v1.yaml"   # 供應商目錄（知識層，待起動：OpenAIGateway）
+
 # Usage:
 # - append here whenever you add a new source file
 # - never delete canonical sources; deprecate via metadata
