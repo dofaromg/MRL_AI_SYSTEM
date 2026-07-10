@@ -10,6 +10,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### 吸收去重蒸餾重建（MRL_AutonomousRuntime 模組）
+- `09_workflow/MRL_AutonomousRuntime_Module_v1.py` — 把吸收→去重→蒸餾→重建流程程式化，輸出自主運行模組規格（dependency graph + boot order），並可直接產生 AgentHarness `AgentConfig`（deny-by-default）
+- `tests/test_MRL_autonomous_runtime_module_v1.py` — 驗收測試：去重合併、依賴拓撲排序、循環依賴穩定回退、預設政策閘行為
+
 #### mcp-with-next-js 去重蒸餾吸收（MRL_MCPServerHarness 系列）
 - `09_workflow/MRL_MCPServerHarness_Streamable_v1.py` — MCP server：Streamable-HTTP transport（純 stdlib http.server + JSON-RPC 2.0），動態 `register_tool()` API，可選 `tool_loop` 銜接 `MRL_AgentHarness_ToolLoop_v1`、`policy_gate` 銜接 `MRL_AgentHarness_PolicyGate_v1`
 - `09_workflow/MRL_MCPClient_Streamable_v1.py` — MCP client：純 stdlib urllib，蒸餾自外部 repo 的 `@modelcontextprotocol/sdk` node client
