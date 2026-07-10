@@ -1,0 +1,88 @@
+{
+  "manifest": "MRL_Absorption_Manifest_v1",
+  "origin_signature": "MrLiouWord",
+  "layer": "MRL_Reference_Layer / MRL_Adapter_Layer",
+  "rule": "external-is-material (rl_11 bp_1); canonical-rename (rl_12/rl_16/rl_20); no-delete originals (rl_15/rl_01); no_proof_implies_rhetoric",
+  "note": "Originals (uploaded zip/.ts/.pages/.md) are the byte source-of-record held by the user. This repo holds the mother's canonical absorption of them. Absorption does NOT flow the mother outward.",
+  "absorbed": [
+    {
+      "original_name": "MRL_Bridge_Mother_Construct_ClaudePack_v1 (zip: 4 files)",
+      "canonical_name": "MRL_Bridge_Mother_Construct_v1",
+      "reclaim_rule": "rl_16 (already MRL_ prefixed — compliant)",
+      "type": "spec / wiring-and-repair task pack",
+      "target": "DL580 product (mrliouhan.ai)",
+      "held_as": "MRL_Reference_Layer/MRL_Bridge_Mother_Construct_v1.md (distilled canonical; ASCII technical core verbatim)",
+      "source_of_record_blob_sha": {
+        "MRL_Bridge_Mother_Construct_v1.md": "e77f0b3bd09b60666f32313c048198632075d0be",
+        "MRL_Bridge_Mother_Construct_Claude_Command.md": "ca8cc836d2adcb631055945a33ec6937e52b1d38",
+        "MRL_Bridge_Mother_Construct_Acceptance.md": "a79b6fb202600e5a5bf1b179f2119aeb821218c3",
+        "MRL_Bridge_Mother_Construct_Manifest.json": "ab67247f1edbe0287db9e04de2fc3d75c411c9ee"
+      },
+      "honest_status": "SPEC ONLY. Full implementation requires the product repo (app.html/admin.html/pricing.html), real Google-OAuth/SMTP/session secrets, and DL580 access — none absorbed here. NOT implemented, NOT claimed live."
+    },
+    {
+      "original_name": "particleteammcp.ts",
+      "canonical_name": "MRL_ParticleTeam_MCP_v1",
+      "reclaim_rule": "rl_12 (external -> MRL_ canonical); mechanical form MRL_particleteammcp_ts",
+      "type": "runnable code — multi-agent MCP orchestrator (Cloudflare Worker, TypeScript)",
+      "author": "MR.liou",
+      "held_as": "MRL_Adapter_Layer/MRL_ParticleTeam_MCP_v1.ts (verbatim except trailing-whitespace-on-blank-lines normalized) + .NOTES.md",
+      "source_of_record_blob_sha": "9e2eccb35b4e602da22bc07edba3dfade13ed264",
+      "sovereignty_notes": [
+        "Cloudflare-Worker shaped; per DL580-local-first, should be re-homed to DL580 runtime (Adapter, not default cloud).",
+        "Secrets via 'x-api-key' request header (compliant — not in URL query).",
+        "5 agents: analyst/creator/critic/researcher/synthesizer; parallel dispatch + consensus.",
+        "Depends on Cloudflare D1 (env.DB) and uses Date.now()/Math.random() for ids."
+      ],
+      "honest_status": "Source preserved as adapter. Not wired into MotherAssembly; not deployed; not verified end-to-end (needs ANTHROPIC_API_KEY + runtime)."
+    },
+    {
+      "original_name": "Cloud_code.pages",
+      "canonical_name": "MRL_PublicSuffixList_Reference_v1",
+      "reclaim_rule": "rl_12 (external -> MRL_ canonical)",
+      "type": "third-party reference data",
+      "identity": "Mozilla Public Suffix List (publicsuffix.org)",
+      "license": "MPL-2.0",
+      "upstream_version": "2026-05-28_06-25-58_UTC",
+      "upstream_commit": "e596036bde712ffb073b948eb8b884c72c94c6e1",
+      "held_as": "MRL_Reference_Layer/MRL_PublicSuffixList_Reference_v1.md (provenance only)",
+      "honest_status": "Identified from .pages preview. Full list NOT extracted from the .iwa binary; use upstream .dat if the data is needed. Third-party (not mother-authored)."
+    },
+    {
+      "original_name": "神經符號協同推理系統 — 實驗與評估 (Notion md)",
+      "canonical_name": "MRL_NeuroSymbolic_Experiment_Eval_v1",
+      "reclaim_rule": "rl_12",
+      "type": "design/eval spec",
+      "held_as": "section in MRL_NeuroSymbolic_CoReasoning_System_v1.md",
+      "honest_status": "Benchmark numbers (94.3%, GPT-5, 4xA100, etc.) are DESIGN-TIME/ASPIRATIONAL targets, NOT measured results. No reproducible artifact. Absorb as design targets, not achievements."
+    },
+    {
+      "original_name": "符號推理核心 — 定義與實現 (Notion md)",
+      "canonical_name": "MRL_Symbolic_Reasoning_Core_v1",
+      "reclaim_rule": "rl_12",
+      "type": "component design spec + Python sketches",
+      "flowseed_layers": ["L3 語意粒子層", "L4 粒子原子層", "L6 意識循環層"],
+      "held_as": "section in MRL_NeuroSymbolic_CoReasoning_System_v1.md",
+      "honest_status": "Design sketch; many methods stubbed ('# 實現略...'). Not runnable as-is."
+    },
+    {
+      "original_name": "神經符號映射引擎 — 定義與實現 (Notion md)",
+      "canonical_name": "MRL_NeuroSymbolic_Mapping_Engine_v1",
+      "reclaim_rule": "rl_12",
+      "type": "component design spec + PyTorch sketches",
+      "flowseed_layers": ["L3 語意粒子層", "L4 粒子原子層"],
+      "held_as": "section in MRL_NeuroSymbolic_CoReasoning_System_v1.md",
+      "honest_status": "Design sketch (nn.Module skeletons, training loop). Not trained, not runnable end-to-end."
+    },
+    {
+      "original_name": "混合知識庫 — 定義與實現 (Notion md)",
+      "canonical_name": "MRL_Hybrid_Knowledge_Base_v1",
+      "reclaim_rule": "rl_12",
+      "type": "component design spec + Python sketches",
+      "flowseed_layers": ["L3 語意粒子層", "L5 量子場疊加層", "L7 語意記憶網格層"],
+      "held_as": "section in MRL_NeuroSymbolic_CoReasoning_System_v1.md",
+      "relation": "Conceptually parallels the repo's existing 03_memory/vector/vector_store.py (symbolic+neural stores + map index).",
+      "honest_status": "Design sketch; stores/index/consistency-manager largely stubbed. Not runnable as-is."
+    }
+  ]
+}
