@@ -13,7 +13,9 @@ from __future__ import annotations
 import pathlib
 import sys
 
-sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
+_parent = str(pathlib.Path(__file__).resolve().parent.parent)
+if _parent not in sys.path:
+    sys.path.insert(0, _parent)
 from mrl_mother_component import MRL_MotherComponent  # noqa: E402
 
 

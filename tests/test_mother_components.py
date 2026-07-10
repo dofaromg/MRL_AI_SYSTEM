@@ -11,8 +11,10 @@ import unittest
 
 _ROOT = pathlib.Path(__file__).resolve().parent.parent
 _MOTHER = _ROOT / "MRL_Mother"
-for _p in (_MOTHER, _MOTHER / "MRL_AI", _MOTHER / "MRL_AGI", _MOTHER / "MRL_ASI"):
-    sys.path.insert(0, str(_p))
+for _p in (_ROOT / "09_workflow", _MOTHER, _MOTHER / "MRL_AI", _MOTHER / "MRL_AGI", _MOTHER / "MRL_ASI"):
+    _s = str(_p)
+    if _s not in sys.path:  # de-dupe: don't perturb import order across the suite
+        sys.path.insert(0, _s)
 
 from mrl_ai import MRL_AI            # noqa: E402
 from mrl_agi import MRL_AGI          # noqa: E402
@@ -20,6 +22,7 @@ from mrl_asi import MRL_ASI          # noqa: E402
 from mrl_mother_component import (   # noqa: E402
     MRL_MotherComponent,
     ORIGIN_SIGNATURE,
+    verify_signature,
 )
 
 
@@ -54,6 +57,22 @@ class TestMotherComponents(unittest.TestCase):
         self.assertFalse(c.verify_origin())
         with self.assertRaises(PermissionError):
             c.run()
+
+    def test_signed_describe_is_tamper_evident(self):
+        # LAW-0: a signed description verifies; mutating any field must be detected.
+        for c in self.components:
+            signed = c.signed_describe()
+            self.assertTrue(verify_signature(signed), f"{c.canonical_name} signature must verify")
+            tampered = dict(signed)
+            tampered["role"] = "HACKED"
+            self.assertFalse(verify_signature(tampered), "tampering must be detected")
+
+    def test_verify_origin_uses_law0_not_bare_equality(self):
+        # a component whose signature doesn't match the expected origin fails verification
+        c = MRL_AI(origin_signature="NotMrLiou")
+        self.assertFalse(c.verify_origin(ORIGIN_SIGNATURE))
+        # and a genuine one verifies against the canonical origin
+        self.assertTrue(MRL_AI().verify_origin(ORIGIN_SIGNATURE))
 
     def test_honest_status_not_completed_claim(self):
         # The component must NOT parrot a \"completed_running\" achievement claim;
