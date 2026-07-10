@@ -103,6 +103,24 @@ class TestNamingSovereignty(unittest.TestCase):
             with self.assertRaises(ValueError, msg=f"{bad!r} must be rejected"):
                 reclaim_name(bad)
 
+    def test_malformed_prefixed_not_compliant(self):
+        # MRL_-prefixed but the leaf isn't clean canonical (sanitize would change it) → rejected,
+        # so it can't bypass reclamation/error reporting.
+        for bad in ("MRL_!!!", "MRL_foo/bar", "MRL_recovered/foo/bar", "MRL_a b"):
+            with self.assertRaises(ValueError, msg=f"{bad!r} must be rejected"):
+                reclaim_name(bad)
+        # and via scan(): surfaced as an error, never compliant
+        reports = scan(["MRL_!!!", "MRL_AI"])
+        by_original = {r["original"]: r for r in reports}
+        self.assertTrue(by_original["MRL_!!!"]["error"])
+        self.assertNotIn("MRL_AI", by_original)  # clean canonical is skipped (compliant)
+
+    def test_valid_canonicals_are_idempotent(self):
+        # reclaim outputs must themselves be recognised as clean canonicals (no re-churn)
+        for good in ("MRL_AI", "MRL_vector_store", "MRL_世界模組", "MRL_recovered/add_gpu_support"):
+            self.assertFalse(reclaim_name(good)["reclaimed"], f"{good!r} must be a no-op")
+            self.assertEqual(scan([good]), [], f"{good!r} must be compliant in scan")
+
     def test_no_degenerate_canonical_ever(self):
         # Whatever reclaim returns, canonical must never be a bare prefix.
         for name in ("vector_store", "世界模組", "claude/foo", "copilot/add-gpu"):
