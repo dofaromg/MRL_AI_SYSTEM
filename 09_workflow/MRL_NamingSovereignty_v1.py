@@ -65,6 +65,19 @@ def has_mrl_prefix(name: str) -> bool:
     return isinstance(name, str) and name.startswith(MRL_PREFIX)
 
 
+def _is_valid_canonical(norm: str) -> bool:
+    """帶 MRL_ 前綴且前綴後有實質識別碼(非 namespace-only,如 "MRL_"、"MRL_recovered/")。
+
+    * 前提:*norm* 已去頭尾空白。退化(namespace-only)者回 False,不得當合規名放行。
+    """
+    return (
+        has_mrl_prefix(norm)
+        and norm != MRL_PREFIX
+        and not norm.endswith("/")
+        and bool(norm[len(MRL_PREFIX):].strip())
+    )
+
+
 def _sanitize(token: str) -> str:
     """把任意 token 正規化為 canonical 允許的字元集,collapse/strip 底線。
 
@@ -97,7 +110,7 @@ def reclaim_name(name: str) -> Dict[str, Any]:
     if has_mrl_prefix(norm):
         # 拒絕 namespace-only / 無 leaf 的退化 canonical(如 "MRL_"、"MRL_recovered/"):
         # 帶前綴但前綴後無實質識別碼者,不得當合規 no-op 放行。
-        if norm == MRL_PREFIX or norm.endswith("/") or not norm[len(MRL_PREFIX):].strip():
+        if not _is_valid_canonical(norm):
             raise ValueError(
                 f"cannot accept degenerate/namespace-only canonical {norm!r}"
             )
@@ -153,7 +166,7 @@ def scan(names: List[str]) -> List[Dict[str, Any]]:
     碰撞計數以「不同 original 值」為準(重複的同一輸入不算碰撞),且【含批次內既已合規的
     MRL_ 名稱】—— 若某提案的 canonical 已被現存合規名佔用(如批次含 "MRL_vector_store"
     與 "vector store!!"),亦標 collision,供人審(rl_02)在套用前解衝突。
-    無法 canonical 化者(sanitize 為空 / namespace-only)以 error 報回,不使掃描中斷。
+    退化 MRL_ 前綴名(namespace-only)與無法 canonical 化者一律以 error 報回,不使掃描中斷。
     """
     reports: List[Dict[str, Any]] = []
     owners: Dict[str, set] = {}  # canonical -> set(distinct originals),含合規名佔用
@@ -162,10 +175,22 @@ def scan(names: List[str]) -> List[Dict[str, Any]]:
             continue
         norm = name.strip()
         if has_mrl_prefix(norm):
-            # 合規名不列入報告,但其 canonical 佔用命名空間(供碰撞偵測)。
-            # 退化合規名(如 "MRL_"、"MRL_recovered/")跳過佔用。
-            if norm != MRL_PREFIX and not norm.endswith("/") and norm[len(MRL_PREFIX):].strip():
+            if _is_valid_canonical(norm):
+                # 合規名不列入報告,但其 canonical 佔用命名空間(供碰撞偵測)。
                 owners.setdefault(norm, set()).add(norm)
+                continue
+            # 退化 MRL_ 前綴名(如 "MRL_"、"MRL_recovered/")非合規:走 error 報回路徑,
+            # 不得被 _cmd_check 當 compliant。
+            reports.append({
+                "original": name,
+                "canonical": None,
+                "reclaimed": False,
+                "rule": None,
+                "reason": f"degenerate/namespace-only canonical {norm!r}",
+                "error": True,
+                "origin_signature": ORIGIN_SIGNATURE,
+                "preserved_original": name,
+            })
             continue
         try:
             rep = reclaim_name(name)
@@ -194,7 +219,8 @@ def scan(names: List[str]) -> List[Dict[str, Any]]:
 
 def _cmd_check(args: argparse.Namespace) -> None:
     reports = scan(args.names)
-    compliant = [n for n in args.names if isinstance(n, str) and has_mrl_prefix(n.strip())]
+    # 只有「有效 canonical」才算合規;退化 MRL_ 前綴名(如 "MRL_")不列入,已由 scan 以 error 報回。
+    compliant = [n for n in args.names if isinstance(n, str) and _is_valid_canonical(n.strip())]
     print(json.dumps(
         {
             "compliant_mrl_prefixed": compliant,
@@ -207,7 +233,16 @@ def _cmd_check(args: argparse.Namespace) -> None:
 
 
 def _cmd_reclaim(args: argparse.Namespace) -> None:
-    print(json.dumps(reclaim_name(args.name), ensure_ascii=False, indent=2))
+    # 驗證失敗回穩定 JSON 錯誤 payload + 非零離開碼(不噴 traceback,保持機器可讀)。
+    try:
+        result = reclaim_name(args.name)
+    except ValueError as exc:
+        print(json.dumps(
+            {"error": True, "reason": str(exc), "original": args.name},
+            ensure_ascii=False, indent=2,
+        ))
+        raise SystemExit(1)
+    print(json.dumps(result, ensure_ascii=False, indent=2))
 
 
 def _build_argparser() -> argparse.ArgumentParser:

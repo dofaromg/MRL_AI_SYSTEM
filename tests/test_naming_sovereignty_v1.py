@@ -136,7 +136,18 @@ class TestNamingSovereignty(unittest.TestCase):
     def test_scan_duplicate_identical_input_is_not_collision(self):
         # same input twice → same canonical, but ONE distinct original → not a collision
         reports = scan(["vector_store", "vector_store"])
+        self.assertEqual(len(reports), 2, "both inputs must be reported (non-vacuous)")
+        self.assertEqual([r["original"] for r in reports], ["vector_store", "vector_store"])
         self.assertTrue(all(not r["collision"] for r in reports))
+
+    def test_scan_degenerate_prefixed_is_error_not_compliant(self):
+        # "MRL_" / "MRL_recovered/" carry the prefix but are namespace-only → error-reported
+        reports = scan(["MRL_", "MRL_recovered/", "MRL_AI"])
+        by_original = {r["original"]: r for r in reports}
+        self.assertTrue(by_original["MRL_"]["error"])
+        self.assertTrue(by_original["MRL_recovered/"]["error"])
+        # the valid compliant name is skipped (not reported at all)
+        self.assertNotIn("MRL_AI", by_original)
 
     def test_scan_collision_with_existing_compliant_name(self):
         # a proposal whose canonical is already occupied by a compliant MRL_ name collides
@@ -170,6 +181,29 @@ class TestNamingSovereignty(unittest.TestCase):
         self.assertEqual(out["canonical"], "MRL_recovered/add_gpu_support")
         self.assertEqual(out["preserved_original"], "copilot/add-gpu-support")
         self.assertEqual(out["origin_signature"], ORIGIN_SIGNATURE)
+
+    def test_cli_check_excludes_degenerate_from_compliant(self):
+        out = self._run_cli(["check", "MRL_", "MRL_AI"])
+        self.assertNotIn("MRL_", out["compliant_mrl_prefixed"])
+        self.assertIn("MRL_AI", out["compliant_mrl_prefixed"])
+        # "MRL_" surfaces as an error report, never silently compliant
+        self.assertTrue(any(r.get("error") and r["original"] == "MRL_"
+                            for r in out["needs_reclamation"]))
+
+    def test_cli_reclaim_invalid_input_json_error_and_nonzero(self):
+        buf = io.StringIO()
+        old_argv = sys.argv
+        sys.argv = ["MRL_NamingSovereignty_v1.py", "reclaim", "MRL_"]
+        try:
+            with contextlib.redirect_stdout(buf):
+                with self.assertRaises(SystemExit) as cm:
+                    ns.main()
+        finally:
+            sys.argv = old_argv
+        self.assertNotEqual(cm.exception.code, 0, "invalid reclaim must exit non-zero")
+        payload = json.loads(buf.getvalue())  # machine-readable, not a traceback
+        self.assertTrue(payload["error"])
+        self.assertEqual(payload["original"], "MRL_")
 
 
 if __name__ == "__main__":
