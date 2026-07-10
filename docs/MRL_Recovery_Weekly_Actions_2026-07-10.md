@@ -1,7 +1,7 @@
 # MRL Recovery Weekly Actions — 2026-07-10 週
 
 origin_signature: MrLiouWord
-週別: W28 · 2026-07-08 ~ 2026-07-13
+週別: W28（ISO week）· 2026-07-06 ~ 2026-07-12
 基底: `MrliouAI` @ `dbd26f0`（最新 default 分支 tip）
 法則: 依 CLAUDE.md 每項 PASS 必附**執行地點**（沙盒 / DL580 實機 / Cloud endpoint）
 
@@ -13,8 +13,9 @@ origin_signature: MrLiouWord
 2. **沒實跑寫「待驗證 / pending」**，不得把 P1/P2 拉高階
 3. **CI 未回傳 status ≠ CI green**：不能寫「CI 通過」；要寫「CI status 未回傳，無法判定」
 4. **Additive-only**：所有動作只追加，不動已合併主線 commit
-5. **`MRL_7700_ENTRY` + `x-api-key` header** 是 DL580 進入點契約，query string 傳 key 一律不接受
-6. **勾選項**：完成後在對應 `[ ]` 改為 `[x]`，並在該項下追加**執行地點 + 憑證**（log 路徑 / commit SHA / dashboard 截圖檔名）
+5. **`MRL_7700_ENTRY`**：`scripts/MRL_bridge_recovery_run.sh` 內定義的 **7700 app 進入點檔名**（非 header contract）
+6. **授權方式**：`x-api-key` header 為**推薦**姿態；bridge legacy `?key=` 路徑目前**仍存在但建議移除**，避免驗收人誤判「server 已拒絕 `?key=`」
+7. **勾選項**：完成後在對應 `[ ]` 改為 `[x]`，並在該項下追加**執行地點 + 憑證**（log 路徑 / commit SHA / dashboard 截圖檔名）
 
 ---
 
@@ -25,23 +26,29 @@ origin_signature: MrLiouWord
 **執行地點**：DL580 Windows 實機（WIN-PBVUI7VK2A6）
 **契約來源**：PR #91 merge commit `ddce340`
 
+**範圍**：本項聚焦「7700 服務存活 + `/health` 契約本身」；bridge key rotation 驗收留在 P0-3 / bridge Phase 3。
+
 - [ ] `schtasks /Query /TN "MRL_ASI_Engine"` → 確認開機自啟已註冊
 - [ ] `netstat -ano | findstr :7700` → 必見 `LISTENING`
-- [ ] `curl -s http://127.0.0.1:7700/health -H "x-api-key: <new_key>"` → 必回 `{"status":"PASS","origin":"MrLiouWord"}`
-- [ ] 舊 key 呼叫 → 必回 401/403（key rotation 驗收）
+- [ ] `curl -s http://127.0.0.1:7700/health` → 必回 `{"status":"PASS","origin":"MrLiouWord"}`
+      （repo 內 7700 health server 參考實作**無驗證**，只要 GET /health 就回 PASS）
 
-**判 PASS**：四項全過才寫「實機 PASS」；缺一項寫「部分 PASS」+ 說明缺哪一項。
+**判 PASS**：三項全過才寫「實機 PASS」；缺一項寫「部分 PASS」+ 說明缺哪一項。
 **憑證**：於 `08_sources/DL580_EvidenceChain/` 追加 `MRL_7700_health_2026-07-10.log`。
 
 ### 2. MRL_Watchdog 未自救 7700 的 root cause（實機）
 
-**執行地點**：DL580 實機（併入 P0-1 SSH session）
+**執行地點**：DL580 實機（併入 P0-1 同一個實機操作 / 遠端連線 session）
 
-- [ ] 讀 watchdog config，確認 7700 是否在監控清單
-- [ ] 讀 watchdog 過去 24h log，找 7700 down 時的觀察 / 動作
-- [ ] 依查明結果，開 issue 或直接補 config PR
+- [ ] 讀 watchdog config，確認 7700 是否在監控清單 — 記下 config 路徑（如 `deploy/dl580/watchdog/*.json` 或實機檔案路徑）
+- [ ] 讀 watchdog 過去 24h log，找 7700 down 時的觀察 / 動作 — 記下 log 路徑或命令輸出檔名
+- [ ] 依查明結果，開 issue 或直接補 config PR — 記下 issue / PR 編號
 
-**判 PASS**：root cause 一句話寫在此檔（不需修 code 也算 PASS，能講清楚就 close）。
+**判 PASS**：以下四項齊備才 close：
+1. root cause 一句話寫在此檔
+2. watchdog config 檔案路徑（含實機絕對路徑或 repo 相對路徑）
+3. 24h log 或命令輸出的憑證檔（`08_sources/DL580_EvidenceChain/watchdog_2026-07-10.log`）
+4. 對應的 issue 或 PR 編號
 
 ### 3. Bridge tunnel 放行後重跑 recovery（實機 + Cloud）
 
@@ -60,7 +67,7 @@ origin_signature: MrLiouWord
 
 **執行地點**：GitGuardian dashboard（cloud）
 
-- [ ] 確認 repo tip 已遮蔽（已完成）
+- [x] repo tip 已遮蔽 — 憑證：見 W28 recap facts 段（明碼 key 已改 SHA-256 hash、不落地）
 - [ ] 確認歷史 commit 內含的 key **已於 DL580 端輪替作廢**（不是 repo 端修就好）
 - [ ] 在 GitGuardian 每條 alert 手動標 resolved + 附註「DL580 端已 rotate SHA-256 hash，不落地」
 
@@ -116,7 +123,7 @@ origin_signature: MrLiouWord
 
 ## 執行順序建議
 
-```
+```text
 週一 → P0-1 DL580 7700 驗證 + P0-2 watchdog root cause
 週二 → P0-4 GitGuardian dashboard 標 resolved
 週三 → 等 P0-3 tunnel 放行（若已放 → 跑 recovery script）
