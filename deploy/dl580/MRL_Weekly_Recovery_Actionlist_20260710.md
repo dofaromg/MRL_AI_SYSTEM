@@ -33,8 +33,19 @@ origin_signature = `MrLiouWord`
   - 判準：新 session `bash scripts/MRL_bridge_recovery_run.sh 0` → Phase 0 回 PING。
 
 ### P1 — DL580 實機（放行後一次打完，重蓋「實機」章）
-- [ ] **[DL580 實機]** 重跑 `MRL_bridge_recovery_run.sh all`，7700 / key / 端點全部**重驗**。
-  - 判準（缺一不可）：`netstat :7700 LISTENING` + `curl /health → {"status":"PASS","origin":"MrLiouWord"}` + 舊 key 拒 / 新 key 通 + x-api-key 走 header（不進 URL query）。
+- [ ] **[DL580 實機]** 重跑復原腳本，7700 / key / 端點全部**重驗**（於 repo 根目錄執行，`scripts/` 相對路徑才對得上）：
+
+    ```bash
+    # 在 repo 根目錄（含 scripts/ 的那層）執行
+    export MRL_BRIDGE_KEY=<目前有效 bridge key>   # 走環境變數，不進 URL query
+    bash scripts/MRL_bridge_recovery_run.sh all
+    ```
+
+  - 判準（缺一不可，DL580 為 Windows，沿用 repo 既有寫法）：
+    - `netstat -ano | findstr :7700` → 回含 `LISTENING` 的一列
+    - `curl.exe -s http://127.0.0.1:7700/health` → 回 `{"status":"PASS","origin":"MrLiouWord"}`
+    - key rotation：舊 key 被拒（401/403）＋ 新 key 通過
+    - x-api-key 走 **header**（`-H "x-api-key: <key>"`），不進 URL query
 - [ ] **[DL580 實機]** 查明 `MRL_Watchdog` 為何沒自救 7700，補「掛掉自動拉起」規則。
 
 ### P2 — MCP / 真實 client（目前只有沙盒 loopback）
