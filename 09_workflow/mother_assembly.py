@@ -84,10 +84,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import pathlib
 import sys
 import time
 from typing import Any, Dict, List, Optional
+
+logger = logging.getLogger(__name__)
 
 ORIGIN_SIGNATURE = "MrLiouWord"
 ASSEMBLY_VERSION = "2.0"
@@ -390,15 +393,17 @@ class MotherAssembly:
     def _boot_long_term_memory(self) -> str:
         # Opt-in: only active when memory.long_term_enabled is true (default off).
         # Default-off keeps chat() behaviour unchanged unless explicitly enabled.
-        enabled = bool(self.config) and str(
-            self.config.get("memory.long_term_enabled", False)
-        ).strip().lower() in ("1", "true", "yes", "on")
-        if not enabled:
-            return "disabled (memory.long_term_enabled=false)"
-        LTM = _try_import("MRL_LongTermMemory_v1", "MRL_LongTermMemory")
-        if LTM is None:
-            return "unavailable"
+        # Read config INSIDE try (like sibling _boot_* helpers): a config error must
+        # not crash boot() — it degrades to an error status (fail-closed).
         try:
+            enabled = bool(self.config) and str(
+                self.config.get("memory.long_term_enabled", False)
+            ).strip().lower() in ("1", "true", "yes", "on")
+            if not enabled:
+                return "disabled (memory.long_term_enabled=false)"
+            LTM = _try_import("MRL_LongTermMemory_v1", "MRL_LongTermMemory")
+            if LTM is None:
+                return "unavailable"
             self.long_term_memory = LTM()
             return "ok"
         except Exception as exc:  # noqa: BLE001
@@ -641,13 +646,16 @@ class MotherAssembly:
         # recalled memories as system context after the session system prompt.
         if self.long_term_memory is not None:
             try:
-                recalled = self.long_term_memory.recall_as_context(message)
+                # Scope recall to this session so memories never leak across sessions/users.
+                recalled = self.long_term_memory.recall_as_context(message, session_id=session_id)
                 if recalled:
                     sys_msgs = [m for m in history if m.get("role") == "system"]
                     rest = [m for m in history if m.get("role") != "system"]
                     history = sys_msgs + recalled + rest
             except Exception:  # noqa: BLE001
-                pass  # memory failure must never break chat (fail-closed)
+                # memory failure must never break chat (fail-closed) — but log it so a
+                # misconfigured / corrupted store doesn't fail silently in production.
+                logger.debug("long_term_memory.recall_as_context failed", exc_info=True)
 
         # Trim context
         if self.context_manager is not None:
@@ -706,10 +714,14 @@ class MotherAssembly:
         # Long-term memory write (opt-in; no-op when disabled).
         if self.long_term_memory is not None:
             try:
-                self.long_term_memory.remember(session_id, "user", message)
-                self.long_term_memory.remember(session_id, "assistant", reply_text)
+                # Persist both turns in ONE store write (avoids two full JSON rewrites).
+                self.long_term_memory.remember_many([
+                    (session_id, "user", message),
+                    (session_id, "assistant", reply_text),
+                ])
             except Exception:  # noqa: BLE001
-                pass  # memory failure must never break chat (fail-closed)
+                # fail-closed, but log so a store that stopped persisting is noticeable.
+                logger.debug("long_term_memory.remember_many failed", exc_info=True)
 
         self._seal_event("chat", {"session_id": session_id, "model": resolved_model})
 

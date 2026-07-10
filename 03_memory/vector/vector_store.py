@@ -127,6 +127,30 @@ class VectorStore:
         self._save()
         return entry
 
+    def add_many(
+        self,
+        items: List[Tuple[str, List[float], Optional[Dict[str, Any]]]],
+    ) -> List[Dict[str, Any]]:
+        """Add/update several entries with a SINGLE persist (one file rewrite).
+
+        *items* is a list of ``(doc_id, vector, meta)``. Returns the stored entries
+        in order. Equivalent to calling :meth:`add` per item but avoids O(n) writes.
+        """
+        stored: List[Dict[str, Any]] = []
+        for doc_id, vector, meta in items:
+            entry: Dict[str, Any] = {
+                "id": doc_id,
+                "vector": [float(v) for v in vector],
+                "meta": meta or {},
+                "added_at_ms": int(time.time() * 1000),
+                "origin_signature": ORIGIN_SIGNATURE,
+            }
+            self._entries[doc_id] = entry
+            stored.append(entry)
+        if stored:
+            self._save()
+        return stored
+
     def delete(self, doc_id: str) -> bool:
         """Remove an entry by id. Returns True if it existed."""
         if doc_id in self._entries:
