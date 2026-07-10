@@ -121,3 +121,31 @@ origin_signature = `MrLiouWord`
 ### 不回填
 
 - 任何 Runtime「主體已升格」之宣稱（未裁示前）。
+
+---
+
+## 實機驗收 — DL580 本地 MCP Filesystem Server 連線（2026-07-05）
+
+分支：`copilot/` 當前工作分支（狀態回填，Additive-Only）
+
+### 已完成（實機，使用者提供之 DL580 本地日誌）
+
+- DL580 本地 MCP（Model Context Protocol）Filesystem server 啟動：PASS（實機 — 2026-07-05）
+  - `Using built-in Node.js for MCP server: Filesystem` → `Server started and connected successfully`
+- MCP 握手：PASS（`initialize` id=0 → result；`notifications/initialized`）
+- 工具列舉：PASS（`tools/list` id=1 → result）
+- 正常關閉：PASS（`intentional shutdown`，非 crash）
+- 兩次連線週期（12:11 / 12:19 UTC）均完整成功，無錯誤訊息。
+
+### 待驗證 / 不得宣稱完成
+
+- 本驗收僅涵蓋 MCP Filesystem 基礎連線握手，**不代表**：
+  - Ollama / 真模型已存在（`OLLAMA_HOST` 實機驗收仍 pending）
+  - Blender `bpy` runtime 已跑通（實機驗收仍 pending）
+  - DL580 全平台「已上線」（host 全量驗收仍 pending）
+- MCP client 端身分（本地客戶端種類）未於日誌中確認。
+
+### 不回填
+
+- 「DL580 已上線」之宣稱
+- 任何超出 MCP Filesystem 連線範圍的完成度宣稱

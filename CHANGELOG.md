@@ -10,6 +10,31 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### 神經符號混合知識庫（MRL_Hybrid_Knowledge_Base_v1 · Notion 設計四構件之一 · 首個可運行構件）
+- `09_workflow/MRL_Hybrid_Knowledge_Base_v1.py` — 神經符號混合知識庫:符號三元組庫(subject/predicate/object + 謂詞/實體倒排索引)+ 神經向量庫(**重用** `03_memory/vector/vector_store.py` + `MRL_SemanticEmbedding_Core_v1`,不重造餘弦/持久化)+ 符號⇄神經映射索引 + 一致性偵測(矛盾/冗餘,**只報不刪** rl_01/rl_15;subsumption 誠實標記 `[待實作]`)+ 知識圖 BFS 最短路徑;精確/相似/混合查詢;`incremental_update`/`integrate_knowledge`/`refine_knowledge`。LAW-0 簽章持久化(`MRL_utils.embed_signature`)。
+- `tests/test_MRL_hybrid_knowledge_base_v1.py` — 18 項驗收(pure unittest,沙盒可重現):精確查詢、相似召回、混合合併去重、矛盾(功能性+顯式否定)、冗餘、圖 BFS 多跳/不可達、跨實例持久化、LAW-0 verify、精煉只報不刪。
+- 誠實邊界:嵌入為雜湊詞袋+餘弦(檢索非神經生成);spec 內基準數字(94.3% 等)為願景非實測,本模組不引用,僅以真實測試為憑;形式邏輯系統(一階/模態/時序)仍留 spec 為設計目標。
+
+#### 吸收去重蒸餾重建（MRL_AutonomousRuntime 模組）
+- `09_workflow/MRL_AutonomousRuntime_Module_v1.py` — 把吸收→去重→蒸餾→重建流程程式化，輸出自主運行模組規格（dependency graph + boot order），並可直接產生 AgentHarness `AgentConfig`（deny-by-default）
+- `tests/test_MRL_autonomous_runtime_module_v1.py` — 驗收測試：去重合併、依賴拓撲排序、循環依賴穩定回退、預設政策閘行為
+
+#### mcp-with-next-js 去重蒸餾吸收（MRL_MCPServerHarness 系列）
+- `09_workflow/MRL_MCPServerHarness_Streamable_v1.py` — MCP server：Streamable-HTTP transport（純 stdlib http.server + JSON-RPC 2.0），動態 `register_tool()` API，可選 `tool_loop` 銜接 `MRL_AgentHarness_ToolLoop_v1`、`policy_gate` 銜接 `MRL_AgentHarness_PolicyGate_v1`
+- `09_workflow/MRL_MCPClient_Streamable_v1.py` — MCP client：純 stdlib urllib，蒸餾自外部 repo 的 `@modelcontextprotocol/sdk` node client
+- `tests/test_MRL_mcp_streamable_v1.py` — 驗收測試 18 項（pytest 相容 + 獨立執行器）：PASS（沙盒 loopback，2026-07-05）
+- `docs/MRL_MCPServerHarness_吸收報告_v1.md` — 去重蒸餾判定表 + 當下狀態（含實機/SSE 待驗證項目誠實標記）
+- `08_sources/sources.manifest.yaml` — 登錄吸收來源 `mcp_with_next_js_absorption_v1`
+- 蒸餾去除外部依賴：`mcp-handler` / `next` / `react` / `zod` / `redis` — 全部替換為 stdlib 等價實作
+
+#### LLM 模型開發計劃收斂（DOF-11「開發」）
+- `docs/MRL_LLM模型開發計劃_v1.md` — 把分散的 LLM 子系統模組
+  （`llm_gateway` / `llm_adapter` / `MRL_LLM_NativeAdapter_v1` /
+  `MRL_MotherGateway_Adapter_v1` / `context_manager` / `streaming` /
+  `guardrail` / `config_manager` / 真模型 P0）收斂成單一開發主線，
+  含資產盤點、M1–M4 階段計劃與誠實狀態彙總（沙盒／實機／待驗證）。
+  Additive-only：只新增計劃書，不改動既有模組。
+
 #### CodePartner agent 化（從封存人格到可呼叫助手）
 - `.claude/agents/codepartner.md` — 由 `05_persona/codepartner/persona.yaml` 編譯的
   Claude Code agent 定義：人格屬性、信任透明五律、五步工作流、產出紀律、

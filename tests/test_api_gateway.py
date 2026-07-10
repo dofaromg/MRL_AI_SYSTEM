@@ -253,7 +253,7 @@ class TestPostChat:
         finally:
             _STATE.assembly = original_assembly
         assert status == 400
-        assert body.get("error") == "'temperature' must be a finite number"
+        assert body.get("error") == "'temperature' must be a number"
         assert isinstance(body.get("trace_id"), str) and body["trace_id"]
 
     def test_rejects_non_finite_temperature(self, srv):
@@ -268,13 +268,13 @@ class TestPostChat:
         finally:
             _STATE.assembly = original_assembly
         assert status == 400
-        assert body.get("error") == "'temperature' must be a finite number"
+        assert body.get("error") == "'temperature' must be between 0.0 and 2.0"
         assert isinstance(body.get("trace_id"), str) and body["trace_id"]
 
     def test_chat_error_not_found_maps_to_404(self, srv):
         class _AssemblyNotFound:
             def chat(self, *args, **kwargs):
-                return {"error": "model not found"}
+                return {"error": "session not found"}
 
         original_assembly = _STATE.assembly
         try:
@@ -283,7 +283,7 @@ class TestPostChat:
         finally:
             _STATE.assembly = original_assembly
         assert status == 404
-        assert body.get("error") == "model not found"
+        assert body.get("error") == "session not found"
         assert isinstance(body.get("trace_id"), str) and body["trace_id"]
 
     def test_chat_error_unavailable_maps_to_503(self, srv):

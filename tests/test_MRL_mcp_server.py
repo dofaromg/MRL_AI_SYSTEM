@@ -11,6 +11,7 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "09_workflow"))
 
 from MRL_MCP_Server_v1 import MRL_MCPServer, TOOLS, PROTOCOL_VERSION  # noqa: E402
+from MRL_Platform_Server import api_mcp  # noqa: E402
 
 
 def _call(srv, method, params=None, rid=1):
@@ -80,3 +81,43 @@ class TestMCPToolCalls:
         r = _call(srv, "tools/call", {"name": "mother_status", "arguments": {}})
         content = json.loads(r["result"]["content"][0]["text"])
         assert content["origin_signature"] == "MrLiouWord"
+
+
+class TestMCPHttpBridge:
+    def test_http_bridge_initialize(self):
+        r = api_mcp({"jsonrpc": "2.0", "id": 7, "method": "initialize", "params": {}})
+        assert r["result"]["protocolVersion"] == PROTOCOL_VERSION
+        assert r["result"]["serverInfo"]["origin_signature"] == "MrLiouWord"
+
+    def test_http_bridge_tools_list(self):
+        r = api_mcp({"jsonrpc": "2.0", "id": 8, "method": "tools/list", "params": {}})
+        names = [t["name"] for t in r["result"]["tools"]]
+        assert "mother_status" in names and "law_engine_loop" in names
+
+    def test_http_bridge_accepts_notifications(self):
+        r = api_mcp({"jsonrpc": "2.0", "method": "notifications/initialized"})
+        assert r["result"]["notification"] is True
+        assert r["result"]["origin_signature"] == "MrLiouWord"
+
+    def test_http_bridge_rejects_missing_method(self):
+        # Empty body (e.g. JSON parse error fallback from _body()) must return error, not a stub.
+        r = api_mcp({})
+        assert "error" in r
+        assert r["error"]["code"] == -32600
+
+    def test_http_bridge_rejects_null_method(self):
+        # method:null must be rejected — non-empty string required.
+        r = api_mcp({"jsonrpc": "2.0", "method": None})
+        assert "error" in r
+        assert r["error"]["code"] == -32600
+
+    def test_http_bridge_rejects_empty_method(self):
+        # method:"" must be rejected — non-empty string required.
+        r = api_mcp({"jsonrpc": "2.0", "method": ""})
+        assert "error" in r
+        assert r["error"]["code"] == -32600
+
+    def test_http_bridge_rejects_non_dict(self):
+        r = api_mcp("not a dict")
+        assert "error" in r
+        assert r["error"]["code"] == -32600

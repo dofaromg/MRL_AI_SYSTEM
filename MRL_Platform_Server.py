@@ -15,11 +15,15 @@ import json
 import os
 import pathlib
 import sys
+import threading
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 ORIGIN_SIGNATURE = "MrLiouWord"
 PLATFORM_DOMAIN = os.environ.get("MRL_PLATFORM_DOMAIN", "mrliouword.com")
+# 零外部依賴法則:平台**不**預設指向任何外部模型供應商。真模型一律走母體自運行
+# DL580(OLLAMA / OpenAI 相容自架端點)。設了 MRL_MOTHER_GATEWAY_URL(指向你 DL580
+# 對外網址)才接;未設則 deny-by-default,誠實回「DL580 未連」,絕不偷用外部 cf。
 _REPO = pathlib.Path(__file__).resolve().parent
 _GATEWAY_MANIFEST = json.loads(
     (_REPO / "data" / "MRL_runtime_gateway_manifest.json").read_text(encoding="utf-8")
@@ -31,6 +35,8 @@ for p in [_REPO / "09_workflow", str(_REPO)]:
 # 母體 crown（優雅降級：未就緒不致整站掛掉）
 _MA = None
 _MA_ERR = None
+_MCP = None
+_MCP_LOCK = threading.Lock()
 
 
 def _mother():
@@ -46,6 +52,15 @@ def _mother():
     except Exception as exc:  # noqa: BLE001
         _MA_ERR = str(exc)
     return _MA
+
+
+def _mcp():
+    """惰性建立 MCP bridge（重用既有 stdio MCP server 核心）。呼叫方須持 _MCP_LOCK。"""
+    global _MCP
+    if _MCP is None:
+        from MRL_MCP_Server_v1 import MRL_MCPServer
+        _MCP = MRL_MCPServer()
+    return _MCP
 
 
 def _subsystem_summary(rep_subs):
@@ -117,6 +132,27 @@ def api_chat(body):
             "note": "真模型未配置（待實機 OLLAMA_HOST/endpoint）；此為感知力流程路由。"}
 
 
+def api_mcp(body):
+    """HTTP bridge: 把 JSON-RPC request 轉發到既有 MCP 核心。"""
+    if not isinstance(body, dict):
+        return {"jsonrpc": "2.0", "id": None,
+                "error": {"code": -32600, "message": "invalid request: object required"}}
+    if not isinstance(body.get("method"), str) or not body["method"]:
+        return {"jsonrpc": "2.0", "id": body.get("id"),
+                "error": {"code": -32600, "message": "invalid request: method required"}}
+    try:
+        with _MCP_LOCK:
+            resp = _mcp().handle(body)
+    except Exception as exc:  # noqa: BLE001
+        return {"jsonrpc": "2.0", "id": body.get("id"),
+                "error": {"code": -32603, "message": f"{type(exc).__name__}: {exc}"}}
+    if resp is None:
+        return {"jsonrpc": "2.0", "id": body.get("id"),
+                "result": {"accepted": True, "notification": True,
+                           "origin_signature": ORIGIN_SIGNATURE}}
+    return resp
+
+
 def api_monitor():
     return {"origin_signature": ORIGIN_SIGNATURE, "checked_at_ms": int(time.time() * 1000),
             "mother": api_mother_status(), "convergence": api_convergence(),
@@ -132,6 +168,7 @@ API_DOCS = [
     ("GET", "/api/mother/status", "MotherAssembly 子系統健康"),
     ("POST", "/api/dl580/run", "跑 DL580 canonical 管線，回驗收 {source,lang}"),
     ("POST", "/api/chat", "人格對話 {message}"),
+    ("POST", "/api/mcp", "MCP JSON-RPC bridge {jsonrpc,id,method,params}"),
     ("GET", "/api/monitor", "即時監控聚合"),
     ("POST", "/mrl/perceive", "感知力核心流程 {..}"),
 ]
@@ -244,6 +281,8 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(200, api_dl580_run(b))
         if p == "/api/chat":
             return self._send(200, api_chat(b))
+        if p == "/api/mcp":
+            return self._send(200, api_mcp(b))
         if p == "/mrl/perceive":
             return self._send(200, {"ok": True,
                                     "route": _GATEWAY_MANIFEST["perception"]["route"],
