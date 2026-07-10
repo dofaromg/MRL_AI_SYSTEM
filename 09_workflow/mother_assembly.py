@@ -158,6 +158,7 @@ class MotherAssembly:
         self.context_manager: Any = None
         self.scheduler: Any = None
         self.config: Any = None
+        self.long_term_memory: Any = None  # opt-in; see memory.long_term_enabled
         self._boot_log: List[Dict[str, Any]] = []
 
     # ── Boot ──────────────────────────────────────────────────────────────────
@@ -213,6 +214,9 @@ class MotherAssembly:
 
         # 12 ── TaskScheduler (v2.0)
         report["subsystems"]["scheduler"] = self._boot_scheduler()
+
+        # 13 ── LongTermMemory (opt-in, default off)
+        report["subsystems"]["long_term_memory"] = self._boot_long_term_memory()
 
         self._booted = True
         self._seal_event("boot", report)
@@ -380,6 +384,23 @@ class MotherAssembly:
             self.scheduler = TaskScheduler(workers=workers)
             self.scheduler.start()
             return f"ok ({workers} worker(s))"
+        except Exception as exc:  # noqa: BLE001
+            return f"error: {exc}"
+
+    def _boot_long_term_memory(self) -> str:
+        # Opt-in: only active when memory.long_term_enabled is true (default off).
+        # Default-off keeps chat() behaviour unchanged unless explicitly enabled.
+        enabled = bool(self.config) and str(
+            self.config.get("memory.long_term_enabled", False)
+        ).strip().lower() in ("1", "true", "yes", "on")
+        if not enabled:
+            return "disabled (memory.long_term_enabled=false)"
+        LTM = _try_import("MRL_LongTermMemory_v1", "MRL_LongTermMemory")
+        if LTM is None:
+            return "unavailable"
+        try:
+            self.long_term_memory = LTM()
+            return "ok"
         except Exception as exc:  # noqa: BLE001
             return f"error: {exc}"
 
@@ -613,8 +634,22 @@ class MotherAssembly:
         # Record user message
         self.conversation_manager.add_message(session_id, "user", message)
 
-        # Get history and trim context
+        # Get history
         history = self.conversation_manager.get_history(session_id)
+
+        # Long-term memory recall (opt-in; no-op when disabled) — inject
+        # recalled memories as system context after the session system prompt.
+        if self.long_term_memory is not None:
+            try:
+                recalled = self.long_term_memory.recall_as_context(message)
+                if recalled:
+                    sys_msgs = [m for m in history if m.get("role") == "system"]
+                    rest = [m for m in history if m.get("role") != "system"]
+                    history = sys_msgs + recalled + rest
+            except Exception:  # noqa: BLE001
+                pass  # memory failure must never break chat (fail-closed)
+
+        # Trim context
         if self.context_manager is not None:
             history, _ = self.context_manager.fit(history)
 
@@ -667,6 +702,15 @@ class MotherAssembly:
 
         # Record assistant reply
         self.conversation_manager.add_message(session_id, "assistant", reply_text)
+
+        # Long-term memory write (opt-in; no-op when disabled).
+        if self.long_term_memory is not None:
+            try:
+                self.long_term_memory.remember(session_id, "user", message)
+                self.long_term_memory.remember(session_id, "assistant", reply_text)
+            except Exception:  # noqa: BLE001
+                pass  # memory failure must never break chat (fail-closed)
+
         self._seal_event("chat", {"session_id": session_id, "model": resolved_model})
 
         return {
@@ -757,6 +801,7 @@ class MotherAssembly:
                 "llm_gateway":          self.llm_gateway is not None,
                 "context_manager":      self.context_manager is not None,
                 "scheduler":            self.scheduler is not None,
+                "long_term_memory":     self.long_term_memory is not None,
             },
             "checked_at_ms": int(time.time() * 1000),
         }
