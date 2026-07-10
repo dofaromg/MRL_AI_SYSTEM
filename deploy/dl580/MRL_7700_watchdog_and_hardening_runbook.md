@@ -24,9 +24,12 @@ schtasks /query /tn "\MRL_Watchdog" /v /fo LIST
 #     （把下面路徑換成 1a "Task To Run" 顯示的實際檔案）
 Get-Content "D:\mrl\watchdog\<watchdog腳本檔>" -Raw
 
-# 1c. 看 watchdog 自己的 log（若有），對照 7700 死亡時段有沒有嘗試重啟
-Get-ChildItem -Path D:\mrl\watchdog -Recurse -Filter *.log -EA SilentlyContinue |
-  Sort-Object LastWriteTime -Descending | Select-Object -First 3 FullName,LastWriteTime
+# 1c. 看 watchdog 自己的 log（含輪替檔），依 7700 事故時間窗篩選，別只取最新幾個
+#     （$from/$to 換成 7700 實際死亡時段；涵蓋 *.log 與 *.log.* 輪替檔）
+$from = Get-Date "2026-07-06 00:00"; $to = Get-Date "2026-07-06 12:00"
+Get-ChildItem -Path D:\mrl\watchdog -Recurse -Include *.log,*.log.* -EA SilentlyContinue |
+  Where-Object { $_.LastWriteTime -ge $from -and $_.LastWriteTime -le $to } |
+  Sort-Object LastWriteTime | Select-Object FullName,LastWriteTime
 ```
 
 **診斷要點（對照 7700 修復根因）**：
@@ -37,10 +40,24 @@ Get-ChildItem -Path D:\mrl\watchdog -Recurse -Filter *.log -EA SilentlyContinue 
 - 若 watchdog 只探測「埠有無監聽」而不重啟、或重啟指向錯檔，就是它沒救回的原因。
 
 **修法（additive，先備份再改）**：把 watchdog 重啟動作對齊已修好的
-`MRL_ASI_Engine` 排程（完整 node 路徑 + 正確進入點）。修完實測：
-手動 `taskkill` 掉 7700 → 等 watchdog 週期 → 確認自動回到 `/health` PASS。
+`MRL_ASI_Engine` 排程（完整 node 路徑 + 正確進入點）。修完以可重現、有上限的流程實測：
 
-> 判準：**人為殺掉 7700 後，watchdog 能在其週期內自動拉回 `/health`（實機）** 才標 PASS。
+```powershell
+# 依「監聽 7700 的 PID」精準終止（不誤殺其他 node）
+$pid7700 = Get-NetTCPConnection -LocalPort 7700 -State Listen -EA SilentlyContinue |
+             Select-Object -First 1 -ExpandProperty OwningProcess
+if ($pid7700) { Stop-Process -Id $pid7700 -Force }
+
+# 有上限地輪詢 /health（示範 180 秒，依 watchdog 週期＋緩衝調整）
+$deadline = (Get-Date).AddSeconds(180); $ok = $false
+while ((Get-Date) -lt $deadline) {
+  try { if ((Invoke-WebRequest http://127.0.0.1:7700/health -TimeoutSec 5 -UseBasicParsing).StatusCode -eq 200) { $ok = $true; break } } catch {}
+  Start-Sleep -Seconds 5
+}
+"watchdog 自動救回 7700 = $ok"   # $true 才算 PASS；逾時 $false 即判失敗
+```
+
+> 判準：**人為殺掉 7700 後，watchdog 能在上限時間內自動拉回 `/health` 200（實機）** 才標 PASS；逾時即失敗。
 
 ---
 
@@ -48,7 +65,7 @@ Get-ChildItem -Path D:\mrl\watchdog -Recurse -Filter *.log -EA SilentlyContinue 
 
 端點層已 200，但真 session 需帶真使用者 cookie，只能瀏覽器實登驗。
 
-```
+```text
 1. 瀏覽器開 https://mrliouword.com/login
 2. 走完 OAuth / magic-link 流程
 3. 登入後開 https://mrliouword.com/api/auth/session
@@ -60,26 +77,52 @@ Get-ChildItem -Path D:\mrl\watchdog -Recurse -Filter *.log -EA SilentlyContinue 
 
 ---
 
-## 待辦 3：Worker / 控制面板是否存有舊 bridge key（輪替後需同步）
+## 待辦 3：Worker / 控制面板 / 全機是否存有舊 bridge key（輪替後需同步）
 
 key 已於 2026-07-08 輪替；任何仍拿舊 key 呼叫 bridge 的模組會 401/403。
+清查需涵蓋**所有已作廢 key**（原始明碼 key + 第一輪曝光 key）、多種 runtime store
+（環境變數 User/Machine 兩 scope、檔案、Registry、排程參數、Worker secret），
+且**只輸出命中位置，絕不輸出 key 值**。
 
-```
+```powershell
 # 3a. Cloudflare Worker（mrl-worker）環境變數
 #     Dashboard → Workers & Pages → 該 worker → Settings → Variables
-#     檢查 MRL_BRIDGE_API_KEY / MRL_BRIDGE_TOKEN 是否為新 key（或改用 header 免帶 key）
+#     確認 MRL_BRIDGE_API_KEY / MRL_BRIDGE_TOKEN 為新 key（或已改用 header 免帶 key）
 
-# 3b. 控制面板（DL580 上，7950）讀的是環境變數 MRL_BACKEND_KEY
-[Environment]::GetEnvironmentVariable("MRL_BACKEND_KEY","User")   # 是否為新 key
-[Environment]::GetEnvironmentVariable("MRL_BRIDGE_TOKEN","User")  # bridge 模組用
+# 3b. 環境變數：User 與 Machine 兩個 scope 都要查
+#     註：service / 排程（尤其 SYSTEM 身分）啟動時只載入環境一次；改 Machine 變數後
+#     須「重啟該 service / 排程」，其行程才會讀到新值 → 改完必重啟再複查有效環境。
+foreach ($scope in 'User','Machine') {
+  foreach ($name in 'MRL_BACKEND_KEY','MRL_BRIDGE_TOKEN','MRL_BRIDGE_API_KEY') {
+    $v = [Environment]::GetEnvironmentVariable($name,$scope)
+    "{0,-8} {1,-20} 有值={2}" -f $scope,$name,([bool]$v)   # 只印有無，不印值
+  }
+}
 
-# 3c. 全機搜殘留舊 key 明碼（值不記錄；比對是否還有硬寫）
-Get-ChildItem D:\mrl -Recurse -Include *.js,*.json,*.env,*.ps1 -EA SilentlyContinue |
-  Select-String -Pattern "MrLiouWord2026" -List | Select-Object Path
+# 3c. 全機殘留清查：操作者於實機 session 逐把貼入「已作廢 key」（Read-Host，不落地、不回寫本檔）；
+#     只輸出命中檔路徑，不輸出 key 值或命中內容。
+$patterns = @()
+do {
+  $sec = Read-Host -AsSecureString "貼入一把已作廢 key（空白 Enter 結束；不顯示、不落地）"
+  $p   = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($sec)
+  $val = [Runtime.InteropServices.Marshal]::PtrToStringAuto($p)
+  [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($p)
+  if ($val) { $patterns += [regex]::Escape($val) }
+} while ($val)
+
+Get-ChildItem D:\mrl -Recurse -Include *.js,*.cjs,*.mjs,*.json,*.env,*.ps1,*.psm1,*.cmd,*.bat,*.config,*.txt -EA SilentlyContinue |
+  ForEach-Object { $f=$_; foreach ($re in $patterns) { if (Select-String -Path $f.FullName -Pattern $re -Quiet) { $f.FullName; break } } } |
+  Sort-Object -Unique
+
+# 其他 runtime store（人工核對，命中即需清；同樣只看有無、不外流值）：
+#  - 排程動作參數：schtasks /query /fo LIST /v  → 檢查各 Task To Run 是否夾帶舊 key
+#  - Registry：reg query "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" 等自啟/服務參數是否硬寫
+#  - Worker / 其他 secret 儲存（見 3a）
 ```
 
-> 判準：**所有呼叫方改用新 key（或 header），舊 key 明碼全機清零（實機）** 才標 PASS。
-> 註：`MrLiouWord2026` 及第一輪曝光 key 皆已 403 作廢，此步是清殘留、防呼叫方壞掉。
+> 判準：**所有呼叫方遷至新 key（或 header）、User+Machine 兩 scope 與「重啟後有效環境」皆無舊 key、
+> 全機檔案 / 排程 / Registry 清查零命中（實機）** 才標 PASS。
+> 註：原始明碼 key 與第一輪曝光 key 皆已 403 作廢（值不記錄於本檔）；本步是清殘留、防呼叫方壞掉。
 
 ---
 
@@ -108,4 +151,7 @@ Get-ChildItem D:\mrl -Recurse -Include *.js,*.json,*.env,*.ps1 -EA SilentlyConti
 
 - 本 runbook 為**沙盒撰寫的執行指引**，所有判準未實跑前一律「待驗證 / 待實機 / 待瀏覽器」。
 - 每項完成後，把實測輸出補回 `MRL_network_whitelist_recovery_v1.md` 的 re-test log（additive）。
+- **回填 re-test log 前必須遮罩敏感資料**：只記錄狀態碼 / 時間 / 非敏感的 request ID 或 fingerprint；
+  對 `/api/auth/session` 回應、Worker 設定、命令輸出、診斷結果中的**使用者身分、key、token、cookie
+  一律遮罩**，禁止貼入完整輸出。
 - 不得把「待驗證」標為「PASS」；實機標「實機」、瀏覽器標「瀏覽器」，附當下日期。
