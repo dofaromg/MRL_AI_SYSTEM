@@ -5,21 +5,22 @@
  * @version 2.0.0
  *
  * v1 (MRL_ParticleTeam_MCP_v1.ts) 是吸收保存的原始材料,保留不改。
- * v2 為母體自生強化版,套用 code review 的「部署前強化清單」,語意等價、行為更安全:
- *   1. 端點驗證  — /mcp、/sse、/dispatch 需 Bearer(env.MCP_ACCESS_TOKEN);
- *                  未設定 token → fail-closed 拒絕(rl_00 deny-by-default),不裸奔燒金鑰。
- *   2. CORS 白名單 — env.MCP_ALLOWED_ORIGINS(逗號分隔);無 wildcard,只回允許的 origin。
- *   3. callAgent  — AbortController 逾時 + 回應形狀防護(content?.[0]?.text)+ error 正規化為字串。
- *   4. /dispatch  — try/catch 包覆 + 輸入驗證,錯誤帶 CORS 回結構化 JSON。
- *   5. 每 agent 各自計時 — duration 為單一 agent 真耗時(非整批)。
- *   6. lint      — substr→slice;switch case 以 block scope 包住宣告。
- *   7. 任務持久化 — activeTasks 以 D1(env.DB)持久化,team_status 跨 request 可查;
- *                  無 DB → 誠實降級為 isolate 級 in-memory(附警告),不假裝跨 request。
+ * v2 為母體自生強化版,套用 code review 的「部署前強化清單」,語意等價、行為更安全。
  *
  * 誠實邊界:本檔為 Cloudflare Worker 形;依「DL580 本體優先、勿預設 Cloudflare」,正式常駐建議
  *   re-home 至 DL580 runtime。**未經 runtime 驗證**(需 Cloudflare/D1 + ANTHROPIC_API_KEY);不宣稱已部署。
- *   金鑰 model id 建議接母體 model gateway 統一解析,避免硬編廠商 model 名。
  */
+
+// 最小 D1 型別介面:本 repo 未引入 @cloudflare/workers-types,僅宣告本檔用到的表面,
+// 使檔案在純 TypeScript 設定下亦可型別檢查。
+interface D1PreparedStatement {
+  bind(...values: unknown[]): D1PreparedStatement;
+  run(): Promise<unknown>;
+  first<T = unknown>(): Promise<T | null>;
+}
+interface D1Database {
+  prepare(query: string): D1PreparedStatement;
+}
 
 export interface Env {
   ANTHROPIC_API_KEY: string;
@@ -27,6 +28,8 @@ export interface Env {
   MCP_ACCESS_TOKEN?: string;     // 必填(生產):Bearer token;未設定則保護端點 fail-closed
   MCP_ALLOWED_ORIGINS?: string;  // 選用:CORS 白名單(逗號分隔);未設定則不回 ACAO(同源)
 }
+
+type TaskType = 'analyze' | 'create' | 'review' | 'research' | 'synthesize' | 'full_team';
 
 interface AIAgent {
   id: string;
@@ -39,7 +42,7 @@ interface AIAgent {
 
 interface Task {
   id: string;
-  type: 'analyze' | 'create' | 'review' | 'research' | 'synthesize';
+  type: TaskType;
   content: string;
   priority: number;
   assignedTo?: string;
@@ -180,18 +183,20 @@ function errText(e: unknown): string {
 
 // ── 任務儲存:有 D1 → 持久化;無 → isolate 級 in-memory(誠實降級)─────
 const _memoryTasks = new Map<string, Task>();
+let _schemaReady = false;  // per-isolate:schema 只建一次,不在每次 put/get 都跑 CREATE TABLE
 
 class TaskStore {
   constructor(private env: Env) {}
 
   private async ensureSchema(): Promise<void> {
-    if (!this.env.DB) return;
+    if (!this.env.DB || _schemaReady) return;
     await this.env.DB.prepare(
       `CREATE TABLE IF NOT EXISTS mrl_particleteam_tasks (
          id TEXT PRIMARY KEY, type TEXT, content TEXT, status TEXT,
          result TEXT, created_at INTEGER
        )`,
     ).run();
+    _schemaReady = true;
   }
 
   async put(task: Task): Promise<void> {
@@ -234,13 +239,18 @@ class TeamCoordinator {
 
   async dispatch(task: string, type = 'analyze', parallel = true, specificAgents?: string[]): Promise<unknown> {
     if (!task || !task.trim()) throw new Error('task is required');
+    // fail-fast:未知 type 不再靜默退回 analyst,避免持久化無效型別、難以除錯。
+    if (!(type in TASK_AGENT_MAPPING)) {
+      throw new Error(`unknown task type: ${JSON.stringify(type)}`);
+    }
+    const validType = type as TaskType;
     const taskId = `task-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
 
-    const agentIds = specificAgents || TASK_AGENT_MAPPING[type] || ['analyst'];
+    const agentIds = specificAgents || TASK_AGENT_MAPPING[validType];
     const agents = AI_TEAM.filter((a) => agentIds.includes(a.id));
     if (agents.length === 0) throw new Error('No agents available for this task type');
 
-    const taskRecord: Task = { id: taskId, type: type as Task['type'], content: task, priority: 1, status: 'processing' };
+    const taskRecord: Task = { id: taskId, type: validType, content: task, priority: 1, status: 'processing' };
     await this.store.put(taskRecord);
 
     let results: Array<{ agent: string; response: string; duration: number }>;
@@ -272,12 +282,19 @@ class TeamCoordinator {
       }
     }
 
+    // synthesize/最終持久化包 try/catch:失敗時把任務標 failed 並落庫,避免永遠卡在 processing。
     let synthesis: string | null = null;
-    if (results.length > 1) synthesis = await this.synthesizeResults(task, results);
-
-    taskRecord.status = 'completed';
-    taskRecord.result = { results, synthesis };
-    await this.store.put(taskRecord);
+    try {
+      if (results.length > 1) synthesis = await this.synthesizeResults(task, results);
+      taskRecord.status = 'completed';
+      taskRecord.result = { results, synthesis };
+      await this.store.put(taskRecord);
+    } catch (e) {
+      taskRecord.status = 'failed';
+      taskRecord.result = { results, error: errText(e) };
+      await this.store.put(taskRecord).catch(() => undefined);
+      throw e;
+    }
 
     return {
       taskId,
@@ -373,7 +390,8 @@ function corsFor(request: Request, env: Env): Record<string, string> {
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
   };
-  const origin = request.headers.get('Origin') || '';
+  // 去除 CR/LF 再比對/回填,避免 response-splitting / header-injection。
+  const origin = (request.headers.get('Origin') || '').replace(/[\r\n]/g, '');
   const allowed = (env.MCP_ALLOWED_ORIGINS || '')
     .split(',')
     .map((s) => s.trim())
@@ -456,7 +474,7 @@ export default {
   ): Promise<Response> {
     if (request.method !== 'POST') return jsonError(405, 'Method not allowed', cors);
 
-    let mcpRequest: { jsonrpc: string; id: number | string; method: string; params?: Record<string, unknown> };
+    let mcpRequest: { jsonrpc: string; id?: number | string | null; method: string; params?: Record<string, unknown> };
     try {
       mcpRequest = (await request.json()) as typeof mcpRequest;
     } catch (e) {
@@ -464,6 +482,11 @@ export default {
         { jsonrpc: '2.0', id: null, error: { code: -32700, message: `Parse error: ${errText(e)}` } },
         { headers: cors },
       );
+    }
+
+    // JSON-RPC notification(無 id,如 notifications/initialized):依規範不得回應 → 204。
+    if (mcpRequest.id === undefined || mcpRequest.id === null) {
+      return new Response(null, { status: 204, headers: cors });
     }
 
     let response: unknown;
@@ -479,6 +502,9 @@ export default {
           },
         };
         break;
+      case 'ping':
+        response = { jsonrpc: '2.0', id: mcpRequest.id, result: {} };
+        break;
       case 'tools/list':
         response = { jsonrpc: '2.0', id: mcpRequest.id, result: { tools: TEAM_TOOLS } };
         break;
@@ -492,7 +518,7 @@ export default {
   },
 
   async handleToolCall(
-    mcpRequest: { id: number | string; params?: Record<string, unknown> },
+    mcpRequest: { id?: number | string | null; params?: Record<string, unknown> },
     coordinator: TeamCoordinator,
   ): Promise<unknown> {
     const params = mcpRequest.params as { name: string; arguments: Record<string, unknown> };
@@ -525,7 +551,7 @@ export default {
         default:
           return { jsonrpc: '2.0', id: mcpRequest.id, error: { code: -32602, message: `Unknown tool: ${toolName}` } };
       }
-      return { jsonrpc: '2.0', id: mcpRequest.id, result: { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] } };
+      return { jsonrpc: '2.0', id: mcpRequest.id, result: { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }], isError: false } };
     } catch (error) {
       return { jsonrpc: '2.0', id: mcpRequest.id, error: { code: -32603, message: errText(error) } };
     }
