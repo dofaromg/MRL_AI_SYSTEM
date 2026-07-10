@@ -109,6 +109,18 @@ class VectorStore:
 
     # ── CRUD ──────────────────────────────────────────────────────────────────
 
+    def _build_entry(
+        self, doc_id: str, vector: List[float], meta: Optional[Dict[str, Any]]
+    ) -> Dict[str, Any]:
+        """Construct a stored-entry dict (shared by add / add_many to avoid drift)."""
+        return {
+            "id": doc_id,
+            "vector": [float(v) for v in vector],
+            "meta": meta or {},
+            "added_at_ms": int(time.time() * 1000),
+            "origin_signature": ORIGIN_SIGNATURE,
+        }
+
     def add(
         self,
         doc_id: str,
@@ -116,13 +128,7 @@ class VectorStore:
         meta: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
         """Add or update an entry. Returns the stored entry."""
-        entry: Dict[str, Any] = {
-            "id": doc_id,
-            "vector": [float(v) for v in vector],
-            "meta": meta or {},
-            "added_at_ms": int(time.time() * 1000),
-            "origin_signature": ORIGIN_SIGNATURE,
-        }
+        entry = self._build_entry(doc_id, vector, meta)
         self._entries[doc_id] = entry
         self._save()
         return entry
@@ -138,13 +144,7 @@ class VectorStore:
         """
         stored: List[Dict[str, Any]] = []
         for doc_id, vector, meta in items:
-            entry: Dict[str, Any] = {
-                "id": doc_id,
-                "vector": [float(v) for v in vector],
-                "meta": meta or {},
-                "added_at_ms": int(time.time() * 1000),
-                "origin_signature": ORIGIN_SIGNATURE,
-            }
+            entry = self._build_entry(doc_id, vector, meta)
             self._entries[doc_id] = entry
             stored.append(entry)
         if stored:
@@ -172,18 +172,26 @@ class VectorStore:
         query_vector: List[float],
         top_k: int = 5,
         min_score: float = -1.0,
+        where: Optional[Dict[str, Any]] = None,
     ) -> List[Tuple[str, float, Dict[str, Any]]]:
         """
         Return the *top_k* nearest entries by cosine similarity.
 
         Returns a list of (doc_id, score, meta) tuples, sorted descending.
+
+        *where* is an optional metadata equality filter (e.g. ``{"session_id": "s1"}``)
+        applied **before** top_k truncation, so a caller scoping to a subset never
+        loses relevant hits to higher-ranked entries outside that subset.
         """
         q = [float(v) for v in query_vector]
         scored: List[Tuple[str, float, Dict[str, Any]]] = []
         for entry in self._entries.values():
+            meta = entry["meta"]
+            if where is not None and any(meta.get(k) != v for k, v in where.items()):
+                continue
             score = _cosine_similarity(q, entry["vector"])
             if score >= min_score:
-                scored.append((entry["id"], score, entry["meta"]))
+                scored.append((entry["id"], score, meta))
         scored.sort(key=lambda x: x[1], reverse=True)
         return scored[:top_k]
 

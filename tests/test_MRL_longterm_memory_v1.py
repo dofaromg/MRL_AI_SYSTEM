@@ -87,6 +87,26 @@ class TestLongTermMemory(unittest.TestCase):
         self.assertTrue(all(h["session_id"] == "alice" for h in hits),
                         "recall must not leak other sessions' memories")
 
+    def test_recall_scoped_beyond_naive_window(self):
+        """Target-session hits must survive even when > top_k*N other-session
+        entries out-rank them: the store-level session filter runs BEFORE top_k
+        truncation, so scoping never crowds out the target session's memories."""
+        ltm = MRL_LongTermMemory(store_path=self.path)
+        # 30 higher-volume 'noise' memories in other sessions, all matching the query.
+        for i in range(30):
+            ltm.remember(f"noise{i}", "user",
+                         "durable replay across reboot exact state hash")
+        # One target-session memory, indistinguishable in content → cannot win on
+        # score alone; it survives only because the filter precedes truncation.
+        ltm.remember("target", "user",
+                     "durable replay across reboot exact state hash")
+        hits = ltm.recall("reboot replay state hash", top_k=3, session_id="target")
+        self.assertTrue(hits, "session-scoped recall must find the target memory")
+        self.assertTrue(all(h["session_id"] == "target" for h in hits),
+                        "no other session's memory may leak through")
+        self.assertEqual(len(hits), 1,
+                         "exactly the one target-session memory is returned")
+
     def test_remember_many_single_batch(self):
         ltm = MRL_LongTermMemory(store_path=self.path)
         stored = ltm.remember_many([
