@@ -82,7 +82,7 @@
       "flowseed_layers": ["L3 語意粒子層", "L5 量子場疊加層", "L7 語意記憶網格層"],
       "held_as": "section in MRL_NeuroSymbolic_CoReasoning_System_v1.md",
       "relation": "Conceptually parallels the repo's existing 03_memory/vector/vector_store.py (symbolic+neural stores + map index).",
-      "honest_status": "Design sketch; stores/index/consistency-manager largely stubbed. Not runnable as-is."
+      "honest_status": "First runnable component realized as 09_workflow/MRL_Hybrid_Knowledge_Base_v1.py (symbolic triple store + neural store reusing vector_store + map index + consistency [report-only] + KnowledgeGraph BFS; 18 sandbox tests pass). Formal-logic systems (first-order/modal/temporal) and subsumption detection remain DESIGN targets, not implemented (no_proof)."
     }
   ]
 }

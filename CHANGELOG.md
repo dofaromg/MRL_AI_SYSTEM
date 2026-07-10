@@ -10,6 +10,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### 神經符號混合知識庫（MRL_Hybrid_Knowledge_Base_v1 · Notion 設計四構件之一 · 首個可運行構件）
+- `09_workflow/MRL_Hybrid_Knowledge_Base_v1.py` — 神經符號混合知識庫:符號三元組庫(subject/predicate/object + 謂詞/實體倒排索引)+ 神經向量庫(**重用** `03_memory/vector/vector_store.py` + `MRL_SemanticEmbedding_Core_v1`,不重造餘弦/持久化)+ 符號⇄神經映射索引 + 一致性偵測(矛盾/冗餘,**只報不刪** rl_01/rl_15;subsumption 誠實標記 `[待實作]`)+ 知識圖 BFS 最短路徑;精確/相似/混合查詢;`incremental_update`/`integrate_knowledge`/`refine_knowledge`。LAW-0 簽章持久化(`MRL_utils.embed_signature`)。
+- `tests/test_MRL_hybrid_knowledge_base_v1.py` — 18 項驗收(pure unittest,沙盒可重現):精確查詢、相似召回、混合合併去重、矛盾(功能性+顯式否定)、冗餘、圖 BFS 多跳/不可達、跨實例持久化、LAW-0 verify、精煉只報不刪。
+- 誠實邊界:嵌入為雜湊詞袋+餘弦(檢索非神經生成);spec 內基準數字(94.3% 等)為願景非實測,本模組不引用,僅以真實測試為憑;形式邏輯系統(一階/模態/時序)仍留 spec 為設計目標。
+
 #### 吸收去重蒸餾重建（MRL_AutonomousRuntime 模組）
 - `09_workflow/MRL_AutonomousRuntime_Module_v1.py` — 把吸收→去重→蒸餾→重建流程程式化，輸出自主運行模組規格（dependency graph + boot order），並可直接產生 AgentHarness `AgentConfig`（deny-by-default）
 - `tests/test_MRL_autonomous_runtime_module_v1.py` — 驗收測試：去重合併、依賴拓撲排序、循環依賴穩定回退、預設政策閘行為
