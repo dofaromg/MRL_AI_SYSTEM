@@ -119,8 +119,9 @@ class MRL_LongTermMemory:
     ) -> List[Dict[str, Any]]:
         """Return the memories most semantically relevant to *query_text*.
 
-        *top_k* must be >= 1. When *session_id* is given, results are scoped to that
-        session (over-fetch then filter) so memories never leak across sessions/users.
+        *top_k* must be >= 1. When *session_id* is given, scoping is pushed down to
+        the store (``where=``), which filters BEFORE top_k truncation, so memories
+        never leak across sessions/users and a session's hits are never crowded out.
         """
         if top_k < 1:
             raise ValueError(f"top_k must be >= 1, got {top_k}")
