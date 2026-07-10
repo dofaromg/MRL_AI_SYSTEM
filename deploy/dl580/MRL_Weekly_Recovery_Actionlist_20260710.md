@@ -28,8 +28,13 @@ origin_signature = `MrLiouWord`
 ## 行動清單（依風險 × 依賴排序）
 
 ### P0 — 前置閘門（其餘全卡在此）
-- [ ] **[你 · 環境設定]** 放行 `mrliouword.com`（含子網域），須**開新 session** 才生效。
-  - 現況：`bridge.mrliouword.com` CONNECT 403（egress 政策，非 DL580 本體掛）。
+- [ ] **[你 · 環境設定]** 放行 recovery 實際需要的**特定 FQDN**（最小權限，逐一列出用途，避免 `*.mrliouword.com` 廣域萬用），須**開新 session** 才生效：
+  - `bridge.mrliouword.com` — DL580 指令橋（`/MRL_run`），**P0/P1 核心必要，優先只放這一個**
+  - `dl580.mrliouword.com` — 官網平台 Express API，P4 OAuth 端點驗證才需要
+  - `mrliouword.com` — Cloudflare 邊緣 worker（平台門面），P3/P4 才需要
+  - `chat.mrliouword.com` — chat 平台，P4 OAuth 才需要
+  - 原則：能只放 `bridge.mrliouword.com` 就先放它；其餘 host 待對應 Phase 真的要用時再逐一加，不預先開整個網域。
+  - 現況：以上 host 目前皆 CONNECT 403（egress 政策，非 DL580 本體掛）。
   - 判準：新 session `bash scripts/MRL_bridge_recovery_run.sh 0` → Phase 0 回 PING。
 
 ### P1 — DL580 實機（放行後一次打完，重蓋「實機」章）
@@ -60,7 +65,10 @@ origin_signature = `MrLiouWord`
 - [ ] **[待驗證]** OAuth 真登入：目前僅端點層 HTTP 200，須瀏覽器真人實登才算完成。
 
 ### P4 — 治理收尾
-- [ ] **[你 · dashboard]** GitGuardian 歷史 key 標 resolved；以 DL580 端 key 輪替作廢為準。
+- [ ] **[你 · dashboard]** GitGuardian 歷史 key 處理 — **不得只憑 DL580 端輪替就標 resolved**。標 resolved 前須記錄兩項證據：
+  - (a) **issuer 端撤銷/輪替**：曝光的舊 key 已在發行端作廢，不只是 DL580 端換掉。
+  - (b) **無其他消費端仍持有舊 key**：確認沒有其他服務 / 腳本 / 文件仍在使用該舊 key。
+  - 兩項都記錄確認後，才可將 GitGuardian 該筆標 resolved。
 - [ ] **[repo]** 每個 PASS 補「執行地點戳章」（沙盒 / DL580 實機分開）。
 
 ---
