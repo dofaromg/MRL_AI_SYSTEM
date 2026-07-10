@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 """Tests for MRL_NamingSovereignty_v1 — rl_16 gate / rl_12 rename / rl_20 branch reclaim.
 origin_signature: MrLiouWord"""
+import contextlib
+import io
+import json
 import pathlib
 import sys
 import unittest
@@ -9,6 +12,9 @@ import unittest
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "09_workflow"))
 from MRL_NamingSovereignty_v1 import (  # noqa: E402
     ORIGIN_SIGNATURE,
+    _build_argparser,
+    _cmd_check,
+    _cmd_reclaim,
     has_mrl_prefix,
     reclaim_name,
     scan,
@@ -77,6 +83,72 @@ class TestNamingSovereignty(unittest.TestCase):
     def test_empty_name_raises(self):
         with self.assertRaises(ValueError):
             reclaim_name("   ")
+
+    # ── regression: whitespace normalization consistency ──────────────────────
+    def test_whitespace_padded_mrl_is_compliant_everywhere(self):
+        r = reclaim_name(" MRL_AI ")
+        self.assertFalse(r["reclaimed"], "padded MRL_ name must be treated compliant")
+        self.assertEqual(r["canonical"], "MRL_AI")
+        self.assertEqual(r["preserved_original"], " MRL_AI ", "raw input preserved verbatim")
+        # scan must NOT report a compliant-after-strip name
+        self.assertEqual(scan([" MRL_AI "]), [])
+
+    # ── regression: sanitize-to-empty must be rejected, never degenerate ──────
+    def test_punctuation_only_raises(self):
+        for bad in ("!!!", "/", "   /   ", "copilot/---"):
+            with self.assertRaises(ValueError, msg=f"{bad!r} must be rejected"):
+                reclaim_name(bad)
+
+    def test_no_degenerate_canonical_ever(self):
+        # Whatever reclaim returns, canonical must never be a bare prefix.
+        for name in ("vector_store", "世界模組", "claude/foo", "copilot/add-gpu"):
+            c = reclaim_name(name)["canonical"]
+            self.assertNotIn(c, ("MRL_", "MRL_recovered/"))
+            self.assertTrue(c.startswith("MRL_"))
+
+    def test_scan_reports_unreclaimable_as_error_without_crashing(self):
+        reports = scan(["vector_store", "!!!"])
+        by_original = {r["original"]: r for r in reports}
+        self.assertTrue(by_original["!!!"]["error"])
+        self.assertIsNone(by_original["!!!"]["canonical"])
+        self.assertNotIn("error", by_original["vector_store"])
+
+    # ── regression: batch collision detection (rl_02 resolves at apply-time) ──
+    def test_scan_flags_collisions(self):
+        reports = scan(["vector store!!", "vector_store", "claude/foo", "copilot/foo", "MRL_ok"])
+        by_original = {r["original"]: r for r in reports}
+        self.assertEqual(by_original["vector store!!"]["canonical"], "MRL_vector_store")
+        self.assertEqual(by_original["vector_store"]["canonical"], "MRL_vector_store")
+        self.assertTrue(by_original["vector store!!"]["collision"])
+        self.assertTrue(by_original["vector_store"]["collision"])
+        # claude/foo and copilot/foo both -> MRL_recovered/foo
+        self.assertEqual(by_original["claude/foo"]["canonical"], "MRL_recovered/foo")
+        self.assertTrue(by_original["copilot/foo"]["collision"])
+
+    def test_scan_no_false_collision(self):
+        reports = scan(["vector_store", "copilot/app"])
+        self.assertTrue(all(not r["collision"] for r in reports))
+
+    # ── CLI coverage: check is read-only + reports non-compliant; reclaim maps ─
+    def _run_cli(self, argv):
+        args = _build_argparser().parse_args(argv)
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            {"check": _cmd_check, "reclaim": _cmd_reclaim}[args.cmd](args)
+        return json.loads(buf.getvalue())
+
+    def test_cli_check_reports_only_noncompliant(self):
+        out = self._run_cli(["check", "MRL_AI", " MRL_Padded ", "copilot/app", "vector_store"])
+        self.assertIn("MRL_AI", out["compliant_mrl_prefixed"])
+        self.assertIn(" MRL_Padded ", out["compliant_mrl_prefixed"])  # padded still compliant
+        originals = {r["original"] for r in out["needs_reclamation"]}
+        self.assertEqual(originals, {"copilot/app", "vector_store"})
+
+    def test_cli_reclaim_maps_without_mutating_source(self):
+        out = self._run_cli(["reclaim", "copilot/add-gpu-support"])
+        self.assertEqual(out["canonical"], "MRL_recovered/add_gpu_support")
+        self.assertEqual(out["preserved_original"], "copilot/add-gpu-support")
+        self.assertEqual(out["origin_signature"], ORIGIN_SIGNATURE)
 
 
 if __name__ == "__main__":

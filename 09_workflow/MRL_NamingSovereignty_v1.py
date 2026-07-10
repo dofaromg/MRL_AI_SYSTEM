@@ -30,11 +30,19 @@ from __future__ import annotations
 
 import argparse
 import json
+import pathlib
 import re
 import sys
 from typing import Any, Dict, List
 
-ORIGIN_SIGNATURE = "MrLiouWord"
+# 母體源頭主權簽章:單一真實來源為 09_workflow/MRL_utils.py(authority_invariance;
+# 不在此静默重定義)。standalone/測試情境以 fallback 保底,值仍為同一 canonical。
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+try:
+    from MRL_utils import ORIGIN_SIGNATURE  # noqa: E402  單一真實來源
+except Exception:  # pragma: no cover - fallback only when MRL_utils unavailable
+    ORIGIN_SIGNATURE = "MrLiouWord"
+
 MRL_PREFIX = "MRL_"
 RECOVERED_NAMESPACE = "MRL_recovered"
 
@@ -58,7 +66,11 @@ def has_mrl_prefix(name: str) -> bool:
 
 
 def _sanitize(token: str) -> str:
-    """把任意 token 正規化為 canonical 允許的字元集,collapse/strip 底線。"""
+    """把任意 token 正規化為 canonical 允許的字元集,collapse/strip 底線。
+
+    可能回傳空字串(當 token 全為不允許字元時,如 "!!!")——呼叫端須拒絕空結果,
+    以免產出退化的 "MRL_" / "MRL_recovered/"。
+    """
     token = _KEEP.sub("_", token)
     token = re.sub(r"_+", "_", token).strip("_")
     return token
@@ -69,61 +81,101 @@ def reclaim_name(name: str) -> Dict[str, Any]:
     把外部名 *name* 映射為母體 canonical 名稱,並附保留清單。
 
     規則:
-      - 已是 MRL_ 前綴 → no-op(reclaimed=False),不重覆包裝。
+      - 已是 MRL_ 前綴(去頭尾空白後)→ no-op(reclaimed=False),不重覆包裝。
       - 含 "/"(分支/vendor 前綴)→ rl_20:MRL_recovered/<sanitized 去前綴>。
       - 其餘外部名 → rl_12/rl_16:MRL_<sanitized>。
-    原名一律保留於 preserved_original(rl_15 / rl_01 no_delete),不刪不改實體。
+    分類一律以「去頭尾空白後」的值為準;preserved_original 則保留呼叫端原樣輸入
+    (rl_15 / rl_01 no_delete),不刪不改實體。
+    若 sanitize 後為空(名稱無任何 canonical-able 字元),拒絕並拋 ValueError,
+    絕不產出退化 canonical。
     """
     if not isinstance(name, str) or not name.strip():
         raise ValueError("cannot reclaim empty name")
-    name = name.strip()
+    raw = name              # 原樣保留(可能含頭尾空白)
+    norm = name.strip()     # 分類/命名一律用正規化值
 
-    if has_mrl_prefix(name):
+    if has_mrl_prefix(norm):
         return {
-            "original": name,
-            "canonical": name,
+            "original": raw,
+            "canonical": norm,
             "reclaimed": False,
             "rule": "rl_16",
             "reason": "already MRL canonical — no reclamation needed",
             "origin_signature": ORIGIN_SIGNATURE,
-            "preserved_original": name,
+            "preserved_original": raw,
         }
 
-    if "/" in name:
+    if "/" in norm:
         # 分支型:剝掉第一段(vendor)前綴,其餘正規化,回收進 MRL_recovered 命名空間。
-        _vendor, _, rest = name.partition("/")
+        _vendor, _, rest = norm.partition("/")
         rest = rest or _vendor
-        canonical = f"{RECOVERED_NAMESPACE}/{_sanitize(rest)}"
+        sanitized = _sanitize(rest)
+        if not sanitized:
+            raise ValueError(
+                f"cannot reclaim {raw!r}: no canonical-able characters after sanitization"
+            )
+        canonical = f"{RECOVERED_NAMESPACE}/{sanitized}"
         rule = "rl_20"
         reason = "vendor/branch name reclaimed to mother recovered namespace"
     else:
-        canonical = f"{MRL_PREFIX}{_sanitize(name)}"
+        sanitized = _sanitize(norm)
+        if not sanitized:
+            raise ValueError(
+                f"cannot reclaim {raw!r}: no canonical-able characters after sanitization"
+            )
+        canonical = f"{MRL_PREFIX}{sanitized}"
         rule = "rl_12"
         reason = "external name renamed to mother canonical (largest closed loop)"
 
     return {
-        "original": name,
+        "original": raw,
         "canonical": canonical,
         "reclaimed": True,
         "rule": rule,
         "reason": reason,
         "origin_signature": ORIGIN_SIGNATURE,
-        "preserved_original": name,  # rl_15 / rl_01 — 原名永不抹除
+        "preserved_original": raw,  # rl_15 / rl_01 — 原名永不抹除
     }
 
 
 def scan(names: List[str]) -> List[Dict[str, Any]]:
     """
     批次偵測(唯讀):只回報缺 MRL_ 前綴、需回收的名稱及其 canonical 提案。
-    已合規(MRL_ 前綴)者不列入。
+    已合規(去頭尾空白後帶 MRL_ 前綴)者不列入。
+
+    每筆報告附 ``collision`` 旗標:當批次內有 ≥2 個不同輸入映射到同一 canonical
+    (如 "vector store!!" 與 "vector_store",或 "claude/foo" 與 "copilot/foo")時標 True,
+    供人審(rl_02)在套用前解衝突。無法 canonical 化者(sanitize 為空)以 error 報回,
+    不使掃描中斷。
     """
     reports: List[Dict[str, Any]] = []
     for name in names:
         if not isinstance(name, str) or not name.strip():
             continue
-        if has_mrl_prefix(name):
+        if has_mrl_prefix(name.strip()):
             continue
-        reports.append(reclaim_name(name))
+        try:
+            reports.append(reclaim_name(name))
+        except ValueError as exc:
+            reports.append({
+                "original": name,
+                "canonical": None,
+                "reclaimed": False,
+                "rule": None,
+                "reason": str(exc),
+                "error": True,
+                "origin_signature": ORIGIN_SIGNATURE,
+                "preserved_original": name,
+            })
+    # 批次碰撞偵測:同一 canonical 出現 >1 次者標記 collision。
+    counts: Dict[str, int] = {}
+    for rep in reports:
+        canonical = rep.get("canonical")
+        if canonical:
+            counts[canonical] = counts.get(canonical, 0) + 1
+    for rep in reports:
+        canonical = rep.get("canonical")
+        rep["collision"] = bool(canonical and counts.get(canonical, 0) > 1)
     return reports
 
 
@@ -131,7 +183,7 @@ def scan(names: List[str]) -> List[Dict[str, Any]]:
 
 def _cmd_check(args: argparse.Namespace) -> None:
     reports = scan(args.names)
-    compliant = [n for n in args.names if has_mrl_prefix(n)]
+    compliant = [n for n in args.names if isinstance(n, str) and has_mrl_prefix(n.strip())]
     print(json.dumps(
         {
             "compliant_mrl_prefixed": compliant,
