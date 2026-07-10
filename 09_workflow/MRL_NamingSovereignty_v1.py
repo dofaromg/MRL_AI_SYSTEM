@@ -227,12 +227,15 @@ def _cmd_check(args: argparse.Namespace) -> None:
     reports = scan(args.names)
     # 只有「有效 canonical」才算合規;退化/非乾淨 MRL_ 前綴名不列入,已由 scan 以 error 報回。
     compliant = [n for n in args.names if isinstance(n, str) and _is_valid_canonical(n.strip())]
+    reclaimable = sum(1 for r in reports if r.get("reclaimed") is True)
+    errors = sum(1 for r in reports if r.get("error") is True)
     print(json.dumps(
         {
             "compliant_mrl_prefixed": compliant,
             "needs_reclamation": reports,
-            "summary": f"{len(reports)} name(s) need reclamation, "
-                       f"{len(compliant)} already MRL canonical",
+            "summary": f"{reclaimable} name(s) need reclamation, "
+                       f"{len(compliant)} already MRL canonical, "
+                       f"{errors} error(s)",
         },
         ensure_ascii=False, indent=2,
     ))
