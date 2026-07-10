@@ -10,11 +10,9 @@ import sys
 import unittest
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "09_workflow"))
+import MRL_NamingSovereignty_v1 as ns  # noqa: E402  real CLI entrypoint under test
 from MRL_NamingSovereignty_v1 import (  # noqa: E402
     ORIGIN_SIGNATURE,
-    _build_argparser,
-    _cmd_check,
-    _cmd_reclaim,
     has_mrl_prefix,
     reclaim_name,
     scan,
@@ -33,8 +31,8 @@ class TestNamingSovereignty(unittest.TestCase):
         r = reclaim_name("claude/whitelist-mrliouword-domain-xls2qt")
         self.assertTrue(r["reclaimed"])
         self.assertEqual(r["rule"], "rl_20")
-        self.assertTrue(r["canonical"].startswith("MRL_recovered/"))
-        self.assertNotIn("/whitelist-", r["canonical"])  # hyphens sanitized to underscore
+        # assert the exact canonical (prefix removed + all segments sanitized)
+        self.assertEqual(r["canonical"], "MRL_recovered/whitelist_mrliouword_domain_xls2qt")
         self.assertEqual(r["origin_signature"], ORIGIN_SIGNATURE)
 
     def test_reclaim_copilot_branch(self):
@@ -99,6 +97,12 @@ class TestNamingSovereignty(unittest.TestCase):
             with self.assertRaises(ValueError, msg=f"{bad!r} must be rejected"):
                 reclaim_name(bad)
 
+    def test_namespace_only_prefix_rejected(self):
+        # bare prefixes carry MRL_ but no identifier — must not pass as compliant no-ops
+        for bad in ("MRL_", "MRL_recovered/", " MRL_ ", "MRL_recovered/  "):
+            with self.assertRaises(ValueError, msg=f"{bad!r} must be rejected"):
+                reclaim_name(bad)
+
     def test_no_degenerate_canonical_ever(self):
         # Whatever reclaim returns, canonical must never be a bare prefix.
         for name in ("vector_store", "世界模組", "claude/foo", "copilot/add-gpu"):
@@ -129,12 +133,29 @@ class TestNamingSovereignty(unittest.TestCase):
         reports = scan(["vector_store", "copilot/app"])
         self.assertTrue(all(not r["collision"] for r in reports))
 
-    # ── CLI coverage: check is read-only + reports non-compliant; reclaim maps ─
+    def test_scan_duplicate_identical_input_is_not_collision(self):
+        # same input twice → same canonical, but ONE distinct original → not a collision
+        reports = scan(["vector_store", "vector_store"])
+        self.assertTrue(all(not r["collision"] for r in reports))
+
+    def test_scan_collision_with_existing_compliant_name(self):
+        # a proposal whose canonical is already occupied by a compliant MRL_ name collides
+        reports = scan(["MRL_vector_store", "vector store!!"])
+        # only the non-compliant one is reported, and it must be flagged colliding
+        self.assertEqual(len(reports), 1)
+        self.assertEqual(reports[0]["canonical"], "MRL_vector_store")
+        self.assertTrue(reports[0]["collision"])
+
+    # ── CLI coverage: drive the REAL main() entrypoint (argv), not a test-local dispatch ─
     def _run_cli(self, argv):
-        args = _build_argparser().parse_args(argv)
         buf = io.StringIO()
-        with contextlib.redirect_stdout(buf):
-            {"check": _cmd_check, "reclaim": _cmd_reclaim}[args.cmd](args)
+        old_argv = sys.argv
+        sys.argv = ["MRL_NamingSovereignty_v1.py", *argv]
+        try:
+            with contextlib.redirect_stdout(buf):
+                ns.main()
+        finally:
+            sys.argv = old_argv
         return json.loads(buf.getvalue())
 
     def test_cli_check_reports_only_noncompliant(self):

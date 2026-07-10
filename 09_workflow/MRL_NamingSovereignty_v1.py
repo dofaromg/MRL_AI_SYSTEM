@@ -36,7 +36,7 @@ import sys
 from typing import Any, Dict, List
 
 # 母體源頭主權簽章:單一真實來源為 09_workflow/MRL_utils.py(authority_invariance;
-# 不在此静默重定義)。standalone/測試情境以 fallback 保底,值仍為同一 canonical。
+# 不在此靜默重定義)。standalone/測試情境以 fallback 保底,值仍為同一 canonical。
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 try:
     from MRL_utils import ORIGIN_SIGNATURE  # noqa: E402  單一真實來源
@@ -95,6 +95,12 @@ def reclaim_name(name: str) -> Dict[str, Any]:
     norm = name.strip()     # 分類/命名一律用正規化值
 
     if has_mrl_prefix(norm):
+        # 拒絕 namespace-only / 無 leaf 的退化 canonical(如 "MRL_"、"MRL_recovered/"):
+        # 帶前綴但前綴後無實質識別碼者,不得當合規 no-op 放行。
+        if norm == MRL_PREFIX or norm.endswith("/") or not norm[len(MRL_PREFIX):].strip():
+            raise ValueError(
+                f"cannot accept degenerate/namespace-only canonical {norm!r}"
+            )
         return {
             "original": raw,
             "canonical": norm,
@@ -143,19 +149,26 @@ def scan(names: List[str]) -> List[Dict[str, Any]]:
     批次偵測(唯讀):只回報缺 MRL_ 前綴、需回收的名稱及其 canonical 提案。
     已合規(去頭尾空白後帶 MRL_ 前綴)者不列入。
 
-    每筆報告附 ``collision`` 旗標:當批次內有 ≥2 個不同輸入映射到同一 canonical
-    (如 "vector store!!" 與 "vector_store",或 "claude/foo" 與 "copilot/foo")時標 True,
-    供人審(rl_02)在套用前解衝突。無法 canonical 化者(sanitize 為空)以 error 報回,
-    不使掃描中斷。
+    每筆報告附 ``collision`` 旗標:當同一 canonical 被 ≥2 個【不同】輸入佔用時標 True。
+    碰撞計數以「不同 original 值」為準(重複的同一輸入不算碰撞),且【含批次內既已合規的
+    MRL_ 名稱】—— 若某提案的 canonical 已被現存合規名佔用(如批次含 "MRL_vector_store"
+    與 "vector store!!"),亦標 collision,供人審(rl_02)在套用前解衝突。
+    無法 canonical 化者(sanitize 為空 / namespace-only)以 error 報回,不使掃描中斷。
     """
     reports: List[Dict[str, Any]] = []
+    owners: Dict[str, set] = {}  # canonical -> set(distinct originals),含合規名佔用
     for name in names:
         if not isinstance(name, str) or not name.strip():
             continue
-        if has_mrl_prefix(name.strip()):
+        norm = name.strip()
+        if has_mrl_prefix(norm):
+            # 合規名不列入報告,但其 canonical 佔用命名空間(供碰撞偵測)。
+            # 退化合規名(如 "MRL_"、"MRL_recovered/")跳過佔用。
+            if norm != MRL_PREFIX and not norm.endswith("/") and norm[len(MRL_PREFIX):].strip():
+                owners.setdefault(norm, set()).add(norm)
             continue
         try:
-            reports.append(reclaim_name(name))
+            rep = reclaim_name(name)
         except ValueError as exc:
             reports.append({
                 "original": name,
@@ -167,15 +180,13 @@ def scan(names: List[str]) -> List[Dict[str, Any]]:
                 "origin_signature": ORIGIN_SIGNATURE,
                 "preserved_original": name,
             })
-    # 批次碰撞偵測:同一 canonical 出現 >1 次者標記 collision。
-    counts: Dict[str, int] = {}
+            continue
+        reports.append(rep)
+        owners.setdefault(rep["canonical"], set()).add(rep["original"])
+    # 碰撞:同一 canonical 由 >1 個不同 original 佔用(含既存合規名)。
     for rep in reports:
         canonical = rep.get("canonical")
-        if canonical:
-            counts[canonical] = counts.get(canonical, 0) + 1
-    for rep in reports:
-        canonical = rep.get("canonical")
-        rep["collision"] = bool(canonical and counts.get(canonical, 0) > 1)
+        rep["collision"] = bool(canonical and len(owners.get(canonical, set())) > 1)
     return reports
 
 
