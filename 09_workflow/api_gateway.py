@@ -575,9 +575,25 @@ class _Handler(BaseHTTPRequestHandler):
 
         session_id = body.get("session_id")
         system_prompt = body.get("system", "")
+        max_tokens_raw = body.get("max_tokens", 1024)
+        if isinstance(max_tokens_raw, bool) or (
+            isinstance(max_tokens_raw, float) and not max_tokens_raw.is_integer()
+        ):
+            _json_response(
+                self,
+                400,
+                {
+                    "error": "'max_tokens' must be an integer",
+                    "engine": "mrl_runtime",
+                    "runtime_origin": "local_mother_assembly",
+                    "trace_id": trace_id,
+                },
+                rid,
+            )
+            return
         try:
-            max_tokens = int(body.get("max_tokens", 1024))
-        except (TypeError, ValueError):
+            max_tokens = int(max_tokens_raw)
+        except (ValueError, TypeError):
             _json_response(
                 self,
                 400,
@@ -604,8 +620,22 @@ class _Handler(BaseHTTPRequestHandler):
             )
             return
 
+        temperature_raw = body.get("temperature", 0.7)
+        if isinstance(temperature_raw, bool):
+            _json_response(
+                self,
+                400,
+                {
+                    "error": "'temperature' must be a number",
+                    "engine": "mrl_runtime",
+                    "runtime_origin": "local_mother_assembly",
+                    "trace_id": trace_id,
+                },
+                rid,
+            )
+            return
         try:
-            temperature = float(body.get("temperature", 0.7))
+            temperature = float(temperature_raw)
         except (TypeError, ValueError):
             _json_response(
                 self,
