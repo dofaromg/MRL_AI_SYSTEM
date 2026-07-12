@@ -11,7 +11,7 @@
 
 ---
 
-## PR #19 — Copilot「add missing features」
+## PR #19 — 外部來源「add missing features」(已回收為MRL粒子)
 
 ### 已在母體(底層技術早已回收進 main)
 `api_gateway.py`、`config_manager.py`、`llm_adapter.py`、`context_manager.py`、
