@@ -169,11 +169,11 @@ class MRL_ExternalFeedbackBranch:
                 "FlowMemoryMount",
                 "ReadyState",
             ],
-            "incoming_path": str(incoming_path.relative_to(self.repo_root)),
-            "sync_log_path": str(self.sync_log_file.relative_to(self.repo_root)),
-            "jump_trace_path": str(self.jump_trace_file.relative_to(self.repo_root)),
-            "flowmeta_path": str(self.flowmeta_file.relative_to(self.repo_root)),
-            "archive_path": str(pathlib.Path(archive["archive_path"]).relative_to(self.repo_root)),
+            "incoming_path": self._display_path(incoming_path),
+            "sync_log_path": self._display_path(self.sync_log_file),
+            "jump_trace_path": self._display_path(self.jump_trace_file),
+            "flowmeta_path": self._display_path(self.flowmeta_file),
+            "archive_path": self._display_path(pathlib.Path(archive["archive_path"])),
             "collapse": collapse,
             "routing": routing,
             "mount": mount,
@@ -338,6 +338,13 @@ class MRL_ExternalFeedbackBranch:
     def _write_json(self, path: pathlib.Path, data: Dict[str, Any]) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    def _display_path(self, path: pathlib.Path) -> str:
+        path = pathlib.Path(path)
+        try:
+            return str(path.relative_to(self.repo_root))
+        except ValueError:
+            return str(path)
 
     def _append_jsonl(self, path: pathlib.Path, record: Dict[str, Any]) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
