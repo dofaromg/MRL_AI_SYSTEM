@@ -150,7 +150,6 @@ const server = http.createServer(async (req,res)=>{
     logger.log('MRL_SERVER_ERROR',{message:e.message, code:e.code || 500, error:e.error || 'MRL_SERVER_ERROR', stack:e.stack});
     const code = e.code || 500;
     const payload = { error:e.error || 'MRL_SERVER_ERROR', message:e.message };
-    if (MRL_CFG.expose_stack) payload.stack = e.stack;
     return send(res,code,payload);
   }
 });
