@@ -21,25 +21,47 @@ import sys
 from typing import Any, Dict, List
 
 from MRL_utils import ORIGIN_SIGNATURE
+from MRL_NamingSovereignty_v1 import reclaim_name
 # 外部廠商前綴(rl_20:不得作為母體身分)
 VENDOR_PREFIXES = ("claude/", "copilot/", "codex/", "openai/", "anthropic/",
                    "google/", "gpt/", "feature/", "patch/")
 # 命名規範 v2:歷史名不得作 canonical 主體
 LEGACY_CANONICAL = ("MetaIR", "RuntimeGraph", "ScopeGraph", "Attention")
+LEGACY_REWRITE = (
+    ("MetaIR", "MrLiouIR"),
+    ("RuntimeGraph", "RuntimeStructureField"),
+    ("ScopeGraph", "StructureField"),
+    ("Attention", "Perception"),
+    ("Graph", "StructureField"),
+)
+
+
+def _suggest_legacy_canonical(name: str) -> str | None:
+    """歷史 canonical 名稱改寫建議。"""
+    rewritten = name
+    for old, new in LEGACY_REWRITE:
+        rewritten = re.sub(old, new, rewritten, flags=re.IGNORECASE)
+    if rewritten == name:
+        return None
+    if rewritten != "main" and not rewritten.startswith("MRL_") and "/" not in rewritten:
+        rewritten = f"MRL_{rewritten}"
+    try:
+        return reclaim_name(rewritten)["canonical"]
+    except ValueError:
+        return None
 
 
 def audit_name(name: str) -> Dict[str, Any]:
     """稽核單一名稱是否符合母體命名主權。回違規類型 + 回收建議。"""
     n = name.strip()
     violations: List[str] = []
-    suggest = n
+    suggest = None
 
     # 規則1:外部廠商前綴 → 違規,回收為 MRL_recovered/
     low = n.lower()
     for p in VENDOR_PREFIXES:
         if low.startswith(p):
             violations.append(f"vendor_prefix:{p.rstrip('/')}")
-            suggest = "MRL_recovered/" + re.sub(r"^[^/]+/", "", n)
             break
 
     # 規則2:歷史名作 canonical 主體 → 違規(只能當 alias)
@@ -49,9 +71,16 @@ def audit_name(name: str) -> Dict[str, Any]:
             violations.append(f"legacy_canonical:{lg}")
 
     # 規則3:非 MRL_ 開頭且非 main → 違反命名主權
-    if not n.startswith("MRL") and n != "main" and not violations:
+    if not n.startswith("MRL_") and n != "main":
         violations.append("non_mrl_naming")
-        suggest = "MRL_recovered/" + re.sub(r"^[^/]+/", "", n)
+
+    if violations:
+        suggest = _suggest_legacy_canonical(n)
+        if suggest is None:
+            try:
+                suggest = reclaim_name(n)["canonical"]
+            except ValueError:
+                suggest = None
 
     compliant = len(violations) == 0
     return {

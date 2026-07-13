@@ -20,7 +20,21 @@ def test_recovered_compliant():
     assert audit_name("MRL_recovered/x")["compliant"]
 
 def test_legacy_canonical_violates():
-    assert not audit_name("MRL_RuntimeScopeGraph")["compliant"]  # ScopeGraph 歷史名
+    r = audit_name("MRL_RuntimeScopeGraph")
+    assert not r["compliant"]  # ScopeGraph 歷史名
+    assert r["reclaim_to"] == "MRL_RuntimeStructureField"
+
+
+def test_non_mrl_name_reclaims_to_mrl_prefix():
+    r = audit_name("vector_store")
+    assert not r["compliant"]
+    assert r["reclaim_to"].startswith("MRL_")
+
+
+def test_mrl_without_underscore_is_not_compliant():
+    r = audit_name("MRLinvalid")
+    assert not r["compliant"]
+    assert "non_mrl_naming" in r["violations"]
 
 def test_batch():
     r = audit_batch(["claude/a","MRL_x","main","codex/b"])
