@@ -8,7 +8,6 @@ function MRL_loadConfig(root) {
     host:process.env.MRL_HOST || '0.0.0.0',
     auth_required:String(process.env.MRL_AUTH_REQUIRED || 'false').toLowerCase() === 'true',
     cors_origins:String(process.env.MRL_CORS_ORIGINS || '*').split(',').map(x => x.trim()).filter(Boolean),
-    expose_stack:String(process.env.MRL_EXPOSE_STACK || 'false').toLowerCase() === 'true',
     storage_dir:path.join(root,'MRL_Storage'),
     max_body_bytes:Number(process.env.MRL_MAX_BODY_BYTES || 50*1024*1024)
   };
