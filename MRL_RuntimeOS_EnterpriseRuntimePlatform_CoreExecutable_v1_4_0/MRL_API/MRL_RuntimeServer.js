@@ -35,9 +35,41 @@ const registry = new MRLModuleRegistry(ROOT);
 const nodeManager = new MRLRuntimeNodeManager(ROOT);
 const upstashAdapter = new MRLUpstashBoxAdapter();
 const metrics = { started_at:new Date().toISOString(), requests:0, errors:0, jobs_submitted:0 };
+const mesh = new MRLRuntimeMeshController(ROOT, nodeManager, graphBuilder, router, executor, logger);
 
-function readBody(req) { return new Promise((resolve,reject)=>{ let data=''; req.on('data',c=>{ data+=c; if(data.length>MRL_CFG.max_body_bytes) reject(new Error('MRL_BODY_TOO_LARGE')); }); req.on('end',()=>{ try{ resolve(data ? JSON.parse(data) : {}) } catch(e){ reject(e) }}); }); }
-function send(res, code, obj, type='application/json') { res.writeHead(code, {'content-type': type, 'access-control-allow-origin':'*', 'access-control-allow-headers':'content-type,authorization,x-mrl-token', 'access-control-allow-methods':'GET,POST,OPTIONS'}); res.end(type==='application/json'?JSON.stringify(obj,null,2):obj); }
+class MRLHttpError extends Error {
+  constructor(code, error, message) {
+    super(message || error);
+    this.code = code;
+    this.error = error;
+  }
+}
+function readBody(req) {
+  return new Promise((resolve,reject)=>{
+    let data='';
+    let settled=false;
+    const fail = err => { if (settled) return; settled=true; reject(err); };
+    req.on('data',c=>{
+      if (settled) return;
+      data+=c;
+      if(data.length>MRL_CFG.max_body_bytes) {
+        fail(new MRLHttpError(413, 'MRL_BODY_TOO_LARGE'));
+        req.destroy();
+      }
+    });
+    req.on('end',()=>{
+      if (settled) return;
+      settled=true;
+      try{ resolve(data ? JSON.parse(data) : {}) } catch(e){ reject(new MRLHttpError(400, 'MRL_JSON_INVALID', e.message)); }
+    });
+    req.on('error', fail);
+  });
+}
+function corsOrigin() {
+  const origins = MRL_CFG.cors_origins || ['*'];
+  return origins.includes('*') ? '*' : origins[0];
+}
+function send(res, code, obj, type='application/json') { res.writeHead(code, {'content-type': type, 'access-control-allow-origin':corsOrigin(), 'access-control-allow-headers':'content-type,authorization,x-mrl-token', 'access-control-allow-methods':'GET,POST,OPTIONS'}); res.end(type==='application/json'?JSON.stringify(obj,null,2):obj); }
 function writeJSON(dirRel, name, obj) { const dir = path.join(ROOT, dirRel); fs.mkdirSync(dir, { recursive:true }); fs.writeFileSync(path.join(dir,name), JSON.stringify(obj,null,2)); }
 function listFiles(dirRel) { const dir=path.join(ROOT,dirRel); if(!fs.existsSync(dir)) return []; return fs.readdirSync(dir).filter(f=>!f.startsWith('.')).map(f=>({ name:f, size:fs.statSync(path.join(dir,f)).size })); }
 function runPipeline(body) {
@@ -50,8 +82,8 @@ function runPipeline(body) {
   const attentionRoute = router.route(runtimeGraph, command);
   const verification = verifier.verify(source, bundle, runtimeGraph, contextGraph);
   const meshPlan = mesh.plan(bundle, contextGraph, command);
-  const trace = body.execute === false ? null : executor.execute(runtimeGraph, attentionRoute, bundle, { source, data: body.data });
   const meshExecution = body.execute === false ? null : mesh.execute(meshPlan, runtimeGraph, attentionRoute, bundle, { source, data: body.data });
+  const trace = meshExecution ? meshExecution.local_trace : null;
   const stamp = Date.now();
   writeJSON('MRL_Storage/MRL_MetaIR', `MRL_MetaIR_${stamp}.json`, bundle.metaIR);
   writeJSON('MRL_Storage/MRL_ParticleIR', `MRL_ParticleIR_${stamp}.json`, bundle.particleIR);
@@ -61,7 +93,6 @@ function runPipeline(body) {
   logger.log('MRL_PIPELINE_RUN',{filename, meta_hash:bundle.metaIR.meta_hash, particle_count:bundle.particleIR.particles.length, verification_pass:verification.pass});
   return { origin_signature:'MrLiouWord', product:'MRL_RuntimeOS_EnterpriseRuntimePlatform_CoreExecutable_v1_4_0', bundle, contextGraph, runtimeGraph, attentionRoute, meshPlan, meshExecution, verification, trace };
 }
-const mesh = new MRLRuntimeMeshController(ROOT, nodeManager, graphBuilder, router, executor, logger);
 const aiGateway = new MRLRuntimeOSAIModelGatewayService(ROOT);
 const skillService = new MRLRuntimeOSSkillModuleService(ROOT, aiGateway, logger);
 const artifactTransfer = new MRLRuntimeOSArtifactTransferService(ROOT);
@@ -114,7 +145,14 @@ const server = http.createServer(async (req,res)=>{
     if (req.url === '/api/mrl/verify/roundtrip' && req.method === 'POST') { const body = await readBody(req); return send(res,200,runPipeline({...body, execute:false}).verification); }
     if (req.url === '/api/mrl/runtime/execute' && req.method === 'POST') { const body = await readBody(req); return send(res,200,runPipeline(body)); }
     return send(res,404,{error:'MRL_ROUTE_NOT_FOUND', url:req.url});
-  } catch(e) { metrics.errors++; logger.log('MRL_SERVER_ERROR',{message:e.message}); return send(res,500,{error:'MRL_SERVER_ERROR', message:e.message, stack:e.stack}); }
+  } catch(e) {
+    metrics.errors++;
+    logger.log('MRL_SERVER_ERROR',{message:e.message, code:e.code || 500, error:e.error || 'MRL_SERVER_ERROR', stack:e.stack});
+    const code = e.code || 500;
+    const payload = { error:e.error || 'MRL_SERVER_ERROR', message:e.message };
+    if (MRL_CFG.expose_stack) payload.stack = e.stack;
+    return send(res,code,payload);
+  }
 });
 if (require.main === module) { server.listen(MRL_CFG.port, MRL_CFG.host, ()=>logger.log('MRL_SERVER_STARTED',{url:`http://${MRL_CFG.host}:${MRL_CFG.port}`})); }
 module.exports = { server, runPipeline, ROOT, MRL_CFG, jobs };
