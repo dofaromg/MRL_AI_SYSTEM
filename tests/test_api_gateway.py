@@ -301,6 +301,7 @@ class TestPostChat:
         assert body.get("error") == "'temperature' must be between 0.0 and 2.0"
         assert isinstance(body.get("trace_id"), str) and body["trace_id"]
 
+
     def test_chat_error_not_found_maps_to_404(self, srv):
         class _AssemblyNotFound:
             def chat(self, *args, **kwargs):
