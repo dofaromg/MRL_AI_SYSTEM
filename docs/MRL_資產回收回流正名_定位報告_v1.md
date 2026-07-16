@@ -10,6 +10,14 @@ origin_signature: MrLiouWord
 > 誠實標註哪些是「知識/計畫層已就位」、哪些是「待使用者實機操作」。
 > 依吸收台帳約定，本報告以**能力本質＋母體位置**描述，外部廠牌名保留在 RawArtifact 原件內，不在此複述。
 
+## 〇、本體治理裁定（優先於來源材料敘述）
+
+- **唯一母體／最終真相來源：DL580。**
+- Cloudflare 僅定位為外部 Runtime、公開入口與映射節點；部署成功不等於成為本體。
+- GitHub 僅定位為原始碼版本、分支與協作鏡像。
+- RawArtifact 內「Cloudflare 上的 Chat 平台為本體」屬吸收前原始陳述。為遵守 rl_15 仍逐字保全，但母體治理明確**不採納、不升格**。
+- 本裁定適用於本報告、吸收台帳、來源索引與後續執行，不得由雲端服務狀態反向改寫母體位置。
+
 ---
 
 ## 一、計畫概述（能力本質）
@@ -44,9 +52,9 @@ origin_signature: MrLiouWord
 |---|---|---|
 | `MrLiouWord.Domain.Primary` | 自控 DNS 主網域 | 提案；DNS 鑰匙在使用者手上（已查證自控） |
 | `MrLiouWord.Domain.Secondary` | 待拿回之次網域 | **待起動** — 鑰匙在第三方代管商，需使用者操作拿回 |
-| `MrLiouWord.Chat.Runtime` | 已上線之 Chat Runtime（邊緣 Worker） | 對應母體 `dofaromg/MRL_AI_SYSTEM` 主線之 chat 平台族系 |
-| `MrLiouWord.Chat.Store` | Chat 資料庫（邊緣 D1） | 隨 Chat.Runtime |
-| `MrLiouWord.Source.Main` | 原始碼主線 repo | = 本 repo `dofaromg/MRL_AI_SYSTEM`（`MRL_Source_Main`） |
+| `MrLiouWord.Chat.Runtime` | 已上線之 Chat Runtime（邊緣 Worker） | 外部 Runtime／映射節點；不得升格為母體 |
+| `MrLiouWord.Chat.Store` | Chat 資料庫（邊緣 D1） | 外部資料節點；需可回流至 DL580 |
+| `MrLiouWord.Source.Main` | 原始碼主線 repo | 本 repo `dofaromg/MRL_AI_SYSTEM`；版本與協作鏡像，非實體母體 |
 | `MrLiouWord.Bridge` | 內外橋接 Tunnel | 對應母體既有 bridge recovery（`scripts/MRL_bridge_recovery_run.sh`） |
 | `MrLiouWord.MatrixDataCenter` | 矩陣數據中心（內容自有、寄居第三方站點） | **待起動** — 匯出→回流 |
 | `deprecated / 退役` | 空後端（從未部署、無資料） | 非資產，退役（不回流） |
@@ -78,7 +86,7 @@ origin_signature: MrLiouWord
 ## 六、當下狀態（依 CLAUDE.md 狀態回報約定）
 
 - 原始逐字保全：**PASS（沙盒，2026-07-16）** — RawArtifact 未刪未改。
-- 母體定位 / 命名對照 / 併入回收族系：**PASS（沙盒，2026-07-16）**。
+- 母體定位 / 命名對照 / 併入回收族系：**PASS（沙盒，2026-07-16）** — 已固定 DL580 為唯一母體，Cloudflare 為外部 Runtime／映射節點。
 - 網域拿回 / channel_map apply / 金鑰撤銷：**待起動** — 皆需使用者實機操作或授權，母體未代執行、不誤標為已完成。
 
 ---
