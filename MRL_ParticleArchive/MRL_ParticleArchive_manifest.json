@@ -204,10 +204,12 @@
       "absorbed_at": "2026-07-16",
       "sha256": "dffdea418873482dc7fe3fe63a294ff218be4066bb6cd43895049d7085587865",
       "knowledge_doc": "docs/MRL_FlowSeed_反推放大公式_吸收報告_v1.md",
-      "signed": true,
+      "signed": false,
       "source_scope": "uploaded_source_material",
       "ownership": "MrLiouWord",
-      "governance_role": "absorbed_knowledge_node"
+      "governance_role": "absorbed_knowledge_node",
+      "embedded_signature": false,
+      "integrity": "sha256_provenance"
     },
     {
       "canonical_name": "MRL_AssetReclaim_Reflow_Naming_Plan_v1",
@@ -217,7 +219,7 @@
       "absorbed_at": "2026-07-16",
       "sha256": "84f3955185d2d10c96949ca648f3dc33d65fd2d5fe0a47951d96d0a13c204618",
       "knowledge_doc": "docs/MRL_資產回收回流正名_定位報告_v1.md",
-      "signed": true,
+      "signed": false,
       "source_scope": "uploaded_source_material",
       "ownership": "MrLiouWord",
       "governance_role": "absorbed_plan_node",
@@ -225,9 +227,11 @@
         "canonical_mother": "DL580",
         "cloudflare_role": "external_runtime_mirror",
         "cloudflare_as_mother": "rejected"
-      }
+      },
+      "embedded_signature": false,
+      "integrity": "sha256_provenance"
     }
   ],
   "_signature": "MrLiouWord",
-  "_sig_hash": "3efbc0919ce38ed686edc0c2f2e9fa228f4d102df5e6aa5a6cdb01c8b16b3740"
+  "_sig_hash": "ffcbedb20066adccefb27e376a2bc36389a269cf231ff8493dd44d7a9eb5c120"
 }
