@@ -3,7 +3,7 @@
   "source": "PR#19 (Copilot add-missing-features)",
   "origin_signature": "MrLiouWord",
   "particle_count": 16,
-  "all_signed": true,
+  "all_signed": false,
   "particles": [
     {
       "canonical_name": "MRL_EnvProductionExample_v1",
@@ -232,6 +232,8 @@
       "integrity": "sha256_provenance"
     }
   ],
+  "all_artifacts_embedded_signed": false,
+  "manifest_metadata_signed": true,
   "_signature": "MrLiouWord",
-  "_sig_hash": "ffcbedb20066adccefb27e376a2bc36389a269cf231ff8493dd44d7a9eb5c120"
+  "_sig_hash": "822e8953d4cc89f915c84704a9b56cfdc7a6762d75869b8a7a5f9b5cc93ee68d"
 }
