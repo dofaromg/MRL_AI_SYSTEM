@@ -2,7 +2,7 @@
   "library": "MRL_ParticleArchive",
   "source": "PR#19 (Copilot add-missing-features)",
   "origin_signature": "MrLiouWord",
-  "particle_count": 14,
+  "particle_count": 16,
   "all_signed": true,
   "particles": [
     {
@@ -229,5 +229,5 @@
     }
   ],
   "_signature": "MrLiouWord",
-  "_sig_hash": "884b55f88b09aa4cc35dddfc654b5ba1839a9154ecb7f73b199c992e8e218c36"
+  "_sig_hash": "3efbc0919ce38ed686edc0c2f2e9fa228f4d102df5e6aa5a6cdb01c8b16b3740"
 }
