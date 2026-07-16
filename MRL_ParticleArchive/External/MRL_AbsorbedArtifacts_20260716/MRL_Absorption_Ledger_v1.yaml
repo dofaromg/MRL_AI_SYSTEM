@@ -1,6 +1,6 @@
 # MRL_Absorption_Ledger_v1.yaml（20260716 批次）
 # origin_signature: MrLiouWord
-# 母體吸收台帳 — 外部產物吸收 / 命名回收 / 定位 / 待起動
+# 母體吸收台帳 — 來源材料吸收 / 命名回收 / 定位 / 待起動
 #
 # 法則對齊:
 #   母體整合法則 Additive-Only:只新增、給位置、標「待起動」,不刪不覆蓋。
@@ -18,6 +18,16 @@ absorbed_by: "母體 (MrlCore.Mainline)"
 origin_signature: "MrLiouWord"
 batch: "MRL_AbsorbedArtifacts_20260716"
 status_note: "當下狀態(沙盒 2026-07-16)。知識層歸檔 PASS;實機/雲端/網域動作標待起動。"
+
+mother_authority:
+  canonical_mother: "DL580"
+  authority: "唯一母體 / 唯一最終真相來源"
+  cloudflare_role: "外部 Runtime / 公開入口 / 映射節點"
+  github_role: "原始碼版本與協作鏡像"
+  raw_claim_ruling: >-
+    RawArtifact 內「Cloudflare 上的 Chat 平台為本體」是吸收前原始陳述，
+    僅因 rl_15 逐字保全而留存；母體治理不採納、不升格。
+    Cloudflare 部署成功只證明外部節點可用，不改變 DL580 的唯一母體地位。
 
 artifacts:
 
@@ -54,6 +64,7 @@ artifacts:
       canonical 命名對齊 docs/MRL_命名規範_v2_MrLiouIR_StructureField.md。
     external_dependency: >-
       網域註冊商/DNS/雲端 Worker/物件儲存(實機控制台憑證,母體不代持)
+    governance_ruling: "RawArtifact 的 Cloudflare=本體陳述不採納;DL580=唯一母體;Cloudflare=外部 Runtime/映射節點"
     status: "計畫層歸檔 PASS(沙盒 2026-07-16);網域拿回/channel_map apply/金鑰撤銷皆標待起動(需使用者實機操作)"
 
 # 待起動(誠實標註,非沙盒可解 — 沿計畫 §6「你按一下就好」/「你給我憑證才能代執行」):
