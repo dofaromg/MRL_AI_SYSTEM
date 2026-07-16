@@ -26,6 +26,7 @@ MRL_ParticleArchive/
 
 - 檔名以 `__` 攤平原始路徑（避免衝突）；原始路徑與 MRL canonical 名映射見 manifest。
 - 共 **13 粒子**，5677 行完整內容，全部 LAW-0 母體簽章（manifest verify=True）。
+- 上述 13 指 `PR19/` 內的嵌入簽章粒子；目前 manifest 總數為 **16**（13 個 PR19 粒子 + 3 個 External 條目）。20260716 的兩件 RawArtifact 為逐字保全，使用 SHA256 provenance 驗證，未嵌入 LAW-0 欄位；其索引 metadata 由頂層 manifest LAW-0 簽章涵蓋。
 
 ## External 來源材料保全批次（吸收前原貌，逐字保全）
 
@@ -34,7 +35,12 @@ MRL_ParticleArchive/
 ```
 External/
 ├── MRL_OpenGraphProtocol_v1.json                    # 外部協定規範
-├── MRL_AbsorbedArtifacts_20260531/                  # 感知分類/嵌入/建置/加速器/註冊表(5 產物)
+├── MRL_AbsorbedArtifacts_20260531/                  # 5 產物 + 1 吸收台帳
+│   ├── MRL_AcceleratorStrategy_TPU_Knowledge_v1.pdf
+│   ├── MRL_BuildPipeline_Blueprint_v1.yml
+│   ├── MRL_PerceptionClassifier_KnowledgeDoc_v1.md
+│   ├── MRL_SemanticEmbedding_RawArtifact_v1.zip
+│   ├── MRL_SystemRegistry_Config_v1.yaml
 │   └── MRL_Absorption_Ledger_v1.yaml
 └── MRL_AbsorbedArtifacts_20260716/                  # FlowSeed 反推公式 + 資產回收正名計畫(2 產物)
     ├── MRL_FlowSeed_ReverseInference_Formula_RawArtifact_v1.txt   # 反推公式總表 + RRP/CPP 元代碼
