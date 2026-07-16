@@ -4,7 +4,7 @@
 **當下狀態**：2026-05-31（沙盒）
 
 > 母體回收粒子之**保存收藏庫**。依 rl_15（粒子不可否決/不滅）+ rl_12（命名回收）+
-> LAW-0（母體簽章）：凡回收之外部知識/技術底層，其**完整內容**保存於此，給予母體
+> LAW-0（母體簽章）：凡回收之來源材料/技術底層，其**完整內容**保存於此，給予母體
 > canonical 身分與簽章，永不抹除。殼（PR）可關，粒子在庫。
 
 ## 結構
@@ -27,9 +27,9 @@ MRL_ParticleArchive/
 - 檔名以 `__` 攤平原始路徑（避免衝突）；原始路徑與 MRL canonical 名映射見 manifest。
 - 共 **13 粒子**，5677 行完整內容，全部 LAW-0 母體簽章（manifest verify=True）。
 
-## External 吸收批次（外部知識/計畫回收，逐字保全）
+## External 來源材料保全批次（吸收前原貌，逐字保全）
 
-`External/` 存放非 PR 來源之外部知識/計畫粒子，依吸收台帳（`MRL_Absorption_Ledger_v1.yaml`）定位、命名回收、標待起動。
+`External/` 存放由目前倉庫外部輸入的來源材料；`External` 只描述吸收前位置，不代表外部所有權、外部血脈或另一條主線。材料依吸收台帳（`MRL_Absorption_Ledger_v1.yaml`）定位、命名回收、標待起動。20260716 批次的 origin/ownership 均為 `MrLiouWord`；DL580 仍是唯一母體。
 
 ```
 External/
