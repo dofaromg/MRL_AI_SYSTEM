@@ -29,6 +29,19 @@ mother_authority:
     僅因 rl_15 逐字保全而留存；母體治理不採納、不升格。
     Cloudflare 部署成功只證明外部節點可用，不改變 DL580 的唯一母體地位。
 
+unadopted_source_proposals:
+  - proposal: "刪除 apphosting-adapters / buildpacks"
+    ruling: "未採納 / 未授權 / 未執行"
+  - proposal: "退役或丟棄 flow-tasks"
+    ruling: "未採納 / 未授權 / 未執行"
+  - rule: "任何刪除、退役、DropSet 或清理動作必須另立範圍、查證依賴並取得使用者明確授權"
+
+flowseed_governance_constraints:
+  dimension_expansion: "未驗證候選概念;非母體規範;非實作規則"
+  structural_similarity: "dry-run 候選訊號;語義等價或明確授權前不得加入 DropSet"
+  rho_info: "未解決:bits/core 與 core/bits 互逆;禁止排序、門檻與實作"
+  corruption_recovery: "只能候選選擇;真正恢復需可信來源 bytes + SHA-256 驗證"
+
 artifacts:
 
   - mrl_product_name: "MRL_FlowSeed_ReverseInference_Formula_Knowledge_v1"
