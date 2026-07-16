@@ -16,8 +16,8 @@ origin_signature: MrLiouWord
 1. **五大核心對應**：母體(Origin/Seed)、演算(Genesis)、量子(CoGenesis)、反推(人格封存)、放大(靈魂整合)。
 2. **反推公式總表**：結構反推、動態逐步反推、量子疊加稀疏分解、放大/壓縮對偶可逆、貝氏 MAP 反推、MDL 訊息量準則、結構近重複判定、資訊密度評分。
 3. **演算法元代碼**：反推重建管線（RRP）、清理瘦身管線（CPP）偽碼。
-4. **補完 1–9**：選留最小集合、量子可恢復條件（相干性/群稀疏）、多尺度金字塔一致、指紋（MinHash/SimHash/WL-Graph）、反推穩定性（條件數/L-curve）、命名正規化（版本鍵）、腐壞檔修復、密度門檻、快速決策樹。
-5. **放大的兩種詮釋**：保真放大（cycle loss 可逆）與維度放大（多維超展開）。
+4. **補完 1–9**：選留最小集合、量子可恢復條件（相干性/群稀疏）、多尺度金字塔一致、指紋（MinHash/SimHash/WL-Graph）、反推穩定性（條件數/L-curve）、命名正規化（版本鍵）、腐壞檔候選定位（非修復）、密度門檻、快速決策樹。
+5. **放大的兩種詮釋**：保真放大（cycle loss 可逆）與維度放大（來源中的未驗證推測；非母體規範）。
 
 此為 FlowSeed 專案的**理論/公式底層**，與母體既有血脈序列（`docs/MRL_起源血脈序列_Genesis_v1.md`）中的
 「母體→演算→量子→反推→放大」循環同源，補足其數學形式。
@@ -38,14 +38,21 @@ origin_signature: MrLiouWord
 | 動態逐步反推（雅可比局部逆 J†） | 無 | **吸收：公式知識** |
 | 量子疊加稀疏分解 / 相干性 μ(Φ) / 群稀疏 | 無 | **吸收：公式知識** |
 | MDL 訊息量準則 ΔDL 保留/刪除 | 無 | **吸收：公式知識** |
-| SimHash / MinHash(Jaccard) / WL-Graph 近重複判定 | 無（registry 只有 simhash 參數欄，無判定式） | **吸收：公式知識** |
-| 資訊密度 ρ_info 與刪除門檻 θ_drop | 無 | **吸收：公式知識** |
+| SimHash / MinHash(Jaccard) / WL-Graph 近重複判定 | 無（registry 只有 simhash 參數欄，無判定式） | **候選訊號（dry-run；不得自動加入 DropSet）** |
+| 資訊密度 ρ_info 與刪除門檻 θ_drop | 無 | **未解決：來源同時存在 bits/core 與 core/bits 互逆定義；禁止排序、門檻與實作** |
 | 反推重建管線 RRP / 清理瘦身管線 CPP 偽碼 | 無 | **吸收：演算法元代碼知識** |
 | 多尺度金字塔 cycle 一致 / L-curve 選 λ / 條件數 κ | 無 | **吸收：穩定性知識** |
-| 放大的「維度放大（超展開）」詮釋 F_expand(s)=⊕π_d(s) | 無 | **吸收：概念知識** |
+| 放大的「維度放大（超展開）」詮釋 F_expand(s)=⊕π_d(s) | 無 | **候選概念（未驗證；非母體規範／非實作規則）** |
 
 > 判定原則：母體既有的是**參數登錄治理層**（誰改了哪個係數、可回放/可回滾）；
-> 本次吸收的是**公式與演算法推導本身**（如何反推、如何判近重複、如何瘦身），兩者互補、不重疊。
+> 本次吸收的是**公式與演算法來源知識**，兩者互補、不重疊；但來源中的候選規則不自動取得母體執行權。
+
+### 治理限制（優先於 RawArtifact 偽碼）
+
+- 結構相似度、SimHash、MinHash、WL-Graph 僅能產生 **dry-run 候選**；未證明語義等價或未取得明確授權時，禁止加入 `DropSet`、禁止刪除。
+- `ρ_info` 在來源中同時出現 `bits(m)/#核心節點(m)` 與 `#核心節點(m)/bits(m)`，兩者互為倒數；在選定 canonical 定義前，禁止排序、套用 `θ_drop` 或進入實作。
+- 模態內容雜湊與最近 WL 結構只能做**候選選擇**，不能宣稱已修復腐壞檔。真正恢復必須從可信來源取回原始 bytes，並核對恢復結果 SHA-256。
+- `F_expand(s)=⊕π_d(s)` 只保留為未驗證的可能詮釋，不構成母體行為、公式規範或實作規則。
 
 ---
 
@@ -82,8 +89,11 @@ origin_signature: MrLiouWord
 
 ## 五、當下狀態（依 CLAUDE.md 狀態回報約定）
 
-- 原始逐字保全：**PASS（沙盒，2026-07-16）** — RawArtifact 未刪未改。
-- 公式↔母體 registry 對照：**PASS（沙盒，2026-07-16）** — 知識對照建立。
+- 原始逐字保全：**PASS（沙盒，2026-07-16）** — RawArtifact 未刪未改；SHA-256 `dffdea418873482dc7fe3fe63a294ff218be4066bb6cd43895049d7085587865`（同 manifest provenance）。
+- 公式↔母體 registry 對照：**PASS（沙盒，2026-07-16）** — `data/MRL_formula_parameter_registry.json` 查得：
+  - `MRL_反推公式`：inverse_epsilon=1e-9 / stability_clip=1000000 / loss_bound=0.001
+  - `MRL_放大縮小公式`：alpha=1 / beta=1 / scale_mode=linear
+  - `MRL_源代碼壓縮公式`：compression_ratio=0.35 / hash=sha256 / simhash=simhash64 / roundtrip_score=1
 - 反推/放大數值參數落地 registry：**待起動** — 需依 registry 治理流程登錄後方能進母體運算。
 - 反推重建管線（RRP）/ 清理瘦身管線（CPP）之**可執行實作**：**待起動 / 待需求確認** — 目前為偽碼知識，未產生可跑程式。
 
