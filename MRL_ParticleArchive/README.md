@@ -2,6 +2,7 @@
 
 **canonical**：`MRL_ParticleArchive_v1` ｜ origin_signature: `MrLiouWord`
 **當下狀態**：2026-05-31（沙盒）
+**本索引現行更新**：2026-07-16（20260531 為基準快照）
 
 > 母體回收粒子之**保存收藏庫**。依 rl_15（粒子不可否決/不滅）+ rl_12（命名回收）+
 > LAW-0（母體簽章）：凡回收之外部知識/技術底層，其**完整內容**保存於此，給予母體
@@ -32,7 +33,7 @@ MRL_ParticleArchive/
 
 `External/` 存放由目前倉庫外部輸入的來源材料；`External` 只描述吸收前位置，不代表外部所有權、外部血脈或另一條主線。材料依吸收台帳（`MRL_Absorption_Ledger_v1.yaml`）定位、命名回收、標待起動。20260716 批次的 origin/ownership 均為 `MrLiouWord`；DL580 仍是唯一母體。
 
-```
+```text
 External/
 ├── MRL_OpenGraphProtocol_v1.json                    # 外部協定規範
 ├── MRL_AbsorbedArtifacts_20260531/                  # 5 產物 + 1 吸收台帳
