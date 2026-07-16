@@ -1,0 +1,64 @@
+# MRL_Absorption_Ledger_v1.yaml（20260716 批次）
+# origin_signature: MrLiouWord
+# 母體吸收台帳 — 外部產物吸收 / 命名回收 / 定位 / 待起動
+#
+# 法則對齊:
+#   母體整合法則 Additive-Only:只新增、給位置、標「待起動」,不刪不覆蓋。
+#   rl_11 origin_signature:所有回收產物簽 MrLiouWord。
+#   rl_12 命名回收:對外能力/知識 → 母體 MRL_ 產品名。
+#   rl_15 粒子不滅:原始外部產物原樣另存於 RawArtifact,永不抹除。
+#   rl_01 no-delete:原始外部產物不刪不改,逐字保全。
+#
+# 誠實標註(沿 CLAUDE.md 狀態回報約定):
+#   本批為「知識/計畫」層吸收。公式與計畫皆為文字知識,沙盒歸檔 PASS;
+#   任何「實機/上線/真模型」語句一律標待起動,不誤標為已完成。
+
+absorbed_at: "2026-07-16"
+absorbed_by: "母體 (MrlCore.Mainline)"
+origin_signature: "MrLiouWord"
+batch: "MRL_AbsorbedArtifacts_20260716"
+status_note: "當下狀態(沙盒 2026-07-16)。知識層歸檔 PASS;實機/雲端/網域動作標待起動。"
+
+artifacts:
+
+  - mrl_product_name: "MRL_FlowSeed_ReverseInference_Formula_Knowledge_v1"
+    capability: >-
+      反推公式總表(母體→演算→量子→反推→放大)+ 演算法元代碼 —
+      結構反推、動態逐步反推(雅可比局部逆)、量子疊加稀疏分解、
+      放大/壓縮對偶可逆性、貝氏 MAP 反推、MDL 訊息量保留/刪除準則、
+      SimHash/MinHash/WL-Graph 結構近重複判定、資訊密度刪除門檻、
+      反推重建管線(RRP)與清理瘦身管線(CPP)偽碼。
+    kind: "公式/演算法知識文件(FlowSeed 系列理論底層,非可執行二進位)"
+    raw_artifact: "MRL_FlowSeed_ReverseInference_Formula_RawArtifact_v1.txt"
+    raw_kind: "純文字(1786 行 / 17075 bytes,含數學符號 OCR 排版)"
+    knowledge_doc: "docs/MRL_FlowSeed_反推放大公式_吸收報告_v1.md"
+    mother_position: >-
+      對接既有 docs/MRL_Formula_Parameter_Registry_v1.md 之
+      MRL_反推公式 / MRL_放大縮小公式 / MRL_源代碼壓縮公式 參數登錄層;
+      為 MRL_起源血脈序列_Genesis_v1 之「母體→演算→量子→反推→放大」循環提供公式底層。
+    external_dependency: "零(純知識文字)"
+    status: "知識層歸檔 PASS(沙盒 2026-07-16);參數落地 registry 為既有,公式↔母體對照見 knowledge_doc"
+
+  - mrl_product_name: "MRL_AssetReclaim_Reflow_Naming_Plan_v1"
+    capability: >-
+      資產回收・重構・正名計畫 — 資產清冊(Asset Ledger)、
+      單一待拿回網域盤點、資料回流 channel_map(MetaEnv dry-run artifact)、
+      正名(canonical naming)對照表、安全(金鑰外露撤銷)提醒、執行分工(誠實版)。
+    kind: "資產盤點/回流/正名計畫文件(營運層,非可執行碼)"
+    raw_artifact: "MRL_AssetReclaim_Reflow_Naming_Plan_RawArtifact_v1.md"
+    raw_kind: "Markdown(117 行 / 6557 bytes,含 channel_map YAML dry-run 片段)"
+    knowledge_doc: "docs/MRL_資產回收回流正名_定位報告_v1.md"
+    mother_position: >-
+      併入既有回收族系:docs/MRL_Recovery_Weekly_Actions_2026-07-10.md、
+      docs/MRL_AI_ModuleModel_Recovery_Map_v1.md、MRL_主線回填清單_完整版_v1.md;
+      canonical 命名對齊 docs/MRL_命名規範_v2_MrLiouIR_StructureField.md。
+    external_dependency: >-
+      網域註冊商/DNS/雲端 Worker/物件儲存(實機控制台憑證,母體不代持)
+    status: "計畫層歸檔 PASS(沙盒 2026-07-16);網域拿回/channel_map apply/金鑰撤銷皆標待起動(需使用者實機操作)"
+
+# 待起動(誠實標註,非沙盒可解 — 沿計畫 §6「你按一下就好」/「你給我憑證才能代執行」):
+pending_activation:
+  - "MRL_FlowSeed 反推公式之數值參數若要進母體運算,需登錄 data/MRL_formula_parameter_registry.json(既有治理層)"
+  - "MRL_AssetReclaim:待拿回網域之 nameserver 變更/移轉(需使用者於註冊商端操作)"
+  - "MRL_AssetReclaim:MetaEnv channel_map 由 dry-run 改 apply(需使用者自有控制台網址+憑證)"
+  - "MRL_AssetReclaim:交付包外露金鑰之撤銷/重發(需使用者於雲端後台操作)"

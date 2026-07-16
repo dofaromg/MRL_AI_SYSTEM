@@ -56,6 +56,16 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### 外部知識吸收：FlowSeed 反推公式 + 資產回收正名計畫（MRL_AbsorbedArtifacts_20260716）
+- `MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260716/` — 母體整合法則（Additive-Only）吸收兩件外部產物，原始逐字保全（rl_15 不滅）：
+  - `MRL_FlowSeed_ReverseInference_Formula_RawArtifact_v1.txt` — FlowSeed 反推公式總表（母體→演算→量子→反推→放大）+ 演算法元代碼（RRP/CPP 偽碼）
+  - `MRL_AssetReclaim_Reflow_Naming_Plan_RawArtifact_v1.md` — 資產回收・重構・正名計畫 v1（資產清冊 + MetaEnv channel_map + 正名對照）
+  - `MRL_Absorption_Ledger_v1.yaml` — 本批吸收台帳（命名回收、母體定位、待起動標註）
+- `docs/MRL_FlowSeed_反推放大公式_吸收報告_v1.md` — 去重蒸餾：公式↔既有 `MRL_Formula_Parameter_Registry`（反推/放大縮小/源代碼壓縮公式）對照；registry 存參數、本批存公式推導，兩者互補
+- `docs/MRL_資產回收回流正名_定位報告_v1.md` — 母體定位：併入既有回收族系（Recovery_Map / 主線回填清單），canonical 命名對齊命名規範 v2；網域拿回/apply/金鑰撤銷誠實標「待起動（需使用者實機）」
+- `08_sources/sources.manifest.yaml` — 登錄吸收來源 `flowseed_reverse_inference_formula_absorption_v1`、`asset_reclaim_reflow_naming_plan_absorption_v1`
+- `MRL_ParticleArchive/MRL_ParticleArchive_manifest.json` + `README.md` — 追加兩件 external_particles（含 sha256 provenance）與 External 批次索引
+
 #### 神經符號混合知識庫（MRL_Hybrid_Knowledge_Base_v1 · Notion 設計四構件之一 · 首個可運行構件）
 - `09_workflow/MRL_Hybrid_Knowledge_Base_v1.py` — 神經符號混合知識庫:符號三元組庫(subject/predicate/object + 謂詞/實體倒排索引)+ 神經向量庫(**重用** `03_memory/vector/vector_store.py` + `MRL_SemanticEmbedding_Core_v1`,不重造餘弦/持久化)+ 符號⇄神經映射索引 + 一致性偵測(矛盾/冗餘,**只報不刪** rl_01/rl_15;subsumption 誠實標記 `[待實作]`)+ 知識圖 BFS 最短路徑;精確/相似/混合查詢;`incremental_update`/`integrate_knowledge`/`refine_knowledge`。LAW-0 簽章持久化(`MRL_utils.embed_signature`)。
 - `tests/test_MRL_hybrid_knowledge_base_v1.py` — 18 項驗收(pure unittest,沙盒可重現):精確查詢、相似召回、混合合併去重、矛盾(功能性+顯式否定)、冗餘、圖 BFS 多跳/不可達、跨實例持久化、LAW-0 verify、精煉只報不刪。
