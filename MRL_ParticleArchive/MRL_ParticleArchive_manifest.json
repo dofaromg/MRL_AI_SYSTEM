@@ -195,6 +195,26 @@
       "archived_as": "MRL_ParticleArchive/External/MRL_OpenGraphProtocol_v1.json",
       "kind": "external_protocol_spec",
       "signed": true
+    },
+    {
+      "canonical_name": "MRL_FlowSeed_ReverseInference_Formula_Knowledge_v1",
+      "source": "FlowSeed 反推公式總表 + 演算法元代碼（使用者上傳）",
+      "archived_as": "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260716/MRL_FlowSeed_ReverseInference_Formula_RawArtifact_v1.txt",
+      "kind": "external_formula_knowledge",
+      "absorbed_at": "2026-07-16",
+      "sha256": "dffdea418873482dc7fe3fe63a294ff218be4066bb6cd43895049d7085587865",
+      "knowledge_doc": "docs/MRL_FlowSeed_反推放大公式_吸收報告_v1.md",
+      "signed": true
+    },
+    {
+      "canonical_name": "MRL_AssetReclaim_Reflow_Naming_Plan_v1",
+      "source": "MRL 資產回收・重構・正名 計畫 v1（使用者上傳）",
+      "archived_as": "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260716/MRL_AssetReclaim_Reflow_Naming_Plan_RawArtifact_v1.md",
+      "kind": "external_ops_plan",
+      "absorbed_at": "2026-07-16",
+      "sha256": "84f3955185d2d10c96949ca648f3dc33d65fd2d5fe0a47951d96d0a13c204618",
+      "knowledge_doc": "docs/MRL_資產回收回流正名_定位報告_v1.md",
+      "signed": true
     }
   ],
   "_signature": "MrLiouWord",

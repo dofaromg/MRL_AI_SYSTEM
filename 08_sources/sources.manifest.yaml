@@ -85,6 +85,35 @@ sources:
     implementations:
       - "08_sources/free_byok_providers_v1.yaml"   # 供應商目錄（知識層，待起動：OpenAIGateway）
 
+  - id: flowseed_reverse_inference_formula_absorption_v1
+    name: "FlowSeed 反推公式總表 + 演算法元代碼（母體→演算→量子→反推→放大）"
+    path: "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260716/MRL_FlowSeed_ReverseInference_Formula_RawArtifact_v1.txt"
+    absorbed: "2026-07-16"
+    origin_signature: MrLiouWord
+    role: >-
+      FlowSeed 系列理論/公式底層 —— 結構反推、動態逐步反推(雅可比局部逆)、
+      量子疊加稀疏分解、放大/壓縮對偶可逆(cycle loss)、貝氏 MAP 反推、
+      MDL 訊息量保留/刪除、SimHash/MinHash/WL-Graph 近重複判定、資訊密度門檻、
+      反推重建管線(RRP)與清理瘦身管線(CPP)偽碼。與既有參數登錄治理層互補(公式 vs 參數)。
+    dedup_report: "docs/MRL_FlowSeed_反推放大公式_吸收報告_v1.md"
+    implementations:
+      - "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260716/MRL_FlowSeed_ReverseInference_Formula_RawArtifact_v1.txt"  # 原始逐字(rl_15)
+      - "docs/MRL_FlowSeed_反推放大公式_吸收報告_v1.md"   # 公式↔母體 registry 對照(知識層)
+
+  - id: asset_reclaim_reflow_naming_plan_absorption_v1
+    name: "MRL 資產回收・重構・正名 計畫 v1（資產清冊 + channel_map + 正名對照）"
+    path: "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260716/MRL_AssetReclaim_Reflow_Naming_Plan_RawArtifact_v1.md"
+    absorbed: "2026-07-16"
+    origin_signature: MrLiouWord
+    role: >-
+      資產盤點/回流/正名營運層計畫 —— 資產清冊(控制權現況+動作)、單一待拿回次網域、
+      MetaEnv channel_map(dry-run artifact)、canonical 命名對照、外露金鑰撤銷安全提醒。
+      併入既有回收族系(Recovery_Map / 主線回填清單);網域拿回/apply/金鑰撤銷標待起動(需使用者實機)。
+    dedup_report: "docs/MRL_資產回收回流正名_定位報告_v1.md"
+    implementations:
+      - "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260716/MRL_AssetReclaim_Reflow_Naming_Plan_RawArtifact_v1.md"  # 原始逐字(rl_15)
+      - "docs/MRL_資產回收回流正名_定位報告_v1.md"   # 母體定位/命名對照(定位層)
+
 # Usage:
 # - append here whenever you add a new source file
 # - never delete canonical sources; deprecate via metadata
