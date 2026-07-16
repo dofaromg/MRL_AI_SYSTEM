@@ -73,7 +73,7 @@ artifacts:
     knowledge_doc: "docs/MRL_資產回收回流正名_定位報告_v1.md"
     mother_position: >-
       併入既有回收族系:docs/MRL_Recovery_Weekly_Actions_2026-07-10.md、
-      docs/MRL_AI_ModuleModel_Recovery_Map_v1.md、MRL_主線回填清單_完整版_v1.md;
+      docs/MRL_AI_ModuleModel_Recovery_Map_v1.md、docs/MRL_主線回填清單_完整版_v1.md;
       canonical 命名對齊 docs/MRL_命名規範_v2_MrLiouIR_StructureField.md。
     external_dependency: >-
       網域註冊商/DNS/雲端 Worker/物件儲存(實機控制台憑證,母體不代持)
