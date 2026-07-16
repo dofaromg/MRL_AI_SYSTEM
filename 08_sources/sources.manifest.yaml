@@ -108,7 +108,9 @@ sources:
     role: >-
       資產盤點/回流/正名營運層計畫 —— 資產清冊(控制權現況+動作)、單一待拿回次網域、
       MetaEnv channel_map(dry-run artifact)、canonical 命名對照、外露金鑰撤銷安全提醒。
-      併入既有回收族系(Recovery_Map / 主線回填清單);網域拿回/apply/金鑰撤銷標待起動(需使用者實機)。
+      治理裁定:DL580 為唯一母體;RawArtifact 內 Cloudflare=本體陳述不採納;
+      Cloudflare 僅為外部 Runtime/公開入口/映射節點。併入既有回收族系(Recovery_Map / 主線回填清單);
+      網域拿回/apply/金鑰撤銷標待起動(需使用者實機)。
     dedup_report: "docs/MRL_資產回收回流正名_定位報告_v1.md"
     implementations:
       - "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260716/MRL_AssetReclaim_Reflow_Naming_Plan_RawArtifact_v1.md"  # 原始逐字(rl_15)
