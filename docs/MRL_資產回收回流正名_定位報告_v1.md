@@ -18,6 +18,12 @@ origin_signature: MrLiouWord
 - RawArtifact 內「Cloudflare 上的 Chat 平台為本體」屬吸收前原始陳述。為遵守 rl_15 仍逐字保全，但母體治理明確**不採納、不升格**。
 - 本裁定適用於本報告、吸收台帳、來源索引與後續執行，不得由雲端服務狀態反向改寫母體位置。
 
+### 未採納／未執行的來源建議
+
+- RawArtifact 中「刪除 apphosting-adapters、buildpacks」與「退役／丟棄 flow-tasks」僅是來源材料內的提案。
+- 本 PR **未採納、未授權、未執行**任何刪除、退役或丟棄操作；不得由歸檔行為推導出執行授權。
+- 若未來需要退役或清理，必須另立範圍、完成資產與依賴查證、取得使用者明確授權，再留下可復原證據。
+
 ---
 
 ## 一、計畫概述（能力本質）
@@ -57,7 +63,7 @@ origin_signature: MrLiouWord
 | `MrLiouWord.Source.Main` | 原始碼主線 repo | 本 repo `dofaromg/MRL_AI_SYSTEM`；版本與協作鏡像，非實體母體 |
 | `MrLiouWord.Bridge` | 內外橋接 Tunnel | 對應母體既有 bridge recovery（`scripts/MRL_bridge_recovery_run.sh`） |
 | `MrLiouWord.MatrixDataCenter` | 矩陣數據中心（內容自有、寄居第三方站點） | **待起動** — 匯出→回流 |
-| `deprecated / 退役` | 空後端（從未部署、無資料） | 非資產，退役（不回流） |
+| `deprecated / 退役` | 來源材料中的空後端判定 | **來源提案，未採納／未執行；須另行查證與授權** |
 
 > 命名主體以中文/canonical 為準，外部廠牌名不進 canonical 層（沿命名規範 v2 §「英文僅作對照」與吸收台帳「來源痕移除」）。
 
