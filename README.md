@@ -1,6 +1,97 @@
-# MRL_AI_SYSTEM
+# Mrliouword — 唯一權威母體系統
 
-FlowAgent / MRL monorepo — compliance + trace + runtime + memory.
+**Mrliouword** is the single authoritative mother system for the MR.liou AI/AGI platform —
+encompassing compliance, trace, runtime, memory, and agent orchestration.
+
+> 怎麼過去，就怎麼回來
+
+**Python package**: `mrliouword` · **CLI**: `mrliouword` · **API**: `/api/v1`
+
+---
+
+## 快速開始 Quick Start
+
+### 安裝依賴
+
+```bash
+pip install -r requirements.txt
+# 開發環境
+pip install -e ".[dev]"
+```
+
+### 驗證命令
+
+```bash
+# 健康檢查
+python -c "
+import sys; sys.path.insert(0,'09_workflow'); sys.path.insert(0,'03_memory/merkle'); sys.path.insert(0,'03_memory/vector')
+from mrliouword.api import HealthProbe; p = HealthProbe(); s = p.check()
+print(s.status, s.subsystems)
+"
+
+# 執行測試套件
+python -m pytest tests/ -v --tb=short
+
+# CLI（安裝後）
+mrliouword version
+mrliouword health
+mrliouword trace emit runtime.start --payload '{"module":"flowcore"}'
+```
+
+### 啟動 API Server
+
+```bash
+python 09_workflow/api_gateway.py serve --host 0.0.0.0 --port 7771
+# 或
+mrliouword api serve --port 7771
+```
+
+---
+
+## 命名規範
+
+| 識別 | 規範值 |
+|------|--------|
+| 產品名稱 | `Mrliouword` |
+| Python 套件 | `mrliouword` |
+| CLI | `mrliouword` |
+| 環境變數（新） | `MRLIOUWORD_*` |
+| 環境變數（舊，相容） | `MRL_*` |
+| API base path | `/api/v1` |
+| origin_signature | `MrLiouWord` |
+
+詳細命名政策：[docs/mrliouword_naming_policy_v1.md](docs/mrliouword_naming_policy_v1.md)
+
+---
+
+## 架構文件
+
+- [系統架構與模組依賴](docs/mrliouword_architecture_v1.md)
+- [外部材料盤點 / 去重蒸餾決策](docs/mrliouword_external_inventory_v1.md)
+- [命名規範與遷移政策](docs/mrliouword_naming_policy_v1.md)
+- [架構決策紀錄 ADR](docs/mrliouword_adrs_v1.md)
+
+---
+
+## mrliouword Python 套件
+
+```python
+# 公開介面（新程式請使用此路徑）
+from mrliouword import MemoryStore, Tracer, MrliouwordConfig, HealthProbe
+from mrliouword.schemas import TraceEvent, MemoryEntry, embed_signature, verify_signature
+
+# 垂直整合流程
+cfg = MrliouwordConfig()
+tracer = Tracer()
+memory = MemoryStore()
+
+event = TraceEvent(event_type="runtime.start", payload={"module": "flowcore"})
+tracer.emit(event)
+
+entry_id = memory.store({"trace_id": event.trace_id, "type": "runtime_event"})
+```
+
+---
 
 ## Mother Core Assembly
 

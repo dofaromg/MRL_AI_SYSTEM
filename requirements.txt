@@ -1,0 +1,10 @@
+# Mrliouword runtime dependencies
+# Python >= 3.11 required
+
+# HTTP client (used in 04_runtime/flowcore_loop.py for FSDirectory lookups)
+requests==2.31.0
+
+# ── Test dependencies (also installed in CI) ──────────────────────────────────
+# These are only needed for development/CI; production deployments can omit them.
+# pytest>=8.0.0
+# pytest-cov>=5.0.0

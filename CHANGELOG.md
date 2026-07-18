@@ -1,12 +1,58 @@
 # Changelog
 
-All notable changes to MRL_AI_SYSTEM will be documented in this file.
+All notable changes to **Mrliouword** (formerly MRL_AI_SYSTEM) will be documented in this file.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
-## [Unreleased]
+## [Unreleased] — Mrliouword 權威母體正式化
+
+### Added
+
+#### Mrliouword Python 套件（`mrliouword/`）— 唯一權威命名空間
+
+- `mrliouword/__init__.py` — 公開介面（`MrliouwordConfig`, `MemoryStore`, `Tracer`, `HealthProbe`, `TraceEvent`, `embed_signature`, `verify_signature`）
+- `mrliouword/schemas.py` — 零依賴資料契約層（`TraceEvent`, `MemoryEntry`, `HealthStatus`, `ErrorResponse`, `embed_signature`, `verify_signature`）；LAW-0 簽章與 `MRL_utils.py` 位元相容（整合測試驗證）
+- `mrliouword/config.py` — 封裝 `config_manager.py`；`MRLIOUWORD_` 環境變數前綴支援
+- `mrliouword/trace.py` — 結構化追蹤器（`Tracer`）；封裝 MerkleChain，支援 correlation_id
+- `mrliouword/memory.py` — 記憶儲存器（`MemoryStore`）；整合 Merkle chain + vector store + LAW-0 簽章
+- `mrliouword/api.py` — 健康探針（`HealthProbe`）；無需啟動 HTTP server，所有子系統可獨立驗證
+- `mrliouword/cli.py` — CLI 入口（`mrliouword`）；`version / health / config / trace emit / memory store / api serve`
+
+#### 依賴與套件宣告
+
+- `requirements.txt` — 依賴固定（`requests==2.31.0`）
+- `pyproject.toml` — 套件宣告（`mrliouword`），CLI 入口點 `mrliouword = "mrliouword.cli:main"`，ruff lint 設定
+
+#### 設定層升級
+
+- `09_workflow/config_manager.py` — 新增 `MRLIOUWORD_` 環境變數前綴支援（`MRLIOUWORD_` > `MRL_` > JSON > 預設值）；更新 docstring
+
+#### 機器可讀元件清單
+
+- `data/mrliouword_manifest.json` — 防止未來再出現多個權威來源的唯一元件清單
+
+#### 整合測試
+
+- `tests/test_mrliouword_integration_v1.py` — 36 個測試覆蓋 runtime→trace→memory→API/CLI 完整垂直流程（沙盒 PASS，2026-07-18）
+
+#### 架構與治理文件
+
+- `docs/mrliouword_external_inventory_v1.md` — 8 個外部儲存庫盤點、去重蒸餾決策紀錄（4 個無法存取，誠實標記）
+- `docs/mrliouword_architecture_v1.md` — 系統架構、L0–L7 層級圖、模組依賴、Repository Map
+- `docs/mrliouword_naming_policy_v1.md` — 命名規範、遷移路徑、machine-readable 元件清單
+- `docs/mrliouword_adrs_v1.md` — 架構決策紀錄 ADR-001~006
+
+#### CI 品質閘升級
+
+- `.github/workflows/deploy.yml` — 新增 lint（ruff）、coverage、依賴掃描（pip-audit）；固定第三方 Action commit SHA；最小 `permissions: contents: read`；release archive 更名為 `mrliouword-{version}.zip`
+
+#### README 更新
+
+- `README.md` — 更新為 Mrliouword 權威定位，新增快速開始、驗證命令、套件使用範例、架構文件連結
+
+---
 
 ### Added
 

@@ -191,16 +191,24 @@ class ConfigManager:
         """
         Retrieve a config value by dotted key.
 
-        Environment variable ``MRL_<KEY_UPPER>`` (dots → underscores) takes
-        precedence over the JSON value.
+        Environment variable priority (high → low):
+          1. ``MRLIOUWORD_<KEY_UPPER>`` (canonical Mrliouword prefix)
+          2. ``MRL_<KEY_UPPER>``        (legacy prefix, backward-compatible)
+          3. JSON config file value
+          4. Built-in default
 
         Examples
         --------
-        ``cfg.get("llm.default_model")``  →  env var ``MRL_LLM_DEFAULT_MODEL``
+        ``cfg.get("llm.default_model")``
+          →  ``MRLIOUWORD_LLM_DEFAULT_MODEL``  (or ``MRL_LLM_DEFAULT_MODEL``)
         """
-        # Check environment variable first
-        env_key = "MRL_" + key.upper().replace(".", "_")
-        env_val = os.environ.get(env_key)
+        # Check environment variable first.
+        # Priority: MRLIOUWORD_<KEY> > MRL_<KEY> > JSON config > default.
+        env_suffix = key.upper().replace(".", "_")
+        env_val = (
+            os.environ.get("MRLIOUWORD_" + env_suffix)
+            or os.environ.get("MRL_" + env_suffix)
+        )
         if env_val is not None:
             # Coerce to the type of the default value
             existing = _nested_get(self._data, key)
