@@ -2,7 +2,7 @@
   "library": "MRL_ParticleArchive",
   "source": "PR#19 (Copilot add-missing-features)",
   "origin_signature": "MrLiouWord",
-  "particle_count": 16,
+  "particle_count": 17,
   "all_signed": false,
   "particles": [
     {
@@ -230,10 +230,31 @@
       },
       "embedded_signature": false,
       "integrity": "sha256_provenance"
+    },
+    {
+      "canonical_name": "MRL_ParticlePackage_MUSAR_v1",
+      "source": "MRL 粒子包 v1（MUSAR v1，使用者上傳）— 自 200 個 Google Cloud SDK 包蒸餾",
+      "archived_as": "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260716/MRL_ParticlePackage_MUSAR_v1_RawArtifact_v1.zip",
+      "kind": "external_particle_package",
+      "absorbed_at": "2026-07-16",
+      "sha256": "1bdba5f04b706189a226c0d6fe12166143f8a003c2273a60749a6b42771a2176",
+      "knowledge_doc": "docs/MRL_粒子包_MUSAR_v1_吸收定位報告_v1.md",
+      "browsable_extract": "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260716/particle_package/",
+      "signed": false,
+      "source_scope": "uploaded_source_material",
+      "ownership": "MrLiouWord",
+      "governance_role": "absorbed_particle_package",
+      "runtime": "MUSAR v1",
+      "contains_particles": 50359,
+      "distilled_particles": 59,
+      "self_reported_law0": "50359/0 (package self-claim; sandbox not per-particle re-verified)",
+      "cloudflare_gateway": "external_runtime; deploy pending (待起動)",
+      "embedded_signature": false,
+      "integrity": "sha256_provenance"
     }
   ],
   "all_artifacts_embedded_signed": false,
   "manifest_metadata_signed": true,
   "_signature": "MrLiouWord",
-  "_sig_hash": "822e8953d4cc89f915c84704a9b56cfdc7a6762d75869b8a7a5f9b5cc93ee68d"
+  "_sig_hash": "3d15d74f9a2786ee4e5ab2777800f5865c5349f1234d16831df5e4847757f02d"
 }
