@@ -56,6 +56,13 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### 母體原生粒子包吸收：MRL 粒子包 v1 / MUSAR v1（MRL_AbsorbedArtifacts_20260716）
+- `MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260716/MRL_ParticlePackage_MUSAR_v1_RawArtifact_v1.zip` — 母體整合法則（Additive-Only）逐字保全（rl_15；8,671,734 bytes / 239 檔；sha256 `1bdba5f0…a2176`）。50,359 顆 canonical 粒子 + 59 蒸餾，MUSAR v1，PID `MRL.{layer}.{fx}.{simhash64}`，自 200 個 Google Cloud SDK 包蒸餾。
+- `.../MRL_AbsorbedArtifacts_20260716/particle_package/` — 自 zip 逐字攤開之小型可瀏覽檔（`index/*.json`、`README.md`、`distilled_L2_L6.jsonl`），不解壓 90 MB 全量以免脹庫（by_layer/by_fx/by_pkg 為同組粒子重複分組，唯一內容 ~25 MB）。
+- `docs/MRL_粒子包_MUSAR_v1_吸收定位報告_v1.md` — 母體定位：本身已是 MRL canonical，故為登錄/定位母體粒子包（非外部命名回收）；不改寫、不重簽粒子自簽 hash。誠實標註「50,359/0 LAW-0」為產物自述、沙盒未逐顆重驗；`cf/` Particle Gateway（Cloudflare D1/KV/Worker）為外部 Runtime，DL580 唯一母體，部署待起動（無金鑰，需使用者自有帳號）。
+- `08_sources/sources.manifest.yaml` — 登錄 `mrl_particle_package_musar_v1_absorption_v1`。
+- `MRL_ParticleArchive/MRL_ParticleArchive_manifest.json` — 追加 external_particles「粒子包」節點（含 sha256、`contains_particles:50359`）；`particle_count` 16→17（13 PR19 + 4 external）；重簽頂層 LAW-0。
+
 #### 外部知識吸收：FlowSeed 反推公式 + 資產回收正名計畫（MRL_AbsorbedArtifacts_20260716）
 - `MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260716/` — 母體整合法則（Additive-Only）吸收兩件外部產物，原始逐字保全（rl_15 不滅）：
   - `MRL_FlowSeed_ReverseInference_Formula_RawArtifact_v1.txt` — FlowSeed 反推公式總表（母體→演算→量子→反推→放大）+ 演算法元代碼（RRP/CPP 偽碼）

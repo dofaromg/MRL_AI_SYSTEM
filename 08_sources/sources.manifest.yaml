@@ -116,6 +116,25 @@ sources:
       - "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260716/MRL_AssetReclaim_Reflow_Naming_Plan_RawArtifact_v1.md"  # 原始逐字(rl_15)
       - "docs/MRL_資產回收回流正名_定位報告_v1.md"   # 母體定位/命名對照(定位層)
 
+  - id: mrl_particle_package_musar_v1_absorption_v1
+    name: "MRL 粒子包 v1（MUSAR v1）— 50,359 canonical 粒子 + 59 蒸餾（自 200 個 Google Cloud SDK 包蒸餾）"
+    path: "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260716/MRL_ParticlePackage_MUSAR_v1_RawArtifact_v1.zip"
+    absorbed: "2026-07-16"
+    origin_signature: MrLiouWord
+    sha256: "1bdba5f04b706189a226c0d6fe12166143f8a003c2273a60749a6b42771a2176"
+    role: >-
+      母體原生 canonical 粒子包(MUSAR v1);PID MRL.{layer}.{fx}.{simhash64} 指紋命名,
+      每顆自帶 origin_signature/law0_hash/provenance_count;層 L1/L2/L6、FX fx02/04/09/14/17。
+      本身已是 MRL canonical,故為登錄/定位母體粒子包(非外部命名回收);不改寫、不重簽粒子自簽 hash。
+      by_layer/by_fx/by_pkg 為同組粒子三種重複分組(唯一內容 ~25 MB);cf/ Particle Gateway(D1/KV/Worker)
+      為外部 Runtime,DL580 唯一母體,部署待起動(無金鑰,需使用者自有 Cloudflare)。
+      「50,359/0 LAW-0」為產物自述,沙盒未逐顆重驗。
+    dedup_report: "docs/MRL_粒子包_MUSAR_v1_吸收定位報告_v1.md"
+    implementations:
+      - "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260716/MRL_ParticlePackage_MUSAR_v1_RawArtifact_v1.zip"  # 原始逐字(rl_15;含 jsonl 分片 + D1 seed + Worker Gateway)
+      - "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260716/particle_package/"  # 攤開小索引(index/*.json、README.md、distilled_L2_L6.jsonl)
+      - "docs/MRL_粒子包_MUSAR_v1_吸收定位報告_v1.md"   # 母體定位報告
+
 # Usage:
 # - append here whenever you add a new source file
 # - never delete canonical sources; deprecate via metadata
