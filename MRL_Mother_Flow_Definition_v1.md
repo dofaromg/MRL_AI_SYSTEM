@@ -1,6 +1,6 @@
 # MRL_Mother_Flow_Definition_v1
 
-```
+```yaml
 origin_signature: MrLiouWord
 document_id:      MRL_Mother_Flow_Definition_v1
 repo:             dofaromg/MRL_AI_SYSTEM
@@ -26,7 +26,7 @@ layer:            PRODUCT_WORLDGATEWAY_EXECUTION_PROFILE
 
 ## 1. 流程總覽
 
-```
+```text
 使用者輸入（任何形式）
         │
         ▼
@@ -107,11 +107,13 @@ layer:            PRODUCT_WORLDGATEWAY_EXECUTION_PROFILE
   "input_text": "...",
   "entry_type": "...",
   "intent_hint": "...",
-  "priority": 0-9,
+  "priority": 5,
   "origin_signature": "MrLiouWord",
   "created_at": "ISO8601"
 }
 ```
+
+`priority` 允許整數 `0..9`；`entry_type` 允許 `task | query | file | command`。範例必須使用其中一個實際值，不得把範圍字串放入 JSON。
 
 **TraceAtom：**
 ```json
@@ -148,10 +150,14 @@ layer:            PRODUCT_WORLDGATEWAY_EXECUTION_PROFILE
 | `persona_router` | 依任務類型選擇 persona / system prompt 策略 |
 
 **任務狀態機：**
-```
-QUEUED → RUNNING → WAITING_TOOL → DONE → SEALED → STORED → RETURNED
-                 ↘ FAILED → ERROR_RECORDED → REPLAY → RESTORE → RETURN
-                                                    ↘ ARCHIVED
+```text
+QUEUED → RUNNING → WAITING_TOOL
+WAITING_TOOL -- tool_success --> RUNNING
+WAITING_TOOL -- timeout | tool_error --> FAILED
+RUNNING → DONE → SEALED → STORED → RETURNED
+RUNNING -- execution_error --> FAILED
+FAILED → ERROR_RECORDED → REPLAY → RESTORE → RETURN
+FAILED -- replay_not_allowed | retention_expired --> ARCHIVED
 ```
 
 **關鍵規則：**
@@ -206,9 +212,17 @@ QUEUED → RUNNING → WAITING_TOOL → DONE → SEALED → STORED → RETURNED
   "world_module": "Engineering_WorldModule",
   "partial_result": "...",
   "full_result": "...",
-  "agent_source": "qwen / openai / local",
+  "agent_source_summary": ["qwen", "local"],
+  "segments": [
+    {
+      "segment_id": "seg_001",
+      "content_hash": "sha256:computed_segment_digest",
+      "ledger_entry_ids": ["ledger_001"]
+    }
+  ],
+  "ledger_entry_ids": ["ledger_001"],
   "origin_signature": "MrLiouWord",
-  "status": "DONE | FAILED",
+  "status": "DONE",
   "error_trace": null
 }
 ```
@@ -255,13 +269,20 @@ QUEUED → RUNNING → WAITING_TOOL → DONE → SEALED → STORED → RETURNED
   "origin_signature": "MrLiouWord",
   "agent_source": "...",
   "canonical_runtime": "DL580",
-  "execution_origin": "DL580 | Cloudflare_mirror | external_adapter",
-  "output_hash": "sha256(...)",
-  "merkle_root": "...",
+  "execution_origin": "DL580",
+  "canonical_serialization": "MRL-UnifiedParticle/1.0 + RFC8785-JCS",
+  "digest_algorithm": "SHA-256",
+  "output_hash": "sha256:computed_digest",
+  "signature_algorithm": "Ed25519",
+  "key_id": "mrl-dl580-seal-2026-01",
+  "signature": "base64url:computed_signature",
+  "merkle_root": "sha256:computed_merkle_root",
   "seal_time": "ISO8601",
   "accepted_by": "MrLiou"
 }
 ```
+
+`execution_origin` 允許 `DL580`、`Cloudflare_mirror` 或 `external_adapter`，但 `canonical_runtime` 永遠是 `DL580`。簽章 payload 是移除 `signature` 後的完整 SealProfile，依 RFC 8785 JCS 正規化，再計算 SHA-256 並以 Ed25519 簽署。`accepted_by` 僅是審核中繼資料，不構成密碼學批准。金鑰必須以 `key_id` 版本化；輪替保留舊公鑰驗證能力，撤銷清單記錄 `key_id`、原因、時間與替代鍵，已簽產物不得被靜默重簽。
 
 **觸發時機：**
 - 每次 partial_result 產出 provisional seal，避免未封印預覽外流
@@ -280,9 +301,9 @@ QUEUED → RUNNING → WAITING_TOOL → DONE → SEALED → STORED → RETURNED
 
 | 狀態 | 可見內容 |
 |------|----------|
-| 未解鎖 | `partial_result`（預覽、摘要、部分結果） |
-| 已解鎖（付款 / 授權） | `full_result` + `proof_bundle` |
-| Admin | 全部 + trace + seal + memory |
+| 未解鎖 | `partial_result` + provisional seal；不可匯出 ProofBundle |
+| 已解鎖（授權功能啟用時） | `full_result` + final seal；可按需產生 ProofBundle |
+| 具 task/session scope 的管理授權 | 可按需取得 trace + seal + memory + ProofBundle；不得跨租戶全域讀取 |
 
 **每個輸出都必須包含：**
 ```json
@@ -291,16 +312,16 @@ QUEUED → RUNNING → WAITING_TOOL → DONE → SEALED → STORED → RETURNED
   "task_id": "...",
   "trace_id": "...",
   "seal_id": "...",
-  "output_type": "partial | full",
-  "runtime_origin": "..."
+  "output_type": "partial",
+  "runtime_origin": "DL580"
 }
 ```
 
 ---
 
-### ⑨ MRL_ProofBundle（可選）
+### ⑨ MRL_ProofBundle（按需產生，證據材料持續累積）
 
-**角色：** 匯出完整的創作權 / 執行權 / 時間戳證明包。
+**角色：** 任務執行時持續累積證據材料；只有收到具 task/session scope 的授權匯出請求時，才組裝完整的創作權 / 執行權 / 時間戳證明包。`Proof Always Ready` 表示材料與驗證路徑隨時可組裝，不代表每次回應都預先產生或附帶 bundle。
 
 **包含：**
 - TaskAtom（原始輸入）
@@ -315,6 +336,16 @@ QUEUED → RUNNING → WAITING_TOOL → DONE → SEALED → STORED → RETURNED
 
 ---
 
+## 2.10 Privacy、Authorization 與 Retention（強制）
+
+- Input、Trace、Memory、Ledger、Seal 與 ProofBundle 都必須帶 `data_classification`、`tenant_id`、`task_id`、`session_id` 與 retention policy reference。
+- 原始輸入、使用者識別與外部內容必須最小化；寫入前遮蔽憑證、token、付款識別碼與不必要個資。
+- 傳輸必須使用 TLS；DL580 durable store、備份與簽章私鑰必須加密保存，私鑰不得進 repo、log、trace 或 ProofBundle。
+- 所有讀取、重播、還原與匯出必須依 tenant + task/session scope 授權；`Admin` 不是無限制跨租戶讀取。
+- retention 到期或收到合法刪除要求時，刪除 payload 與可識別索引；只保留法律或稽核必要的不可逆 hash、刪除證明與最小 lineage。
+- ProofBundle 匯出前再次執行 redact、authorization、tenant isolation、hash/signature verification；任何一項失敗即拒絕匯出並留下 error trace。
+
+---
 ## 3. MRL_Agent_Source_Ledger
 
 任何外部 AI 產出的內容，必須記入 Ledger：
@@ -347,7 +378,7 @@ QUEUED → RUNNING → WAITING_TOOL → DONE → SEALED → STORED → RETURNED
 | **External AI = Execution Particle** | 外部 AI 是執行工具，不是架構基礎 |
 | **Every Output Sealed** | 所有輸出必須有 SealAtom（origin_signature + hash） |
 | **Memory is Ground Truth** | MemoryLayer 是系統唯一真相來源，不是 session dict |
-| **Proof Always Ready** | 任何任務都可匯出 ProofBundle |
+| **Proof Always Ready** | 每個任務持續累積證據材料；通過授權後可按需組裝與匯出 ProofBundle |
 | **No Silent Failure** | 失敗必須保留 error_trace，不可靜默 |
 
 ---
