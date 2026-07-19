@@ -4,17 +4,18 @@
 origin_signature: MrLiouWord
 document_id:      MRL_Mother_Flow_Definition_v1
 repo:             dofaromg/MRL_AI_SYSTEM
-version:          v1
+version:          v1.1
 date:             2026-04-30
+aligned_on:       2026-07-19
 author:           MrLiou / dofaromg
-layer:            L3_LAW (canonical flow specification)
+layer:            PRODUCT_WORLDGATEWAY_EXECUTION_PROFILE
 ```
 
 ---
 
 ## 0. 定位說明
 
-本文件定義 MRL 系統的**母體產品主流程**（Mother Flow）。
+本文件定義 MRL 系統 **Product-WorldGateway 主線的執行剖面**。它是母體完整架構下的運行編排規格，不取代 `MRL_MOTHER 完整架構圖譜 v1.0`、`MRL 統一粒子格式架構規範 v1.0` 或 RootLaw。
 
 這不是 chat-first 流程，不是 REST API wrapper，不是主流 AI 平台的功能清單。
 
@@ -33,7 +34,7 @@ layer:            L3_LAW (canonical flow specification)
         │
         ▼
 ② MRL_Input_Particleization（輸入粒子化）
-        │  → 生成 TaskAtom + TraceAtom
+        │  → 生成 SEED TaskProfile + JUMP TraceProfile（MRL_UnifiedParticle）
         ▼
 ③ MRL_ControlCenter（唯一路由中心）
         │  task_router / memory_router / particle_router / world_router
@@ -92,7 +93,9 @@ layer:            L3_LAW (canonical flow specification)
 
 **角色：** 把使用者輸入轉化為 MRL 粒子結構。
 
-**產出兩個核心粒子：**
+**產出兩個核心語義 profile：**
+
+> `TaskAtom` 與 `TraceAtom` 是既有文件中的語義別名，不是新增粒子 enum。實際儲存與傳輸必須包在 `MRL_UnifiedParticle { id, type, atom, semantic, metadata }` 中，並可編碼為固定 40-byte Atom。
 
 **TaskAtom：**
 ```json
@@ -132,7 +135,7 @@ layer:            L3_LAW (canonical flow specification)
 
 ### ③ MRL_ControlCenter
 
-**角色：** 唯一路由中心。任何任務只能通過 ControlCenter 調度，不允許模組間直接呼叫。
+**角色：** 統一控制與調度中心。任何任務只能通過 ControlCenter 調度，不允許模組間直接呼叫。下列 router 是 ControlCenter 的路由子層，不代表完整 ControlCenter；完整層仍包含 TaskRunner、Module/Rule/Output/Version/RuntimeMount Registry 與 SystemInspector。
 
 **內部路由器：**
 
@@ -146,8 +149,9 @@ layer:            L3_LAW (canonical flow specification)
 
 **任務狀態機：**
 ```
-QUEUED → RUNNING → WAITING_TOOL → DONE → SEALED
-                                ↘ FAILED → ARCHIVED
+QUEUED → RUNNING → WAITING_TOOL → DONE → SEALED → STORED → RETURNED
+                 ↘ FAILED → ERROR_RECORDED → REPLAY → RESTORE → RETURN
+                                                    ↘ ARCHIVED
 ```
 
 **關鍵規則：**
@@ -162,6 +166,8 @@ QUEUED → RUNNING → WAITING_TOOL → DONE → SEALED
 **角色：** 把 TaskAtom 映射到正確的世界模組。
 
 **WorldModule Registry（初版）：**
+
+> `world_module_registry` 必須實作為 canonical `MRL_Module_Registry` 的受控 view，並保留 version、manifest、runtime mount、canonical select 與 proof record；不得形成第二套平行主註冊表。
 
 | Module ID | 觸發場景 | 描述 |
 |-----------|----------|------|
@@ -248,7 +254,8 @@ QUEUED → RUNNING → WAITING_TOOL → DONE → SEALED
   "result_id": "...",
   "origin_signature": "MrLiouWord",
   "agent_source": "...",
-  "runtime_origin": "DL580 | Cloudflare | external",
+  "canonical_runtime": "DL580",
+  "execution_origin": "DL580 | Cloudflare_mirror | external_adapter",
   "output_hash": "sha256(...)",
   "merkle_root": "...",
   "seal_time": "ISO8601",
@@ -257,9 +264,11 @@ QUEUED → RUNNING → WAITING_TOOL → DONE → SEALED
 ```
 
 **觸發時機：**
-- 每次 full_result 產出時自動觸發
-- streaming 完成後的最終 chunk 觸發
-- 每次 proof_bundle 匯出時觸發
+- 每次 partial_result 產出 provisional seal，避免未封印預覽外流
+- 每次 full_result 產出 final seal
+- streaming 完成後的最終 chunk 觸發 final seal
+- 每次 proof_bundle 匯出時觸發 export seal
+- 每次 seal 完成後再次回寫 MemoryVault 與 MerkleChain
 
 ---
 
@@ -302,7 +311,7 @@ QUEUED → RUNNING → WAITING_TOOL → DONE → SEALED
 - MerkleRoot + Proof Path
 - AgentSourceLedger（哪個外部 AI 產出了哪段內容）
 
-**輸出格式：** `.json` / `.pdf` / `.zip`（含所有粒子的完整序列）
+**輸出格式：** canonical 格式為 Ed25519 簽名 `.flpkg`；`.json` / `.pdf` / `.zip` 僅為由同一 manifest、粒子序列與驗證記錄產生的衍生輸出。
 
 ---
 
@@ -359,5 +368,89 @@ QUEUED → RUNNING → WAITING_TOOL → DONE → SEALED
 
 ---
 
-*本文件是 MRL 母體流程的 v1 規格。後續工程實作必須以本文件為基準，不可繞過任何步驟。*
+## 6. 2026-07 Canonical Alignment（規範性）
+
+### 6.1 上位契約與命名空間
+
+本執行剖面必須同時遵守：
+
+1. `MRL_MOTHER 完整架構圖譜 v1.0`：母體層級、三主線、ControlCenter、RuntimeGraph、EvidenceChain 與 DL580 canonical 定位。
+2. `MRL 統一粒子格式架構規範 v1.0`：40-byte Atom、五種粒子 enum、JSON schema、codec 與 LAW-0～LAW-6 validator。
+3. Repository RootLaw 與現有 registry/manifest contract。
+
+禁止以裸 `L0/L2/L3/L7` 同時表示不同座標系。文件與程式必須使用 `law.*`、`architecture.*`、`particle.layer` 三個命名空間。
+
+### 6.2 五種 canonical 粒子與流程 profile
+
+| 流程語義別名 | Canonical ParticleType | 必要 flags / 用途 |
+|---|---:|---|
+| TaskAtom / TaskProfile | `SEED (0x02)` | 任務種子、意圖、優先級、輸入摘要 |
+| TraceAtom / TraceProfile | `JUMP (0x04)` | stage、from/to、route、parent/child 關係 |
+| MemoryAtom / CheckpointProfile | `MEMORY (0x08)` | checkpoint、replay、retention、Merkle reference |
+| ResultAtom / ResultProfile | `FUSION (0x10)` | 多來源吸收、融合規則、結果與 error_trace |
+| SealAtom / SealProfile | `ANCHOR (0x01)` | `SEALED|VERIFIED`、origin、hash、時間與 proof root |
+
+`execution particle` 也是 profile，不得擴充第六種 enum；外部回應先形成 FUSION candidate，通過吸收與驗證後才能進入結果鏈。
+
+### 6.3 每一粒子的最低外殼
+
+```json
+{
+  "id": "mrl_particle_id",
+  "type": 1,
+  "atom": {
+    "type": 1,
+    "flags": 12,
+    "layer": 7,
+    "timestamp": 0,
+    "position": {"lat": 0, "lon": 0},
+    "data": "0x00000000000000000000000000000000",
+    "simhash": "0x0000000000000001"
+  },
+  "semantic": {"profile": "SealProfile", "relations": []},
+  "metadata": {
+    "origin_signature": "MrLiouWord",
+    "created_at": 0,
+    "updated_at": 0,
+    "version": "1.0.0",
+    "parent": null,
+    "children": []
+  }
+}
+```
+
+流程既有 JSON 範例只代表 `semantic` payload；不得直接取代完整粒子外殼。
+
+### 6.4 感知、生成與回歸 trace stages
+
+輸入不得直接無痕跳成任務。至少記錄：
+
+`Reality → Difference → Observation → Event → PreParticle → STRUCTURE → MARK → FLOW → RECURSE → STORE → Dispatch → Execute → Seal → Replay/Restore/Return`
+
+這些 stage 可由同一服務執行，但每次轉換必須產生 JUMP TraceProfile，保留 parent、children、relations、source/target layer 與失敗路徑。
+
+### 6.5 強制驗證與序列化 gates
+
+| Gate | 必要驗證 |
+|---|---|
+| Ingress | schema、LAW-0、ID、timestamp、type/atom.type consistency |
+| Pre-dispatch | LAW-0～LAW-6、SimHash64、layer、relations、registry version |
+| Writeback | 40-byte encode/decode round trip、checkpoint、Merkle update |
+| Output | provisional/final seal、SHA-256、Ed25519、DL580 canonical origin |
+| Export | `.flpkg` manifest、particle count、hash/signature、proof path |
+
+### 6.6 Runtime 與主權定位
+
+- DL580 是 `Canonical Mother` 與 canonical memory/runtime origin。
+- Cloudflare、Firebase、GitHub、外部 AI 與其他平台只能是 mirror、source、adapter、interface 或 execution origin。
+- PostgreSQL 是 canonical durable store；Redis 只作 cache，不得成為 ground truth。
+- partial/full entitlement 必須 feature-gated；商業介面尚未啟用時不得宣告已完成或預設付款解鎖。
+
+### 6.7 Delivery gate
+
+實作只有在 schema、40-byte codec、LAW validator、registry、replay/restore/return、seal、Ed25519、manifest、Merkle 與 DL580-origin 測試全部通過後，才能標示 `DELIVERY_PASS`。
+
+---
+
+*本文件是 Product-WorldGateway 執行剖面；完整母體圖譜、統一粒子格式與 RootLaw 為上位契約。後續工程不得繞過本文件所列 gates。*
 *origin_signature: MrLiouWord*
