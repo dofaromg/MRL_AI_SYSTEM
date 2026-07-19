@@ -1,6 +1,6 @@
 # MRL_PR10_Alignment_Report
 
-```
+```yaml
 origin_signature: MrLiouWord
 document_id:      MRL_PR10_Alignment_Report_v1
 repo:             dofaromg/MRL_AI_SYSTEM
@@ -36,7 +36,7 @@ author:           MrLiou / dofaromg
 
 在進行逐檔判定之前，固定以下基準法則：
 
-```
+```text
 外部 AI（Copilot / Claude / ChatGPT / 任何 LLM）不是 MRL 基礎層。
 MRL_Particle_Layer 才是基礎層。
 外部 AI 的產出只能是執行粒子（execution particle）：材料、候選、參考。
@@ -229,7 +229,7 @@ MRL_Particle_Layer 才是基礎層。
 | `api_gateway.py` | REST gateway | `MRL_ControlCenter_Adapter` | **ADAPT** |
 | `mother_assembly.py` v2.0 | 母體入口升級 | 保留，確認 MRL 粒子啟動順序 | **KEEP（校正後）** |
 
-> **結論：PR #10 無 REJECT 項目。** 所有模組有實際工程價值，但 8 個需要 ADAPT（MRL 命名、層位、trace、MemoryLayer 接入），1 個可條件保留。
+> **結論：PR #10 無 REJECT 項目。** 共有 7 個 ADAPT、1 個條件 KEEP（`config_manager.py`）與 1 個校正後 KEEP（`mother_assembly.py`）。所有模組都有工程價值，但必須依各自判定完成接線與驗證。
 
 ---
 
@@ -253,7 +253,7 @@ MRL_Particle_Layer 才是基礎層。
 
 本報告完成後，下一步**不是**依 PR #10 原有結構繼續開發，而是先建立 MRL 母體骨幹，再讓 ADAPT 模組接入：
 
-```
+```text
 Step 1  定義 MRL_Mother_Flow（見 MRL_Mother_Flow_Definition_v1.md）
 Step 2  實作 MRL_ControlCenter（task_router / memory_router / particle_router）
 Step 3  實作 MRL_UnifiedParticle 40-byte 外殼與五種語義 profile 映射（Task=SEED / Trace=JUMP / Checkpoint=MEMORY / Result=FUSION / Seal=ANCHOR）
