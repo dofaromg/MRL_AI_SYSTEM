@@ -271,6 +271,37 @@ class TestPostChat:
         assert body.get("error") == "'temperature' must be between 0.0 and 2.0"
         assert isinstance(body.get("trace_id"), str) and body["trace_id"]
 
+    def test_rejects_non_positive_max_tokens(self, srv):
+        class _AssemblyOk:
+            def chat(self, *args, **kwargs):
+                return {"reply": "ok"}
+
+        original_assembly = _STATE.assembly
+        try:
+            _STATE.assembly = _AssemblyOk()
+            status, body = srv.post("/chat", {"message": "test", "model": "x", "max_tokens": 0})
+        finally:
+            _STATE.assembly = original_assembly
+        assert status == 400
+        assert body.get("error") == "'max_tokens' must be > 0"
+        assert isinstance(body.get("trace_id"), str) and body["trace_id"]
+
+    def test_rejects_out_of_range_temperature(self, srv):
+        class _AssemblyOk:
+            def chat(self, *args, **kwargs):
+                return {"reply": "ok"}
+
+        original_assembly = _STATE.assembly
+        try:
+            _STATE.assembly = _AssemblyOk()
+            status, body = srv.post("/chat", {"message": "test", "model": "x", "temperature": 3.0})
+        finally:
+            _STATE.assembly = original_assembly
+        assert status == 400
+        assert body.get("error") == "'temperature' must be between 0.0 and 2.0"
+        assert isinstance(body.get("trace_id"), str) and body["trace_id"]
+
+
     def test_chat_error_not_found_maps_to_404(self, srv):
         class _AssemblyNotFound:
             def chat(self, *args, **kwargs):

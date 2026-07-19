@@ -65,6 +65,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import pathlib
 import sys
 import time
@@ -642,6 +643,19 @@ class _Handler(BaseHTTPRequestHandler):
                 400,
                 {
                     "error": "'temperature' must be a number",
+                    "engine": "mrl_runtime",
+                    "runtime_origin": "local_mother_assembly",
+                    "trace_id": trace_id,
+                },
+                rid,
+            )
+            return
+        if not math.isfinite(temperature):
+            _json_response(
+                self,
+                400,
+                {
+                    "error": "'temperature' must be a finite number",
                     "engine": "mrl_runtime",
                     "runtime_origin": "local_mother_assembly",
                     "trace_id": trace_id,
