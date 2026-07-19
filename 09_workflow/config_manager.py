@@ -73,13 +73,18 @@ _DEFAULTS: Dict[str, Any] = {
         "log_level": "INFO",
     },
     "llm": {
-        "default_model": "mock",
+        # deny-by-default (rootlaw rl_00): no implicit mock in production.
+        # Set a real model (e.g. "gpt-4o", "claude-3-5-sonnet") or enable a
+        # local engine; "mock" requires allow_mock=true and is test-only.
+        "default_model": "",
         "max_tokens": 1024,
         "temperature": 0.7,
         "stream": False,
         "openai_api_key": "",
         "anthropic_api_key": "",
         "local_base_url": "http://localhost:11434/v1",
+        "enable_local": False,
+        "allow_mock": False,
     },
     "memory": {
         "vector_store_path": "03_memory/vector/_data",
@@ -113,6 +118,21 @@ _DEFAULTS: Dict[str, Any] = {
     },
     "eval": {
         "default_threshold": 0.5,
+    },
+
+    # Self-optimisation (mainstream pattern: dynamic config, auditable)
+    "self_optimize": {
+        "enabled": False,
+        "apply": False,
+        "last_run_at_ms": 0,
+    },
+
+    # Learning ingest defaults (kept separate; endpoints remain deny-by-default)
+    "learning": {
+        "enabled": False,
+        "chunk_chars": 1400,
+        "overlap": 200,
+        "top_k": 5,
     },
 }
 
@@ -171,16 +191,24 @@ class ConfigManager:
         """
         Retrieve a config value by dotted key.
 
-        Environment variable ``MRL_<KEY_UPPER>`` (dots → underscores) takes
-        precedence over the JSON value.
+        Environment variable priority (high → low):
+          1. ``MRLIOUWORD_<KEY_UPPER>`` (canonical Mrliouword prefix)
+          2. ``MRL_<KEY_UPPER>``        (legacy prefix, backward-compatible)
+          3. JSON config file value
+          4. Built-in default
 
         Examples
         --------
-        ``cfg.get("llm.default_model")``  →  env var ``MRL_LLM_DEFAULT_MODEL``
+        ``cfg.get("llm.default_model")``
+          →  ``MRLIOUWORD_LLM_DEFAULT_MODEL``  (or ``MRL_LLM_DEFAULT_MODEL``)
         """
-        # Check environment variable first
-        env_key = "MRL_" + key.upper().replace(".", "_")
-        env_val = os.environ.get(env_key)
+        # Check environment variable first.
+        # Priority: MRLIOUWORD_<KEY> > MRL_<KEY> > JSON config > default.
+        env_suffix = key.upper().replace(".", "_")
+        env_val = (
+            os.environ.get("MRLIOUWORD_" + env_suffix)
+            or os.environ.get("MRL_" + env_suffix)
+        )
         if env_val is not None:
             # Coerce to the type of the default value
             existing = _nested_get(self._data, key)

@@ -38,7 +38,7 @@ tiers:
       - "09_workflow/signature.js"
       - "09_workflow/seed.js"
       - "data/relations/module_relations.yaml"
-    health_check: "python 04_runtime/flowcore_loop.py --verify"
+    health_check: "python 04_runtime/flowcore_loop.py cli --help"
     layer: "L0–L7 + MetaEnv"
     core_groups: [1, 2, 3, 4, 5, 6]
 
@@ -50,7 +50,7 @@ tiers:
     required_modules:
       - "00_rootlaw/rootlaw.yaml"
       - "04_runtime/flowcore_loop.py"
-    start_command: "python 04_runtime/flowcore_loop.py serve"
+    start_command: "python 04_runtime/flowcore_loop.py serve --host 127.0.0.1 --port 8787"
     env_vars:
       FLOW_VAULT_ROOT: "path/to/vault"
       FLOW_PORT: "8787"
@@ -148,6 +148,21 @@ install_order:
       action: "Verify world module"
       command: "python 05_persona/world_module.py snap"
       validates: "05_persona/world_module.py"
+
+    - step: 6
+      action: "Start MRL API gateway (background)"
+      command: "python 09_workflow/api_gateway.py --host 127.0.0.1 --port 7771"
+      validates: "09_workflow/api_gateway.py"
+
+    - step: 7
+      action: "Verify learning ingest CLI"
+      command: "python 09_workflow/MRL_learning_ingest.py --help"
+      validates: "09_workflow/MRL_learning_ingest.py"
+
+    - step: 8
+      action: "Verify self optimisation CLI"
+      command: "python 09_workflow/MRL_self_optimize.py sense"
+      validates: "09_workflow/MRL_self_optimize.py"
 
 # ─── Recovery protocol ───────────────────────────────────────────────────────
 recovery:

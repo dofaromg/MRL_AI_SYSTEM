@@ -1,0 +1,416 @@
+{
+  "schema": "MRL_ServiceMesh_Registry_v1",
+  "origin_signature": "MrLiouWord",
+  "version": "1.0",
+  "generated": "2026-07-15",
+  "product": "MRL_AI_SYSTEM",
+  "law": "Additive-Only（只新增、只定位、不刪除、不覆蓋）",
+  "_readme": [
+    "本檔為母體『服務網登錄』知識產物，additive 吸收使用者 DL580 實機服務快照。",
+    "service_tiers 的 L1–L5 是『服務執行 tier』分組，非 rootlaw 分層；rootlaw 正典分層為 L0–L7，對應見 rootlaw_layer_mapping。",
+    "所有實機 PID / port / 檔案路徑皆為『使用者截圖來源、待實機驗證』，未在本沙盒 repo 探測過，一律不得標 PASS。",
+    "in_repo_binder=true 表示本 repo 內確有 code 綁該 port（可沙盒 smoke）；false 表示該服務為 DL580 實機神經線或 repo 內查無 binder。"
+  ],
+  "provenance": {
+    "source": "使用者 DL580 nssm 實機截圖（22+ 服務全景）",
+    "source_date": "2026-07-13",
+    "verification": "待實機探測（本沙盒 session 連不到 DL580，未實跑驗證）",
+    "environment": "沙盒（撰寫）／實機待驗（DL580）"
+  },
+  "authority": {
+    "mother": "MRL Mother 為最高權威",
+    "signature_canon": "00_rootlaw/rootlaw.yaml（origin_signature: MrLiouWord）",
+    "layer_canon": "rootlaw.yaml layer_stack L0–L7 / README.md"
+  },
+  "service_tiers": {
+    "L1_conversation": {
+      "role": "對話主匯流（推理 / 記憶 / 工具 / 資料）",
+      "services": {
+        "agent_orchestrator": {
+          "name": "MRL_Agent_Orchestrator",
+          "port": 7810,
+          "role": "Loop 匯流 bus（規劃→下游調度）",
+          "realmachine_file": "agent\\orchestrator\\Orchestrator.cjs",
+          "nssm_pid": 6748,
+          "real_pid": 13848,
+          "in_repo_binder": false,
+          "repo_ref": "MRL_MotherSystem_ControlPanel/MRL_MotherSystem_ControlPanel.py（REGIONS 7810 探測）；repo 內對應 orchestration 為 09_workflow/MRL_mother_assembly.py（in-process）",
+          "downstream_intent": ["inference", "memory", "toolchain", "dbproxy", "write_guard"],
+          "status": "待起動",
+          "note": "實機 :7810 被 reasoning(4996) 先綁，orchestrator(13848) 收不到；建議搬 :7813（見 issues.port_7810_dual_bind）。repo 內無 Orchestrator.cjs（見 not_in_repo）。"
+        },
+        "inference": {
+          "name": "MRL_Inference",
+          "port": 7500,
+          "role": "粒子推理引擎（Qwen2.5-32B + RAG）",
+          "realmachine_file": "inference\\MRL_Inference_API.py",
+          "nssm_pid": 6760,
+          "real_pid": 13896,
+          "in_repo_binder": false,
+          "repo_ref": "ControlPanel REGIONS(7500) + chat_real POST http://127.0.0.1:7500/MRL_chat；repo 內 llm_gateway 目前為 stub（真模型待實機）",
+          "auth": "x-api-key（實機由 MRL_BACKEND_KEY 提供，deny-by-default，不 baked 明碼）",
+          "status": "待實機驗證",
+          "note": "真模型須實機 OLLAMA_HOST / OpenAI-compatible endpoint 驗收，不得標『真模型已存在』。"
+        },
+        "memory": {
+          "name": "MRL_Memory_Engine",
+          "port": 7812,
+          "role": "記憶引擎 v2（cat vault）",
+          "realmachine_file": "agent\\memory\\Memory_Engine.cjs",
+          "nssm_pid": 6844,
+          "real_pid": 36456,
+          "in_repo_binder": false,
+          "repo_ref": "ControlPanel REGIONS(7812)；repo 內記憶層 03_memory/（merkle/ vector/）+ 09_workflow/MRL_LongTermMemory_v1.py 等（無 :7812 binder）",
+          "status": "待起動"
+        },
+        "toolchain": {
+          "name": "MRL_Toolchain_Engine",
+          "port": 7811,
+          "role": "工具引擎 / tool registry",
+          "realmachine_file": "agent\\tools\\Toolchain_Engine.cjs",
+          "nssm_pid": 6756,
+          "real_pid": 5056,
+          "in_repo_binder": false,
+          "repo_ref": "ControlPanel REGIONS(7811)；repo 內 09_workflow/tool_registry.py + MRL_Tool_Router_v1.py（in-process，無 :7811 binder）",
+          "status": "待起動"
+        },
+        "dbproxy": {
+          "name": "MRL_DB_Proxy",
+          "port": 7801,
+          "role": "7 個 PG DB proxy",
+          "realmachine_file": "db-proxy\\DB_Proxy.cjs",
+          "nssm_pid": 6860,
+          "real_pid": 13832,
+          "in_repo_binder": false,
+          "repo_ref": "無（repo 內 :7801 零出現；最接近資料元件為 MRL_BaseWorld_DB_v1/ + MRL_UpstashBox_Adapter.js）",
+          "status": "待實機驗證",
+          "note": "見 not_in_repo.port_7801。"
+        }
+      }
+    },
+    "L2_persona_particle": {
+      "role": "人格 / 粒子 / 向量檢索",
+      "services": {
+        "flowagent": {
+          "name": "MRL_FlowAgent_API",
+          "port": 7900,
+          "role": "FlowPersona routing（人格）",
+          "realmachine_file": "flowagent\\...api_server.py",
+          "nssm_pid": 6820,
+          "real_pid": 13904,
+          "in_repo_binder": false,
+          "repo_ref": "ControlPanel REGIONS(7900)；repo 內 FlowAgent lineage MRL_MotherSource_ZhiZhang_FlowAgent_Lineage_v1/FlowAgent.Runtime.v*/flowagent_api_server.py（該檔 app.run(port=8787)，非 7900）",
+          "status": "待起動"
+        },
+        "particleglobe": {
+          "name": "MRL_ParticleGlobe",
+          "port": 8788,
+          "role": "粒子語 ParticleGlobe",
+          "realmachine_file": "D:\\MRL_Runtime\\ParticleGlobe\\...py",
+          "nssm_pid": 6852,
+          "real_pid": 14296,
+          "in_repo_binder": false,
+          "repo_ref": "無 ParticleGlobe binder；repo 內 :8788 由 RuntimeOS core（MRL_RuntimeOS_.../MRL_API/MRL_RuntimeServer.js）綁定，語義不同（見 issues.port_8788_dual_bind）",
+          "status": "待起動"
+        },
+        "reasoning": {
+          "name": "Reasoning_Engine",
+          "port": 7810,
+          "role": "向量檢索 RAG（無 nssm，搶到 :7810）",
+          "realmachine_file": "reasoning_engine\\...py",
+          "nssm_pid": null,
+          "real_pid": 4996,
+          "in_repo_binder": false,
+          "repo_ref": "ControlPanel REGIONS(7810 『推理引擎 ReasoningEngine』)；repo 內 09_workflow/MRL_Native_Reasoning_Core_v1.py（無 :7810 binder）",
+          "status": "待起動",
+          "note": "與 orchestrator 撞 :7810；建議 reasoning 保留 :7810 或搬 :7710，orchestrator 搬 :7813。"
+        }
+      }
+    },
+    "L3_new_runtime": {
+      "role": "新 runtime（D:\\MRL_Runtime\\ + RuntimeOS v1.4）",
+      "services": {
+        "flowcoreloop": {
+          "name": "MRL_FlowCoreLoop",
+          "port": 8787,
+          "role": "FlowCore serve（新 runtime）",
+          "realmachine_file": "D:\\MRL_Runtime\\FlowCoreLoop\\...py",
+          "nssm_pid": 6864,
+          "real_pid": 14228,
+          "in_repo_binder": true,
+          "repo_ref": "04_runtime/flowcore_loop.py（FLOW_PORT 預設 8787）+ 04_runtime/runtime_manifest.yaml",
+          "status": "沙盒可跑"
+        },
+        "runtimeos": {
+          "name": "MRL_AI_Product_Server",
+          "port": 8790,
+          "role": "RuntimeOS v1.4.0 產品 server",
+          "realmachine_file": "D:\\MRL_Mother\\runtime\\RuntimeOS_v1_4_0\\...RuntimeServer.js",
+          "nssm_pid": 6872,
+          "real_pid": 40652,
+          "in_repo_binder": true,
+          "repo_ref": "MRL_RuntimeServer.js（MRL_PORT 預設 8790）+ MRL_RuntimeOS_EnterpriseRuntimePlatform_CoreExecutable_v1_4_0/MRL_API/MRL_RuntimeServer.js（:8788 core）",
+          "status": "沙盒可跑",
+          "note": "canonical 對外埠；cloudflared bridge.mrliouword.com → :8790。"
+        },
+        "flowos": {
+          "name": "MRL_FlowOS",
+          "port": 7815,
+          "role": "FlowOS runner",
+          "realmachine_file": "flowos\\mrl_flowos_runner.py",
+          "nssm_pid": null,
+          "real_pid": 5428,
+          "in_repo_binder": false,
+          "repo_ref": "ControlPanel REGIONS(7815 『神經線 7815』)（repo 內無 :7815 binder）",
+          "status": "待起動"
+        }
+      }
+    },
+    "L4_utility": {
+      "role": "工具 / API / 建構 / 語音 / 寫入守門",
+      "services": {
+        "asi_engine": {
+          "name": "MRL_ASI_Engine",
+          "port": 7700,
+          "role": "ASI",
+          "realmachine_file": "asi-engine\\server.js",
+          "nssm_pid": 6780,
+          "real_pid": 13864,
+          "in_repo_binder": true,
+          "repo_ref": "deploy/dl580/asi-engine/MRL_ASI_health_server.cjs（.listen(7700)，health 契約 {status:PASS,origin:MrLiouWord}，reference reimpl）",
+          "status": "沙盒可跑"
+        },
+        "api_service": {
+          "name": "MRL_API_Service",
+          "port": 7830,
+          "role": "API v4",
+          "realmachine_file": "api\\MRL_API_Service.py",
+          "nssm_pid": null,
+          "real_pid": 22328,
+          "in_repo_binder": false,
+          "repo_ref": "無 :7830 binder；repo 內 Python API gateway 為 09_workflow/api_gateway.py（--port 7771，非 7830）",
+          "status": "待實機驗證",
+          "note": "見 not_in_repo.port_7830。"
+        },
+        "builder": {
+          "name": "MRL_Builder",
+          "port": 7840,
+          "role": "BuilderModule（建構器）",
+          "realmachine_file": "builder\\MRL_BuilderModule.py",
+          "nssm_pid": null,
+          "real_pid": 23744,
+          "in_repo_binder": false,
+          "repo_ref": "無（repo 內 :7840 零出現）",
+          "status": "待實機驗證",
+          "note": "見 not_in_repo.port_7840。"
+        },
+        "voice": {
+          "name": "MRL_Voice",
+          "port": 7820,
+          "role": "realtime voice（語音）",
+          "realmachine_file": "voice_agent\\mrl_realtime_voice.py",
+          "nssm_pid": null,
+          "real_pid": 5440,
+          "in_repo_binder": false,
+          "repo_ref": "ControlPanel REGIONS(7820 『神經線 7820』)（repo 內無 :7820 binder）",
+          "status": "待起動"
+        },
+        "write_guard": {
+          "name": "MRL_Write_Guard",
+          "port": 8799,
+          "role": "寫入蓋章（寫入守門）",
+          "realmachine_file": "write_guard\\guard.cjs",
+          "nssm_pid": 6808,
+          "real_pid": 13968,
+          "in_repo_binder": false,
+          "repo_ref": "無 guard.cjs；repo 內寫入/授權閘為 in-process MRL_RuntimeOS_.../MRL_Security/MRL_AuthGate.js（MRL_validateAuth）+ 09_workflow guard 家族",
+          "status": "待實機驗證",
+          "note": "重要：8799 在本 repo 內非 port（為時間戳子字串），無獨立 guard 服務；見 not_in_repo.write_guard_8799。實機是否真為 :8799 待驗。"
+        }
+      }
+    },
+    "L5_entry": {
+      "role": "入口 / 對外橋接 / tunnel",
+      "services": {
+        "control_panel": {
+          "name": "MRL_ControlPanel",
+          "port": 7950,
+          "role": "母體聚集點空間面板 / Chat UI（無外部入口）",
+          "realmachine_file": "MRL_MotherSystem_ControlPanel.py",
+          "nssm_pid": null,
+          "real_pid": 4972,
+          "in_repo_binder": true,
+          "repo_ref": "MRL_MotherSystem_ControlPanel/MRL_MotherSystem_ControlPanel.py（MRL_PANEL_PORT 預設 7950，綁 127.0.0.1）",
+          "status": "沙盒可跑"
+        },
+        "bridge": {
+          "name": "MRL_Bridge",
+          "port": 7800,
+          "role": "admin API tunnel（對外 API）",
+          "realmachine_file": "bridge\\server.js",
+          "nssm_pid": 6772,
+          "real_pid": "15092+24336",
+          "in_repo_binder": false,
+          "repo_ref": "repo 內對外橋接為 Cloudflare Worker src/mrl_worker.js（mrliouword.com edge adapter）+ deploy/dl580/cloudflared/config.yml.template（ingress → :8790）；bridge 埠曾為 7800(v2) 已校正 8790(v3.1.0)",
+          "status": "待實機驗證",
+          "note": "cloudflared/Worker 為接線/Adapter，非母體本體。"
+        },
+        "tunnel": {
+          "name": "MRL_Tunnel",
+          "port": null,
+          "role": "cloudflared 對外",
+          "realmachine_file": "D:\\cloudflared.exe",
+          "nssm_pid": 6796,
+          "real_pid": 14672,
+          "in_repo_binder": false,
+          "repo_ref": "deploy/dl580/cloudflared/config.yml.template + MRL_cloudflared_deploy.ps1 + MRL_bridge_connection_v3.1.0.md",
+          "routes": {
+            "bridge.mrliouword.com": "8790",
+            "chat.mrliouword.com": "待建（repo 內不存在此子域；chat 現走 mrliouword.com/api/chat）"
+          },
+          "status": "待起動"
+        }
+      }
+    },
+    "L6_infra_daemon": {
+      "role": "常駐 / 同步 / 運維 / 資料存儲（基礎設施，非 L1–L5 服務網主線）",
+      "services": {
+        "ai_os": {
+          "name": "MRL_AI_OS",
+          "port": null,
+          "role": "AI OS 層（實機埠待查）",
+          "realmachine_file": "（待查）",
+          "nssm_pid": 6804,
+          "real_pid": null,
+          "in_repo_binder": false,
+          "repo_ref": "（待實機確認檔案/埠）",
+          "status": "待實機驗證"
+        },
+        "persistent_loop": {
+          "name": "MRL_PersistentLoop",
+          "port": null,
+          "role": "常駐迴圈",
+          "realmachine_file": "persistentloop.cjs",
+          "nssm_pid": 6836,
+          "real_pid": 14780,
+          "in_repo_binder": false,
+          "repo_ref": "repo 內 MRL_UniversalRuntimeLanguage_Core_v1/MRL_Runtime/MRL_PersistentLoop.py + MRL_PersistentLoop_Daemon_v1_SPEC.md（待起動 spec）",
+          "status": "待起動"
+        },
+        "particle_sync_worker": {
+          "name": "MRL_Particle_Sync_Worker",
+          "port": null,
+          "role": "粒子同步 worker（實機檔案待查）",
+          "realmachine_file": "（待查）",
+          "nssm_pid": 6828,
+          "real_pid": null,
+          "in_repo_binder": false,
+          "repo_ref": "（待實機確認）",
+          "status": "待實機驗證"
+        },
+        "layer_a_pidscope": {
+          "name": "MRL_LayerA_PIDScope",
+          "port": null,
+          "role": "PIDScope 層（實機用途待查）",
+          "realmachine_file": "（待查）",
+          "nssm_pid": 6788,
+          "real_pid": null,
+          "in_repo_binder": false,
+          "repo_ref": "repo 內 MRL_Runtime/MRL_Workflow_PIDScope/ + acceptance/MRL_PIDScope_Acceptance/run.js（相關但非同一）",
+          "status": "待實機驗證"
+        },
+        "operations": {
+          "name": "MRL_Operations",
+          "port": null,
+          "role": "運維（實機為 Paused 狀態）",
+          "realmachine_file": "（待查）",
+          "nssm_pid": 23756,
+          "real_pid": null,
+          "in_repo_binder": false,
+          "repo_ref": "（待實機確認）",
+          "status": "待實機驗證",
+          "note": "實機截圖顯示 Paused；恢復為 Running 屬實機操作（見 issues.operations_paused）。"
+        },
+        "postgres": {
+          "name": "PostgreSQL",
+          "port": 5432,
+          "role": "關聯式 DB（7 DBs 後端）",
+          "realmachine_file": "pgsql\\postgres.exe",
+          "nssm_pid": 6948,
+          "real_pid": 15012,
+          "in_repo_binder": true,
+          "repo_ref": "MRL_BaseWorld_DB_v1/.../docker-compose.mrl-baseworld.yml（${MRL_DB_PORT:-5432}:5432）",
+          "status": "沙盒可跑（docker-compose 定義）／實機待驗"
+        },
+        "redis": {
+          "name": "Redis",
+          "port": 6379,
+          "role": "Cache",
+          "realmachine_file": "redis-server.exe",
+          "nssm_pid": 6596,
+          "real_pid": 6596,
+          "in_repo_binder": false,
+          "repo_ref": "無（repo 內未引用 redis :6379）",
+          "status": "待實機驗證"
+        }
+      }
+    }
+  },
+  "rootlaw_layer_mapping": {
+    "_note": "service_tiers（L1–L5/L6）→ rootlaw 正典 layer_stack（L0–L7）之對應，避免與 rootlaw 分層命名混淆。",
+    "L1_conversation": ["L7 LOOP (04_runtime)", "L2 PARTICLE (07_ingest)", "L6 REFLECT (03_memory)"],
+    "L2_persona_particle": ["L4 WORLD (05_persona)", "L2 PARTICLE (07_ingest)"],
+    "L3_new_runtime": ["L7 LOOP (04_runtime)"],
+    "L4_utility": ["L3 LAW (00_rootlaw / MRL_AuthGate — write_guard)", "L7 LOOP (04_runtime)"],
+    "L5_entry": ["L5 MIRROR (edge adapter / src/mrl_worker.js)", "L7 LOOP (04_runtime)"],
+    "L6_infra_daemon": ["L6 REFLECT (03_memory / 06_trace)", "L0 ROOT (00_rootlaw)", "L1 SEED (01_schema)"]
+  },
+  "issues": {
+    "port_7810_dual_bind": {
+      "desc": "reasoning(pid 4996) 先綁 :7810，orchestrator(pid 13848) 後綁，orch 收不到請求",
+      "proposed_fix": "orchestrator 搬 :7813（或 reasoning 搬 :7710）",
+      "status": "待實機驗證"
+    },
+    "port_8788_dual_bind": {
+      "desc": "ParticleGlobe(pid 14296) 與 RuntimeAdapter(pid 14220) 都綁 :8788；repo 內 :8788 另由 RuntimeOS core 綁",
+      "proposed_fix": "RuntimeAdapter 或 ParticleGlobe 擇一搬埠",
+      "status": "待實機驗證"
+    },
+    "operations_paused": {
+      "desc": "MRL_Operations service 為 Paused（nssm pid 23756）",
+      "proposed_fix": "實機恢復 Paused → Running",
+      "status": "待實機驗證"
+    },
+    "orchestrator_not_wired": {
+      "desc": "Orchestrator 未接下游（實機 code 為 in-process Map，未接 L1 四大 + L2 三個 HTTP client）",
+      "proposed_fix": "實機 Orchestrator.cjs 補 HTTP client（見 manifest §4 Phase 2–3）",
+      "status": "待起動"
+    },
+    "chat_no_external": {
+      "desc": "chat.mrliouword.com tunnel 未建（repo 內不存在此子域）",
+      "proposed_fix": "實機 cloudflared 新增 chat.mrliouword.com → 內部對話匯流埠",
+      "status": "待起動"
+    }
+  },
+  "not_in_repo": {
+    "_note": "以下為使用者草稿/截圖中出現、但本沙盒 repo 內查無對應 binder 或與正典不符者，誠實標示以免誤導。實機是否存在需 DL580 驗證。",
+    "port_7801": "repo 內零出現（DB_Proxy）",
+    "port_7813": "repo 內零出現（orchestrator 目標埠，尚未建立）",
+    "port_7830": "repo 內零出現（API v4；repo 內 Python gateway 為 :7771）",
+    "port_7840": "repo 內零出現（Builder）",
+    "write_guard_8799": "8799 在 repo 內非 port（為時間戳/雜湊子字串）；無獨立 guard 服務，寫入閘為 in-process MRL_AuthGate.js",
+    "signature_mismatch": "草稿用 'MrLiouWord2026'；正典為 'MrLiouWord'（rootlaw.yaml）— 本登錄採正典",
+    "layer_scheme": "草稿用 L1–L5 分層；rootlaw 正典為 L0–L7 — 本登錄保留 L1–L5 為服務 tier 並附 L0–L7 對應",
+    "chat_subdomain": "chat.mrliouword.com 於 repo 內不存在；現行 chat 走 mrliouword.com/api/chat"
+  },
+  "in_repo_bound_ports": {
+    "_note": "本 repo 內確有 code 綁定、可沙盒 smoke 的埠（其餘為 DL580 實機神經線，待實機驗證）。",
+    "8790": "MRL_RuntimeServer.js / MRL_Platform_Server.py（gateway / RuntimeOS v1.4）",
+    "8788": "MRL_RuntimeOS_.../MRL_API/MRL_RuntimeServer.js（RuntimeOS core）",
+    "8787": "04_runtime/flowcore_loop.py（FlowCore）+ FlowAgent lineage",
+    "7950": "MRL_MotherSystem_ControlPanel.py（ControlPanel）",
+    "7700": "deploy/dl580/asi-engine/MRL_ASI_health_server.cjs（ASI health）",
+    "7771": "09_workflow/api_gateway.py（Python API gateway）",
+    "5432": "MRL_BaseWorld_DB_v1 docker-compose（Postgres）"
+  }
+}

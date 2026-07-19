@@ -1,0 +1,89 @@
+{
+  "artifact": "MRL_Particle_Package_v1",
+  "runtime": "MUSAR v1",
+  "total_canonical_particles": 50359,
+  "distilled_particles": 59,
+  "by_layer": {
+    "L6": 295,
+    "L2": 3697,
+    "L1": 46367
+  },
+  "by_kind": {
+    "contract": 295,
+    "behavior": 3697,
+    "type": 46367
+  },
+  "by_fx": {
+    "fx02": {
+      "name": "Data",
+      "count": 46367
+    },
+    "fx04": {
+      "name": "Compute",
+      "count": 960
+    },
+    "fx09": {
+      "name": "Validate",
+      "count": 1742
+    },
+    "fx14": {
+      "name": "State",
+      "count": 995
+    },
+    "fx17": {
+      "name": "Meta",
+      "count": 295
+    }
+  },
+  "source_packages": 200,
+  "top_packages": {
+    "aiplatform": 4454,
+    "dialogflow": 3355,
+    "discoveryengine": 2594,
+    "compute": 1847,
+    "shopping": 1844,
+    "bigquery": 1613,
+    "retail": 1289,
+    "ces": 1027,
+    "spanner": 955,
+    "bigtable": 809,
+    "ai": 766,
+    "visionai": 641,
+    "dataplex": 640,
+    "osconfig": 639,
+    "securitycenter": 613,
+    "alloydb": 590,
+    "maps": 537,
+    "documentai": 516,
+    "storage": 512,
+    "firestore": 508,
+    "networksecurity": 494,
+    "networkconnectivity": 455,
+    "datacatalog": 453,
+    "dataform": 446,
+    "datastore": 438,
+    "monitoring": 434,
+    "analytics": 421,
+    "automl": 414,
+    "video": 409,
+    "pubsub": 408
+  },
+  "shards": {
+    "by_layer": [
+      "L1.jsonl",
+      "L2.jsonl",
+      "L6.jsonl"
+    ],
+    "by_fx": [
+      "fx02.jsonl",
+      "fx04.jsonl",
+      "fx09.jsonl",
+      "fx14.jsonl",
+      "fx17.jsonl"
+    ],
+    "by_pkg_count": 200
+  },
+  "origin_signature": "MrLiouWord",
+  "law0_hash": "6305f22969b0fe2f",
+  "signed_at": 1784209709
+}

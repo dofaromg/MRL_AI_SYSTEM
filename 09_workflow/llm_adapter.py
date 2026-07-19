@@ -399,7 +399,8 @@ class LLMGateway:
 
     def __init__(self) -> None:
         self._adapters: Dict[str, LLMAdapter] = {}
-        # Register a built-in mock adapter
+        # Register a built-in mock adapter (testing only).
+        # NOTE: Production routing must never silently fall back to this adapter.
         self._adapters["mock"] = MockAdapter()
 
     def register(self, name: str, adapter: LLMAdapter) -> "LLMGateway":
@@ -421,6 +422,12 @@ class LLMGateway:
             f"No adapter registered for model '{model}'. "
             f"Registered: {list(self._adapters.keys())}"
         )
+
+    def is_mock_model(self, model: str) -> bool:
+        try:
+            return isinstance(self.adapter_for(model), MockAdapter)
+        except KeyError:
+            return False
 
     def complete(self, request: LLMRequest) -> LLMResponse:
         """Route *request* to the appropriate adapter and return the response."""

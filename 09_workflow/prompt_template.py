@@ -49,7 +49,7 @@ _DEFAULT_STORE = _REPO_ROOT / "data" / "prompt_templates.json"
 _VAR_RE = re.compile(r"\{(\w+)\}")
 
 
-# ─── PromptTemplate ───────────────────────────────────────────────────────────
+# ─── PromptTemplate ────────────────────────────────────────────
 
 class PromptTemplate:
     """
@@ -120,7 +120,7 @@ class PromptTemplate:
         )
 
 
-# ─── TemplateRegistry ────────────────────────────────────────────────────────
+# ─── TemplateRegistry ─────────────────────────────────────────
 
 class TemplateRegistry:
     """
@@ -135,7 +135,7 @@ class TemplateRegistry:
         self._templates: Dict[str, PromptTemplate] = {}
         self._load()
 
-    # ── Persistence ───────────────────────────────────────────────────────────
+    # ── Persistence ──────────────────────────────────────────
 
     def _load(self) -> None:
         if self._path.exists():
@@ -156,7 +156,7 @@ class TemplateRegistry:
         with self._path.open("w", encoding="utf-8") as f:
             json.dump(payload, f, ensure_ascii=False, indent=2)
 
-    # ── CRUD ──────────────────────────────────────────────────────────────────
+    # ── CRUD ───────────────────────────────────────────────
 
     def add(
         self,
@@ -164,8 +164,31 @@ class TemplateRegistry:
         text: str,
         description: str = "",
     ) -> PromptTemplate:
-        """Add a new template or replace an existing one (bumps version)."""
+        """Add a new template, or update an existing one.
+
+        The version counter is bumped (and the store rewritten) **only when
+        the template's ``text`` or ``description`` actually changes**.
+        Re-adding an identical template is idempotent — no version bump, no
+        ``created_at_ms`` reset, no rewrite.
+
+        Rationale: startup / seed code re-adds the standard templates on every
+        run. The previous unconditional ``existing.version + 1`` inflated the
+        version and reset the timestamp on every process start even though the
+        template text never changed (observed churn in
+        ``data/prompt_templates.json``: 9 → 12 → 244 → 332), producing
+        misleading version history and constant version-control noise.
+        Making ``add`` idempotent on unchanged content stops the churn at the
+        source. Additive-only: no template is deleted; unchanged content is
+        preserved exactly as stored.
+        """
         existing = self._templates.get(template_id)
+        if (
+            existing is not None
+            and existing.text == text
+            and existing.description == description
+        ):
+            # Unchanged content — idempotent no-op (preserve version + timestamp).
+            return existing
         version = (existing.version + 1) if existing else 1
         t = PromptTemplate(template_id, text, description, version=version)
         self._templates[template_id] = t
@@ -185,7 +208,7 @@ class TemplateRegistry:
     def list_ids(self) -> List[str]:
         return sorted(self._templates.keys())
 
-    # ── Render ────────────────────────────────────────────────────────────────
+    # ── Render ──────────────────────────────────────────────
 
     def render(
         self,
@@ -227,7 +250,7 @@ class TemplateRegistry:
         return len(self._templates)
 
 
-# ─── CLI ─────────────────────────────────────────────────────────────────────
+# ─── CLI ─────────────────────────────────────────────────────
 
 def _cmd_add(args: argparse.Namespace) -> None:
     reg = TemplateRegistry()

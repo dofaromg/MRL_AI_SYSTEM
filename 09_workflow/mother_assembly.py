@@ -84,10 +84,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import pathlib
 import sys
 import time
 from typing import Any, Dict, List, Optional
+
+logger = logging.getLogger(__name__)
 
 ORIGIN_SIGNATURE = "MrLiouWord"
 ASSEMBLY_VERSION = "2.0"
@@ -158,6 +161,7 @@ class MotherAssembly:
         self.context_manager: Any = None
         self.scheduler: Any = None
         self.config: Any = None
+        self.long_term_memory: Any = None  # opt-in; see memory.long_term_enabled
         self._boot_log: List[Dict[str, Any]] = []
 
     # ── Boot ──────────────────────────────────────────────────────────────────
@@ -213,6 +217,9 @@ class MotherAssembly:
 
         # 12 ── TaskScheduler (v2.0)
         report["subsystems"]["scheduler"] = self._boot_scheduler()
+
+        # 13 ── LongTermMemory (opt-in, default off)
+        report["subsystems"]["long_term_memory"] = self._boot_long_term_memory()
 
         self._booted = True
         self._seal_event("boot", report)
@@ -321,11 +328,38 @@ class MotherAssembly:
 
     def _boot_llm_gateway(self) -> str:
         LLMGateway = _try_import("llm_adapter", "LLMGateway")
+        LocalAdapter = _try_import("llm_adapter", "LocalAdapter")
+        OpenAIAdapter = _try_import("llm_adapter", "OpenAIAdapter")
+        AnthropicAdapter = _try_import("llm_adapter", "AnthropicAdapter")
         if LLMGateway is None:
             return "unavailable"
         try:
             self.llm_gateway = LLMGateway()
-            return "ok"
+            errors = []
+            # 各 adapter 獨立註冊：單一失敗不阻斷其他 adapter（review PR#77）
+            if LocalAdapter is not None:
+                try:
+                    local_base_url = "http://localhost:11434/v1"
+                    if self.config:
+                        local_base_url = str(self.config.get("llm.local_base_url", local_base_url))
+                    self.llm_gateway.register("local", LocalAdapter(base_url=local_base_url))
+                except Exception as exc:  # noqa: BLE001
+                    errors.append(f"local: {exc}")
+            if OpenAIAdapter is not None and self.config:
+                try:
+                    openai_key = str(self.config.get("llm.openai_api_key", "")).strip()
+                    if openai_key:
+                        self.llm_gateway.register("openai", OpenAIAdapter(api_key=openai_key))
+                except Exception as exc:  # noqa: BLE001
+                    errors.append(f"openai: {exc}")
+            if AnthropicAdapter is not None and self.config:
+                try:
+                    anthropic_key = str(self.config.get("llm.anthropic_api_key", "")).strip()
+                    if anthropic_key:
+                        self.llm_gateway.register("anthropic", AnthropicAdapter(api_key=anthropic_key))
+                except Exception as exc:  # noqa: BLE001
+                    errors.append(f"anthropic: {exc}")
+            return "ok" if not errors else f"partial: {'; '.join(errors)}"
         except Exception as exc:  # noqa: BLE001
             return f"error: {exc}"
 
@@ -356,6 +390,25 @@ class MotherAssembly:
         except Exception as exc:  # noqa: BLE001
             return f"error: {exc}"
 
+    def _boot_long_term_memory(self) -> str:
+        # Opt-in: only active when memory.long_term_enabled is true (default off).
+        # Default-off keeps chat() behaviour unchanged unless explicitly enabled.
+        # Read config INSIDE try (like sibling _boot_* helpers): a config error must
+        # not crash boot() — it degrades to an error status (fail-closed).
+        try:
+            enabled = bool(self.config) and str(
+                self.config.get("memory.long_term_enabled", False)
+            ).strip().lower() in ("1", "true", "yes", "on")
+            if not enabled:
+                return "disabled (memory.long_term_enabled=false)"
+            LTM = _try_import("MRL_LongTermMemory_v1", "MRL_LongTermMemory")
+            if LTM is None:
+                return "unavailable"
+            self.long_term_memory = LTM()
+            return "ok"
+        except Exception as exc:  # noqa: BLE001
+            return f"error: {exc}"
+
     # ── Built-in tools ────────────────────────────────────────────────────────
 
     def _register_builtin_tools(self) -> None:
@@ -383,6 +436,29 @@ class MotherAssembly:
             return a + b
 
         @self.tool_registry.register(
+            description="Subtract b from a.",
+            parameters={"a": float, "b": float},
+        )
+        def subtract(a: float, b: float) -> float:
+            return a - b
+
+        @self.tool_registry.register(
+            description="Multiply two numbers.",
+            parameters={"a": float, "b": float},
+        )
+        def multiply(a: float, b: float) -> float:
+            return a * b
+
+        @self.tool_registry.register(
+            description="Divide a by b.",
+            parameters={"a": float, "b": float},
+        )
+        def divide(a: float, b: float) -> float:
+            if b == 0:
+                raise ValueError("Cannot divide by zero")
+            return a / b
+
+        @self.tool_registry.register(
             description="Retrieve world state snapshot.",
         )
         def world_snapshot() -> Dict[str, Any]:
@@ -400,6 +476,18 @@ class MotherAssembly:
             vec = [float(x) for x in query_csv.split(",")]
             hits = self.vector_store.query(vec, top_k=top_k)
             return [{"id": h[0], "score": h[1], "meta": h[2]} for h in hits]
+
+        @self.tool_registry.register(
+            description="Get basic text statistics.",
+            parameters={"text": str},
+        )
+        def text_stats(text: str) -> Dict[str, int]:
+            words = [w for w in text.strip().split() if w]
+            return {
+                "chars": len(text),
+                "words": len(words),
+                "lines": text.count("\n") + (1 if text.strip() else 0),
+            }
 
     # ── Built-in templates ────────────────────────────────────────────────────
 
@@ -526,10 +614,17 @@ class MotherAssembly:
         if self.conversation_manager is None:
             return {"error": "ConversationManager unavailable"}
 
-        # Resolve model
-        resolved_model = model or (
-            self.config.get("llm.default_model", "mock") if self.config else "mock"
-        )
+        # Resolve model — deny-by-default（rootlaw rl_00）：不隱式退回 mock
+        resolved_model = str(model or (
+            self.config.get("llm.default_model", "") if self.config else ""
+        )).strip()
+        if not resolved_model:
+            return {"error": "'model' is required unless llm.default_model is configured"}
+        allow_mock = False
+        if self.config:
+            allow_mock = str(self.config.get("llm.allow_mock", False)).strip().lower() in ("1", "true", "yes", "on")
+        if resolved_model.startswith("mock") and not allow_mock:
+            return {"error": "MockAdapter is test-only. Set llm.allow_mock=true to enable."}
 
         # Get or create session
         if session_id is None:
@@ -544,8 +639,25 @@ class MotherAssembly:
         # Record user message
         self.conversation_manager.add_message(session_id, "user", message)
 
-        # Get history and trim context
+        # Get history
         history = self.conversation_manager.get_history(session_id)
+
+        # Long-term memory recall (opt-in; no-op when disabled) — inject
+        # recalled memories as system context after the session system prompt.
+        if self.long_term_memory is not None:
+            try:
+                # Scope recall to this session so memories never leak across sessions/users.
+                recalled = self.long_term_memory.recall_as_context(message, session_id=session_id)
+                if recalled:
+                    sys_msgs = [m for m in history if m.get("role") == "system"]
+                    rest = [m for m in history if m.get("role") != "system"]
+                    history = sys_msgs + recalled + rest
+            except Exception:  # noqa: BLE001
+                # memory failure must never break chat (fail-closed) — but log it so a
+                # misconfigured / corrupted store doesn't fail silently in production.
+                logger.debug("long_term_memory.recall_as_context failed", exc_info=True)
+
+        # Trim context
         if self.context_manager is not None:
             history, _ = self.context_manager.fit(history)
 
@@ -555,22 +667,62 @@ class MotherAssembly:
             for m in history
         ]
 
-        # LLM call
-        reply_text = f"[MockAdapter] Echo: {message}"
-        if self.llm_gateway is not None:
-            LLMRequest = _try_import("llm_adapter", "LLMRequest")
-            if LLMRequest is not None:
-                req = LLMRequest(
-                    model=resolved_model,
-                    messages=llm_messages,
-                    max_tokens=max_tokens,
-                    temperature=temperature,
-                )
-                resp = self.llm_gateway.complete(req)
-                reply_text = resp.text if resp.ok else f"[LLM Error] {resp.error}"
+        # LLM call — deny-by-default（rootlaw rl_00）：gateway 不可用或呼叫失敗時
+        # 以 top-level error 誠實回報，不以 Mock 偽造回覆（fail closed）。
+        if self.llm_gateway is None:
+            return {
+                "error": "LLM gateway unavailable (not booted)",
+                "session_id": session_id,
+                "model": resolved_model,
+                "origin_signature": ORIGIN_SIGNATURE,
+            }
+        LLMRequest = _try_import("llm_adapter", "LLMRequest")
+        if LLMRequest is None:
+            return {
+                "error": "llm_adapter module unavailable",
+                "session_id": session_id,
+                "model": resolved_model,
+                "origin_signature": ORIGIN_SIGNATURE,
+            }
+        req = LLMRequest(
+            model=resolved_model,
+            messages=llm_messages,
+            max_tokens=max_tokens,
+            temperature=temperature,
+        )
+        try:
+            resp = self.llm_gateway.complete(req)
+        except Exception as exc:  # noqa: BLE001 — 例如未註冊模型的 KeyError
+            return {
+                "error": f"LLM error: {exc}",
+                "session_id": session_id,
+                "model": resolved_model,
+                "origin_signature": ORIGIN_SIGNATURE,
+            }
+        if not resp.ok:
+            return {
+                "error": f"LLM error: {resp.error}",
+                "session_id": session_id,
+                "model": resolved_model,
+                "origin_signature": ORIGIN_SIGNATURE,
+            }
+        reply_text = resp.text
 
         # Record assistant reply
         self.conversation_manager.add_message(session_id, "assistant", reply_text)
+
+        # Long-term memory write (opt-in; no-op when disabled).
+        if self.long_term_memory is not None:
+            try:
+                # Persist both turns in ONE store write (avoids two full JSON rewrites).
+                self.long_term_memory.remember_many([
+                    (session_id, "user", message),
+                    (session_id, "assistant", reply_text),
+                ])
+            except Exception:  # noqa: BLE001
+                # fail-closed, but log so a store that stopped persisting is noticeable.
+                logger.debug("long_term_memory.remember_many failed", exc_info=True)
+
         self._seal_event("chat", {"session_id": session_id, "model": resolved_model})
 
         return {
@@ -661,6 +813,7 @@ class MotherAssembly:
                 "llm_gateway":          self.llm_gateway is not None,
                 "context_manager":      self.context_manager is not None,
                 "scheduler":            self.scheduler is not None,
+                "long_term_memory":     self.long_term_memory is not None,
             },
             "checked_at_ms": int(time.time() * 1000),
         }
