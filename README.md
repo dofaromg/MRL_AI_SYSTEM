@@ -309,3 +309,7 @@ python 09_workflow/config_manager.py set --key llm.openai_api_key --value sk-...
 ```
 
 See `04_runtime/runtime_manifest.yaml` for the full install order and recovery protocol.
+
+## References
+
+- [@Mrliou](https://github.com/Mrliou)
