@@ -32,7 +32,8 @@ mother_authority:
     不改動 DL580 現行治理。任何升格/套用需另立範圍並取得使用者明確授權。
 
 # ── 本批吸收物（母體名 ← 原始檔）──────────────────────────────
-absorbed_artifacts:
+# top-level key 沿用既有批次(20260531/20260716)慣例: artifacts
+artifacts:
   - mother_name: "MRL_Zero_Origin_v1.md"
     source_name: "Mrl_Zero.Origin.v1.md"
     kind: "種子 / 身份起源知識（persona seed origin）"
@@ -90,8 +91,8 @@ absorbed_artifacts:
     reversible: "原始 zip 逐字保全。"
     pipeline: "COLMAP/SfM → AI 注意力加權重投影誤差 → ContextGraph → NBV/補拍提示 → QualityGate → HTML+heatmap+JSON"
 
-# ── 未採納 / 未授權（誠實邊界）────────────────────────────────
-unadopted_or_pending_authorization:
+# ── 未採納 / 未授權（誠實邊界）；key 沿用既有批次慣例: pending_activation ──
+pending_activation:
   - item: "flowagent_final/APPLY_TO_MOTHER.sh 執行"
     ruling: "未執行 / 待授權：會改動母體結構,需另立範圍 + 明確授權。"
   - item: "flowagent_final/DEPLOY.sh / deploy_dl580 部署"

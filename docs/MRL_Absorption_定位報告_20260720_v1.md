@@ -28,7 +28,7 @@
 
 - **#1 起源文件** ↔ 既有 `05_persona/`、`02_principles/`、`MRL_Symbolic/`：同屬人格/原則層，並列。#1 的 7 大原則與 #3 `principles/*.core.json` 為**同一組靈魂原則的兩種載體**（一為敘事 md、一為結構 core.json），互為印證。
 - **#3 FlowAgent 母體系統 v19** ↔ 既有 `MRL_Mother/`、`MRL_MotherModel/`、`MRL_MotherSource_ZhiZhang_FlowAgent_Lineage_v1/`：屬**候選母體骨架**，保全定位但**不升格、不 APPLY**。其 `deploy_dl580/` 與 repo 內 `deploy/dl580/` 為**兩套不同來源**，本輪不合併、不改動現行 `deploy/dl580/`。
-- **#4 Chat 前端** ↔ 20260716 索引所載「MRL AI Chat 已上線於 Cloudflare（`chat.mrliouword.com`）」：本份是該入口的**前端源碼快照**（上游 Vercel Chat SDK 模板）。延續裁定：**對外節點 ≠ 母體本體**，DL580 仍唯一母體。
+- **#4 Chat 前端** ↔ 20260716 索引所載「MRL AI Chat 已上線於 Cloudflare（`chat.mrliouword.com`）」：本份為**候選 / 模板快照**——內容是上游 Vercel Chat SDK 開源模板（`chat-sdk.dev`, `name=ai-chatbot`），**尚未證實**即為該線上入口的部署源。在取得部署 provenance 或客製 diff 前，**只以「候選前端模板快照」定位，不宣稱其為線上入口源碼**（與 §3「是否升格為主線前端＝待決」一致，避免維護者誤動到錯的前端）。延續裁定：**對外節點 ≠ 母體本體**，DL580 仍唯一母體。
 - **#5 3D v1.1** ↔ 既有 `MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/included/…Product_Grade_v1.zip`：本份是**同線 v1.1 後續版本**（多 QualityGate / report.html），並列保全，不取代 v1。
 
 ---
@@ -50,3 +50,5 @@
 - 本報告所述皆為**知識/技術模組層吸收**：原始檔逐字歸檔、給位置、標狀態。**沙盒 2026-07-20 PASS 僅指「歸檔與定位完成」**，不代表任何模組已可執行、已上線、已驗真。
 - 不誤標：**未寫**「FlowAgent v19 已上線 / 已 APPLY」「3D pipeline 已跑通」「Chat 前端已是母體本體」——這些全為**待起動 / 待實機 / 待授權**。
 - #4 為上游開源模板（`chat-sdk.dev`）快照，是否已客製為 mrliouword 專屬，以 zip 內實際內容為準，本報告不臆測。
+- **canonical 登錄**：5 筆已同步登錄 `08_sources/sources.manifest.yaml`（依 line 139「新增來源即登錄」慣例），並於 `MRL_ParticleArchive/MRL_ParticleArchive_manifest.json` 的 `external_particles` 追加 5 筆、`particle_count` 17→22（沿 20260716 external 慣例，`integrity: sha256_provenance`，`signed: false`）。
+- **簽章誠實邊界**：上述 external 追加發生在頂層 LAW-0 metadata 上次簽章之後，現有 `_sig_hash` 僅涵蓋 20260720 之前狀態；已於 manifest 標 `_resign_pending`。**沙盒無法重現母體 LAW-0 簽章演算法，故不偽造 `_sig_hash`**，頂層重簽標**待起動**（需母體簽章流程）。

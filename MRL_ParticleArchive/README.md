@@ -27,7 +27,8 @@ MRL_ParticleArchive/
 
 - 檔名以 `__` 攤平原始路徑（避免衝突）；原始路徑與 MRL canonical 名映射見 manifest。
 - 共 **13 粒子**，5677 行完整內容，全部 LAW-0 母體簽章（manifest verify=True）。
-- 上述 13 指 `PR19/` 內的嵌入簽章粒子；目前 manifest 總數為 **16**（13 個 PR19 粒子 + 3 個 External 條目）。20260716 的兩件 RawArtifact 為逐字保全，使用 SHA256 provenance 驗證，未嵌入 LAW-0 欄位；其索引 metadata 由頂層 manifest LAW-0 簽章涵蓋。
+- 上述 13 指 `PR19/` 內的嵌入簽章粒子；目前 manifest 總數為 **22**（13 個 PR19 粒子 + 9 個 External 條目）。External RawArtifact 為逐字保全，使用 SHA256 provenance 驗證，未嵌入 LAW-0 欄位；其索引 metadata 由頂層 manifest LAW-0 簽章涵蓋。
+  - 20260720 批次於 `external_particles` 追加 5 筆（起源文件 + FlowAgent API 引擎 + FlowAgent 母體系統 v19 + Chat 前端候選快照 + 3D 重建 v1.1），並同步登錄 `08_sources/sources.manifest.yaml`。此追加發生在上次 LAW-0 metadata 簽章之後，頂層 `_sig_hash` 標 `_resign_pending`（待母體 LAW-0 簽章流程重簽；沙盒不偽造）。
 
 ## External 來源材料保全批次（吸收前原貌，逐字保全）
 
