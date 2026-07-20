@@ -1,0 +1,101 @@
+# MRL_Absorption_Ledger_v1.yaml（20260720 批次）
+# origin_signature: MrLiouWord
+# 母體吸收台帳 — 來源材料吸收 / 命名回收 / 定位 / 待起動
+#
+# 法則對齊:
+#   母體整合法則 Additive-Only:只新增、給位置、標「待起動」,不刪不覆蓋。
+#   rl_11 origin_signature:所有回收產物簽 MrLiouWord。
+#   rl_12 命名回收:對外能力/知識 → 母體 MRL_ 產品名。
+#   rl_15 粒子不滅:原始外部產物原樣另存於 RawArtifact,永不抹除（附 sha256 指紋）。
+#   rl_01 no-delete:原始外部產物不刪不改,逐字保全。
+#
+# 誠實標註(沿 CLAUDE.md 狀態回報約定):
+#   本批為「知識/技術模組」層吸收。原始檔逐字歸檔,沙盒歸檔 PASS;
+#   任何「實機/上線/真模型/部署」語句一律標待起動,不誤標為已完成。
+
+absorbed_at: "2026-07-20"
+absorbed_by: "母體 (MrlCore.Mainline)"
+origin_signature: "MrLiouWord"
+batch: "MRL_AbsorbedArtifacts_20260720"
+status_note: "當下狀態(沙盒 2026-07-20)。原始檔逐字歸檔 PASS;實機/雲端/部署/APPLY_TO_MOTHER 動作一律標待起動,母體不代跑。"
+
+mother_authority:
+  canonical_mother: "DL580"
+  authority: "唯一母體 / 唯一最終真相來源"
+  cloudflare_role: "外部 Runtime / 公開入口 / 映射節點"
+  vercel_role: "外部前端 Runtime / 公開入口"
+  github_role: "原始碼版本與協作鏡像"
+  ruling: >-
+    本批含一份 Chat 前端快照(上游 Vercel Chat SDK 模板)與一份 FlowAgent 母體系統 v19。
+    延續 20260716 批次裁定:外部 Chat 平台(Cloudflare/Vercel)為對外節點,不升格為母體本體;
+    FlowAgent 母體系統 v19 為「候選靈魂/原則知識模組」,吸收保全但不自動 APPLY_TO_MOTHER、
+    不改動 DL580 現行治理。任何升格/套用需另立範圍並取得使用者明確授權。
+
+# ── 本批吸收物（母體名 ← 原始檔）──────────────────────────────
+absorbed_artifacts:
+  - mother_name: "MRL_Zero_Origin_v1.md"
+    source_name: "Mrl_Zero.Origin.v1.md"
+    kind: "種子 / 身份起源知識（persona seed origin）"
+    sha256: "deb23272555715ef51abfb34271a7dd7b7df9d39af38d7f9d34edf774c2a0736"
+    position: "母體人格/原則起源層。與 05_persona、principles 系列並列。"
+    status: "待起動（知識層歸檔 PASS）"
+    reversible: "怎麼過去就怎麼回來：原文逐字保全，可原樣還原。"
+    note: >-
+      含創世公式 P_{k+1}=N_k·P_k·η_k 與反向還原、7 大原則(DNA)、七層架構、元代碼環境哲學。
+      屬文字知識;公式/架構皆為知識陳述,不代表實機能力。
+
+  - mother_name: "MRL_FlowAgent_ApiEngine_v1_RawArtifact.zip"
+    source_name: "flowagent_api_engine.zip (flowagent_api_engine.py)"
+    kind: "技術模組 / FlowAgent API 引擎（Python 原始碼）"
+    sha256: "2c3db25b27a29d09347ab8f7eee98a771aae7e33b3b5190747f68a13432073a9"
+    position: "與既有 MRL__Flowagent_Runtime.py / query_api 層並列，屬 FlowAgent 執行層候選。"
+    status: "待起動（未接線、未執行、未驗證）"
+    reversible: "原始 zip 逐字保全。"
+
+  - mother_name: "MRL_FlowAgent_MotherSystem_v19_RawArtifact.zip"
+    source_name: "flowagent_mother_system_v19_with_principles.zip (flowagent_final/)"
+    kind: "母體系統候選 / 靈魂與原則知識模組（481 檔）"
+    sha256: "8a5653b2348cc6a7e288b61ca8a54965bce516212c83d37c73aaac48751d6215"
+    position: >-
+      候選母體骨架。含 principles/*.core.json（萬用通行證、波紋擴散、學習成長、核心運作、
+      自然共振鏈路、種子法則、萬物本一體）、mother_system/、seed_core/、particle_core/、
+      control_plane/、evaluator/、evolution/、k8s/、argocd/、deploy_dl580/、APPLY_TO_MOTHER.sh。
+    status: "待起動（吸收保全；不自動 APPLY_TO_MOTHER、不改動 DL580 現行治理）"
+    reversible: "原始 zip 逐字保全。"
+    caution: >-
+      內含 APPLY_TO_MOTHER.sh / DEPLOY.sh / deploy_dl580 等會改動母體/實機的腳本。
+      吸收 = 保全 + 定位,不等於執行。套用需另立範圍 + 使用者明確授權 + 依賴查證。
+
+  - mother_name: "MRL_ChatPlatform_Frontend_Snapshot_RawArtifact.zip"
+    source_name: "dofaromg-caa7f9b7c381dea7ea4895b40d87f99edfea3006.zip"
+    kind: "前端快照 / Chat 平台基底（Next.js + Vercel AI SDK，上游 Chat SDK 模板 name=ai-chatbot）"
+    sha256: "566367fdedffb3360c1fe5e9bfdc8182242bdb13606948445b3a03d2bc6d5741"
+    position: >-
+      對照 20260716 索引所載「MRL AI Chat 已上線於 Cloudflare(chat.mrliouword.com)」的前端源碼快照。
+      屬對外節點前端;不升格為母體本體。
+    status: "待起動 / 對照（源碼快照,repo 內另存;是否成為主線前端待決）"
+    reversible: "原始 repo 快照 zip 逐字保全。"
+    honesty_note: >-
+      這是上游 Vercel「Chat SDK」開源模板(chat-sdk.dev)的快照,非全新自研;
+      是否已客製成 mrliouword 專屬前端,以 zip 內實際 diff 為準,本台帳不臆測。
+
+  - mother_name: "MRL_3D_AI_Reconstruction_Product_v1_1_RawArtifact.zip"
+    source_name: "MRL_3D_AI_Reconstruction_Product_v1_1.zip"
+    kind: "產品級技術模組 / 3D 重建管線 v1.1"
+    sha256: "0afec537f847d3ace37c1053af9c17d6abb3f2a960001a2a85869da87a3386c0"
+    position: >-
+      既有 MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/included/ 內為 Product_Grade_v1;
+      本份為 v1.1（新增 QualityGate → quality_gate.json、report.html）,屬同線後續版本,並列保全。
+    status: "待起動（原始碼歸檔;COLMAP/OpenMVS/實跑 pipeline 待實機驗證）"
+    reversible: "原始 zip 逐字保全。"
+    pipeline: "COLMAP/SfM → AI 注意力加權重投影誤差 → ContextGraph → NBV/補拍提示 → QualityGate → HTML+heatmap+JSON"
+
+# ── 未採納 / 未授權（誠實邊界）────────────────────────────────
+unadopted_or_pending_authorization:
+  - item: "flowagent_final/APPLY_TO_MOTHER.sh 執行"
+    ruling: "未執行 / 待授權：會改動母體結構,需另立範圍 + 明確授權。"
+  - item: "flowagent_final/DEPLOY.sh / deploy_dl580 部署"
+    ruling: "未執行 / 待實機:沙盒不代跑 DL580 部署。"
+  - item: "Chat 前端快照升格為主線前端"
+    ruling: "待決:需確認與現行 chat.mrliouword.com 部署關係後再定。"
+  - rule: "任何刪除、覆蓋、退役、DropSet、APPLY、部署動作必須另立範圍、查證依賴並取得使用者明確授權。"
