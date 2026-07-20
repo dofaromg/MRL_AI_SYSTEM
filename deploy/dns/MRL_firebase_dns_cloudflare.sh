@@ -11,8 +11,8 @@
 # 安全設計：
 #   - Token 只從環境變數讀取，不寫死在檔案。
 #   - 冪等：已存在的記錄會 SKIP，不重複建立。
-#   - SPF 只能有一筆：若偵測到既有 SPF，預設「不」自動加第二筆，改印出合併建議。
-#     確認原本沒有 SPF、要讓腳本自行加上時，才設 MRL_FORCE_SPF=1。
+#   - SPF 只能有一筆：若偵測到既有 SPF，一律「不」自動加第二筆（多筆 SPF 會全部失效），
+#     改印出正確的合併建議（include 會插在終端 all 之前）。原本沒有 SPF 時才自動建立。
 #   - DKIM CNAME 一律 proxied=false（DNS only / 灰雲），開 Proxy 會破壞 DKIM。
 #
 # 前置：
@@ -85,14 +85,21 @@ EXISTING_SPF=$(curl -sS "${AUTH[@]}" "${API}/zones/${CF_ZONE_ID}/dns_records?typ
 SKIP_SPF=0
 if [ -n "${EXISTING_SPF}" ]; then
   echo "⚠️  偵測到既有 SPF：${EXISTING_SPF}"
+  # 已存在 SPF 時「一律」不自動新增第二筆——多筆 SPF 會讓全部 SPF 失效，
+  # 沒有任何覆寫可以安全繞過（原先的 MRL_FORCE_SPF 反而會製造第二筆，已移除）。
+  SKIP_SPF=1
   if echo "${EXISTING_SPF}" | grep -qi "_spf.firebasemail.com"; then
-    echo "    已含 firebasemail，SPF 無需變更。"
-    SKIP_SPF=1
+    echo "    已含 _spf.firebasemail.com，SPF 無需變更。"
   else
-    echo "    SPF 只能一筆，不自動新增第二筆。請手動把既有 SPF 合併，例如："
-    echo "    ${EXISTING_SPF% ~all} include:_spf.firebasemail.com ~all"
-    echo "    （確認原本『沒有』SPF、要讓腳本自行加 firebase SPF，才設 MRL_FORCE_SPF=1 重跑）"
-    [ "${MRL_FORCE_SPF:-0}" = "1" ] || SKIP_SPF=1
+    # 把 include 插在「終端 all 機制」之前，並保留原本的修飾（~all / -all / ?all / +all）。
+    # 直接接在 -all 之後會讓 include 永遠不被評估（all 一律 match），等於沒授權 Firebase。
+    MERGED_SPF=$(printf '%s' "${EXISTING_SPF}" \
+      | sed -E 's/[[:space:]]*([-~?+]?all)[[:space:]]*$/ include:_spf.firebasemail.com \1/')
+    if [ "${MERGED_SPF}" = "${EXISTING_SPF}" ]; then
+      MERGED_SPF="${EXISTING_SPF} include:_spf.firebasemail.com"   # 原本沒有終端 all
+    fi
+    echo "    SPF 只能一筆，不自動新增。請手動把既有 SPF『合併』為（include 需在終端 all 之前）："
+    echo "    ${MERGED_SPF}"
   fi
 fi
 

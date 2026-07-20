@@ -68,18 +68,24 @@ else
   fail "查不到 TXT firebase=flowmemorysync"
 fi
 
-# ── 3) DKIM CNAMEs ────────────────────────────────────────────────
-D1="$(lookup "firebase1._domainkey.${DOMAIN}" CNAME)"
-D2="$(lookup "firebase2._domainkey.${DOMAIN}" CNAME)"
-if printf '%s' "${D1}" | grep -qi 'dkim1._domainkey.firebasemail.com'; then
-  pass "DKIM1 CNAME 指向 firebasemail (${D1})"
+# ── 3) DKIM CNAMEs（比對「完整」目標主機，避免前綴被竄改/打錯仍誤判 PASS）──
+# Firebase 目標格式為 mail-<網域,點換成減號>.dkimN._domainkey.firebasemail.com
+DOMAIN_DASH="$(printf '%s' "${DOMAIN}" | tr '.' '-')"
+EXP_D1="mail-${DOMAIN_DASH}.dkim1._domainkey.firebasemail.com"
+EXP_D2="mail-${DOMAIN_DASH}.dkim2._domainkey.firebasemail.com"
+# 正規化：去頭尾空白、去結尾點、轉小寫，再做完整字串比對
+norm_host() { printf '%s' "$1" | tr 'A-Z' 'a-z' | sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//; s/\.$//'; }
+D1="$(norm_host "$(lookup "firebase1._domainkey.${DOMAIN}" CNAME)")"
+D2="$(norm_host "$(lookup "firebase2._domainkey.${DOMAIN}" CNAME)")"
+if [ "${D1}" = "${EXP_D1}" ]; then
+  pass "DKIM1 CNAME 完整指向 ${EXP_D1}"
 else
-  fail "firebase1._domainkey 未指向 ...dkim1._domainkey.firebasemail.com（得到：${D1:-空})"
+  fail "firebase1._domainkey 應指向 ${EXP_D1}，實得：${D1:-空}"
 fi
-if printf '%s' "${D2}" | grep -qi 'dkim2._domainkey.firebasemail.com'; then
-  pass "DKIM2 CNAME 指向 firebasemail (${D2})"
+if [ "${D2}" = "${EXP_D2}" ]; then
+  pass "DKIM2 CNAME 完整指向 ${EXP_D2}"
 else
-  fail "firebase2._domainkey 未指向 ...dkim2._domainkey.firebasemail.com（得到：${D2:-空})"
+  fail "firebase2._domainkey 應指向 ${EXP_D2}，實得：${D2:-空}"
 fi
 
 echo "----------------------------------------"
