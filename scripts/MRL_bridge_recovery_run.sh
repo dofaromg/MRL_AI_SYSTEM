@@ -40,6 +40,8 @@ need_key() {
 }
 
 # 經 bridge 在 DL580 上執行指令（cmd 內容 URL-encode 後帶入 MRL_run）
+# 認證：bridge 契約為 x-api-key header（runtime_bridge.json / dl580_bridge.config.json），
+#       key 走 header 不放 query，避免落入伺服器存取日誌與 URL。
 mrl_run() {
   local cmd="$1"
   echo "--- DL580> ${cmd}"
