@@ -70,6 +70,7 @@ mrliouword api serve --port 7771
 - [外部材料盤點 / 去重蒸餾決策](docs/mrliouword_external_inventory_v1.md)
 - [命名規範與遷移政策](docs/mrliouword_naming_policy_v1.md)
 - [架構決策紀錄 ADR](docs/mrliouword_adrs_v1.md)
+- [前端部署與平台說明摘要](docs/MRL_前端部署與平台說明摘要_v1.md)
 
 ---
 
