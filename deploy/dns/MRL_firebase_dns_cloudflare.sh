@@ -57,6 +57,8 @@ record_exists() { # $1=type $2=fqdn $3=content_substr
       >/dev/null 2>&1
 }
 
+FAIL_COUNT=0
+
 create() { # $1=type $2=fqdn $3=content $4=proxied(true/false) $5=match_substr
   local type="$1" name="$2" content="$3" proxied="$4" match="$5"
   if record_exists "${type}" "${name}" "${match}"; then
@@ -71,6 +73,8 @@ create() { # $1=type $2=fqdn $3=content $4=proxied(true/false) $5=match_substr
     echo "OK    建立: ${type} ${name}"
   else
     echo "FAIL  建立: ${type} ${name} -> $(echo "${resp}" | jq -c '.errors' 2>/dev/null)"
+    FAIL_COUNT=$((FAIL_COUNT + 1))
+    return 1
   fi
 }
 
@@ -103,5 +107,9 @@ create TXT "${DOMAIN}" "firebase=flowmemorysync" false "firebase=flowmemorysync"
 create CNAME "firebase1._domainkey.${DOMAIN}" "mail-mrliouword-com.dkim1._domainkey.firebasemail.com" false "dkim1._domainkey.firebasemail.com"
 create CNAME "firebase2._domainkey.${DOMAIN}" "mail-mrliouword-com.dkim2._domainkey.firebasemail.com" false "dkim2._domainkey.firebasemail.com"
 
+if [ "${FAIL_COUNT}" -gt 0 ]; then
+  echo "FAIL  共 ${FAIL_COUNT} 筆記錄建立失敗，請確認 Token 權限後重跑。"
+  exit 1
+fi
 echo "DONE。等生效（最長 48h，通常數分鐘）後，回 Firebase 該頁按「驗證」。"
 echo "驗證生效狀態：bash deploy/dns/MRL_firebase_dns_verify.sh"
