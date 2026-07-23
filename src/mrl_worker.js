@@ -7,10 +7,20 @@
 //
 // 靜態端點（邊緣直答）：/、/health、/mrl/state、/api/mrl/runtime/convergence
 // 動態端點（轉發 DL580）：/api/mother/status、/api/dl580/run、/api/chat、/api/monitor、/mrl/perceive
+// 除錯收集端點（邊緣直答）：POST /__manus__/logs — 前端內嵌除錯收集器上報 console/network/ui 事件
 
 import { APP_HTML } from "./mrl_app_ui.js";
 
 const ORIGIN_SIGNATURE = "MrLiouWord";
+
+// CORS：允許前端跨域上報（含 POST JSON 前的 preflight 預檢）。
+// x-mrl-origin-signature 為 MRL 母體追蹤標記，蓋在每個 JSON 回應上。
+const CORS_HEADERS = {
+  "access-control-allow-origin": "*",
+  "access-control-allow-methods": "GET, POST, OPTIONS",
+  "access-control-allow-headers": "content-type, x-mrl-origin-signature",
+  "access-control-max-age": "86400",
+};
 
 function domain(env) {
   return (env && env.MRL_PLATFORM_DOMAIN) || "mrliouword.com";
@@ -46,6 +56,32 @@ function dashboard(env) {
   return APP_HTML;
 }
 
+// MRL 結構化封裝：把前端內嵌收集器上報的除錯日誌收斂成母體標準封包，
+// 蓋 origin_signature 追蹤標記與唯一識別 (trace_id)，欄位缺漏一律歸零陣列以保安全。
+function wrapManusLogs(payload, request) {
+  const safe = (payload && typeof payload === "object") ? payload : {};
+  const asArray = (v) => (Array.isArray(v) ? v : []);
+  const consoleLogs = asArray(safe.consoleLogs);
+  const networkRequests = asArray(safe.networkRequests);
+  const uiEvents = asArray(safe.uiEvents);
+  return {
+    origin_signature: ORIGIN_SIGNATURE,
+    mrl_kind: "MRL_ManusDebugLogPacket",
+    trace_id: "MRL-MANUS-" + Date.now().toString(36),
+    received_at: new Date().toISOString(),
+    source: {
+      referer: (request && request.headers.get("referer")) || null,
+      user_agent: (request && request.headers.get("user-agent")) || null,
+    },
+    counts: {
+      consoleLogs: consoleLogs.length,
+      networkRequests: networkRequests.length,
+      uiEvents: uiEvents.length,
+    },
+    payload: { consoleLogs, networkRequests, uiEvents },
+  };
+}
+
 const PROXY_PATHS = ["/api/mother/status", "/api/dl580/run", "/api/chat", "/api/monitor", "/mrl/perceive"];
 
 export default {
@@ -54,8 +90,33 @@ export default {
     const p = url.pathname;
     const J = (o, s = 200) => new Response(JSON.stringify(o), {
       status: s,
-      headers: { "content-type": "application/json; charset=utf-8", "access-control-allow-origin": "*" },
+      headers: {
+        "content-type": "application/json; charset=utf-8",
+        "x-mrl-origin-signature": ORIGIN_SIGNATURE,
+        ...CORS_HEADERS,
+      },
     });
+
+    // CORS 預檢：前端 POST JSON 前的 preflight（OPTIONS）一律放行，避免跨域阻擋。
+    if (request.method === "OPTIONS") {
+      return new Response(null, { status: 204, headers: CORS_HEADERS });
+    }
+
+    // 除錯收集端點：前端內嵌收集器 POST /__manus__/logs 上報 console/network/ui 事件。
+    // 安全 await request.json() 解析 → MRL 母體結構化封裝 → 蓋 origin_signature → 回 200。
+    if (p === "/__manus__/logs" && request.method === "POST") {
+      let body;
+      try {
+        body = await request.json();
+      } catch (e) {
+        // 內容非合法 JSON：誠實回 400（不謊報 success），仍附 CORS 讓前端能讀到回應。
+        return J({ success: false, origin: ORIGIN_SIGNATURE, error: "MRL_INVALID_JSON" }, 400);
+      }
+      const packet = wrapManusLogs(body, request);
+      // 收斂到邊緣可觀測性日誌（wrangler.jsonc observability.enabled=true 會收集）。
+      console.log("MRL_ManusDebugLogPacket", packet.trace_id, JSON.stringify(packet.counts));
+      return J({ success: true, origin: ORIGIN_SIGNATURE });
+    }
 
     if (request.method === "GET" && (p === "/" || p === "/index.html")) {
       return new Response(dashboard(env), { headers: { "content-type": "text/html; charset=utf-8" } });
