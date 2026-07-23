@@ -67,7 +67,7 @@ function wrapManusLogs(payload, request) {
   return {
     origin_signature: ORIGIN_SIGNATURE,
     mrl_kind: "MRL_ManusDebugLogPacket",
-    trace_id: "MRL-MANUS-" + Date.now().toString(36),
+    trace_id: mrlTraceId(),
     received_at: new Date().toISOString(),
     source: {
       referer: (request && request.headers.get("referer")) || null,
@@ -80,6 +80,40 @@ function wrapManusLogs(payload, request) {
     },
     payload: { consoleLogs, networkRequests, uiEvents },
   };
+}
+
+// 唯一識別（防碰撞）：時間前綴保留粗略可排序性；crypto.randomUUID() 提供隨機性，
+// 避免同毫秒併發的兩個請求拿到相同 trace_id。極端環境無 randomUUID 時退回隨機後備。
+function mrlTraceId() {
+  const t = Date.now().toString(36);
+  let rand;
+  try {
+    rand = crypto.randomUUID();
+  } catch (e) {
+    rand = t + "-" + Math.random().toString(36).slice(2, 14);
+  }
+  return "MRL-MANUS-" + t + "-" + rand;
+}
+
+// 上限守則：公開端點須有邊界。
+const MAX_BODY_BYTES = 256 * 1024; // 256KB：debug 日誌批次的合理上限，逾者回 413。
+const MAX_LOG_CHARS = 20000;       // 單筆 observability log 的截斷上限，避免整筆遺失。
+
+// 將 MRL 封包（含 payload）寫入邊緣可觀測性日誌（wrangler.jsonc observability.enabled=true 會收集）；
+// 確保 console/network/ui 內容真正落地，而非只留計數。逾量截斷但保留 counts 與前段內容。
+function emitPacketLog(packet) {
+  let serialized;
+  try {
+    serialized = JSON.stringify(packet);
+  } catch (e) {
+    serialized = JSON.stringify({ trace_id: packet.trace_id, counts: packet.counts, serialize_error: String(e) });
+  }
+  if (serialized.length > MAX_LOG_CHARS) {
+    console.log("MRL_ManusDebugLogPacket", packet.trace_id, "TRUNCATED",
+      JSON.stringify(packet.counts), serialized.slice(0, MAX_LOG_CHARS));
+  } else {
+    console.log("MRL_ManusDebugLogPacket", packet.trace_id, serialized);
+  }
 }
 
 const PROXY_PATHS = ["/api/mother/status", "/api/dl580/run", "/api/chat", "/api/monitor", "/mrl/perceive"];
@@ -97,14 +131,22 @@ export default {
       },
     });
 
-    // CORS 預檢：前端 POST JSON 前的 preflight（OPTIONS）一律放行，避免跨域阻擋。
+    // CORS 預檢：邊緣統一處理所有路徑的 OPTIONS preflight（含代理 /api/*），一律回
+    // 204 + CORS，使前端跨域 POST 不被阻擋。此為刻意的邊緣層行為（非只限
+    // /__manus__/logs）；代理端點的實際（非 OPTIONS）請求仍照常轉發 DL580。
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: CORS_HEADERS });
     }
 
     // 除錯收集端點：前端內嵌收集器 POST /__manus__/logs 上報 console/network/ui 事件。
-    // 安全 await request.json() 解析 → MRL 母體結構化封裝 → 蓋 origin_signature → 回 200。
+    // 大小防護 → 安全 await request.json() 解析 → MRL 母體結構化封裝 → 收斂 observability → 回 200。
     if (p === "/__manus__/logs" && request.method === "POST") {
+      // 大小防護：公開端點（allow-origin:*）先以 content-length 粗略擋超大 body，
+      // 避免 await request.json() 把過大內容讀進記憶體造成 CPU/記憶體壓力。
+      const declaredLen = Number(request.headers.get("content-length") || 0);
+      if (Number.isFinite(declaredLen) && declaredLen > MAX_BODY_BYTES) {
+        return J({ success: false, origin: ORIGIN_SIGNATURE, error: "MRL_PAYLOAD_TOO_LARGE", max_bytes: MAX_BODY_BYTES }, 413);
+      }
       let body;
       try {
         body = await request.json();
@@ -113,8 +155,8 @@ export default {
         return J({ success: false, origin: ORIGIN_SIGNATURE, error: "MRL_INVALID_JSON" }, 400);
       }
       const packet = wrapManusLogs(body, request);
-      // 收斂到邊緣可觀測性日誌（wrangler.jsonc observability.enabled=true 會收集）。
-      console.log("MRL_ManusDebugLogPacket", packet.trace_id, JSON.stringify(packet.counts));
+      // 收斂完整封包（含 payload）到 observability，而非只留計數；逾量截斷。
+      emitPacketLog(packet);
       return J({ success: true, origin: ORIGIN_SIGNATURE });
     }
 
