@@ -45,9 +45,35 @@ def test_worker_uses_canonical_mrl_packet_naming():
     assert 'console.log("MRL_DebugLogPacket"' in w
 
 
+# 外部平台「產品名」禁列（Canonicalization Gate §4：外部名不得升格為 canonical 主體）。
+# 只列產品/服務名；不含 cloudflare / workers — 那是 Transport/部署平台（gate §2 Adapter 層，允許）。
+EXTERNAL_PLATFORM_NAMES = (
+    "manus",
+    "vercel",
+    "openai",
+    "chatgpt",
+    "copilot",
+    "coderabbit",
+    "codex",
+    "huggingface",
+    "netlify",
+    "heroku",
+    "replit",
+    "supabase",
+    "firebase",
+    "anthropic",
+    "gemini",
+    "sillytavern",
+)
+
+
 def test_worker_contains_no_external_platform_canonicalization():
     w = worker().lower()
-    assert "manus" not in w, "external platform name must not appear in product canonical route/packet/trace"
+    for name in EXTERNAL_PLATFORM_NAMES:
+        assert name not in w, (
+            f"external platform name {name!r} must not appear in product "
+            "canonical route/packet/trace (MRL_Product_Canonicalization_Gate_v1 §4)"
+        )
 
 
 def test_worker_parses_json_safely():
