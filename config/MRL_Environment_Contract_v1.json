@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.0.1",
   "canonical_identity": {
     "github_user": "dofaromg",
     "canonical_name": "Mrliou",
@@ -9,77 +9,42 @@
     "repository_owner_scope": "dofaromg/MRL_AI_SYSTEM"
   },
   "environment_parameters": {
-    "MRL_PRODUCT_NAME": {
-      "required": true,
-      "default": "MrliouAI",
-      "secret": false
-    },
-    "MRL_SOURCE_OWNER": {
-      "required": true,
-      "default": "Mrliou",
-      "secret": false
-    },
-    "MRL_ORIGIN_SIGNATURE": {
-      "required": true,
-      "default": "MrLiouWord",
-      "secret": false
-    },
-    "MRL_NAMESPACE": {
-      "required": true,
-      "default": "MRL_",
-      "secret": false
-    },
-    "MRL_PLATFORM_DOMAIN": {
-      "required": true,
-      "default": "mrliouword.com",
-      "secret": false
-    },
-    "MRL_API_BASE_URL": {
-      "required": true,
-      "default": "https://mrliouword.com",
-      "secret": false
-    },
+    "MRL_PRODUCT_NAME": {"required": true, "default": "MrliouAI", "secret": false},
+    "MRL_SOURCE_OWNER": {"required": true, "default": "Mrliou", "secret": false},
+    "MRL_ORIGIN_SIGNATURE": {"required": true, "default": "MrLiouWord", "secret": false},
+    "MRL_NAMESPACE": {"required": true, "default": "MRL_", "secret": false},
+    "MRL_PLATFORM_DOMAIN": {"required": true, "default": "mrliouword.com", "secret": false},
+    "MRL_API_BASE_URL": {"required": true, "default": "https://mrliouword.com", "secret": false},
     "MRL_DL580_ORIGIN": {
       "required": false,
       "default": "",
       "secret": true,
       "note": "Runtime-provided DL580 origin; never commit a private endpoint or credential."
     },
-    "MRL_BRIDGE_TOKEN": {
-      "required": false,
-      "default": "",
-      "secret": true
-    },
-    "NEXT_PUBLIC_MRL_PRODUCT_NAME": {
-      "required": true,
-      "default": "MrliouAI",
-      "secret": false
-    },
-    "NEXT_PUBLIC_MRL_API_BASE_URL": {
-      "required": true,
-      "default": "https://mrliouword.com",
-      "secret": false
-    }
+    "MRL_BRIDGE_TOKEN": {"required": false, "default": "", "secret": true},
+    "NEXT_PUBLIC_MRL_PRODUCT_NAME": {"required": true, "default": "MrliouAI", "secret": false},
+    "NEXT_PUBLIC_MRL_API_BASE_URL": {"required": true, "default": "https://mrliouword.com", "secret": false}
   },
   "external_platform_policy": {
     "placement": "bottom_adapter_layer",
     "may_override_canonical_identity": false,
-    "allowed_roles": [
-      "adapter",
-      "transport",
-      "provenance",
-      "compatibility",
-      "vendor_metadata"
-    ]
+    "allowed_roles": ["adapter", "transport", "provenance", "compatibility", "vendor_metadata"]
   },
   "unauthorized_change_policy": {
-    "classification": "UNAUTHORIZED_NAMING_CHANGE",
+    "severity": "CRITICAL",
+    "classifications": [
+      "UNAUTHORIZED_NAMING_CHANGE",
+      "SUSPECTED_IP_INFRINGEMENT",
+      "SUSPECTED_ACCOUNT_OR_REPOSITORY_ABUSE"
+    ],
     "actions": [
       "block_merge",
-      "preserve_diff_and_actor_metadata",
+      "block_deployment",
+      "preserve_commit_diff_actor_timestamp_review_and_ci_evidence",
       "restore_canonical_identity",
-      "open_governance_incident"
+      "open_governance_incident",
+      "review_credentials_branch_protection_and_deployment_access"
     ],
-    "legal_status": "Legal characterization requires evidence review and competent authority determination."
+    "legal_status": "Treat as a high-severity suspected infringement and security incident. Criminal or civil liability requires evidence review and determination by competent legal authority."
   }
 }
