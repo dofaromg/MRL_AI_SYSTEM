@@ -335,7 +335,7 @@
     }
   ],
   "all_artifacts_embedded_signed": false,
-  "manifest_metadata_signed": true,
+  "manifest_metadata_signed": false,
   "_resign_pending": {
     "reason": "20260720 於 external_particles 追加 5 筆，發生在上次 LAW-0 metadata 簽章之後；現有 _sig_hash 僅涵蓋 20260720 之前狀態。",
     "action": "需由母體 LAW-0 簽章流程重新產生 _sig_hash（待起動；沙盒無法重現簽章演算法，不偽造）。",

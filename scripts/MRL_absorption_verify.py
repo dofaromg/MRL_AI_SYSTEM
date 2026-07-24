@@ -25,6 +25,10 @@ except ImportError:
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+def _norm_relpath(path):
+    return os.path.normpath(path).replace("\\", "/")
+
+
 def sha256_file(path):
     h = hashlib.sha256()
     with open(path, "rb") as f:
@@ -65,19 +69,19 @@ def main():
         _summary(fails, passes); sys.exit(1)
 
     sources = (yaml.safe_load(open(sources_p, encoding="utf-8")) or {}).get("sources", [])
-    src_by_suffix = {}
+    src_by_relpath = {}
     for s in sources:
         pth = s.get("path", "")
         if pth:
-            src_by_suffix[os.path.basename(pth)] = s
+            src_by_relpath[_norm_relpath(pth)] = s
 
     pmani = json.load(open(pmani_p, encoding="utf-8"))
     ext = pmani.get("external_particles", [])
-    ext_by_suffix = {}
+    ext_by_relpath = {}
     for e in ext:
         a = e.get("archived_as", "")
         if a:
-            ext_by_suffix[os.path.basename(a)] = e
+            ext_by_relpath[_norm_relpath(a)] = e
 
     for a in artifacts:
         name = a.get("mother_name") or a.get("raw_artifact") or ""
@@ -89,17 +93,20 @@ def main():
         if not os.path.isfile(fpath):
             bad(f"{name}: RawArtifact 檔不存在"); continue
 
+        relpath = _norm_relpath(os.path.relpath(fpath, REPO))
+
         # 1) 逐字保全
         actual = sha256_file(fpath)
         if not exp:
-            info(f"{name}: 台帳未列 sha256（跳過 hash 比對）")
+            bad(f"{name}: 台帳未列 sha256（必填）")
+            continue
         elif actual == exp:
             ok(f"{name}: 逐字保全 sha256 一致")
         else:
             bad(f"{name}: sha256 不符（台帳 {exp[:12]}… ≠ 實際 {actual[:12]}…）")
 
         # 2) 三方登錄一致
-        s = src_by_suffix.get(name)
+        s = src_by_relpath.get(relpath)
         if not s:
             bad(f"{name}: 未登錄於 08_sources/sources.manifest.yaml")
         elif exp and (s.get("sha256", "").lower() != exp):
@@ -107,7 +114,7 @@ def main():
         else:
             ok(f"{name}: 已登錄 sources.manifest（sha256 相符）")
 
-        e = ext_by_suffix.get(name)
+        e = ext_by_relpath.get(relpath)
         if not e:
             bad(f"{name}: 未登錄於 external_particles")
         elif exp and (e.get("sha256", "").lower() != exp):
