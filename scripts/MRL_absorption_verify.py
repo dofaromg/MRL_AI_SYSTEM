@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # MRL_absorption_verify.py — 母體吸收完整性 / 一致性驗證器
-# origin_signature = MrLiouWord
+# origin_signature：由母根源 09_workflow/MRL_utils.py 匯入（去重蒸餾・單一真實來源）
 #
 # 目的（補強 rl_15 粒子不滅 / 逐字保全 + 三方登錄一致）：
 #   驗證某吸收批次的每件 RawArtifact —
@@ -23,6 +23,20 @@ except ImportError:
     sys.exit(2)
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# 對齊母根源（去重蒸餾・單一真實來源）：origin_signature 一律由 09_workflow/MRL_utils.py
+# 匯入，不在此重複定義字面值（沿 MRL_utils 律法「不得在其他模組重複定義，應 from MRL_utils import」）。
+# 匯入模式沿用 MRL_Mother/mrl_mother_component.py 的 guarded sys.path + guarded fallback 慣例。
+_WF = os.path.join(REPO, "09_workflow")
+if _WF not in sys.path:
+    sys.path.insert(0, _WF)
+try:
+    from MRL_utils import ORIGIN_SIGNATURE  # 母根源・單一真實來源
+except ModuleNotFoundError as _exc:
+    # 僅在「MRL_utils 本身不存在」時退回；其他 import 失敗不得靜默遮蔽（否則會繞過單一真實來源）。
+    if _exc.name != "MRL_utils":
+        raise
+    ORIGIN_SIGNATURE = "MrLiouWord"
 
 
 def _norm_relpath(path):
@@ -53,7 +67,7 @@ def main():
     pmani_p = os.path.join(REPO, "MRL_ParticleArchive", "MRL_ParticleArchive_manifest.json")
 
     print("MRL_ABSORPTION_VERIFY")
-    print("origin_signature=MrLiouWord")
+    print(f"origin_signature={ORIGIN_SIGNATURE}")
     print(f"batch={batch}")
 
     fails, passes = [], []
