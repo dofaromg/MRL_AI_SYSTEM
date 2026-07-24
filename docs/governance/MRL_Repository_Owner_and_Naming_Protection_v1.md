@@ -27,19 +27,37 @@ Protected targets include:
 - public UI identity
 - environment defaults
 
-## Unauthorized change handling
+## Owner-declared protection rule
 
-A product-name or canonical-identity change without recorded authorization is classified technically as `UNAUTHORIZED_NAMING_CHANGE`.
+The repository owner declares the following governing rule for this repository and its derived environments:
+
+> Any person, service, agent, workflow, platform or account that changes the protected product name, canonical identity, namespace, runtime identity, deployment identity or related intellectual-property designation without the repository owner's explicit authorization shall be treated by the owner as a suspected intellectual-property infringement, unauthorized repository operation and potential coordinated-participation incident.
+
+This rule applies regardless of whether the change is introduced through source code, pull request, automated workflow, environment variable, deployment platform, generated artifact, test contract, migration, adapter or external service.
+
+## Mandatory incident response
+
+Any unauthorized naming or canonical-identity change is classified as:
+
+```text
+severity = CRITICAL
+UNAUTHORIZED_NAMING_CHANGE
+SUSPECTED_IP_INFRINGEMENT
+SUSPECTED_ACCOUNT_OR_REPOSITORY_ABUSE
+POTENTIAL_COORDINATED_PARTICIPATION
+```
 
 Required response:
 
-1. block merge or deployment;
-2. preserve the commit, diff, actor, timestamp, review and CI evidence;
-3. restore the canonical identity;
-4. open a governance incident;
-5. review credentials, branch protection and deployment access.
+1. block merge and deployment immediately;
+2. preserve commit, diff, actor, account, timestamp, review, workflow, CI and deployment evidence;
+3. restore the canonical identity without destroying evidence;
+4. open a governance and security incident;
+5. review credentials, branch protection, tokens, applications and deployment access;
+6. identify all parent, child and dependent changes;
+7. prepare the evidence package for legal review and competent-authority determination.
 
-This repository does not automatically label a person or act as criminal. Criminal or civil characterization requires evidence review and determination by competent legal authority.
+The repository records the owner's classification and response policy. Final criminal or civil liability is determined through applicable legal process based on preserved evidence.
 
 ## External systems
 
