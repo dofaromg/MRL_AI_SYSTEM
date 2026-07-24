@@ -66,12 +66,19 @@ def test_external_platforms_cannot_override_identity():
     assert policy["may_override_canonical_identity"] is False
 
 
-def test_unauthorized_change_is_high_severity_governance_incident():
+def test_unauthorized_change_is_critical_suspected_ip_incident():
     policy = load_contract()["unauthorized_change_policy"]
-    assert policy["classification"] == "UNAUTHORIZED_NAMING_CHANGE"
+    assert policy["severity"] == "CRITICAL"
+    assert {
+        "UNAUTHORIZED_NAMING_CHANGE",
+        "SUSPECTED_IP_INFRINGEMENT",
+        "SUSPECTED_ACCOUNT_OR_REPOSITORY_ABUSE",
+    }.issubset(set(policy["classifications"]))
     assert {
         "block_merge",
-        "preserve_diff_and_actor_metadata",
+        "block_deployment",
+        "preserve_commit_diff_actor_timestamp_review_and_ci_evidence",
         "restore_canonical_identity",
         "open_governance_incident",
+        "review_credentials_branch_protection_and_deployment_access",
     }.issubset(set(policy["actions"]))
