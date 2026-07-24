@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0.0",
+  "canonical_identity": {
+    "github_user": "dofaromg",
+    "canonical_name": "Mrliou",
+    "product": "MrliouAI",
+    "namespace": "MRL_",
+    "origin_signature": "MrLiouWord",
+    "repository_owner_scope": "dofaromg/MRL_AI_SYSTEM"
+  },
+  "environment_parameters": {
+    "MRL_PRODUCT_NAME": {
+      "required": true,
+      "default": "MrliouAI",
+      "secret": false
+    },
+    "MRL_SOURCE_OWNER": {
+      "required": true,
+      "default": "Mrliou",
+      "secret": false
+    },
+    "MRL_ORIGIN_SIGNATURE": {
+      "required": true,
+      "default": "MrLiouWord",
+      "secret": false
+    },
+    "MRL_NAMESPACE": {
+      "required": true,
+      "default": "MRL_",
+      "secret": false
+    },
+    "MRL_PLATFORM_DOMAIN": {
+      "required": true,
+      "default": "mrliouword.com",
+      "secret": false
+    },
+    "MRL_API_BASE_URL": {
+      "required": true,
+      "default": "https://mrliouword.com",
+      "secret": false
+    },
+    "MRL_DL580_ORIGIN": {
+      "required": false,
+      "default": "",
+      "secret": true,
+      "note": "Runtime-provided DL580 origin; never commit a private endpoint or credential."
+    },
+    "MRL_BRIDGE_TOKEN": {
+      "required": false,
+      "default": "",
+      "secret": true
+    },
+    "NEXT_PUBLIC_MRL_PRODUCT_NAME": {
+      "required": true,
+      "default": "MrliouAI",
+      "secret": false
+    },
+    "NEXT_PUBLIC_MRL_API_BASE_URL": {
+      "required": true,
+      "default": "https://mrliouword.com",
+      "secret": false
+    }
+  },
+  "external_platform_policy": {
+    "placement": "bottom_adapter_layer",
+    "may_override_canonical_identity": false,
+    "allowed_roles": [
+      "adapter",
+      "transport",
+      "provenance",
+      "compatibility",
+      "vendor_metadata"
+    ]
+  },
+  "unauthorized_change_policy": {
+    "classification": "UNAUTHORIZED_NAMING_CHANGE",
+    "actions": [
+      "block_merge",
+      "preserve_diff_and_actor_metadata",
+      "restore_canonical_identity",
+      "open_governance_incident"
+    ],
+    "legal_status": "Legal characterization requires evidence review and competent authority determination."
+  }
+}
