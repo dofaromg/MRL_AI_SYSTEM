@@ -42,6 +42,10 @@ def main():
     ap.add_argument("--batch", default="20260720", help="批次日期，如 20260720")
     args = ap.parse_args()
     batch = args.batch
+    # 防護：--batch 僅允許 8 位數日期，避免 ../ 等值讓 bdir 指向 repo 外
+    if not (len(batch) == 8 and batch.isdigit()):
+        print(f"FAIL: --batch 需為 8 位數日期（如 20260720），收到：{batch!r}")
+        sys.exit(2)
 
     bdir = os.path.join(REPO, "MRL_ParticleArchive", "External", f"MRL_AbsorbedArtifacts_{batch}")
     ledger_p = os.path.join(bdir, "MRL_Absorption_Ledger_v1.yaml")
@@ -62,20 +66,27 @@ def main():
             print(f"FAIL: 缺檔 {os.path.relpath(p, REPO)}")
             sys.exit(2)
 
-    ledger = yaml.safe_load(open(ledger_p, encoding="utf-8"))
+    with open(ledger_p, encoding="utf-8") as f:
+        ledger = yaml.safe_load(f)
+    if not isinstance(ledger, dict):
+        bad(f"台帳 {os.path.relpath(ledger_p, REPO)} 非有效 YAML 物件（頂層應為 mapping）")
+        _summary(fails, passes); sys.exit(1)
     artifacts = ledger.get("artifacts") or ledger.get("absorbed_artifacts") or []
     if not artifacts:
         bad(f"台帳 {os.path.relpath(ledger_p, REPO)} 無 artifacts")
         _summary(fails, passes); sys.exit(1)
 
-    sources = (yaml.safe_load(open(sources_p, encoding="utf-8")) or {}).get("sources", [])
+    with open(sources_p, encoding="utf-8") as f:
+        sources_doc = yaml.safe_load(f)
+    sources = (sources_doc.get("sources", []) if isinstance(sources_doc, dict) else [])
     src_by_relpath = {}
     for s in sources:
         pth = s.get("path", "")
         if pth:
             src_by_relpath[_norm_relpath(pth)] = s
 
-    pmani = json.load(open(pmani_p, encoding="utf-8"))
+    with open(pmani_p, encoding="utf-8") as f:
+        pmani = json.load(f)
     ext = pmani.get("external_particles", [])
     ext_by_relpath = {}
     for e in ext:

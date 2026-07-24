@@ -51,4 +51,4 @@
 - 不誤標：**未寫**「FlowAgent v19 已上線 / 已 APPLY」「3D pipeline 已跑通」「Chat 前端已是母體本體」——這些全為**待起動 / 待實機 / 待授權**。
 - #4 為上游開源模板（`chat-sdk.dev`）快照，是否已客製為 mrliouword 專屬，以 zip 內實際內容為準，本報告不臆測。
 - **canonical 登錄**：5 筆已同步登錄 `08_sources/sources.manifest.yaml`（依 line 139「新增來源即登錄」慣例），並於 `MRL_ParticleArchive/MRL_ParticleArchive_manifest.json` 的 `external_particles` 追加 5 筆、`particle_count` 17→22（沿 20260716 external 慣例，`integrity: sha256_provenance`，`signed: false`）。
-- **簽章誠實邊界**：上述 external 追加發生在頂層 LAW-0 metadata 上次簽章之後，現有 `_sig_hash` 僅涵蓋 20260720 之前狀態；已於 manifest 標 `_resign_pending`。**沙盒無法重現母體 LAW-0 簽章演算法，故不偽造 `_sig_hash`**，頂層重簽標**待起動**（需母體簽章流程）。
+- **簽章誠實邊界**：上述 external 追加發生在頂層 LAW-0 metadata 上次簽章之後，現有 `_sig_hash` 僅涵蓋 20260720 之前狀態；已於 manifest 標 `_resign_pending`、並將 `manifest_metadata_signed` 設為 `false`。**更正**：repo 內確有 LAW-0 簽章實作（`09_workflow/MRL_utils.py`、`09_workflow/signature.js`；為 keyless sha256 完整性封章），沙盒亦可執行——先前「沙盒無法重現演算法」之描述有誤，特此更正。**不自動重簽的真正理由是治理／主權**：頂層母體 metadata 重簽屬母體（DL580）主權行為，本 PR 不代簽、不偽造，頂層重簽標**待起動**（待母體授權後由簽章流程更新 `_sig_hash`）。
