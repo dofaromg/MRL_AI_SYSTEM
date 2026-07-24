@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.1",
+  "schema_version": "1.0.2",
   "canonical_identity": {
     "github_user": "dofaromg",
     "canonical_name": "Mrliou",
@@ -15,12 +15,7 @@
     "MRL_NAMESPACE": {"required": true, "default": "MRL_", "secret": false},
     "MRL_PLATFORM_DOMAIN": {"required": true, "default": "mrliouword.com", "secret": false},
     "MRL_API_BASE_URL": {"required": true, "default": "https://mrliouword.com", "secret": false},
-    "MRL_DL580_ORIGIN": {
-      "required": false,
-      "default": "",
-      "secret": true,
-      "note": "Runtime-provided DL580 origin; never commit a private endpoint or credential."
-    },
+    "MRL_DL580_ORIGIN": {"required": false, "default": "", "secret": true, "note": "Runtime-provided DL580 origin; never commit a private endpoint or credential."},
     "MRL_BRIDGE_TOKEN": {"required": false, "default": "", "secret": true},
     "NEXT_PUBLIC_MRL_PRODUCT_NAME": {"required": true, "default": "MrliouAI", "secret": false},
     "NEXT_PUBLIC_MRL_API_BASE_URL": {"required": true, "default": "https://mrliouword.com", "secret": false}
@@ -32,10 +27,12 @@
   },
   "unauthorized_change_policy": {
     "severity": "CRITICAL",
+    "owner_declared_policy": true,
     "classifications": [
       "UNAUTHORIZED_NAMING_CHANGE",
       "SUSPECTED_IP_INFRINGEMENT",
-      "SUSPECTED_ACCOUNT_OR_REPOSITORY_ABUSE"
+      "SUSPECTED_ACCOUNT_OR_REPOSITORY_ABUSE",
+      "POTENTIAL_COORDINATED_PARTICIPATION"
     ],
     "actions": [
       "block_merge",
@@ -43,8 +40,9 @@
       "preserve_commit_diff_actor_timestamp_review_and_ci_evidence",
       "restore_canonical_identity",
       "open_governance_incident",
-      "review_credentials_branch_protection_and_deployment_access"
+      "review_credentials_branch_protection_and_deployment_access",
+      "prepare_evidence_package_for_legal_review"
     ],
-    "legal_status": "Treat as a high-severity suspected infringement and security incident. Criminal or civil liability requires evidence review and determination by competent legal authority."
+    "legal_status": "Repository-owner incident classification and response rule; final criminal or civil liability is determined through applicable legal process based on preserved evidence."
   }
 }
