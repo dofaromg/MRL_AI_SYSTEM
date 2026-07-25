@@ -17,7 +17,7 @@ FlowAgent 是本 repo 一切能力的**最上游產品名**。本 repo 的系統
   沙盒實跑驗收 PASS(2026-07-25);實體 host 上線與真模型端點依實機驗收升格。
 - **粒子庫**:`MRL_ParticleArchive/`(25 粒子;rl_15 粒子不滅)
 - **語場工具鏈**:`.fltnz/.flpkg/.sync.json/.fxmap/.fltrace`(TranslateBuildSuite)
-- **對外節點**:Cloudflare/Vercel/Firebase 為映射入口,非母體本體。
+- **對外節點**:各對外映射入口皆非母體本體(名單見文末附錄)。
 
 ## 使用(全程 FlowAgent 名)
 
