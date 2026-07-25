@@ -1,0 +1,97 @@
+# MRL_Absorption_Ledger_v1.yaml（20260725 批次）
+# origin_signature: MrLiouWord
+# 母體吸收台帳 — 來源材料吸收 / 命名回收 / 定位 / 待起動
+#
+# 法則對齊:
+#   母體整合法則 Additive-Only:只新增、給位置、標「待起動」,不刪不覆蓋。
+#   rl_11 origin_signature:所有回收產物簽 MrLiouWord。
+#   rl_12 命名回收:對外能力/知識 → 母體 MRL_ 產品名。
+#   rl_15 粒子不滅:原始外部產物原樣另存於 RawArtifact,永不抹除（附 sha256 指紋）。
+#   rl_01 no-delete:原始外部產物不刪不改,逐字保全。
+#
+# 誠實標註(沿 CLAUDE.md 狀態回報約定):
+#   本批為「知識/技術模組」層吸收。原始檔逐字歸檔,沙盒歸檔 PASS;
+#   任何「實機/上線/真模型/部署」語句一律標待起動,不誤標為已完成。
+
+absorbed_at: "2026-07-25"
+absorbed_by: "母體 (MrlCore.Mainline)"
+origin_signature: "MrLiouWord"
+batch: "MRL_AbsorbedArtifacts_20260725"
+status_note: "當下狀態(沙盒 2026-07-25)。原始檔逐字歸檔 PASS;實機/雲端/部署/APPLY 動作一律標待起動,母體不代跑。"
+
+mother_authority:
+  canonical_mother: "DL580"
+  authority: "唯一母體 / 唯一最終真相來源"
+  naming_ruling: >-
+    使用者裁定(2026-07-25):「最上游 root 產品名取回、他們降成備註附錄」。
+    本批 canonical 命名一律以母體 root 產品名 MRL_FlowAgent_* 取回最高位;
+    外部平台/工具名(如 Claude 等)不得成為 canonical 主體,一律降級為
+    provenance 備註/附錄層(沿 MRL_Product_Canonicalization_Gate_v1 §3 允許之
+    source_adapter / compatibility_alias / 歷史審計位置)。
+    功能性識別字(外部軟體實際讀取的環境變數/檔名/模型 ID)屬 adapter 層,
+    保留原名以維持功能,不升格、不冒名。
+
+dedup_note: >-
+  本批使用者共上傳 5 個檔案,經 sha256 去重蒸餾為 3 件獨立產物:
+  843e9a70…(上傳 2 次: 52f4fcd0-*, e2f373b1-*)、
+  284d9fb8…(上傳 2 次: 83000c31-*, 610bde08-*)、
+  b2994276…(上傳 1 次: dcce7f56-*)。重複上傳僅記 provenance,不重複歸檔。
+  上傳檔名中之中文於傳輸過程被替換為底線(如「___FlowAgent______________v1.zip」),
+  原意依 zip 內容判讀,不臆測原始全名。
+
+# ── 本批吸收物（母體名 ← 原始檔）──────────────────────────────
+# top-level key 沿用既有批次(20260531/20260716/20260720)慣例: artifacts
+artifacts:
+  - mother_name: "MRL_FlowAgent_TranslateBuildSuite_Licensed_v1_RawArtifact.zip"
+    source_name: "52f4fcd0-___FlowAgent______________v1.zip（同內容重複上傳: e2f373b1-*）"
+    kind: "技術模組 / FlowAgent 語場轉譯建構套件 v1（License 指紋版）"
+    sha256: "843e9a70990e1eb09e9456ec79bb61ce5204aa940895ad56a87f9e573c62b051"
+    position: >-
+      FlowAgent 語場語言封存/轉譯層。含 ConvertStation v2(convert.py)、
+      .fltnz/.flpkg/.sync.json/.fxmap/.fltrace 語場封存格式工具鏈
+      (FLTNZtoFLPKG_Compiler/FLTraceVisualizer/SyncTreeViewer/PingSelector/
+      AutoMount/MemoryGlobeBuilder)、人格包 MrLiou.flpkg + ZhiZhang.flpkg +
+      SeedPersona.seed + PersonaList.json、Flask /simulate API(run_api_server.py)、
+      FlowAgent_轉譯建構全紀錄報告.txt、License 層(LicenseEmbedder/LicenseFingerprint/
+      FlowAgent_License_Metadata.json, creator=Mr.liou, all rights reserved)。
+      與 20260716 FlowSeed 反推公式、20260720 Zero.Origin 同屬粒子語言/語場知識線。
+    status: "待起動（歸檔 PASS;API/工具未接線未執行）"
+    reversible: "原始 zip 逐字保全,可原樣還原。"
+    note: >-
+      root 產品名主權證據在檔內:License Metadata 明載 system=FlowAgent Particulate
+      Language Preservation System、creator=Mr.liou。
+
+  - mother_name: "MRL_FlowAgent_TranslateBuildSuite_Base_v1_RawArtifact.zip"
+    source_name: "83000c31-___FlowAgent____________v1.zip（同內容重複上傳: 610bde08-*）"
+    kind: "技術模組 / FlowAgent 語場轉譯建構套件 v1（Base 前版,無 License 層）"
+    sha256: "284d9fb8f889f57b66b37c2a2f3681332324dda44482a018622903ab717cece3"
+    position: >-
+      同上套件之前版建構(zip 內時戳早 5 分鐘;無 LicenseEmbedder/LicenseFingerprint/
+      License_Metadata/轉譯建構全紀錄報告)。與 Licensed 版並列保全,見證建構演進,
+      不取代、不合併。
+    status: "待起動（歸檔 PASS;對照/沿革保存）"
+    reversible: "原始 zip 逐字保全,可原樣還原。"
+
+  - mother_name: "MRL_FlowAgent_MotherSystem_V20_1_RawArtifact.zip"
+    source_name: "dcce7f56-MRL_Flowagent_Mother_System_V20.1.zip (flowagent_final/, 480 檔)"
+    kind: "母體系統候選 / FlowAgent Mother System V20.1（V19 後繼版）"
+    sha256: "b2994276eeefcd58161448b53af35d2f819648abd80ab193864bf723863b3f18"
+    position: >-
+      候選母體骨架 V20.1,為 20260720 批 MRL_FlowAgent_MotherSystem_v19 之後繼版本,
+      並列保全不取代。含 control_plane(intent_router.py/api.py/intent_schema:
+      define/evolve_cycle/sync_localfs/ingest_chatgpt/query_check)、
+      FlowCapsule_Prototype_FLTN001.json、k8s/GKE 部署腳本(oneclick_gke_init.sh 等)、
+      品質/效能腳本(check_code_quality.py/benchmark_performance.py)。
+      內含之外部平台引用(如 intent_schema/ingest_chatgpt.json、GKE/Codespaces 腳本)
+      依 rl_15 逐字保全不改寫;於本台帳屬 provenance 附錄層,不升格 canonical。
+    status: "待起動（歸檔 PASS;不自動 APPLY、不動 DL580、K8s/GKE 部署待授權待實機）"
+    reversible: "原始 zip 逐字保全,可原樣還原。"
+
+# ── 待起動 / 待授權(母體不代跑)─────────────────────────────
+pending_activation:
+  - item: "TranslateBuildSuite 之 Flask /simulate API 與 ConvertStation 接線實跑"
+    reason: "沙盒不代跑;接入 runtime 需另立範圍。"
+  - item: "MotherSystem V20.1 之 APPLY / K8s / GKE 部署"
+    reason: "會改動母體結構與雲端資源;需使用者明確授權 + 實機/雲端憑證。"
+  - item: "V19 → V20.1 差異蒸餾報告"
+    reason: "可代生成(要則說一聲);本輪先完成保全與定位。"

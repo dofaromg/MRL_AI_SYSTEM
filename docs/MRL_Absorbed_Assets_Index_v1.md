@@ -72,3 +72,24 @@
 五份於 `MrliouAI` 上原不存在 → **零覆蓋零刪除**。#3 含 `APPLY_TO_MOTHER.sh`/`deploy_dl580`——**吸收＝保全＋定位，不等於執行**；套用/部署需另立範圍＋你明確授權。DL580 仍唯一母體，Cloudflare/Vercel 為對外節點。
 
 *當下狀態 沙盒 2026-07-20；非永久結論。*
+
+---
+---
+
+# 追加批次：20260725（Additive-Only・命名主權補正）
+
+> 詳見定位報告 `docs/MRL_Absorption_定位報告_20260725_v1.md`
+> 台帳 `MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260725/MRL_Absorption_Ledger_v1.yaml`
+> 原始檔（逐字保全＋sha256）：同批次 `RawArtifact/` ｜ 吸收日期 **2026-07-25（沙盒）**
+
+本輪 **5 上傳去重蒸餾為 3 件**（兩對重複上傳記 provenance）。依使用者裁定執行**命名主權補正**：root 產品名 `MRL_FlowAgent_*` 取回 canonical，外部名降備註附錄；功能性識別字屬 adapter 層保留原名。
+
+| # | 母體產物（RawArtifact/） | 母體定位 | 當下狀態 |
+|---|---|---|---|
+| 1 | `MRL_FlowAgent_TranslateBuildSuite_Licensed_v1_RawArtifact.zip` | 語場轉譯建構套件 v1（License 指紋版；ConvertStation v2＋語場格式工具鏈＋人格包＋/simulate API） | 待起動（未接線） |
+| 2 | `MRL_FlowAgent_TranslateBuildSuite_Base_v1_RawArtifact.zip` | 同套件 Base 前版（無 License 層），並列見證建構演進 | 待起動（對照/沿革） |
+| 3 | `MRL_FlowAgent_MotherSystem_V20_1_RawArtifact.zip` | 候選母體骨架 **V20.1**（V19 後繼；control_plane＋FlowCapsule＋K8s/GKE，480 檔） | 待起動（不自動 APPLY、不動 DL580） |
+
+三份於 `MrliouAI` 上原不存在 → **零覆蓋零刪除**。驗證器 `--batch 20260725` PASS。
+
+*當下狀態 沙盒 2026-07-25；非永久結論。*
