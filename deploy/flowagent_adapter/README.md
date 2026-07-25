@@ -1,8 +1,8 @@
-# MRL_FlowAgent_SovereignAdapter_v1（重新包裝建構）
+# FlowAgent 產品啟動器（最上游本體；重新包裝建構）
 
-origin_signature: `MrLiouWord` ｜ 裁定：root 產品名取回、外部名降備註附錄（2026-07-25）
+origin_signature: `MrLiouWord` ｜ 裁定：root 產品名取回、外部名降備註附錄（2026-07-25）｜ 最上游主權文件：`/FLOWAGENT.md`
 
-`flowagent` = FlowAgent 品牌啟動包裝器。你全程使用 FlowAgent 命名（指令 / `FLOWAGENT_*` 環境變數 / `FLOWAGENT.md`・`~/.flowagent.json` 設定檔 / `flowagent-*` 模型名），包裝器在內部把功能識別字轉譯給底層外部 CLI——外部名只存在於包裝器內部（附錄層），不對外、不升格。
+`flowagent` = **FlowAgent 產品的啟動器，FlowAgent 是主體**。你全程使用 FlowAgent 命名（指令 / `FLOWAGENT_*` 環境變數 / `FLOWAGENT.md`・`~/.flowagent.json` 設定檔 / `flowagent-*` 模型名）。外部工具的相容識別字屬**附錄層**：只存在於啟動器內部的相容轉譯段，不對外、不具主體位階。
 
 對照表與原則：`docs/MRL_FlowAgent_Naming_Adapter_Map_v1.md`
 
