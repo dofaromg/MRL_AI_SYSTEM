@@ -228,6 +228,27 @@
       ]
     },
     {
+      "symbol": "🔗",
+      "title": "橋接 / MCP / API 紀錄 / Bridge·MCP·ApiRecord",
+      "items": [
+        {
+          "path": "mrliouword/api_record.py",
+          "role": "母體 API 紀錄模組（Platform Server 端，JSONL 帳本 record/tail/summary）",
+          "exists": true
+        },
+        {
+          "path": "MRL_Bridge_ApiRecord",
+          "role": "bridge 生產級 API 紀錄中介層（Express/pg/redis/x-api-key，給 bridge.mrliouword.com）",
+          "exists": true
+        },
+        {
+          "path": "MRL_Bridge_MCP",
+          "role": "原生 C MCP 伺服器（WinHTTP+cJSON+stdio，8 工具接 Bridge 127.0.0.1:7800）",
+          "exists": true
+        }
+      ]
+    },
+    {
       "symbol": "📇",
       "title": "索引 / 註冊 / Registry",
       "items": [

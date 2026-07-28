@@ -76,6 +76,13 @@
 | 🛰️ | `wrangler.jsonc` | `wrangler.jsonc` | Cloudflare Worker 部署設定 |
 | 🛰️ | `MRL__Business_Dashboard.html` | `MRL__Business_Dashboard.html` | 商業儀表板 |
 
+### 🔗 橋接 / MCP / API 紀錄 / Bridge·MCP·ApiRecord
+| 符號 | 粒子 / 模組 | 路徑 | 職責 |
+|---|---|---|---|
+| 🔗 | `api_record.py` | `mrliouword/api_record.py` | 母體 API 紀錄模組（Platform Server 端，JSONL 帳本 record/tail/summary） |
+| 🔗 | `MRL_Bridge_ApiRecord` | `MRL_Bridge_ApiRecord` | bridge 生產級 API 紀錄中介層（Express/pg/redis/x-api-key，給 bridge.mrliouword.com） |
+| 🔗 | `MRL_Bridge_MCP` | `MRL_Bridge_MCP` | 原生 C MCP 伺服器（WinHTTP+cJSON+stdio，8 工具接 Bridge 127.0.0.1:7800） |
+
 ### 📇 索引 / 註冊 / Registry
 | 符號 | 粒子 / 模組 | 路徑 | 職責 |
 |---|---|---|---|
