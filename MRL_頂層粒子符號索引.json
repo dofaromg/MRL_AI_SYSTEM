@@ -1,0 +1,416 @@
+{
+  "schema": "MRL_TopLevel_ParticleSymbol_Index_v1",
+  "origin_signature": "MrLiouWord",
+  "law": "Additive-Only；母體為最高權威",
+  "backbone": [
+    {
+      "dir": "00_rootlaw",
+      "symbol": "⟐",
+      "name": "根律法層",
+      "role": "母體最高律法（Additive-Only、權位、origin_signature 主權）"
+    },
+    {
+      "dir": "01_schema",
+      "symbol": "▢",
+      "name": "綱要層",
+      "role": "結構定義與資料模型 schema"
+    },
+    {
+      "dir": "02_principles",
+      "symbol": "⚖",
+      "name": "原則層",
+      "role": "運作原則與治理準則"
+    },
+    {
+      "dir": "03_memory",
+      "symbol": "❖",
+      "name": "記憶層",
+      "role": "長期記憶 / 記憶鏈 / 星圖"
+    },
+    {
+      "dir": "04_runtime",
+      "symbol": "⚙",
+      "name": "運行層",
+      "role": "FlowCore 迴圈與運行核心"
+    },
+    {
+      "dir": "05_persona",
+      "symbol": "☯",
+      "name": "人格層",
+      "role": "人格 / 平行人格引擎"
+    },
+    {
+      "dir": "06_trace",
+      "symbol": "⌖",
+      "name": "追跡層",
+      "role": "追蹤 / 可觀測 / 溯源"
+    },
+    {
+      "dir": "07_ingest",
+      "symbol": "⇥",
+      "name": "吸收層",
+      "role": "外部知識吸收與定位（母體吸收法則）"
+    },
+    {
+      "dir": "08_sources",
+      "symbol": "⛃",
+      "name": "源料層",
+      "role": "原始來源與素材"
+    },
+    {
+      "dir": "09_workflow",
+      "symbol": "⇄",
+      "name": "工作流層",
+      "role": "工具註冊 / 排程 / 記憶整合 / 結果閘"
+    }
+  ],
+  "sections": [
+    {
+      "symbol": "✦",
+      "title": "母體核心 / Mother Core",
+      "items": [
+        {
+          "path": "MRL_Mother",
+          "role": "母體本體聚合（MotherAssembly）",
+          "exists": true
+        },
+        {
+          "path": "MRL_MotherModel",
+          "role": "母體模型與模組註冊（module_registry.json）",
+          "exists": true
+        },
+        {
+          "path": "MRL_MotherSystem_ControlPanel",
+          "role": "母體控制台",
+          "exists": true
+        },
+        {
+          "path": "MRL_MotherSource_ZhiZhang_FlowAgent_Lineage_v1",
+          "role": "ZhiZhang / FlowAgent 母源血系",
+          "exists": true
+        },
+        {
+          "path": "MRL_母體收斂包_v1",
+          "role": "母體收斂交付包",
+          "exists": true
+        },
+        {
+          "path": "MRL_Mother_Flow_Definition_v1.md",
+          "role": "母體流定義",
+          "exists": true
+        },
+        {
+          "path": "MRL_Mother_Launch.js",
+          "role": "母體啟動器",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "symbol": "⚙",
+      "title": "運行 / Runtime",
+      "items": [
+        {
+          "path": "MRL_Runtime",
+          "role": "運行時模組集",
+          "exists": true
+        },
+        {
+          "path": "MRL_RuntimeOS_EnterpriseRuntimePlatform_CoreExecutable_v1_4_0",
+          "role": "企業級運行 OS 核心可執行",
+          "exists": true
+        },
+        {
+          "path": "MRL_UniversalRuntimeLanguage_Core_v1",
+          "role": "通用運行語言核心",
+          "exists": true
+        },
+        {
+          "path": "MRL_RuntimeServer.js",
+          "role": "Node 運行伺服器入口",
+          "exists": true
+        },
+        {
+          "path": "MRL_Platform_Server.py",
+          "role": "對外平台伺服器（零依賴，python3 直接開機）",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "symbol": "∴",
+      "title": "符號 / 粒子 / Symbolic·Particle",
+      "items": [
+        {
+          "path": "MRL_Symbolic",
+          "role": "符號體系：宇宙符號層 / 粒子語言層 / 楔形文字映射 / 四層同步語意場",
+          "exists": true
+        },
+        {
+          "path": "MRL_ParticleArchive",
+          "role": "粒子檔案庫（canonical 粒子 + _sig_hash 簽章）",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "symbol": "🌍",
+      "title": "世界 / World",
+      "items": [
+        {
+          "path": "MRL_BaseWorld_DB_v1",
+          "role": "基底世界資料庫（schema / deploy）",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "symbol": "⇄",
+      "title": "轉接 / Adapter",
+      "items": [
+        {
+          "path": "MRL_Adapter_Layer",
+          "role": "轉接層",
+          "exists": true
+        },
+        {
+          "path": "MRL_Adapters",
+          "role": "轉接器集",
+          "exists": true
+        },
+        {
+          "path": "MRL_Reference_Layer",
+          "role": "參照層",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "symbol": "🜂",
+      "title": "火核 / FireCore",
+      "items": [
+        {
+          "path": "MRL_FireCore_v1_0",
+          "role": "FireCore（store/push/trace/live/vault/auth 模組）",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "symbol": "🛰️",
+      "title": "邊緣 / 產品入口 / Edge·Product",
+      "items": [
+        {
+          "path": "src/mrl_app.html",
+          "role": "產品 UI 單一來源（登入器 + 模組）",
+          "exists": true
+        },
+        {
+          "path": "src/mrl_app_ui.js",
+          "role": "產品 UI 建置產物（APP_HTML）",
+          "exists": true
+        },
+        {
+          "path": "src/mrl_worker.js",
+          "role": "Cloudflare Worker 邊緣門面（mrliouword.com）",
+          "exists": true
+        },
+        {
+          "path": "wrangler.jsonc",
+          "role": "Cloudflare Worker 部署設定",
+          "exists": true
+        },
+        {
+          "path": "MRL__Business_Dashboard.html",
+          "role": "商業儀表板",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "symbol": "📇",
+      "title": "索引 / 註冊 / Registry",
+      "items": [
+        {
+          "path": "MRL_ServiceMesh_Registry_v1.json",
+          "role": "服務網格註冊表",
+          "exists": true
+        },
+        {
+          "path": "MRL_AI_ModuleModel_Recovery_Map_v1.md",
+          "role": "模組/模型復原地圖",
+          "exists": true
+        },
+        {
+          "path": "MRL_MotherModel/module_registry.json",
+          "role": "母體模組註冊（主線節點）",
+          "exists": true
+        },
+        {
+          "path": "MRL_DELIVERY_MANIFEST_20260531.md",
+          "role": "交付清單",
+          "exists": true
+        },
+        {
+          "path": "docs/MRL_Absorbed_Assets_Index_v1.md",
+          "role": "已吸收資產索引",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "symbol": "📱",
+      "title": "裝置 / Device",
+      "items": [
+        {
+          "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1",
+          "role": "iOS 3D 掃描 × DL580 產品橋",
+          "exists": true
+        }
+      ]
+    }
+  ],
+  "mainline_nodes": [
+    {
+      "node_id": "MRL.NODE.00.Reality",
+      "layer": "L-Root/Pre",
+      "status": "reconstructed",
+      "source_count": 12,
+      "dependencies": []
+    },
+    {
+      "node_id": "MRL.NODE.01.Origin",
+      "layer": "L0",
+      "status": "reconstructed",
+      "source_count": 13,
+      "dependencies": [
+        "MRL.NODE.00.Reality"
+      ]
+    },
+    {
+      "node_id": "MRL.NODE.02.SeedKernel",
+      "layer": "L0/L1",
+      "status": "reconstructed",
+      "source_count": 20,
+      "dependencies": [
+        "MRL.NODE.01.Origin"
+      ]
+    },
+    {
+      "node_id": "MRL.NODE.03.PreParticle",
+      "layer": "L1",
+      "status": "reconstructed",
+      "source_count": 24,
+      "dependencies": [
+        "MRL.NODE.02.SeedKernel"
+      ]
+    },
+    {
+      "node_id": "MRL.NODE.04.Particle",
+      "layer": "L2",
+      "status": "reconstructed",
+      "source_count": 220,
+      "dependencies": [
+        "MRL.NODE.03.PreParticle"
+      ]
+    },
+    {
+      "node_id": "MRL.NODE.05.Signal",
+      "layer": "L3",
+      "status": "reconstructed",
+      "source_count": 17,
+      "dependencies": [
+        "MRL.NODE.04.Particle"
+      ]
+    },
+    {
+      "node_id": "MRL.NODE.06.Field",
+      "layer": "L3",
+      "status": "reconstructed",
+      "source_count": 18,
+      "dependencies": [
+        "MRL.NODE.05.Signal"
+      ]
+    },
+    {
+      "node_id": "MRL.NODE.07.Persona",
+      "layer": "L4",
+      "status": "reconstructed",
+      "source_count": 79,
+      "dependencies": [
+        "MRL.NODE.06.Field"
+      ]
+    },
+    {
+      "node_id": "MRL.NODE.08.Memory",
+      "layer": "L2/L5",
+      "status": "reconstructed",
+      "source_count": 9,
+      "dependencies": [
+        "MRL.NODE.07.Persona"
+      ]
+    },
+    {
+      "node_id": "MRL.NODE.09.Globe",
+      "layer": "L5/L∞",
+      "status": "reconstructed",
+      "source_count": 8,
+      "dependencies": [
+        "MRL.NODE.08.Memory"
+      ]
+    },
+    {
+      "node_id": "MRL.NODE.10.World",
+      "layer": "L4/L7",
+      "status": "reconstructed",
+      "source_count": 14,
+      "dependencies": [
+        "MRL.NODE.09.Globe"
+      ]
+    },
+    {
+      "node_id": "MRL.NODE.11.Runtime",
+      "layer": "L6",
+      "status": "reconstructed",
+      "source_count": 8,
+      "dependencies": [
+        "MRL.NODE.10.World"
+      ]
+    },
+    {
+      "node_id": "MRL.NODE.12.Mother",
+      "layer": "L0(canonical)",
+      "status": "reconstructed",
+      "source_count": 7,
+      "dependencies": [
+        "MRL.NODE.11.Runtime"
+      ]
+    },
+    {
+      "node_id": "MRL.NODE.13.Return",
+      "layer": "L7/Loop",
+      "status": "reconstructed",
+      "source_count": 5,
+      "dependencies": [
+        "MRL.NODE.12.Mother"
+      ],
+      "closure": "MRL.NODE.01.Origin"
+    }
+  ],
+  "particle_archive": {
+    "library": "MRL_ParticleArchive",
+    "particle_count": 17
+  },
+  "service_mesh": {
+    "product": "MRL_AI_SYSTEM",
+    "version": "1.0",
+    "tiers": [
+      "L1_conversation",
+      "L2_persona_particle",
+      "L3_new_runtime",
+      "L4_utility",
+      "L5_entry",
+      "L6_infra_daemon"
+    ]
+  }
+}
