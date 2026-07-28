@@ -257,3 +257,6 @@ data/links/MRLsmall.*.jsonl
 data/cycles/MRLsmall.*.jsonl
 data/journal/MRLsmall.*.jsonl
 data/MetaCode.export.*.json
+
+# MRL API 紀錄帳本（runtime 產物，不入庫）
+data/mrl_api_records.jsonl

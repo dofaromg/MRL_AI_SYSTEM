@@ -32,6 +32,12 @@ for p in [_REPO / "09_workflow", str(_REPO)]:
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
+# MRL API 紀錄模組（母體 API 呼叫/遙測落地帳本）。載入失敗不得中斷平台。
+try:
+    from mrliouword import api_record as _api_record
+except Exception:  # noqa: BLE001
+    _api_record = None
+
 # 母體 crown（優雅降級：未就緒不致整站掛掉）
 _MA = None
 _MA_ERR = None
@@ -240,8 +246,27 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("content-type", ctype)
         self.send_header("content-length", str(len(body)))
         self.send_header("access-control-allow-origin", "*")
+        self.send_header("x-mrl-origin-signature", ORIGIN_SIGNATURE)
         self.end_headers()
         self.wfile.write(body)
+        self._record(status, len(body))
+
+    def _record(self, status, nbytes):
+        """把本次 API 呼叫記入 MRL_ApiRecord 帳本；失敗絕不影響回應。"""
+        if _api_record is None:
+            return
+        try:
+            t0 = getattr(self, "_t0", None)
+            latency_ms = (time.time() - t0) * 1000.0 if t0 else None
+            _api_record.record(
+                method=self.command,
+                path=self.path.split("?")[0],
+                status=int(status),
+                latency_ms=latency_ms,
+                meta={"bytes": int(nbytes)},
+            )
+        except Exception:  # noqa: BLE001
+            pass
 
     def _body(self):
         n = int(self.headers.get("content-length", 0) or 0)
@@ -252,8 +277,27 @@ class Handler(BaseHTTPRequestHandler):
         except Exception:  # noqa: BLE001
             return {}
 
+    def _query(self):
+        from urllib.parse import parse_qs, urlparse
+        return {k: v[0] for k, v in parse_qs(urlparse(self.path).query).items()}
+
     def do_GET(self):
+        self._t0 = time.time()
         p = self.path.split("?")[0]
+        # MRL API 紀錄模組讀取端點
+        if p == "/api/mrl/records":
+            if _api_record is None:
+                return self._send(503, {"ok": False, "error": "MRL_APIRECORD_UNAVAILABLE"})
+            try:
+                n = int(self._query().get("n", "50"))
+            except ValueError:
+                n = 50
+            return self._send(200, {"ok": True, "origin_signature": ORIGIN_SIGNATURE,
+                                    "records": _api_record.tail(n)})
+        if p == "/api/mrl/records/summary":
+            if _api_record is None:
+                return self._send(503, {"ok": False, "error": "MRL_APIRECORD_UNAVAILABLE"})
+            return self._send(200, {"ok": True, **_api_record.summary()})
         if p in ("/", "/index.html"):
             # 產品級入口 (MRL_Product_Entry_UI · Issue #25/#26/#27/#28/#29)。
             # 找不到產品 UI 才退回舊工程頁 page_html()（#27：正式入口不應是工程測試頁）。
@@ -275,8 +319,28 @@ class Handler(BaseHTTPRequestHandler):
         return self._send(404, {"ok": False, "error": "MRL_ROUTE_NOT_FOUND", "path": p})
 
     def do_POST(self):
+        self._t0 = time.time()
         p = self.path.split("?")[0]
         b = self._body()
+        # 產品遙測端點：前端/Worker 上報 console/network/ui 事件 → 記入 MRL_ApiRecord 帳本。
+        if p == "/api/mrl/telemetry/logs":
+            def _len(x):
+                return len(x) if isinstance(x, list) else 0
+            counts = {
+                "consoleLogs": _len(b.get("consoleLogs")),
+                "networkRequests": _len(b.get("networkRequests")),
+                "uiEvents": _len(b.get("uiEvents")),
+            }
+            trace_id = None
+            if _api_record is not None:
+                rec = _api_record.record(
+                    method="POST", path=p, status=200, kind="telemetry",
+                    meta={"counts": counts, "referer": self.headers.get("referer")},
+                )
+                trace_id = rec.get("trace_id")
+            return self._send(200, {"success": True, "product": "MrliouAI",
+                                    "source_owner": "Mrliou", "origin_signature": ORIGIN_SIGNATURE,
+                                    "trace_id": trace_id, "counts": counts})
         if p == "/api/dl580/run":
             return self._send(200, api_dl580_run(b))
         if p == "/api/chat":
