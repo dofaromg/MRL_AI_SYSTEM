@@ -235,6 +235,74 @@ async function chat(){$('#chatOut').textContent='…';$('#chatOut').textContent=
 </script></body></html>"""
 
 
+def records_dashboard_html():
+    """MRL API 紀錄看板（自含單頁）。讀 /api/mrl/records/summary 與 /api/mrl/records。
+    origin_signature: MrLiouWord — 完成「記錄→儲存→查詢→呈現」迴圈。"""
+    return """<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MRL API 紀錄看板 · MrLiouWord</title>
+<style>
+:root{--bg:#0b0f0d;--panel:#0f1512;--line:#1d2a22;--ink:#e7f0ea;--dim:#8aa294;--acc:#27d07a;--warn:#ffcc66;--danger:#ff6b6b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,"Noto Sans TC",Segoe UI,Roboto,sans-serif}
+header{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 3px rgba(39,208,122,.18)}
+h1{font-size:16px;margin:0}.tag{font-size:11px;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:2px 9px}
+.wrap{max-width:1100px;margin:0 auto;padding:18px 20px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+.card b{font-size:24px;display:block}.card span{color:var(--dim);font-size:12px}
+.row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;flex:1;min-width:260px}
+.box h3{margin:0 0 8px;font-size:13px;color:var(--dim)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+td,th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:280px}
+th{color:var(--dim);font-weight:600}
+.s2{color:var(--acc)}.s4{color:var(--warn)}.s5{color:var(--danger)}
+button{background:var(--acc);color:#04150c;border:0;border-radius:9px;padding:8px 16px;font-weight:700;cursor:pointer}
+.mut{color:var(--dim);font-size:12px}
+</style></head><body>
+<header><span class="dot"></span><h1>MRL API 紀錄看板</h1>
+<span class="tag">origin_signature: MrLiouWord</span>
+<span class="tag" id="prod">MrliouAI</span>
+<span style="flex:1"></span><button onclick="load()">刷新</button></header>
+<div class="wrap">
+  <div class="cards" id="cards"></div>
+  <div class="row">
+    <div class="box"><h3>依路徑 / by_path</h3><table id="bypath"><tbody></tbody></table></div>
+    <div class="box"><h3>依狀態 / by_status</h3><table id="bystatus"><tbody></tbody></table>
+      <h3 style="margin-top:12px">依方法 / by_method</h3><table id="bymethod"><tbody></tbody></table></div>
+  </div>
+  <div class="box"><h3>最近紀錄 / recent (最多 100)</h3>
+    <table><thead><tr><th>時間 (UTC)</th><th>method</th><th>path</th><th>status</th><th>ms</th><th>trace_id</th></tr></thead>
+    <tbody id="rows"></tbody></table></div>
+  <p class="mut" id="err"></p>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+function scls(s){s=String(s);return s[0]==='2'?'s2':s[0]==='4'?'s4':s[0]==='5'?'s5':''}
+function kvrows(obj){return Object.entries(obj||{}).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<tr><td>${k}</td><td style="text-align:right">${v}</td></tr>`).join('')||'<tr><td class="mut">—</td></tr>'}
+async function load(){
+  $('#err').textContent='';
+  try{
+    const s=await (await fetch('/api/mrl/records/summary')).json();
+    $('#cards').innerHTML=`
+      <div class="card"><b>${s.total??0}</b><span>總請求數 total</span></div>
+      <div class="card"><b>${Object.keys(s.by_path||{}).length}</b><span>不同路徑 paths</span></div>
+      <div class="card"><b>${(s.by_status&&s.by_status['200'])||0}</b><span>200 成功</span></div>
+      <div class="card"><b>${((s.by_status&&s.by_status['503'])||0)+((s.by_status&&s.by_status['500'])||0)}</b><span>5xx</span></div>`;
+    $('#bypath').innerHTML='<tbody>'+kvrows(s.by_path)+'</tbody>';
+    $('#bystatus').innerHTML='<tbody>'+kvrows(s.by_status)+'</tbody>';
+    $('#bymethod').innerHTML='<tbody>'+kvrows(s.by_method)+'</tbody>';
+    if(s.product)$('#prod').textContent=s.product;
+    const d=await (await fetch('/api/mrl/records?n=100')).json();
+    const recs=(d.records||[]).slice().reverse();
+    $('#rows').innerHTML=recs.map(r=>`<tr><td>${(r.ts||'').replace('T',' ').replace('Z','')}</td><td>${r.method||''}</td><td title="${r.path||''}">${r.path||''}</td><td class="${scls(r.status)}">${r.status??''}</td><td>${r.latency_ms??''}</td><td class="mut">${r.trace_id||''}</td></tr>`).join('')||'<tr><td class="mut" colspan=6>尚無紀錄</td></tr>';
+  }catch(e){$('#err').textContent='讀取失敗：'+e+'（此看板需 MRL_Platform_Server.py 提供 /api/mrl/records）';}
+}
+load();setInterval(load,10000);
+</script></body></html>"""
+
+
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *a):  # 安靜
         pass
@@ -298,6 +366,9 @@ class Handler(BaseHTTPRequestHandler):
             if _api_record is None:
                 return self._send(503, {"ok": False, "error": "MRL_APIRECORD_UNAVAILABLE"})
             return self._send(200, {"ok": True, **_api_record.summary()})
+        if p in ("/mrl/records", "/api/mrl/records/view"):
+            # MRL API 紀錄看板：讀 /api/mrl/records/summary 與 /api/mrl/records，可視化。
+            return self._send(200, records_dashboard_html(), "text/html; charset=utf-8")
         if p in ("/", "/index.html"):
             # 產品級入口 (MRL_Product_Entry_UI · Issue #25/#26/#27/#28/#29)。
             # 找不到產品 UI 才退回舊工程頁 page_html()（#27：正式入口不應是工程測試頁）。
