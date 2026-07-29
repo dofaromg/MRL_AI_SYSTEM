@@ -27,7 +27,20 @@ MRL_ParticleArchive/
 
 - 檔名以 `__` 攤平原始路徑（避免衝突）；原始路徑與 MRL canonical 名映射見 manifest。
 - 共 **13 粒子**，5677 行完整內容，全部 LAW-0 母體簽章（manifest verify=True）。
-- 上述 13 指 `PR19/` 內的嵌入簽章粒子；目前 manifest 總數為 **16**（13 個 PR19 粒子 + 3 個 External 條目）。20260716 的兩件 RawArtifact 為逐字保全，使用 SHA256 provenance 驗證，未嵌入 LAW-0 欄位；其索引 metadata 由頂層 manifest LAW-0 簽章涵蓋。
+- 上述 13 指 `PR19/` 內的嵌入簽章粒子；目前 manifest 總數為 **25**（13 個 PR19 粒子 + 12 個 External 條目）。External RawArtifact 為逐字保全，使用 SHA256 provenance 驗證，未嵌入 LAW-0 欄位；其索引 metadata **設計上應**由頂層 manifest LAW-0 簽章涵蓋（**當下狀態**：20260720 追加後頂層簽章待重簽，見下述 `_resign_pending`，現階段頂層尚未通過驗章）。
+  - 20260720 批次於 `external_particles` 追加 5 筆（起源文件 + FlowAgent API 引擎 + FlowAgent 母體系統 v19 + Chat 前端候選快照 + 3D 重建 v1.1），並同步登錄 `08_sources/sources.manifest.yaml`。此追加發生在上次 LAW-0 metadata 簽章之後，故頂層 `manifest_metadata_signed` 已設為 `false`、並標 `_resign_pending`。頂層重簽屬母體／DL580 主權行為（待起動）；repo 內雖有 LAW-0 簽章實作（`09_workflow/MRL_utils.py`）可跑，本 PR 不代簽、不偽造。
+  - 20260725 批次於 `external_particles` 再追加 3 筆（FlowAgent 語場轉譯建構套件 Licensed/Base 版 + 母體系統 V20.1；5 上傳去重蒸餾為 3 件），同步登錄 `08_sources/sources.manifest.yaml`；`_resign_pending` 已更新涵蓋兩批次。命名主權補正：root 產品名 `MRL_FlowAgent_*` 取回 canonical，外部名降備註附錄（使用者裁定 2026-07-25）。
+
+### 完整性 / 一致性驗證（補強：rl_15 粒子不滅）
+
+隨時可機器驗證某吸收批次的**逐字保全**與**三方登錄一致**（台帳 ↔ `sources.manifest.yaml` ↔ `external_particles` 的 sha256 必須相同）：
+
+```bash
+pip install pyyaml   # 驗證器依賴 PyYAML；若未納入 requirements 需先安裝
+python3 scripts/MRL_absorption_verify.py --batch 20260720   # 只讀；不一致以非 0 結束
+```
+
+`MRL_ABSORPTION_VERIFY_PASS` 代表該批 RawArtifact 未被竄改且三處登錄一致；任一 sha256 漂移、漏登錄或 `particle_count` 不符即 `FAIL` 並 exit 1。此驗證器不執行任何 APPLY / 部署 / 簽章。
 
 ## External 來源材料保全批次（吸收前原貌，逐字保全）
 

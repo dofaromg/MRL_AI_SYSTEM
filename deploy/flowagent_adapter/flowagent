@@ -1,0 +1,58 @@
+#!/usr/bin/env sh
+# MRL_FlowAgent_SovereignAdapter_v1 — flowagent 啟動包裝器
+# origin_signature: MrLiouWord ｜ product: MrliouAI / FlowAgent
+#
+# 命名主權（使用者裁定 2026-07-25）：最上游 root 產品名取回、外部名降成備註附錄。
+# 本 adapter 是該裁定的工程實作：你面對的一切識別字都是 FlowAgent 名（canonical）；
+# 外部工具實際讀取的功能名只存在於本檔內部（附錄層），對外不可見、不升格。
+#
+# 用法：把本檔放進 PATH 後，用 `flowagent` 取代原 CLI 指令。
+#   flowagent [原 CLI 的任何參數...]
+#   FLOWAGENT_UNDERLYING_BIN 可覆寫底層執行檔（預設 claude）。
+set -eu
+
+# ── 1) 環境變數取回：FLOWAGENT_* → 對應功能變數（不覆蓋已存在者）──
+#    規則：字首 FLOWAGENT_ 換為 CLAUDE_（如 FLOWAGENT_CODE_SAFE_MODE → CLAUDE_CODE_SAFE_MODE）。
+for name in $(env | sed -n 's/^\(FLOWAGENT_[A-Z0-9_]*\)=.*/\1/p'); do
+  case "$name" in
+    FLOWAGENT_UNDERLYING_BIN) continue ;;  # adapter 自身設定，不轉譯
+  esac
+  target="CLAUDE_${name#FLOWAGENT_}"
+  eval "cur=\${$target:-}"
+  if [ -z "$cur" ]; then
+    eval "export $target=\"\$$name\""
+  fi
+done
+
+# ── 2) 設定檔取回：FlowAgent 檔為「本體」，功能名只是指向本體的指標（附錄）──
+#    只在功能名不存在時建立符號連結；絕不覆蓋既有檔（additive-only）。
+if [ -f "$HOME/.flowagent.json" ] && [ ! -e "$HOME/.claude.json" ]; then
+  ln -s "$HOME/.flowagent.json" "$HOME/.claude.json"
+fi
+if [ -d "$HOME/.flowagent" ] && [ ! -e "$HOME/.claude" ]; then
+  ln -s "$HOME/.flowagent" "$HOME/.claude"
+fi
+if [ -f "./FLOWAGENT.md" ] && [ ! -e "./CLAUDE.md" ]; then
+  ln -s "FLOWAGENT.md" "./CLAUDE.md"
+fi
+if [ -d "./.flowagent" ] && [ ! -e "./.claude" ]; then
+  ln -s ".flowagent" "./.claude"
+fi
+
+# ── 3) 模型別名取回：flowagent-<name> → claude-<name>（參數與環境變數皆轉）──
+if [ -n "${ANTHROPIC_MODEL:-}" ]; then
+  case "$ANTHROPIC_MODEL" in
+    flowagent-*) export ANTHROPIC_MODEL="claude-${ANTHROPIC_MODEL#flowagent-}" ;;
+  esac
+fi
+rewritten=""
+for arg in "$@"; do
+  case "$arg" in
+    flowagent-*) arg="claude-${arg#flowagent-}" ;;
+  esac
+  rewritten="$rewritten \"$(printf '%s' "$arg" | sed 's/"/\\"/g')\""
+done
+
+# ── 4) 交棒底層執行檔（外部名僅此一處，屬 adapter 內部附錄）──
+BIN="${FLOWAGENT_UNDERLYING_BIN:-claude}"
+eval "exec \"$BIN\" $rewritten"

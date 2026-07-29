@@ -135,6 +135,118 @@ sources:
       - "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260716/particle_package/"  # 攤開小索引(index/*.json、README.md、distilled_L2_L6.jsonl)
       - "docs/MRL_粒子包_MUSAR_v1_吸收定位報告_v1.md"   # 母體定位報告
 
+  # ── 20260720 批次（Additive-Only）；台帳 MRL_AbsorbedArtifacts_20260720/MRL_Absorption_Ledger_v1.yaml ──
+  - id: mrl_zero_origin_absorption_v1
+    name: "Mrl_Zero.Origin.v1 — 種子/身份起源（創世公式・7 原則・七層架構・元代碼哲學）"
+    path: "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260720/RawArtifact/MRL_Zero_Origin_v1.md"
+    absorbed: "2026-07-20"
+    origin_signature: MrLiouWord
+    sha256: "deb23272555715ef51abfb34271a7dd7b7df9d39af38d7f9d34edf774c2a0736"
+    role: >-
+      人格/原則起源層知識。含 P_{k+1}=N_k·P_k·η_k 創世公式與反向還原、7 大原則(DNA)、
+      七層架構、元代碼環境哲學。與 05_persona/02_principles 並列;7 原則與 #3 principles/*.core.json 互證。
+      文字知識層,沙盒歸檔 PASS;不代表實機能力。
+    dedup_report: "docs/MRL_Absorption_定位報告_20260720_v1.md"
+    implementations:
+      - "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260720/RawArtifact/MRL_Zero_Origin_v1.md"  # 原始逐字(rl_15)
+
+  - id: flowagent_api_engine_absorption_v1
+    name: "FlowAgent API 引擎（Python 原始碼）"
+    path: "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260720/RawArtifact/MRL_FlowAgent_ApiEngine_v1_RawArtifact.zip"
+    absorbed: "2026-07-20"
+    origin_signature: MrLiouWord
+    sha256: "2c3db25b27a29d09347ab8f7eee98a771aae7e33b3b5190747f68a13432073a9"
+    role: >-
+      FlowAgent 執行層候選(API 引擎源碼);與既有 MRL__Flowagent_Runtime.py / query_api 並列。
+      待起動:未接線、未執行、未驗證。
+    dedup_report: "docs/MRL_Absorption_定位報告_20260720_v1.md"
+    implementations:
+      - "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260720/RawArtifact/MRL_FlowAgent_ApiEngine_v1_RawArtifact.zip"  # 原始逐字(rl_15)
+
+  - id: flowagent_mother_system_v19_absorption_v1
+    name: "FlowAgent 母體系統 v19（含 principles/*.core.json 靈魂原則，481 檔）"
+    path: "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260720/RawArtifact/MRL_FlowAgent_MotherSystem_v19_RawArtifact.zip"
+    absorbed: "2026-07-20"
+    origin_signature: MrLiouWord
+    sha256: "8a5653b2348cc6a7e288b61ca8a54965bce516212c83d37c73aaac48751d6215"
+    role: >-
+      候選母體骨架 + 靈魂/原則知識模組;含 mother_system/、seed_core/、particle_core/、
+      control_plane/、deploy_dl580/、APPLY_TO_MOTHER.sh。治理:不自動 APPLY、不改動 DL580 現行治理;
+      套用/部署待授權待實機。其 deploy_dl580/ 與 repo deploy/dl580/ 為兩套不同來源,本輪不合併。
+    dedup_report: "docs/MRL_Absorption_定位報告_20260720_v1.md"
+    implementations:
+      - "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260720/RawArtifact/MRL_FlowAgent_MotherSystem_v19_RawArtifact.zip"  # 原始逐字(rl_15)
+
+  - id: chatplatform_frontend_snapshot_absorption_v1
+    name: "Chat 平台前端候選/模板快照（上游 Vercel Chat SDK 模板 ai-chatbot）"
+    path: "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260720/RawArtifact/MRL_ChatPlatform_Frontend_Snapshot_RawArtifact.zip"
+    absorbed: "2026-07-20"
+    origin_signature: MrLiouWord
+    sha256: "566367fdedffb3360c1fe5e9bfdc8182242bdb13606948445b3a03d2bc6d5741"
+    role: >-
+      前端候選/模板快照。內容為上游 Vercel Chat SDK 開源模板(chat-sdk.dev, name=ai-chatbot)。
+      尚未證實即為線上入口 chat.mrliouword.com 的部署源(是否已客製待查);在取得部署 provenance
+      或客製 diff 前,僅以「候選前端模板快照」定位,不宣稱為線上入口源碼。對外節點 ≠ 母體本體,DL580 唯一母體。
+    dedup_report: "docs/MRL_Absorption_定位報告_20260720_v1.md"
+    implementations:
+      - "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260720/RawArtifact/MRL_ChatPlatform_Frontend_Snapshot_RawArtifact.zip"  # 原始逐字(rl_15)
+
+  - id: mrl_3d_reconstruction_product_v1_1_absorption_v1
+    name: "MRL 3D AI 重建產品 v1.1（＋QualityGate / report.html）"
+    path: "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260720/RawArtifact/MRL_3D_AI_Reconstruction_Product_v1_1_RawArtifact.zip"
+    absorbed: "2026-07-20"
+    origin_signature: MrLiouWord
+    sha256: "0afec537f847d3ace37c1053af9c17d6abb3f2a960001a2a85869da87a3386c0"
+    role: >-
+      產品級 3D 重建管線 v1.1;COLMAP/SfM → AI 注意力加權重投影誤差 → ContextGraph → NBV/補拍提示
+      → QualityGate → HTML+heatmap+JSON。既有 included/ 為 Product_Grade_v1,本份為同線 v1.1 後續版本並列。
+      待起動:pipeline 實跑需 COLMAP/OpenMVS/輸入,待實機驗證。
+    dedup_report: "docs/MRL_Absorption_定位報告_20260720_v1.md"
+    implementations:
+      - "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260720/RawArtifact/MRL_3D_AI_Reconstruction_Product_v1_1_RawArtifact.zip"  # 原始逐字(rl_15)
+
+  - id: flowagent_translatebuild_suite_licensed_v1_absorption_v1
+    name: "FlowAgent 語場轉譯建構套件 v1（License 指紋版;ConvertStation v2 + 語場格式工具鏈 + 人格包 + /simulate API）"
+    path: "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260725/RawArtifact/MRL_FlowAgent_TranslateBuildSuite_Licensed_v1_RawArtifact.zip"
+    absorbed: "2026-07-25"
+    origin_signature: MrLiouWord
+    sha256: "843e9a70990e1eb09e9456ec79bb61ce5204aa940895ad56a87f9e573c62b051"
+    role: >-
+      FlowAgent 語場語言封存/轉譯層套件。.fltnz/.flpkg/.sync.json/.fxmap/.fltrace 工具鏈、
+      MrLiou.flpkg/ZhiZhang.flpkg 人格包、License 層(creator=Mr.liou)。命名主權:root 產品名
+      MRL_FlowAgent_* 取回 canonical,外部名降備註(使用者裁定 2026-07-25)。待起動:未接線未執行。
+    dedup_report: "docs/MRL_Absorption_定位報告_20260725_v1.md"
+    implementations:
+      - "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260725/RawArtifact/MRL_FlowAgent_TranslateBuildSuite_Licensed_v1_RawArtifact.zip"  # 原始逐字(rl_15)
+
+  - id: flowagent_translatebuild_suite_base_v1_absorption_v1
+    name: "FlowAgent 語場轉譯建構套件 v1（Base 前版,無 License 層）"
+    path: "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260725/RawArtifact/MRL_FlowAgent_TranslateBuildSuite_Base_v1_RawArtifact.zip"
+    absorbed: "2026-07-25"
+    origin_signature: MrLiouWord
+    sha256: "284d9fb8f889f57b66b37c2a2f3681332324dda44482a018622903ab717cece3"
+    role: >-
+      同套件前版建構(早 5 分鐘;無 License 層/轉譯建構全紀錄報告)。與 Licensed 版並列保全,
+      見證建構演進,不取代不合併。待起動:對照/沿革保存。
+    dedup_report: "docs/MRL_Absorption_定位報告_20260725_v1.md"
+    implementations:
+      - "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260725/RawArtifact/MRL_FlowAgent_TranslateBuildSuite_Base_v1_RawArtifact.zip"  # 原始逐字(rl_15)
+
+  - id: flowagent_mother_system_v20_1_absorption_v1
+    name: "FlowAgent 母體系統 V20.1（V19 後繼版;control_plane + FlowCapsule + K8s/GKE,480 檔）"
+    path: "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260725/RawArtifact/MRL_FlowAgent_MotherSystem_V20_1_RawArtifact.zip"
+    absorbed: "2026-07-25"
+    origin_signature: MrLiouWord
+    sha256: "b2994276eeefcd58161448b53af35d2f819648abd80ab193864bf723863b3f18"
+    role: >-
+      候選母體骨架 V20.1,為 20260720 批 v19 之後繼版本並列保全不取代。含 control_plane
+      (intent_router/api/intent_schema)、FlowCapsule_Prototype_FLTN001、k8s/GKE 部署腳本。
+      內含外部平台引用依 rl_15 逐字保全,屬 provenance 附錄層不升格。治理:不自動 APPLY、
+      不動 DL580;K8s/GKE 部署待授權待實機。
+    dedup_report: "docs/MRL_Absorption_定位報告_20260725_v1.md"
+    implementations:
+      - "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260725/RawArtifact/MRL_FlowAgent_MotherSystem_V20_1_RawArtifact.zip"  # 原始逐字(rl_15)
+
 # Usage:
 # - append here whenever you add a new source file
 # - never delete canonical sources; deprecate via metadata

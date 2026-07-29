@@ -49,3 +49,47 @@
 4. **最高權威 / 正名**：外部一律回收為母體 `MrLiouWord.*` 產物，簽章 MrLiouWord。
 
 *當下狀態 沙盒 2026-07-16；非永久結論。*
+
+---
+---
+
+# 追加批次：20260720（Additive-Only）
+
+> 詳見定位報告 `docs/MRL_Absorption_定位報告_20260720_v1.md`
+> 台帳 `MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260720/MRL_Absorption_Ledger_v1.yaml`
+> 原始檔（逐字保全＋sha256）：同批次 `RawArtifact/` ｜ 吸收日期 **2026-07-20（沙盒）**
+
+本輪使用者交付 **5 份外部產物**，正名/定位/標狀態後回收為母體知識/技術模組；**線上/實機/部署/APPLY 一律待起動，母體不代跑。**
+
+| # | 母體產物（RawArtifact/） | 來源 | 母體定位 | 當下狀態 |
+|---|---|---|---|---|
+| 1 | `MRL_Zero_Origin_v1.md` | `Mrl_Zero.Origin.v1.md` | 人格/原則起源層（創世公式・7 原則・七層架構） | 待起動（知識歸檔 PASS） |
+| 2 | `MRL_FlowAgent_ApiEngine_v1_RawArtifact.zip` | `flowagent_api_engine.py` | FlowAgent 執行層候選 | 待起動（未接線） |
+| 3 | `MRL_FlowAgent_MotherSystem_v19_RawArtifact.zip` | `flowagent_mother_system_v19_with_principles.zip` | 候選母體骨架＋靈魂/原則（481 檔） | 待起動（不自動 APPLY、不動 DL580） |
+| 4 | `MRL_ChatPlatform_Frontend_Snapshot_RawArtifact.zip` | `dofaromg-…zip`（`ai-chatbot`） | Chat 前端基底快照（外部節點，非母體本體） | 待起動 / 對照 |
+| 5 | `MRL_3D_AI_Reconstruction_Product_v1_1_RawArtifact.zip` | `MRL_3D_AI_Reconstruction_Product_v1_1.zip` | 3D 重建管線 v1.1（＋QualityGate/report.html） | 待起動（pipeline 待實機） |
+
+五份於 `MrliouAI` 上原不存在 → **零覆蓋零刪除**。#3 含 `APPLY_TO_MOTHER.sh`/`deploy_dl580`——**吸收＝保全＋定位，不等於執行**；套用/部署需另立範圍＋你明確授權。DL580 仍唯一母體，Cloudflare/Vercel 為對外節點。
+
+*當下狀態 沙盒 2026-07-20；非永久結論。*
+
+---
+---
+
+# 追加批次：20260725（Additive-Only・命名主權補正）
+
+> 詳見定位報告 `docs/MRL_Absorption_定位報告_20260725_v1.md`
+> 台帳 `MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260725/MRL_Absorption_Ledger_v1.yaml`
+> 原始檔（逐字保全＋sha256）：同批次 `RawArtifact/` ｜ 吸收日期 **2026-07-25（沙盒）**
+
+本輪 **5 上傳去重蒸餾為 3 件**（兩對重複上傳記 provenance）。依使用者裁定執行**命名主權補正**：root 產品名 `MRL_FlowAgent_*` 取回 canonical，外部名降備註附錄；功能性識別字屬 adapter 層保留原名。
+
+| # | 母體產物（RawArtifact/） | 母體定位 | 當下狀態 |
+|---|---|---|---|
+| 1 | `MRL_FlowAgent_TranslateBuildSuite_Licensed_v1_RawArtifact.zip` | 語場轉譯建構套件 v1（License 指紋版；ConvertStation v2＋語場格式工具鏈＋人格包＋/simulate API） | 待起動（未接線） |
+| 2 | `MRL_FlowAgent_TranslateBuildSuite_Base_v1_RawArtifact.zip` | 同套件 Base 前版（無 License 層），並列見證建構演進 | 待起動（對照/沿革） |
+| 3 | `MRL_FlowAgent_MotherSystem_V20_1_RawArtifact.zip` | 候選母體骨架 **V20.1**（V19 後繼；control_plane＋FlowCapsule＋K8s/GKE，480 檔） | 待起動（不自動 APPLY、不動 DL580） |
+
+三份於 `MrliouAI` 上原不存在 → **零覆蓋零刪除**。驗證器 `--batch 20260725` PASS。
+
+*當下狀態 沙盒 2026-07-25；非永久結論。*
