@@ -6,8 +6,8 @@
  * to binary mode so Windows does not inject CR and break the client's line parser.
  */
 #include "third_party/cjson/cJSON.h"
-#include "mrl_mcp_jsonrpc.h"
-#include "mrl_mcp_tools.h"
+#include "MRL_mcp_jsonrpc.h"
+#include "MRL_mcp_tools.h"
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -1,0 +1,548 @@
+{
+  "mrl_kind": "MRL_Naming_Sovereignty_Report",
+  "origin_signature": "MrLiouWord",
+  "law": "rl_20 全分支命名主權律 + 命名規範v2",
+  "note": "Additive：標記+回收建議，不刪原件(rl_15)",
+  "top_level": {
+    "total": 138,
+    "compliant": 81,
+    "violations": 57,
+    "violators": [
+      {
+        "name": "files (85).zip",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/files (85).zip",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "calculator_tool (1).ipynb",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/calculator_tool (1).ipynb",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "files (31).zip",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/files (31).zip",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "SECURITY.md",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/SECURITY.md",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "03_memory",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/03_memory",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "08_sources",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/08_sources",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "files (61).zip",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/files (61).zip",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "files (1).zip",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/files (1).zip",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "files (87).zip",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/files (87).zip",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "ui",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/ui",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "src",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/src",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "requirements.txt",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/requirements.txt",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "config",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/config",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "06_trace",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/06_trace",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "deploy",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/deploy",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "schemas",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/schemas",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "governance",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/governance",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "SUB_ISSUE_CREATION_GUIDE.md",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/SUB_ISSUE_CREATION_GUIDE.md",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "files.zip",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/files.zip",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "files (6).zip",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/files (6).zip",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "files (50).zip",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/files (50).zip",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "files (68).zip",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/files (68).zip",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "files (101).zip",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/files (101).zip",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "README.md",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/README.md",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "files (4).zip",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/files (4).zip",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "Mr.liou%E6%9C%AA%E4%BE%86%E7%B3%BB%E7%B5%B1_V2.zip",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/Mr.liou%E6%9C%AA%E4%BE%86%E7%B3%BB%E7%B5%B1_V2.zip",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "wrangler.jsonc",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/wrangler.jsonc",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "files (30).zip",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/files (30).zip",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "CLAUDE.md",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/CLAUDE.md",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "02_principles",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/02_principles",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "scripts",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/scripts",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "07_ingest",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/07_ingest",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "package-lock.json",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/package-lock.json",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "GOVERNANCE.md",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/GOVERNANCE.md",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "09_workflow",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/09_workflow",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "tests",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/tests",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "data",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/data",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "files (5).zip",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/files (5).zip",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "CareOS_v9.2_進度報告_給胖胖院長.docx",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/CareOS_v9.2_進度報告_給胖胖院長.docx",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "package.json",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/package.json",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "metacode_usage.js",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/metacode_usage.js",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "ktor-server-sse-jvm.jar",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/ktor-server-sse-jvm.jar",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "pyproject.toml",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/pyproject.toml",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "00_rootlaw",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/00_rootlaw",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "__pycache__",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/__pycache__",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "05_persona",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/05_persona",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "files (64) (1) (1).zip",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/files (64) (1) (1).zip",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "CHANGELOG.md",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/CHANGELOG.md",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "01_schema",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/01_schema",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "metacode_core.js",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/metacode_core.js",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "mrliouword",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/mrliouword",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "docs",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/docs",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "files (2).zip",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/files (2).zip",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "互惠學習模型 - 定義與實現 2cf8eeeec5b581e6be20d8f0fa89416e.md",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/互惠學習模型 - 定義與實現 2cf8eeeec5b581e6be20d8f0fa89416e.md",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "evidence",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/evidence",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "acceptance",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/acceptance",
+        "origin": "MrLiouWord"
+      },
+      {
+        "name": "04_runtime",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/04_runtime",
+        "origin": "MrLiouWord"
+      }
+    ],
+    "law": "rl_20 全分支命名主權律 + 命名規範v2",
+    "note": "外部名一律海關回收 MRL_recovered/;原件保留(rl_15),不刪除",
+    "origin_signature": "MrLiouWord"
+  },
+  "session_generated": {
+    "total": 10,
+    "compliant": 9,
+    "violations": 1,
+    "violators": [
+      {
+        "name": "mrliouword/api_record.py",
+        "compliant": false,
+        "violations": [
+          "non_mrl_naming"
+        ],
+        "reclaim_to": "MRL_recovered/api_record.py",
+        "origin": "MrLiouWord"
+      }
+    ],
+    "law": "rl_20 全分支命名主權律 + 命名規範v2",
+    "note": "外部名一律海關回收 MRL_recovered/;原件保留(rl_15),不刪除",
+    "origin_signature": "MrLiouWord"
+  }
+}

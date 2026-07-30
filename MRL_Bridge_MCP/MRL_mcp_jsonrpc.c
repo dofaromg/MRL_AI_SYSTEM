@@ -2,7 +2,7 @@
  * Error/result builders follow the MRL_Bridge_MCP C Implementation Guide verbatim,
  * plus a protocolVersion-echoing initialize builder (forward-safe negotiation).
  */
-#include "mrl_mcp_jsonrpc.h"
+#include "MRL_mcp_jsonrpc.h"
 #include <string.h>
 
 char *MRL_rpc_error(cJSON *id, int code, const char *msg) {

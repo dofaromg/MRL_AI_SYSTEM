@@ -14,7 +14,7 @@
    或一行 gcc：
    ```
    D:\MrlToolchain\mingw64\mingw64\bin\gcc.exe -O2 -Wall -Wextra -std=c11 -I. ^
-     mrl_mcp_main.c mrl_mcp_jsonrpc.c mrl_mcp_tools.c mrl_http.c ^
+     MRL_mcp_main.c MRL_mcp_jsonrpc.c MRL_mcp_tools.c MRL_http.c ^
      third_party\cjson\cJSON.c ^
      -o MRL_Bridge_MCP.exe -lwinhttp -static -s
    ```
@@ -33,7 +33,7 @@
 | `mrl_sysinfo` | 系統資訊 | `GET /MRL_sysinfo` |
 | `mrl_particle_stats` | `mrl_particle`/`mrl_persona`/`mrl_memory` 列數合計 | 3× `POST /MRL_pg/query` |
 
-> 端點路徑寫在 `mrl_mcp_tools.c` 最上方的 `MRL_EP_*` 常數 —— 若你 bridge server.js 的實際路由不同，改那幾行即可。GET 工具的參數一律 RFC 3986 percent-encode。
+> 端點路徑寫在 `MRL_mcp_tools.c` 最上方的 `MRL_EP_*` 常數 —— 若你 bridge server.js 的實際路由不同，改那幾行即可。GET 工具的參數一律 RFC 3986 percent-encode。
 
 ## 三、認證與 LAW-0
 
@@ -41,7 +41,7 @@
 - `x-api-key: MrLiouWord2026`（對齊 server.js `API_KEY_HASH`）
 - `x-origin-signature: MrLiouWord`（LAW-0 provenance）
 
-金鑰與端點常數在 `mrl_http.h`（`MRL_API_KEY`、`MRL_BRIDGE_HOST`、`MRL_BRIDGE_PORT`）。**切勿把金鑰寫進 log 或工具回傳文字。**
+金鑰與端點常數在 `MRL_http.h`（`MRL_API_KEY`、`MRL_BRIDGE_HOST`、`MRL_BRIDGE_PORT`）。**切勿把金鑰寫進 log 或工具回傳文字。**
 
 ## 四、接進 Claude Desktop
 
@@ -70,17 +70,17 @@ Get-Content .\smoke.jsonl | .\MRL_Bridge_MCP.exe
 
 ## 七、驗證紀錄（當下狀態 2026-07-28，沙盒）
 
-- 4 個 C 檔 `gcc -fsyntax-only -std=c11 -Wall -Wextra` **全通過**（portable 檔用真 cJSON API 對照；`mrl_http.c` 用 Win32 stub 對照）。
+- 4 個 C 檔 `gcc -fsyntax-only -std=c11 -Wall -Wextra` **全通過**（portable 檔用真 cJSON API 對照；`MRL_http.c` 用 Win32 stub 對照）。
 - **未在此環境完整編譯**（WinHTTP 為 Windows 專屬，此 Linux 沙盒無 winhttp.dll/mingw）。請在你的 `D:\MrlToolchain\mingw64` 依上方 Makefile 建置，並用 `smoke.jsonl` 實機驗收。
 
 ## 八、檔案
 
 ```
 MRL_Bridge_MCP/
-├── mrl_mcp_main.c        # stdio 迴圈、_O_BINARY、initialize/ping/tools 分發
-├── mrl_mcp_jsonrpc.c/.h  # JSON-RPC 2.0：error/result/initialize 建構
-├── mrl_mcp_tools.c/.h    # 8 工具 schema + dispatch + Bridge 呼叫
-├── mrl_http.c/.h         # WinHTTP client + URL encoder（x-api-key/x-origin-signature）
+├── MRL_mcp_main.c        # stdio 迴圈、_O_BINARY、initialize/ping/tools 分發
+├── MRL_mcp_jsonrpc.c/.h  # JSON-RPC 2.0：error/result/initialize 建構
+├── MRL_mcp_tools.c/.h    # 8 工具 schema + dispatch + Bridge 呼叫
+├── MRL_http.c/.h         # WinHTTP client + URL encoder（x-api-key/x-origin-signature）
 ├── third_party/cjson/    # 放 cJSON v1.7.19（見 PLACE_cJSON_HERE.md）
 ├── Makefile
 ├── smoke.jsonl

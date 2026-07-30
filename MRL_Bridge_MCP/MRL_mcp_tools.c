@@ -15,9 +15,9 @@
  * Tool execution failures (bad args, Bridge non-200, timeout) => isError:true result,
  * NOT a JSON-RPC protocol error (MCP 2025-11-25 / SEP-1303).
  */
-#include "mrl_mcp_tools.h"
-#include "mrl_mcp_jsonrpc.h"
-#include "mrl_http.h"
+#include "MRL_mcp_tools.h"
+#include "MRL_mcp_jsonrpc.h"
+#include "MRL_http.h"
 
 #include <stdio.h>
 #include <stdlib.h>

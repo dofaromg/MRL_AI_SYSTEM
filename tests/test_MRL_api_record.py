@@ -19,7 +19,7 @@ def _fresh(tmp_path, monkeypatch):
     """以隔離帳本路徑載入模組。"""
     ledger = tmp_path / "records.jsonl"
     monkeypatch.setenv("MRL_API_RECORD_PATH", str(ledger))
-    from mrliouword import api_record
+    from mrliouword import MRL_api_record as api_record
     importlib.reload(api_record)
     api_record.clear()
     return api_record, ledger

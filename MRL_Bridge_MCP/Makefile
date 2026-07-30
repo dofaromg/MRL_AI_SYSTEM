@@ -5,7 +5,7 @@
 CC      := D:/MrlToolchain/mingw64/mingw64/bin/gcc.exe
 CFLAGS  := -O2 -Wall -Wextra -std=c11 -I.
 LDFLAGS := -lwinhttp -static -s
-SRC     := mrl_mcp_main.c mrl_mcp_jsonrpc.c mrl_mcp_tools.c mrl_http.c third_party/cjson/cJSON.c
+SRC     := MRL_mcp_main.c MRL_mcp_jsonrpc.c MRL_mcp_tools.c MRL_http.c third_party/cjson/cJSON.c
 OUT     := MRL_Bridge_MCP.exe
 
 $(OUT): $(SRC)

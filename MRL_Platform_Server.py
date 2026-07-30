@@ -34,7 +34,7 @@ for p in [_REPO / "09_workflow", str(_REPO)]:
 
 # MRL API 紀錄模組（母體 API 呼叫/遙測落地帳本）。載入失敗不得中斷平台。
 try:
-    from mrliouword import api_record as _api_record
+    from mrliouword import MRL_api_record as _api_record
 except Exception:  # noqa: BLE001
     _api_record = None
 
