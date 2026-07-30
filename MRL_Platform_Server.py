@@ -38,6 +38,16 @@ try:
 except Exception:  # noqa: BLE001
     _api_record = None
 
+# MRL 粒子翻譯器（文字 ⇄ 粒子語言，可逆）。以檔案路徑載入（套件路徑含中文/版本）。
+try:
+    import importlib.util as _ilu
+    _pt_path = _REPO / "MRL_UniversalRuntimeLanguage_Core_v1" / "MRL_Language" / "MRL_ParticleTranslator.py"
+    _pt_spec = _ilu.spec_from_file_location("mrl_particle_translator", _pt_path)
+    _particle = _ilu.module_from_spec(_pt_spec)
+    _pt_spec.loader.exec_module(_particle)
+except Exception:  # noqa: BLE001
+    _particle = None
+
 # 母體 crown（優雅降級：未就緒不致整站掛掉）
 _MA = None
 _MA_ERR = None
@@ -412,6 +422,21 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(200, {"success": True, "product": "MrliouAI",
                                     "source_owner": "Mrliou", "origin_signature": ORIGIN_SIGNATURE,
                                     "trace_id": trace_id, "counts": counts})
+        # 粒子翻譯端點：文字 ⇄ 粒子語言（可逆）。
+        if p == "/api/mrl/particle/translate":
+            if _particle is None:
+                return self._send(503, {"ok": False, "error": "MRL_PARTICLE_TRANSLATOR_UNAVAILABLE"})
+            text = b.get("text")
+            if not isinstance(text, str):
+                return self._send(400, {"ok": False, "origin_signature": ORIGIN_SIGNATURE,
+                                        "error": "MRL_INVALID_INPUT", "reason": "需要字串欄位 text"})
+            direction = b.get("direction", "roundtrip")
+            try:
+                out = _particle.translate(text, direction=direction, label=b.get("label", "translate"))
+                return self._send(200, {"ok": True, **out})
+            except Exception as e:  # noqa: BLE001
+                return self._send(500, {"ok": False, "origin_signature": ORIGIN_SIGNATURE,
+                                        "error": "MRL_PARTICLE_TRANSLATE_FAILED", "reason": str(e)})
         if p == "/api/dl580/run":
             return self._send(200, api_dl580_run(b))
         if p == "/api/chat":
