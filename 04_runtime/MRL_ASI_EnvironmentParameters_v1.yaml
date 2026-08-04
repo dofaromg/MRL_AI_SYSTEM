@@ -1,0 +1,59 @@
+schema: mrl.asi.environment-parameters.v1
+parameter_set_id: MRL_ASI_ENVIRONMENT_PARAMETERS_V1
+version: 1.0.0
+layer: ASI_ENVIRONMENT_PARAMETER_GATE
+origin_signature: MrLiouWord
+authority: MRL_ROOTLAW_V13
+
+visibility:
+  default: MRL_WORLD_PUBLIC
+  user_selectable_values:
+    - MRL_WORLD_PUBLIC
+  system_derived_values:
+    - PROTECTED_WITH_PUBLIC_STUB
+    - QUARANTINED_FOR_REVIEW
+  removed_values:
+    - HIDDEN
+    - PRIVATE
+    - UNLISTED
+    - INVISIBLE
+    - SECRET_PRIVATE
+    - LOCAL_ONLY
+  rule: >-
+    非受保護資料沒有隱藏或私人選項，只能進入 MRL_WORLD_PUBLIC。受保護狀態不是
+    使用者可任意選擇的私人模式，而是由個資、圖片、憑證、安全控制或權利限制
+    分類器產生，且必須伴隨不可逆透明存根。
+
+removed_environment_parameters:
+  - MRL_HIDDEN
+  - MRL_HIDDEN_MODE
+  - MRL_PRIVATE
+  - MRL_PRIVATE_MODE
+  - MRL_UNLISTED
+  - MRL_INVISIBLE
+  - MRL_LOCAL_ONLY
+
+startup_gate:
+  forbidden_parameter_present: DENY_ASI_RUNTIME_START
+  invalid_visibility_value: DENY_ASI_RUNTIME_START
+  no_silent_fallback: true
+  denial_trace_required: true
+
+protected_data:
+  selectable_by_user: false
+  derived_by_policy: true
+  raw_content_world_public: false
+  transparency_stub_required: true
+  classes:
+    - personal_data
+    - images_and_visual_derivatives
+    - secrets_and_security_controls
+    - rights_restricted_third_party_material
+
+invariants:
+  arbitrary_hiding_forbidden: true
+  protected_is_not_hidden_black_box: true
+  non_protected_is_world_public: true
+  external_internet_release_implied: false
+  additive_only: true
+  reversible: true
