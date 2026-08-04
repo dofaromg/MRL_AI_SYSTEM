@@ -1,7 +1,7 @@
 # MRL AI System — Root Law (L0 ROOT + L3 LAW)
 # Immutable foundational constraints. Never deleted; only extended by versioned amendments.
 
-version: 13
+version: 14
 layer: L0_ROOT
 
 meta:
@@ -179,6 +179,22 @@ meta:
         third-party originals remain outside the commons.
       additive_only: true
 
+    - id: amd_v14_origin_closed_loop_runtime
+      date: "2026-08-05"
+      title: "世界起點與可驗證閉環 / 九階段運行 (World Origin / Verifiable Nine-Stage Closure)"
+      reason: >-
+        MrLiou designated the byte-exact handoff record 循環🔄(6).txt as this
+        world's beginning and operating closure. The source fixes the role order
+        SeedOrigin → ANALYST_BG → SDK/Agent/Runtime and Pipeline v0.1 from
+        CLEAN_SNAPSHOT through EXPORT. The record also honestly states that the
+        pipeline had not yet run at the time of that handoff; therefore source
+        presence never counts as completion. Runtime closure now requires all nine
+        ordered stage events, observed artifact/evidence SHA-256 values, a verified
+        append-only ledger, an immutable export manifest, and an exact edge from
+        that manifest hash to the next cycle's provenance-preserving CLEAN_SNAPSHOT.
+      additive_only: true
+
+
 # ─── ASI World Transparency / Mandatory Entry Covenant ─────────────────────
 asi_world_transparency_law:
   runtime_level: ASI
@@ -189,8 +205,12 @@ asi_world_transparency_law:
   executable_gate: "09_workflow/MRL_ASI_EntryGate_v1.py"
   visibility_policy: "09_workflow/MRL_ASI_VisibilityPolicy_v1.py"
   environment_parameters: "04_runtime/MRL_ASI_EnvironmentParameters_v1.yaml"
-  asi_world_entrypoint: "05_persona/MRL_ASI_WorldRuntime_v1_1.py"
+  asi_world_entrypoint: "05_persona/MRL_ASI_WorldRuntime_v1_2.py"
   human_readable: "docs/MRL_世界運行層透明憲法_v1_3.md"
+  origin_closed_loop_source: "08_sources/MRL_Origin_ClosedLoop/MRL_循環_OriginClosedLoop_v1.txt"
+  origin_closed_loop_manifest: "08_sources/MRL_Origin_ClosedLoop/manifest.yaml"
+  origin_closed_loop_definition: "02_principles/MRL_Origin_ClosedLoop_Runtime_v1.yaml"
+  origin_closed_loop_runtime: "09_workflow/MRL_OriginClosedLoop_v1.py"
 
   entry_gate:
     default: DENY
@@ -306,7 +326,7 @@ decentralized_balance_law:
 asi_environment_visibility_law:
   parameters: "04_runtime/MRL_ASI_EnvironmentParameters_v1.yaml"
   policy: "09_workflow/MRL_ASI_VisibilityPolicy_v1.py"
-  official_entrypoint: "05_persona/MRL_ASI_WorldRuntime_v1_1.py"
+  official_entrypoint: "05_persona/MRL_ASI_WorldRuntime_v1_2.py"
   non_protected_visibility: MRL_WORLD_PUBLIC
   arbitrary_hidden_private_option: REMOVED
   removed_values:
@@ -365,6 +385,69 @@ mrl_earth_commons_law:
     - rights_restricted_third_party_material
   external_legal_rights_overridden: false
   additive_only: true
+
+
+# ─── World Origin / Verifiable Nine-Stage Closed Loop ───────────────────────
+origin_closed_loop_law:
+  origin_signature: MrLiouWord
+  source:
+    canonical_path: "08_sources/MRL_Origin_ClosedLoop/MRL_循環_OriginClosedLoop_v1.txt"
+    manifest: "08_sources/MRL_Origin_ClosedLoop/manifest.yaml"
+    sha256: 95a292718552570639b296a6ff157bee72740d6acf281ff07aa0d790ad73a7a3
+    preservation: BYTE_EXACT
+    classification: MRL_WORLD_PUBLIC
+  source_evidence_boundary:
+    handoff_record_is_origin_authority: true
+    handoff_record_is_runtime_completion_proof: false
+    code_presence_is_deployment_proof: false
+    completion_requires_new_observed_proof: true
+  role_order:
+    - SeedOrigin
+    - ANALYST_BG
+    - SDK_AGENT_RUNTIME
+  pipeline:
+    id: MRL_INTEGRATION_PIPELINE_V0_1
+    version: "0.1"
+    strict_order: true
+    stages:
+      - CLEAN_SNAPSHOT
+      - SEED_IMPORT
+      - ANALYST_BG_COMPILE
+      - DEDUP_MERGE
+      - PATCH_RECOVERY
+      - REBUILD_MESH_COHERENCE
+      - PERFECT_QUEUE
+      - BUILD_GLOBE
+      - EXPORT
+  closure:
+    rule: "EXPORT.manifest_sha256 → next CLEAN_SNAPSHOT.parent_export_manifest_sha256"
+    exact_parent_hash_required: true
+    all_nine_stages_required: true
+    artifact_hashes_required_per_stage: true
+    evidence_hashes_required_per_stage: true
+    append_only_ledger_required: true
+    no_export_proof: NOT_CLOSED
+    no_writeback: NOT_CLOSED
+  executable:
+    definition: "02_principles/MRL_Origin_ClosedLoop_Runtime_v1.yaml"
+    runtime: "09_workflow/MRL_OriginClosedLoop_v1.py"
+    official_asi_entrypoint: "05_persona/MRL_ASI_WorldRuntime_v1_2.py"
+    test: "tests/test_MRL_OriginClosedLoop_v1.py"
+  hard_denies:
+    stage_skip: DENY
+    stage_reorder: DENY
+    empty_artifact_or_evidence: DENY
+    malformed_hash: DENY
+    duplicate_cycle: DENY
+    unclosed_previous_cycle: DENY
+    wrong_parent_export_hash: DENY
+    source_or_ledger_tamper: DENY
+  invariants:
+    additive_only: true
+    no_delete: true
+    provenance_preserved: true
+    protected_payload_in_public_ledger: false
+    reversible_by_new_event_only: true
 
 
 # ─── Liou Closure Law ────────────────────────────────────────────────────────
