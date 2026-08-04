@@ -1,0 +1,131 @@
+schema: mrl.url-format.v1
+component_id: MRL_URL_V1
+version: 1.0.0
+origin_signature: MrLiouWord
+status: candidate_runtime_component
+
+purpose: >-
+  以網址格式直接區分 ASI 環境場、Po、世界、外部投影、來源與證據層，避免帳號、
+  token、環境參數與世界物件被混成同一入口。網址是穩定位址與來源證明，不是權限
+  憑證，也不是物理測量資料本體。
+
+scheme: mrl
+canonical_grammar: >-
+  mrl://<layer>/<route>?v=1&src=<lowercase-sha256>[&mode=<field-mode>]
+
+layers:
+  asi:
+    tokenless: true
+    accountless: true
+    routes:
+      - /field/<field-id>
+      - /field/<field-id>/frame/<frame-id>
+      - /field/<field-id>/frame/<frame-id>/po/<po-id>
+    required_query:
+      - v
+      - src
+      - mode
+    mode_values:
+      - measured
+      - simulated
+      - inferred
+  world:
+    routes:
+      - /<world-id>/node/<node-id>
+    required_query:
+      - v
+      - src
+  projection:
+    meaning: external_network_or_interface_projection_only
+    routes:
+      - /surface/<surface-id>/resource/<resource-id>
+    required_query:
+      - v
+      - src
+  source:
+    routes:
+      - /object/<source-id>
+    required_query:
+      - v
+      - src
+  trace:
+    routes:
+      - /event/<event-id>
+    required_query:
+      - v
+      - src
+
+field_frame_boundary:
+  raw_environment_values_in_url: forbidden
+  stored_in_content_addressed_field_frame:
+    - current
+    - frequency
+    - electric_field
+    - magnetic_field
+    - electromagnetic_spectrum
+    - radiation
+    - units
+    - calibration
+    - uncertainty
+    - timestamp
+    - spatial_reference
+    - sensor_provenance
+  source_hash_in_url: required
+  reason: >-
+    不同環境參數具有不同量綱；URL 只定位經校準且有來源鏈的 frame，不把數值直接
+    串入查詢字串，也不把模擬或推論資料冒充實測資料。
+
+identifier_rules:
+  alphabet: lowercase_ascii
+  pattern: "^[a-z0-9](?:[a-z0-9._~-]{0,62}[a-z0-9])?$"
+  maximum_length: 64
+  human_label_in_url: forbidden
+  unicode_confusable_in_identifier: forbidden
+  silent_case_folding: forbidden
+  labels_live_in_referenced_object: true
+
+query_rules:
+  canonical_order:
+    - v
+    - src
+    - mode
+  duplicate_key: forbidden
+  unknown_key: forbidden
+  fragment: forbidden
+  port: forbidden
+  userinfo: forbidden
+  raw_credential_or_identity_keys:
+    - token
+    - access_token
+    - api_key
+    - key
+    - secret
+    - credential
+    - auth
+    - authorization
+    - password
+    - session
+    - cookie
+    - subject
+    - account
+  credential_or_identity_in_url: forbidden
+
+examples:
+  asi_po: >-
+    mrl://asi/field/earth-lab/frame/frame-0001/po/po-0001?v=1&src=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&mode=measured
+  world_node: >-
+    mrl://world/mother/node/flowseed?v=1&src=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  projection_resource: >-
+    mrl://projection/surface/web/resource/public-index?v=1&src=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  source_object: >-
+    mrl://source/object/origin-0001?v=1&src=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  trace_event: >-
+    mrl://trace/event/event-0001?v=1&src=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+invariants:
+  asi_manifestation_depends_on_token: false
+  url_grants_authority: false
+  source_hash_is_not_authentication: true
+  parse_fail_closed: true
+  canonical_round_trip_required: true
+  similar_name_substitution_forbidden: true
