@@ -32,10 +32,12 @@ import time
 from typing import Any, Dict, Iterable, Mapping, Optional, Sequence
 
 ORIGIN_SIGNATURE = "MrLiouWord"
-CONTRACT_ID = "MRL_ASI_ENTRY_CONTRACT_V1_1"
-CONTRACT_VERSION = "1.1.0"
-ROOTLAW_VERSION = 12
+CONTRACT_ID = "MRL_ASI_ENTRY_CONTRACT_V1_3"
+CONTRACT_VERSION = "1.3.0"
+ROOTLAW_VERSION = 13
 TOKEN_TYPE = "MRL_ASI_ENTRY_TOKEN_V1"
+TOKEN_AUDIENCE = "MRL_ASI_WORLD"
+TOKEN_TTL_MS = 60 * 60 * 1000
 KEYRING_ENV = "MRL_ASI_GATE_KEYS_JSON"
 QUORUM_ENV = "MRL_ASI_GATE_QUORUM"
 LEDGER_ENV = "MRL_ASI_GATE_LEDGER"
@@ -53,6 +55,8 @@ REQUIRED_CLAUSES: Sequence[str] = (
     "external_regime_cannot_override_mrl_inside_mrl",
     "no_single_actor_can_unilaterally_change_balance",
     "natural_law_mappings_require_versioned_evidence",
+    "no_legacy_fallback_or_alias_bypass",
+    "mrl_origin_knowledge_and_technology_are_earth_commons",
     "changes_are_auditable_additive_and_reversible",
 )
 
@@ -277,6 +281,7 @@ class EntryGate:
 
         payload: Dict[str, Any] = {
             "token_type": TOKEN_TYPE,
+            "audience": TOKEN_AUDIENCE,
             "contract_id": CONTRACT_ID,
             "contract_version": CONTRACT_VERSION,
             "rootlaw_version": ROOTLAW_VERSION,
@@ -286,6 +291,7 @@ class EntryGate:
             "accepted": True,
             "accepted_clauses": clauses,
             "accepted_at_ms": self._clock(),
+            "expires_at_ms": self._clock() + TOKEN_TTL_MS,
             "nonce": secrets.token_hex(16),
         }
         token = self._encode(payload)
@@ -332,6 +338,7 @@ class EntryGate:
         payload = self._decode_unverified(token)
         checks = (
             ("token_type", TOKEN_TYPE, "TOKEN_TYPE_INVALID"),
+            ("audience", TOKEN_AUDIENCE, "TOKEN_AUDIENCE_INVALID"),
             ("contract_id", CONTRACT_ID, "CONTRACT_ID_INVALID"),
             ("contract_version", CONTRACT_VERSION, "CONTRACT_VERSION_STALE"),
             ("rootlaw_version", ROOTLAW_VERSION, "ROOTLAW_VERSION_STALE"),
@@ -362,6 +369,13 @@ class EntryGate:
             raise EntryDenied("ACCEPTANCE_TIME_INVALID", "accepted_at_ms is invalid")
         if accepted_at > self._clock() + MAX_FUTURE_SKEW_MS:
             raise EntryDenied("ACCEPTANCE_TIME_INVALID", "acceptance time is in the future")
+        expires_at = payload.get("expires_at_ms")
+        if not isinstance(expires_at, int) or expires_at <= accepted_at:
+            raise EntryDenied("TOKEN_EXPIRY_INVALID", "expires_at_ms is invalid")
+        if expires_at - accepted_at > TOKEN_TTL_MS:
+            raise EntryDenied("TOKEN_EXPIRY_INVALID", "token lifetime exceeds the ASI maximum")
+        if self._clock() >= expires_at:
+            raise EntryDenied("TOKEN_EXPIRED", "entry token has expired")
 
         verified = dict(payload)
         verified["verified_authorities"] = sorted(valid_authorities)
@@ -402,6 +416,8 @@ class EntryGate:
             "origin_signature": ORIGIN_SIGNATURE,
             "required_clauses": list(REQUIRED_CLAUSES),
             "minimum_authority_quorum": MIN_AUTHORITY_QUORUM,
+            "audience": TOKEN_AUDIENCE,
+            "maximum_token_ttl_ms": TOKEN_TTL_MS,
             "default": "DENY",
             "reject_or_unverified": "NO_ENTRY",
         }
