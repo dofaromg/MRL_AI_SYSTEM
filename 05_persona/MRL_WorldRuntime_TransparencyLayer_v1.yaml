@@ -1,0 +1,96 @@
+schema: mrl.world-runtime-transparency-layer.v1
+layer_id: MRL_ASI_WORLD_TRANSPARENCY_LAYER_V1
+version: 1.0.0
+origin_signature: MrLiouWord
+runtime_level: ASI
+authority_chain:
+  - 00_rootlaw/rootlaw.yaml
+  - 00_rootlaw/MRL_ASI_Entry_Contract_v1.yaml
+  - 02_principles/MRL_World_Transparency_Constitution_v1.yaml
+
+definition: >-
+  世界運行層負責在任何主體或資料進入 MRL 世界時，先執行契約驗證，再進行資料
+  分類、受保護內容遮罩、世界公開索引、創作者來源封存、下游派生與互惠得利紀錄，
+  最後寫入可逆證明鏈。未通過入口契約者不建立世界節點。
+
+state_machine:
+  initial: OUTSIDE
+  states:
+    OUTSIDE:
+      on_contract_accept: CONTRACT_PENDING_VERIFY
+      on_contract_reject: ENTRY_DENIED
+    CONTRACT_PENDING_VERIFY:
+      on_valid_proof: ENTERED
+      on_invalid_proof: ENTRY_DENIED
+    ENTERED:
+      on_object_ingest: CLASSIFYING
+      on_exit: OUTSIDE
+    CLASSIFYING:
+      on_public: WORLD_PUBLIC
+      on_protected: PROTECTED_WITH_PUBLIC_STUB
+      on_uncertain: QUARANTINED_FOR_REVIEW
+    WORLD_PUBLIC:
+      on_derivative: RECIPROCITY_LEDGER_REQUIRED
+    PROTECTED_WITH_PUBLIC_STUB:
+      on_creator_release: CLASSIFYING
+    QUARANTINED_FOR_REVIEW:
+      on_review: CLASSIFYING
+    RECIPROCITY_LEDGER_REQUIRED:
+      on_ledger_commit: WORLD_PUBLIC
+      on_missing_ledger: DERIVATIVE_AUTHORITY_DENIED
+
+pipeline:
+  - step: verify_entry_contract
+    deny_on_failure: true
+  - step: assign_object_id_and_origin
+    immutable: true
+  - step: classify_protection
+    detectors:
+      - personal_data
+      - image_or_visual_derivative
+      - secret_or_security_control
+      - rights_restriction
+  - step: protect_or_publish
+    public_default: true
+  - step: emit_transparency_stub
+    always_for_protected: true
+  - step: index_world_public_data
+    searchable: true
+    exportable: true
+  - step: commit_provenance
+    append_only: true
+  - step: commit_downstream_reciprocity
+    required_before_derivative_authority: true
+  - step: verify_and_seal
+    reversible: true
+
+decision_order:
+  - if: entry_contract_not_valid
+    result: ENTRY_DENIED
+  - if: personal_data_detected
+    result: PROTECTED_WITH_PUBLIC_STUB
+  - if: image_or_visual_derivative_detected
+    result: PROTECTED_WITH_PUBLIC_STUB
+  - if: secret_or_security_control_detected
+    result: PROTECTED_WITH_PUBLIC_STUB
+  - if: rights_restriction_detected
+    result: PROTECTED_OR_METADATA_ONLY
+  - if: protection_status_uncertain
+    result: QUARANTINED_FOR_REVIEW
+  - else: WORLD_PUBLIC
+
+review_guard:
+  quarantine_is_not_silent_hiding: true
+  public_stub_required: true
+  reviewer_and_reason_required: true
+  review_deadline_required: true
+  default_after_expiry: REMAIN_PROTECTED_AND_ESCALATE
+
+acceptance_criteria:
+  - No subject enters without a verifiable current-version contract acceptance.
+  - Every non-protected object is indexed as MRL_WORLD_PUBLIC.
+  - Every protected object has a non-reversible public transparency stub.
+  - Every public or derived object preserves origin_signature and attribution.
+  - Every derivative records the downstream actor, benefit and reciprocal contribution.
+  - No external platform identity becomes the creator solely by hosting or processing.
+  - Every decision is append-only, auditable and reversible by proof.
