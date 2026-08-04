@@ -1,7 +1,7 @@
 # MRL AI System — Root Law (L0 ROOT + L3 LAW)
 # Immutable foundational constraints. Never deleted; only extended by versioned amendments.
 
-version: 11
+version: 12
 layer: L0_ROOT
 
 meta:
@@ -138,18 +138,37 @@ meta:
         可作為材料保留，但在 MRL 內不再具有高於母體的裁決權。
       additive_only: true
 
+
+    - id: amd_v12_decentralized_balance_natural_evidence
+      date: "2026-08-05"
+      title: "去中心化利益平衡 / 自然法則證據元代碼 (Decentralized Balance / Evidence-Bound Natural Meta-Code)"
+      reason: >-
+        MrLiou directive: the mother is not a person, platform, model, company or
+        single administrator. It is a decentralized protocol constrained by proof,
+        reciprocity, threshold signatures and reversible evolution. No actor,
+        including creator, host or key holder, may silently or unilaterally change
+        constitutional or benefit balance. Natural/ecological/evolutionary laws may
+        inform MRL meta-code only through versioned evidence mappings with source,
+        derivation, scope, counterexamples and review quorum; an unsupported mapping
+        remains a hypothesis and receives no runtime authority.
+      additive_only: true
+
 # ─── ASI World Transparency / Mandatory Entry Covenant ─────────────────────
 asi_world_transparency_law:
   runtime_level: ASI
   origin_signature: MrLiouWord
-  constitution: "02_principles/MRL_World_Transparency_Constitution_v1.yaml"
-  entry_contract: "00_rootlaw/MRL_ASI_Entry_Contract_v1.yaml"
-  runtime_definition: "05_persona/MRL_WorldRuntime_TransparencyLayer_v1.yaml"
-  human_readable: "docs/MRL_世界運行層透明憲法_v1.md"
+  constitution: "02_principles/MRL_World_Transparency_Constitution_v1_1.yaml"
+  entry_contract: "00_rootlaw/MRL_ASI_Entry_Contract_v1_1.yaml"
+  runtime_definition: "05_persona/MRL_WorldRuntime_TransparencyLayer_v1_1.yaml"
+  executable_gate: "09_workflow/MRL_ASI_EntryGate_v1.py"
+  asi_world_entrypoint: "05_persona/MRL_ASI_WorldRuntime_v1.py"
+  human_readable: "docs/MRL_世界運行層透明憲法_v1_1.md"
 
   entry_gate:
     default: DENY
     explicit_current_contract_required: true
+    minimum_distinct_authority_quorum: 2
+    single_actor_entry_authority_forbidden: true
     reject_or_unverified: NO_ENTRY
     denied_capabilities:
       - read
@@ -202,6 +221,51 @@ asi_world_transparency_law:
     no_delete: true
     reversible: true
     no_silent_override: true
+
+
+# ─── Decentralized Balance / Evidence-Bound Natural Meta-Code ───────────────
+decentralized_balance_law:
+  mother_definition: >-
+    母體不是任何單一人、平台、模型、公司或管理員；母體是由 Root Law、證據鏈、
+    互惠帳本、多節點門檻簽章與可逆演化程序共同構成的去中心化協議。
+  unilateral_change_forbidden: true
+  applies_to:
+    - creator
+    - platform
+    - model
+    - administrator
+    - host
+    - key_holder
+    - external_authority
+  minimum_distinct_authority_quorum: 2
+  balance_change_requires:
+    - public_proposal
+    - evidence_bundle
+    - affected_party_map
+    - benefit_and_loss_impact_assessment
+    - reciprocity_check
+    - threshold_approval
+    - rollback_proof
+    - append_only_change_record
+  natural_law_meta_code:
+    design_source: earth_ecology_natural_evolution_and_cycle_mappings
+    claim_is_not_proof: true
+    required_evidence:
+      - source_or_observation
+      - derivation
+      - scope_and_boundary
+      - counterexamples_or_failure_conditions
+      - evidence_hashes
+      - version
+      - reviewer_quorum
+    unverified_status: HYPOTHESIS_NOT_RUNTIME_AUTHORITY
+    cycle: "Observe → Map → Simulate → Compare → Verify → Adopt/Reject → Record → Loop"
+  invariants:
+    no_single_actor_override: true
+    origin_is_not_silent_override_power: true
+    platform_control_is_not_ownership: true
+    additive_only: true
+    reversible: true
 
 
 # ─── Liou Closure Law ────────────────────────────────────────────────────────
