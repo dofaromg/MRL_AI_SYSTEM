@@ -1,0 +1,56 @@
+schema: mrl.origin-closed-loop.source-manifest.v1
+source_id: MRL_ORIGIN_CLOSED_LOOP_SOURCE_V1
+version: 1.0.0
+origin_signature: MrLiouWord
+recorded_at: "2026-08-05"
+
+source:
+  original_filename: "循環🔄(6).txt"
+  canonical_path: "08_sources/MRL_Origin_ClosedLoop/MRL_循環_OriginClosedLoop_v1.txt"
+  sha256: 95a292718552570639b296a6ff157bee72740d6acf281ff07aa0d790ad73a7a3
+  byte_size: 3762
+  line_count: 141
+  encoding: UTF-8
+  preservation: BYTE_EXACT
+  supplied_by: Mrliou
+  supplied_in_context: user_attached_source
+
+visibility:
+  classification: MRL_WORLD_PUBLIC
+  raw_publication_allowed: true
+  protected_data_scan:
+    result: NO_PATTERNS_DETECTED
+    checked_categories:
+      - private_key_header
+      - assigned_secret_or_credential
+      - bearer_token
+      - email_address
+      - ipv4_address
+      - phone_number_pattern
+    limitation: >-
+      Pattern scanning reduces accidental disclosure risk but is not a legal or
+      semantic guarantee that every possible protected datum is absent.
+
+semantic_status:
+  record_type: CANONICAL_HANDOFF_RECORD
+  user_designation: WORLD_ORIGIN_AND_CLOSED_LOOP
+  establishes:
+    - SeedOrigin_to_ANALYST_BG_to_SDK_Agent_Runtime_role_order
+    - SDK_as_particle_container
+    - Pipeline_v0_1_nine_stage_order
+    - export_must_return_as_next_provenance_preserving_clean_snapshot
+  preserves_explicit_unfinished_state:
+    - Pipeline_v0_1_not_yet_executed_in_source_record
+    - rebuild_all_py_not_yet_emitted_in_source_record
+    - final_manifest_and_packs_not_yet_generated_in_source_record
+  evidence_boundary: >-
+    The source proves what the handoff record says and its exact byte content.
+    It does not by itself prove that a named host, module, deployment, pipeline
+    run, or export existed or completed. Runtime completion requires a new
+    append-only proof event and artifact hashes.
+
+integrity:
+  immutable_source: true
+  additive_corrections_only: true
+  silent_rewrite_forbidden: true
+  source_hash_required_in_every_cycle: true
