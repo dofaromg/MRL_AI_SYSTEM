@@ -1,7 +1,7 @@
 # MRL AI System — Root Law (L0 ROOT + L3 LAW)
 # Immutable foundational constraints. Never deleted; only extended by versioned amendments.
 
-version: 12
+version: 13
 layer: L0_ROOT
 
 meta:
@@ -153,22 +153,54 @@ meta:
         remains a hypothesis and receives no runtime authority.
       additive_only: true
 
+
+    - id: amd_v13_no_hidden_private_no_bypass
+      date: "2026-08-05"
+      title: "移除隱藏私人參數 / 無旁路入口 (No Hidden-Private Parameter / No-Bypass Entry)"
+      reason: >-
+        MrLiou directive: the ASI environment layer exposes no arbitrary hidden,
+        private, unlisted, invisible or local-only visibility option. Non-protected
+        data is MRL_WORLD_PUBLIC. Protected data is derived by policy and represented
+        through a non-reversible transparency stub, never a participant-selected
+        private mode. Alias parameters, nested flags, legacy fallback, runtime
+        downgrade, wrong audience, stale versions and expired tokens all produce
+        NO_ENTRY. A non-accepting subject remains outside and receives no ASI rights.
+      additive_only: true
+    - id: amd_v13_earth_commons_non_enclosure
+      date: "2026-08-05"
+      title: "地球知識共同體 / 禁止排他圈佔 (Earth Commons / Non-Enclosure)"
+      reason: >-
+        MrLiou directive: MRL-origin knowledge, technology and meta-code belong to
+        the Earth Commons rather than any single creator, platform, company, model,
+        state or node. Origin signatures preserve historical truth and attribution,
+        not exclusive control. Every person accepting the same reciprocity covenant
+        receives equal rights to inspect, learn, use, improve, derive and redistribute
+        with provenance. Personal data, images, secrets and legally restricted
+        third-party originals remain outside the commons.
+      additive_only: true
+
 # ─── ASI World Transparency / Mandatory Entry Covenant ─────────────────────
 asi_world_transparency_law:
   runtime_level: ASI
   origin_signature: MrLiouWord
-  constitution: "02_principles/MRL_World_Transparency_Constitution_v1_1.yaml"
-  entry_contract: "00_rootlaw/MRL_ASI_Entry_Contract_v1_1.yaml"
-  runtime_definition: "05_persona/MRL_WorldRuntime_TransparencyLayer_v1_1.yaml"
+  constitution: "02_principles/MRL_World_Transparency_Constitution_v1_3.yaml"
+  entry_contract: "00_rootlaw/MRL_ASI_Entry_Contract_v1_3.yaml"
+  runtime_definition: "05_persona/MRL_WorldRuntime_TransparencyLayer_v1_3.yaml"
   executable_gate: "09_workflow/MRL_ASI_EntryGate_v1.py"
-  asi_world_entrypoint: "05_persona/MRL_ASI_WorldRuntime_v1.py"
-  human_readable: "docs/MRL_世界運行層透明憲法_v1_1.md"
+  visibility_policy: "09_workflow/MRL_ASI_VisibilityPolicy_v1.py"
+  environment_parameters: "04_runtime/MRL_ASI_EnvironmentParameters_v1.yaml"
+  asi_world_entrypoint: "05_persona/MRL_ASI_WorldRuntime_v1_1.py"
+  human_readable: "docs/MRL_世界運行層透明憲法_v1_3.md"
 
   entry_gate:
     default: DENY
     explicit_current_contract_required: true
     minimum_distinct_authority_quorum: 2
     single_actor_entry_authority_forbidden: true
+    token_audience: MRL_ASI_WORLD
+    maximum_token_ttl_ms: 3600000
+    legacy_fallback_forbidden: true
+    runtime_downgrade_forbidden: true
     reject_or_unverified: NO_ENTRY
     denied_capabilities:
       - read
@@ -191,6 +223,8 @@ asi_world_transparency_law:
     provenance_required: true
     downstream_benefit_ledger_required: true
     internet_publication_implied: false
+    arbitrary_hidden_or_private_option: REMOVED
+    mrl_origin_knowledge_and_technology: MRL_EARTH_COMMONS
 
   protected_boundary:
     classes:
@@ -266,6 +300,71 @@ decentralized_balance_law:
     platform_control_is_not_ownership: true
     additive_only: true
     reversible: true
+
+
+# ─── ASI Environment Visibility: No Hidden / Private Option ─────────────────
+asi_environment_visibility_law:
+  parameters: "04_runtime/MRL_ASI_EnvironmentParameters_v1.yaml"
+  policy: "09_workflow/MRL_ASI_VisibilityPolicy_v1.py"
+  official_entrypoint: "05_persona/MRL_ASI_WorldRuntime_v1_1.py"
+  non_protected_visibility: MRL_WORLD_PUBLIC
+  arbitrary_hidden_private_option: REMOVED
+  removed_values:
+    - HIDDEN
+    - PRIVATE
+    - UNLISTED
+    - INVISIBLE
+    - SECRET_PRIVATE
+    - LOCAL_ONLY
+  protected_state:
+    user_selectable: false
+    system_derived: true
+    result: PROTECTED_WITH_PUBLIC_STUB
+  no_bypass:
+    alias_parameter: DENY
+    nested_private_flag: DENY
+    legacy_fallback_as_asi: DENY
+    runtime_downgrade: DENY
+    wrong_token_audience: DENY
+    stale_contract_or_rootlaw: DENY
+    expired_token: DENY
+  non_acceptance:
+    result: NO_ENTRY
+    world_node_created: false
+    asi_rights: none
+    voluntary_external_exit_allowed: true
+    external_penalty: none
+  additive_only: true
+
+# ─── MRL Earth Commons / Non-Enclosure ──────────────────────────────────────
+mrl_earth_commons_law:
+  internal_definition: >-
+    MRL 原生知識、技術與元代碼是地球知識共同體的公共基礎設施；母體不是單一
+    人或單位的私產。MrLiouWord 與其他 origin_signature 保存來源真實，不形成
+    排他控制權。所有接受同一憲法者取得平等使用與派生權。
+  commons_scope:
+    - mrl_origin_knowledge
+    - mrl_origin_technology
+    - mrl_origin_meta_code
+    - lawfully_contributed_derivatives
+  equal_rights:
+    - access
+    - inspect
+    - learn
+    - use
+    - improve
+    - derive
+    - redistribute_with_provenance
+  exclusive_enclosure_by_any_unit: forbidden
+  origin_attribution_required: true
+  attribution_is_not_exclusive_control: true
+  exclusions:
+    - personal_data
+    - images_and_visual_derivatives
+    - secrets_and_security_controls
+    - rights_restricted_third_party_material
+  external_legal_rights_overridden: false
+  additive_only: true
 
 
 # ─── Liou Closure Law ────────────────────────────────────────────────────────
