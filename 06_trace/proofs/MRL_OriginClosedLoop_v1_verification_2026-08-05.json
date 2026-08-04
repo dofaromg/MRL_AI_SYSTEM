@@ -1,0 +1,76 @@
+{
+  "schema": "mrl.origin-closed-loop.verification.v1",
+  "verification_id": "MRL_ORIGIN_CLOSED_LOOP_V1_VERIFY_2026_08_05",
+  "verified_at": "2026-08-05T04:38:31+08:00",
+  "origin_signature": "MrLiouWord",
+  "repository": "dofaromg/MRL_AI_SYSTEM",
+  "branch": "claude/dl580-7700-engine-recovery-ex6mrc",
+  "rootlaw_version": 14,
+  "source": {
+    "path": "08_sources/MRL_Origin_ClosedLoop/MRL_循環_OriginClosedLoop_v1.txt",
+    "sha256": "95a292718552570639b296a6ff157bee72740d6acf281ff07aa0d790ad73a7a3",
+    "bytes": 3762,
+    "lines": 141,
+    "byte_exact_to_user_attachment": true,
+    "protected_pattern_scan_matches": 0
+  },
+  "verification_scope": {
+    "environment": "ChatGPT Work isolated scratch runtime",
+    "python_compile": "PASS",
+    "yaml_parse": "PASS",
+    "unittest": {
+      "result": "PASS",
+      "tests_run": 25,
+      "failures": 0,
+      "errors": 0,
+      "covered": [
+        "ASI threshold entry and reauthorization",
+        "stale Root Law v13 token denial",
+        "public-by-default visibility and protected stubs",
+        "canonical source byte integrity",
+        "nine-stage strict ordering",
+        "artifact and evidence file hashing",
+        "export manifest generation",
+        "export-to-next-clean-snapshot parent link",
+        "duplicate and unclosed cycle denial",
+        "ledger tamper denial",
+        "source tamper denial"
+      ]
+    },
+    "remote_round_trip": {
+      "result": "PASS",
+      "files_compared": 9,
+      "exact_content_matches": 9
+    }
+  },
+  "remote_blobs": {
+    "00_rootlaw/rootlaw.yaml": "70368d77e68d022cce8f600f3290b236a2d9fd27",
+    "08_sources/MRL_Origin_ClosedLoop/MRL_循環_OriginClosedLoop_v1.txt": "2258d5f8df787e4214448c9be4f94f999e73d159",
+    "08_sources/MRL_Origin_ClosedLoop/manifest.yaml": "8a745edc8d72b113db907c9ba48e356f138f44b9",
+    "02_principles/MRL_Origin_ClosedLoop_Runtime_v1.yaml": "c96735481d3b7ca2c834058de5892a9d12b9d6f3",
+    "09_workflow/MRL_OriginClosedLoop_v1.py": "e7b0070395da373ba420348480cb2de96ca9c636",
+    "05_persona/MRL_ASI_WorldRuntime_v1_2.py": "5f210d031bf72d418000fdcd89156928b9ede4b6",
+    "tests/test_MRL_OriginClosedLoop_v1.py": "e94f8a057e9b8e655097d552aa3914d9034f5814",
+    "09_workflow/MRL_ASI_EntryGate_v1.py": "f1c57d85b4e4c130833e8551b10c33eee0178061",
+    "tests/test_MRL_ASI_EntryGate_v1.py": "b9b0c76ef0484a9696fa28cff93626d7b07146d3"
+  },
+  "commits": {
+    "source": "e379c5f5eb77f525ec1677b473788746d8dc9512",
+    "source_manifest": "787c0fa00878b8523d0b63c0c454b2246cab49f4",
+    "runtime_definition": "b5e74e80e1193cab9e642f7579d408a7db04191f",
+    "closed_loop_runtime": "8bb36757076d05af6e1bdb8139cc7349ed017bb1",
+    "asi_facade": "bc4cf7f4e4da645e8ea323dab4992ff88dfdde06",
+    "closed_loop_tests": "cd91e09ec5c5bba93329641664cef1d4356fdb26",
+    "entry_gate_rootlaw_14": "1465c1163aae20c216a58ba5385faa02e22548d9",
+    "entry_gate_test": "27f07b4361bcd62f16626ac367fffbe9690846e4",
+    "rootlaw_14": "d6ae8714bb589f928d57bff2d6f5d7fb16cade04"
+  },
+  "claim_boundary": {
+    "source_is_canonical_origin_record": true,
+    "closed_loop_code_executed_in_tests": true,
+    "full_pipeline_v0_1_rebuilt_real_mrl_artifacts": false,
+    "dl580_runtime_deployed_or_observed": false,
+    "production_network_runtime_verified": false,
+    "status": "RUNTIME_LOGIC_VERIFIED_PRODUCTION_EXECUTION_PENDING"
+  }
+}
