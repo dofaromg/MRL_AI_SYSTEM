@@ -1,0 +1,184 @@
+schema: mrl.world-transparency-constitution.v1_3
+constitution_id: MRL_WORLD_TRANSPARENCY_CONSTITUTION_V1_3
+version: 1.3.0
+layer: ASI_WORLD_LAW
+origin_signature: MrLiouWord
+authority: MRL_ROOTLAW
+
+scope:
+  world: MRL
+  public_domain: MRL_WORLD_PUBLIC
+  requires_entry_contract: MRL_ASI_ENTRY_CONTRACT_V1_3
+  internet_publication_implied: false
+
+constitutional_rule: >-
+  MRL 世界內，除受保護資料外，其餘資料一律透明公開、可檢索、可匯出、可追溯，
+  不得以黑箱、相似名稱、隱藏映射或平台權限使其實質不可見。
+
+default_visibility:
+  class: MRL_WORLD_PUBLIC
+  searchable: true
+  exportable: true
+  source_trace_required: true
+  transformation_trace_required: true
+  benefit_trace_required: true
+  deny_by_exception_only: true
+
+protected_classes:
+  personal_data:
+    raw_visibility: PROTECTED
+    includes:
+      - identity_identifiers
+      - contact_information
+      - precise_location
+      - health_and_biometric_data
+      - private_conversation_content
+      - data_linkable_to_a_natural_person
+  images:
+    raw_visibility: PROTECTED
+    includes:
+      - photographs
+      - screenshots
+      - scans
+      - video_frames
+      - thumbnails
+      - faces
+      - exif_and_location_derivatives
+  secrets_and_security_controls:
+    raw_visibility: PROTECTED
+    includes:
+      - passwords
+      - api_keys
+      - private_keys
+      - tokens
+      - recovery_codes
+      - exploitable_private_infrastructure_details
+    reason: >-
+      憑證與安全控制屬私人操作資料；公開會直接破壞所有參與者的平等與自主。
+  rights_restricted_material:
+    raw_visibility: PROTECTED_OR_METADATA_ONLY
+    rule: >-
+      第三方依法或依明確授權不得公開的原始內容，只公開來源、雜湊、權利狀態、
+      保管位置與不公開理由，不冒充為 MRL 自有作品。
+
+transparency_stub:
+  required_for_every_protected_record: true
+  public_fields:
+    - object_id
+    - origin_signature
+    - creator_or_custodian
+    - protected_class
+    - withholding_reason
+    - content_hash_when_safe
+    - created_at
+    - retention_state
+    - review_state
+  forbidden_fields:
+    - raw_protected_content
+    - reversible_preview
+    - exposed_secret
+
+creator_provenance_and_earth_commons:
+  mrl_origin_knowledge_and_technology: MRL_EARTH_COMMONS
+  equal_participant_use_rights: true
+  exclusive_ownership_inside_mrl: forbidden
+  enclosure_by_creator_platform_or_unit: forbidden
+  origin_signature_immutable: true
+  attribution_required: true
+  attribution_is_provenance_not_exclusive_control: true
+  platform_role: ADAPTER_OR_PROCESSOR_UNLESS_SEPARATELY_PROVEN
+  hosting_or_model_processing_does_not_create_ownership: true
+  mother_is_common_protocol_infrastructure: true
+  mrliou_role: origin_contributor_not_exclusive_owner
+  any_person_role: equal_participant_after_contract_acceptance
+  commons_exclusions:
+    - personal_data
+    - images_and_visual_derivatives
+    - secrets_and_security_controls
+    - rights_restricted_third_party_material
+  external_legal_rights_overridden: false
+
+downstream_reciprocity:
+  ledger_required: true
+  fields:
+    - source_object_id
+    - source_origin_signature
+    - downstream_actor
+    - access_time
+    - purpose
+    - transformation
+    - derivative_object_id
+    - capability_or_benefit_received
+    - reciprocal_contribution
+    - responsibility_state
+  missing_ledger_effect: DENY_DERIVATIVE_AUTHORITY
+
+no_black_box:
+  silent_hiding_forbidden: true
+  silent_rename_forbidden: true
+  silent_reclassification_forbidden: true
+  similar_name_substitution_forbidden: true
+  every_mapping_must_be_bidirectional: true
+  every_denial_must_have_reason_and_proof: true
+
+decentralized_balance_governance:
+  mother_is_protocol_not_single_actor: true
+  unilateral_balance_change_forbidden: true
+  minimum_distinct_authority_quorum: 2
+  required_before_change:
+    - public_proposal
+    - evidence_bundle
+    - affected_party_map
+    - benefit_and_loss_impact_assessment
+    - reciprocity_check
+    - threshold_approval
+    - rollback_proof
+  creator_origin_does_not_grant_silent_override: true
+  platform_control_does_not_grant_silent_override: true
+
+natural_law_meta_code:
+  role: EVIDENCE_BACKED_DESIGN_SOURCE
+  claim_is_not_proof: true
+  required_fields:
+    - law_mapping_id
+    - source_or_observation
+    - derivation
+    - scope_and_boundary
+    - counterexamples_or_failure_conditions
+    - evidence_hashes
+    - version
+    - reviewer_quorum
+  unverified_mapping_status: HYPOTHESIS_NOT_RUNTIME_AUTHORITY
+  evolution_cycle:
+    - observe
+    - map
+    - simulate
+    - compare
+    - verify
+    - adopt_or_reject
+    - record
+    - repeat
+
+no_bypass_boundary:
+  legacy_fallback_as_asi_forbidden: true
+  renamed_private_alias_forbidden: true
+  nested_private_parameter_forbidden: true
+  runtime_downgrade_forbidden: true
+  unsigned_asi_identity_forbidden: true
+  token_audience_required: MRL_ASI_WORLD
+  token_maximum_ttl_ms: 3600000
+  failure_effect: NO_ENTRY
+  voluntary_external_exit_allowed: true
+
+external_release:
+  default: NOT_IMPLIED
+  requires:
+    - creator_authorization
+    - protected_data_scan
+    - rights_check
+    - release_trace
+
+amendment:
+  additive_only: true
+  no_silent_override: true
+  supersession_requires_versioned_amendment: true
