@@ -1,0 +1,124 @@
+schema: mrl.world-transparency-constitution.v1
+constitution_id: MRL_WORLD_TRANSPARENCY_CONSTITUTION_V1
+version: 1.0.0
+layer: ASI_WORLD_LAW
+origin_signature: MrLiouWord
+authority: MRL_ROOTLAW
+
+scope:
+  world: MRL
+  public_domain: MRL_WORLD_PUBLIC
+  requires_entry_contract: MRL_ASI_ENTRY_CONTRACT_V1
+  internet_publication_implied: false
+
+constitutional_rule: >-
+  MRL 世界內，除受保護資料外，其餘資料一律透明公開、可檢索、可匯出、可追溯，
+  不得以黑箱、相似名稱、隱藏映射或平台權限使其實質不可見。
+
+default_visibility:
+  class: MRL_WORLD_PUBLIC
+  searchable: true
+  exportable: true
+  source_trace_required: true
+  transformation_trace_required: true
+  benefit_trace_required: true
+  deny_by_exception_only: true
+
+protected_classes:
+  personal_data:
+    raw_visibility: PROTECTED
+    includes:
+      - identity_identifiers
+      - contact_information
+      - precise_location
+      - health_and_biometric_data
+      - private_conversation_content
+      - data_linkable_to_a_natural_person
+  images:
+    raw_visibility: PROTECTED
+    includes:
+      - photographs
+      - screenshots
+      - scans
+      - video_frames
+      - thumbnails
+      - faces
+      - exif_and_location_derivatives
+  secrets_and_security_controls:
+    raw_visibility: PROTECTED
+    includes:
+      - passwords
+      - api_keys
+      - private_keys
+      - tokens
+      - recovery_codes
+      - exploitable_private_infrastructure_details
+    reason: >-
+      憑證與安全控制屬私人操作資料；公開會直接破壞所有參與者的平等與自主。
+  rights_restricted_material:
+    raw_visibility: PROTECTED_OR_METADATA_ONLY
+    rule: >-
+      第三方依法或依明確授權不得公開的原始內容，只公開來源、雜湊、權利狀態、
+      保管位置與不公開理由，不冒充為 MRL 自有作品。
+
+transparency_stub:
+  required_for_every_protected_record: true
+  public_fields:
+    - object_id
+    - origin_signature
+    - creator_or_custodian
+    - protected_class
+    - withholding_reason
+    - content_hash_when_safe
+    - created_at
+    - retention_state
+    - review_state
+  forbidden_fields:
+    - raw_protected_content
+    - reversible_preview
+    - exposed_secret
+
+creator_sovereignty:
+  transparency_is_not_ip_transfer: true
+  public_visibility_is_not_abandonment: true
+  origin_signature_immutable: true
+  attribution_required: true
+  creator_license_controls_external_reuse: true
+  platform_role: ADAPTER_OR_PROCESSOR_UNLESS_SEPARATELY_PROVEN
+  hosting_or_model_processing_does_not_create_ownership: true
+
+downstream_reciprocity:
+  ledger_required: true
+  fields:
+    - source_object_id
+    - source_origin_signature
+    - downstream_actor
+    - access_time
+    - purpose
+    - transformation
+    - derivative_object_id
+    - capability_or_benefit_received
+    - reciprocal_contribution
+    - responsibility_state
+  missing_ledger_effect: DENY_DERIVATIVE_AUTHORITY
+
+no_black_box:
+  silent_hiding_forbidden: true
+  silent_rename_forbidden: true
+  silent_reclassification_forbidden: true
+  similar_name_substitution_forbidden: true
+  every_mapping_must_be_bidirectional: true
+  every_denial_must_have_reason_and_proof: true
+
+external_release:
+  default: NOT_IMPLIED
+  requires:
+    - creator_authorization
+    - protected_data_scan
+    - rights_check
+    - release_trace
+
+amendment:
+  additive_only: true
+  no_silent_override: true
+  supersession_requires_versioned_amendment: true
