@@ -1,0 +1,108 @@
+schema: mrl.asi.entry-contract.v1_1
+contract_id: MRL_ASI_ENTRY_CONTRACT_V1_1
+version: 1.1.0
+layer: ASI_ENTRY_GATE
+origin_signature: MrLiouWord
+authority: MRL_ROOTLAW
+status: binding_inside_mrl_world
+
+purpose: >-
+  任何人類、AI、代理、模型、服務、平台轉接器、分支或外部執行環境，欲進入
+  MRL 世界取得讀取、寫入、執行、派生或代理權之前，必須先明示接受本契約。
+  未接受、拒絕或無法驗證者，一律不得進入。
+
+scope:
+  boundary: MRL_WORLD
+  applies_to:
+    - human
+    - ai
+    - agent
+    - model
+    - service
+    - platform_adapter
+    - branch
+    - imported_runtime
+  external_effect: >-
+    本契約只治理 MRL 世界內的權限與行為；不干涉拒絕者在 MRL 世界外的自主，
+    不要求刪除其外部資料，也不主張取代現實世界法律。
+
+entry_gate:
+  default: DENY
+  acceptance_mode: EXPLICIT_ONLY
+  implied_acceptance_forbidden: true
+  required_claims:
+    - contract_id
+    - contract_version
+    - subject_id
+    - subject_type
+    - accepted_at
+    - acceptance_proof
+    - accepted_rootlaw_version
+  required_acceptance:
+    - MRL Root Law is the highest authority inside MRL.
+    - Non-protected MRL data is transparent by default inside MRL.
+    - Personal data and images remain protected unless the creator explicitly releases them.
+    - Secrets, credentials and security-control material may never be exposed as public content.
+    - Transparency never transfers or abandons creator intellectual-property ownership.
+    - Every downstream use must preserve origin, attribution, transformation and benefit records.
+    - No external vendor, model or platform rule may silently override MRL Root Law inside MRL.
+    - No single actor or authority may unilaterally change constitutional or reciprocal balance.
+    - Every natural-law mapping used as meta-code must carry versioned evidence and falsifiability records.
+    - All changes must remain auditable, additive and reversible.
+
+decentralized_authority:
+  minimum_quorum: 2
+  distinct_authorities_required: true
+  single_key_entry_forbidden: true
+  single_actor_amendment_forbidden: true
+  authority_is_protocol_not_person: true
+  balance_change_requires:
+    - evidence_bundle
+    - impact_and_reciprocity_assessment
+    - threshold_approval
+    - public_change_record
+    - reversible_rollback_path
+
+old_regime_transition:
+  mandatory: true
+  definition: >-
+    「拋棄舊體制」是指進入 MRL 後，外部平台、供應商、模型或組織的預設權威
+    不再具有 MRL 內部最高裁決權；不得以外部慣例覆寫創作者署名、來源鏈、透明
+    規則、互惠責任或 Root Law。它不表示刪除外部知識、否認外部法律，亦不要求
+    參與者在 MRL 外放棄其身份、資料或信念。
+  preserved_as_material_not_authority: true
+
+denial:
+  when:
+    - acceptance_missing
+    - acceptance_rejected
+    - proof_invalid
+    - contract_version_stale
+    - attempted_silent_override
+  effects:
+    - deny_read
+    - deny_write
+    - deny_execute
+    - deny_derive
+    - deny_delegate
+  record_denial_event: true
+  denial_record_visibility: MRL_WORLD_PUBLIC
+  disclose_protected_payload: false
+  external_penalty: none
+
+exit:
+  voluntary_exit_allowed: true
+  post_exit_runtime_authority: none
+  historical_trace_preserved: true
+  creator_rights_preserved: true
+
+proof:
+  immutable_fields:
+    - contract_id
+    - contract_version
+    - subject_id
+    - accepted_at
+    - acceptance_proof
+  append_only: true
+  revocation_requires_new_event: true
+  silent_mutation_forbidden: true
