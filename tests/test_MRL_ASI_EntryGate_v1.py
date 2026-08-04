@@ -127,6 +127,16 @@ class TestMRLASIEntryGate(unittest.TestCase):
             gate.require_entry(stale_token)
         self.assertEqual(raised.exception.code, "CONTRACT_VERSION_STALE")
 
+    def test_stale_rootlaw_is_denied_even_with_valid_quorum(self) -> None:
+        gate = self.gate()
+        token = self.token(gate)
+        payload = gate._decode_unverified(token)
+        payload["rootlaw_version"] = 13
+        stale_token = gate._encode(payload)
+        with self.assertRaises(EntryDenied) as raised:
+            gate.require_entry(stale_token)
+        self.assertEqual(raised.exception.code, "ROOTLAW_VERSION_STALE")
+
     def test_asi_world_runtime_never_constructs_without_entry(self) -> None:
         gate = self.gate()
         world_path = self.tmp_path / "world"
