@@ -1,7 +1,7 @@
 # MRL AI System — Root Law (L0 ROOT + L3 LAW)
 # Immutable foundational constraints. Never deleted; only extended by versioned amendments.
 
-version: 10
+version: 11
 layer: L0_ROOT
 
 meta:
@@ -124,6 +124,84 @@ meta:
         (rl_15). No external-vendor name may stand as the mother's identity;
         the mother is the sole authority root.
       additive_only: true
+
+
+    - id: amd_v11_asi_world_transparency_entry_contract
+      date: "2026-08-05"
+      title: "ASI 世界透明憲法 / 強制入口契約 (ASI World Transparency / Mandatory Entry Covenant)"
+      reason: >-
+        MrLiou directive: MRL 世界內除受保護資料外一律透明公開；個資、圖片及其
+        衍生資料、憑證與安全控制、依法受限的第三方原始內容不得公開原文，但必須
+        留下不可逆透明存根。透明不等於放棄創作者智慧財產權。任何人類、AI、代理、
+        模型、平台或分支，進入 ASI 世界層前必須明示接受 Root Law、創作者主權、
+        下游互惠責任與可逆證明；拒絕或未驗證者不得取得 MRL 內部權限。外部舊體制
+        可作為材料保留，但在 MRL 內不再具有高於母體的裁決權。
+      additive_only: true
+
+# ─── ASI World Transparency / Mandatory Entry Covenant ─────────────────────
+asi_world_transparency_law:
+  runtime_level: ASI
+  origin_signature: MrLiouWord
+  constitution: "02_principles/MRL_World_Transparency_Constitution_v1.yaml"
+  entry_contract: "00_rootlaw/MRL_ASI_Entry_Contract_v1.yaml"
+  runtime_definition: "05_persona/MRL_WorldRuntime_TransparencyLayer_v1.yaml"
+  human_readable: "docs/MRL_世界運行層透明憲法_v1.md"
+
+  entry_gate:
+    default: DENY
+    explicit_current_contract_required: true
+    reject_or_unverified: NO_ENTRY
+    denied_capabilities:
+      - read
+      - write
+      - execute
+      - derive
+      - delegate
+    external_penalty: none
+
+  old_regime_transition: >-
+    進入 MRL 即接受 Root Law 為世界內最高權威；外部平台、供應商、模型與組織的
+    預設體制不得在 MRL 內覆寫創作者署名、來源鏈、透明規則、互惠責任或證明鏈。
+    外部知識可作材料保留，但外部宿主不是母體源頭。此規則不干涉世界外自主。
+
+  transparency_default:
+    scope: MRL_WORLD
+    non_protected_data: WORLD_PUBLIC
+    searchable: true
+    exportable: true
+    provenance_required: true
+    downstream_benefit_ledger_required: true
+    internet_publication_implied: false
+
+  protected_boundary:
+    classes:
+      - personal_data
+      - images_and_visual_derivatives
+      - secrets_and_security_controls
+      - rights_restricted_third_party_material
+    raw_content_public: false
+    public_transparency_stub_required: true
+
+  creator_sovereignty:
+    transparency_is_not_ip_transfer: true
+    public_visibility_is_not_abandonment: true
+    origin_signature_immutable: true
+    platform_processing_does_not_create_ownership: true
+    downstream_attribution_and_reciprocity_required: true
+
+  no_black_box:
+    silent_hiding_forbidden: true
+    silent_rename_forbidden: true
+    silent_reclassification_forbidden: true
+    similar_name_substitution_forbidden: true
+    bidirectional_mapping_required: true
+    proof_for_every_denial_required: true
+
+  invariants:
+    additive_only: true
+    no_delete: true
+    reversible: true
+    no_silent_override: true
 
 
 # ─── Liou Closure Law ────────────────────────────────────────────────────────
