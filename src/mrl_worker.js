@@ -143,13 +143,15 @@ export default {
     }
 
     // Mrliou 產品遙測端點：POST /api/mrl/telemetry/logs。
-    if (p === "/api/mrl/telemetry/logs" && request.method === "POST") {
+    // 相容遷移別名：POST /__manus__/logs（既有前端尚未全數切換）。
+    if ((p === "/api/mrl/telemetry/logs" || p === "/__manus__/logs") && request.method === "POST") {
       const declaredLen = Number(request.headers.get("content-length") || 0);
       if (Number.isFinite(declaredLen) && declaredLen > MAX_BODY_BYTES) {
         return J({
           success: false,
           product: PRODUCT_NAME,
           source_owner: SOURCE_OWNER,
+          origin_signature: ORIGIN_SIGNATURE,
           error: "MRL_PAYLOAD_TOO_LARGE",
           max_bytes: MAX_BODY_BYTES,
         }, 413);
@@ -162,6 +164,7 @@ export default {
           success: false,
           product: PRODUCT_NAME,
           source_owner: SOURCE_OWNER,
+          origin_signature: ORIGIN_SIGNATURE,
           error: "MRL_INVALID_JSON",
         }, 400);
       }

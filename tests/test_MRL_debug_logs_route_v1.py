@@ -21,11 +21,13 @@ def worker() -> str:
 def test_worker_intercepts_mrl_telemetry_logs_path():
     w = worker()
     assert '"/api/mrl/telemetry/logs"' in w
+    assert '"/__manus__/logs"' in w
     pattern = re.compile(
-        r'p\s*===\s*"/api/mrl/telemetry/logs"\s*&&\s*request\.method\s*===\s*"POST"'
-        r'|request\.method\s*===\s*"POST"\s*&&\s*p\s*===\s*"/api/mrl/telemetry/logs"'
+        r'p\s*===\s*"/api/mrl/telemetry/logs"\s*\|\|\s*p\s*===\s*"/__manus__/logs"'
+        r'|p\s*===\s*"/__manus__/logs"\s*\|\|\s*p\s*===\s*"/api/mrl/telemetry/logs"'
     )
-    assert pattern.search(w), "MRL telemetry route must be POST-only"
+    assert pattern.search(w), "MRL telemetry route must support canonical + compatibility alias"
+    assert 'request.method === "POST"' in w
 
 
 def test_worker_uses_mrliou_product_and_source_identity():
@@ -68,7 +70,7 @@ EXTERNAL_PLATFORM_NAMES = (
 
 
 def test_worker_contains_no_external_platform_canonicalization():
-    w = worker().lower()
+    w = worker().lower().replace("/__manus__/logs", "")
     for name in EXTERNAL_PLATFORM_NAMES:
         assert name not in w, (
             f"external platform name {name!r} must not appear in product "
@@ -82,6 +84,11 @@ def test_worker_parses_json_safely():
     pattern = re.compile(r"try\s*\{[^}]*await\s+request\.json\(\)[^}]*\}\s*catch", re.DOTALL)
     assert pattern.search(w)
     assert "MRL_INVALID_JSON" in w
+    invalid_json_error_pattern = re.compile(
+        r"MRL_INVALID_JSON\"[\s\S]*origin_signature:\s*ORIGIN_SIGNATURE|"
+        r"origin_signature:\s*ORIGIN_SIGNATURE[\s\S]*MRL_INVALID_JSON"
+    )
+    assert invalid_json_error_pattern.search(w)
 
 
 def test_worker_handles_expected_log_fields():
@@ -95,6 +102,11 @@ def test_worker_guards_payload_size():
     assert "content-length" in w
     assert "413" in w
     assert "MRL_PAYLOAD_TOO_LARGE" in w
+    payload_too_large_error_pattern = re.compile(
+        r"MRL_PAYLOAD_TOO_LARGE\"[\s\S]*origin_signature:\s*ORIGIN_SIGNATURE|"
+        r"origin_signature:\s*ORIGIN_SIGNATURE[\s\S]*MRL_PAYLOAD_TOO_LARGE"
+    )
+    assert payload_too_large_error_pattern.search(w)
 
 
 def test_worker_trace_id_is_collision_resistant():
