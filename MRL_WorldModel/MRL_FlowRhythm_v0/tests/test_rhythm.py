@@ -6,6 +6,7 @@ FlowRhythm v0 驗收 —— 全部用建構者自己的語料（2025-07 粒子�
   D. 軌跡 .fltnz 可被 mrl Dialect 逐位元組往返，並被辨識為 trace 行
   E. 母體所有種子（pcode / fltnz / flpkg / flseed）都能跑完節奏並 Replay
   F. 世界圖：把節奏軌跡放回母體語料，套用可見律（Node + Map + Trace + Coupling）
+  G. 未經核准的詞性／階段→軌跡動詞映射在正典模式 fail-closed；sandbox 明示啟用並標記非正典
 origin_signature: MrLiouWord
 """
 import glob, json, os, sys, zipfile
@@ -30,9 +31,21 @@ with zipfile.ZipFile(os.path.join(LEX, "重新下載 FluinSim.DualSet.v1.flsim")
         log = z.read(g + ".runtime.log").decode("utf-8")
         res[f"B_{g}_narration_byte_identical"] = F.narrate_like_flsim(chain, L) == log
 
-# C + D
-r = F.run(c_pcode, L, F.Clock(FIX), "EchoPersona")
-rp = F.replay(r["trace_fltnz"], L, "EchoPersona")
+# C + D + G
+try:
+    F.run(c_pcode, L, F.Clock(FIX), "EchoPersona")
+except F.ProvisionalSemanticMappingError:
+    res["G_canonical_default_fail_closed"] = True
+else:
+    res["G_canonical_default_fail_closed"] = False
+
+r = F.run(c_pcode, L, F.Clock(FIX), "EchoPersona", allow_provisional=True)
+res["G_sandbox_marked_noncanonical"] = (
+    r["semantic_status"] == F.SEMANTIC_PROVISIONAL
+    and bool(r["provisional_mappings"])
+    and "semantic_status: PROVISIONAL_NOT_CANONICAL" in r["trace_fltnz"]
+)
+rp = F.replay(r["trace_fltnz"], L, "EchoPersona", allow_provisional=True)
 res["C_replay_same_packet_sha256"] = rp["final_sha256"] == r["final_sha256"]
 res["C_replay_trace_byte_identical"] = rp["trace_fltnz"] == r["trace_fltnz"]
 ok, ir = D.roundtrip(r["trace_fltnz"].encode("utf-8"), "EchoPersona.trace.fltnz")
@@ -52,8 +65,8 @@ for g, t in extra.items():
     runs.append((g, F.chain_from_fltnz(t)))
 e_ok = True
 for name, ch in runs:
-    r1 = F.run(ch, L, F.Clock(FIX), name)
-    r2 = F.replay(r1["trace_fltnz"], L, name)
+    r1 = F.run(ch, L, F.Clock(FIX), name, allow_provisional=True)
+    r2 = F.replay(r1["trace_fltnz"], L, name, allow_provisional=True)
     good = r2["final_sha256"] == r1["final_sha256"] and r2["trace_fltnz"] == r1["trace_fltnz"]
     e_ok &= good
     stem = name.rsplit(".", 1)[0] if name.endswith((".pcode", ".flpkg", ".flseed")) else name
