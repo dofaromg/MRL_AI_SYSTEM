@@ -145,3 +145,4 @@ origin_signature: MrLiouWord ｜ additive-only
 - canonical模式預設fail-closed，不輸出含上述映射的軌跡。
 - sandbox必須明示 `allow_provisional=True`，且header、field、event保留非正典標記；不得用於DL580正式閉合、canonical receipt或主封包完成宣告。
 - 舊sandbox軌跡與舊收據保留，不覆寫；其語義授權狀態依本修補追加判讀。
+- v0.2.0把`semantic_status`與`provisional_mappings`納入封包及最終SHA-256，防止非正典輸出只移除標籤後沿用同一雜湊；v0.1.0雜湊維持歷史證據。
