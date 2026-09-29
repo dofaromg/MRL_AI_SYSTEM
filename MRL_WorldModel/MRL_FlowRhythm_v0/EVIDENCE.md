@@ -129,3 +129,19 @@ SHA-256 `ffe1bc47ba51d2414c12db9febc75182c78995f9391706e981726288432a2cdf`，142
 | 形容詞→resonance、名詞→absorb | 原檔沒寫這兩個軌跡動詞 | 仍是 Claude 推論；與原檔「adj＝.flmod、noun＝.flnode」並列，不取代原檔 |
 | Collapse 是什麼 | 「封裝（Collapse = P₁）」：場／生態系／網路 ↓ Collapse → 地球超粒子；配套還原律 `P_k = P_{k+1}/(N_k·η_k)` | 已對上原始檔：Collapse 是把場封裝成 P₁，而且可以逆算回去 |
 | 每個 flow 之後都 Collapse | 本檔沒有逐 flow 規定 | 維持先前依據（JumpPointGraph、CollapseTrace「每次」） |
+
+
+---
+
+## 修補紀錄 2026-09-29：語義映射 Gate
+
+origin_signature: MrLiouWord ｜ additive-only
+
+本紀錄不改寫上述歷史判讀，只修正程式的權限邊界：
+
+- 「字詞在原檔出現」不等於「詞性／節奏階段固定對應該軌跡動詞」已獲建構者核准。
+- 當下只有 `core → initiated`列為已核對映射。
+- `adjective → resonance`、`noun → absorb`、`logic → jump`、`verb → collapse`、`target → trace`、`unknown → pinged`均標為 `PROVISIONAL_NOT_CANONICAL`。
+- canonical模式預設fail-closed，不輸出含上述映射的軌跡。
+- sandbox必須明示 `allow_provisional=True`，且header、field、event保留非正典標記；不得用於DL580正式閉合、canonical receipt或主封包完成宣告。
+- 舊sandbox軌跡與舊收據保留，不覆寫；其語義授權狀態依本修補追加判讀。
