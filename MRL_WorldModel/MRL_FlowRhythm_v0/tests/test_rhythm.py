@@ -9,7 +9,7 @@ FlowRhythm v0 驗收 —— 全部用建構者自己的語料（2025-07 粒子�
   G. 未經核准的詞性／階段→軌跡動詞映射在正典模式 fail-closed；sandbox 明示啟用並標記非正典
 origin_signature: MrLiouWord
 """
-import glob, json, os, re, shutil, sys, tempfile, zipfile
+import glob, hashlib, json, os, re, shutil, sys, tempfile, zipfile
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
 import flow_rhythm as F
@@ -94,6 +94,14 @@ seeds = [os.path.join(LEX, n) for n in ("下載 EchoPersona.pcode", "下載 Echo
          "下載 FluinCoreSeed.v1.flseed", "下載 Memory.Seed.Core.v1.flseed")]
 with zipfile.ZipFile(os.path.join(LEX, "重新下載 FluinSim.DualSet.v1.flsim")) as z:
     extra = {g: z.read(g + ".fltnz").decode("utf-8") for g in ("Group1_EchoPersona", "Group2_ConflictChange")}
+historical_dir = os.path.join(ROOT, "traces")
+def _tree_hashes(root):
+    return {
+        os.path.relpath(p, root): hashlib.sha256(open(p, "rb").read()).hexdigest()
+        for p in sorted(glob.glob(os.path.join(root, "**"), recursive=True))
+        if os.path.isfile(p)
+    }
+historical_before = _tree_hashes(historical_dir)
 out_dir = tempfile.mkdtemp(prefix="mrl-flowrhythm-v020-")
 runs = []
 for p in seeds:
@@ -124,7 +132,10 @@ res["F_visible_before"] = before["tiers"].get("visible", 0)
 res["F_visible_after"] = after["tiers"].get("visible", 0)
 res["F_visible_nodes"] = [n["id"] for n in after["visible_nodes"]]
 shutil.rmtree(out_dir)
-res["G_historical_traces_untouched"] = not os.path.exists(out_dir)
+res["G_historical_traces_untouched"] = (
+    not os.path.exists(out_dir)
+    and _tree_hashes(historical_dir) == historical_before
+)
 
 print(json.dumps(res, ensure_ascii=False, indent=1))
 bools = [v for k, v in res.items() if isinstance(v, bool)]
