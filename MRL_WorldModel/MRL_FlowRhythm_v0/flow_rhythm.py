@@ -177,6 +177,25 @@ class ProvisionalSemanticMappingError(ValueError):
     """正典輸出遇到未由建構者明文核准的軌跡動詞映射。"""
 
 
+class SemanticAuthorityIntegrityError(ValueError):
+    """Replay輸入缺少或竄改語義授權metadata。"""
+
+
+def semantic_authority(chain: List[str], L: Lexicon) -> Dict:
+    kinds = [kind_of(tok, L) for tok in chain]
+    provisional = sorted({f"{k}->{VERB_OF[k]}" for k in kinds if k not in VERIFIED_VERB_KINDS})
+    return {
+        "engine_version": ENGINE_VERSION,
+        "origin_signature": SIGN,
+        "semantic_status": SEMANTIC_PROVISIONAL if provisional else SEMANTIC_VERIFIED,
+        "provisional_mappings": provisional,
+    }
+
+
+def _canonical_json(value: Dict) -> str:
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+
+
 def packet_hash(packet: Dict) -> str:
     return hashlib.sha256(json.dumps(packet, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
 
@@ -206,13 +225,13 @@ def run(chain: List[str], L: Lexicon, clock: Optional[Clock] = None, title: str 
     才能使用尚未由建構者明文核准的固定軌跡動詞映射；輸出會永久標記為非正典。
     """
     clock = clock or Clock()
-    kinds = [kind_of(tok, L) for tok in chain]
-    provisional = sorted({f"{k}->{VERB_OF[k]}" for k in kinds if k not in VERIFIED_VERB_KINDS})
+    authority = semantic_authority(chain, L)
+    provisional = authority["provisional_mappings"]
     if provisional and not allow_provisional:
         raise ProvisionalSemanticMappingError(
             "canonical FlowRhythm refused provisional mappings: " + ", ".join(provisional)
         )
-    semantic_status = SEMANTIC_PROVISIONAL if provisional else SEMANTIC_VERIFIED
+    semantic_status = authority["semantic_status"]
     field_ = {"persona": None, "attributes": [], "objects": [], "jumps": [], "flows": [], "targets": [],
               "packets": [], "origin_signature": SIGN, "semantic_status": semantic_status,
               "provisional_mappings": provisional}
@@ -251,7 +270,10 @@ def run(chain: List[str], L: Lexicon, clock: Optional[Clock] = None, title: str 
     )})
     header = (f"# {title} · FlowRhythm v{ENGINE_VERSION} · origin_signature: {SIGN}"
               f" · semantic_status: {semantic_status}")
-    trace_lines = [header, "::initiated::"] + [f"[{e['ts']}] ::{e['verb']}→ {e['token']}{e['detail']}" for e in events]
+    authority_line = "# mrl_semantic_authority: " + _canonical_json(authority)
+    trace_lines = [header, authority_line, "::initiated::"] + [
+        f"[{e['ts']}] ::{e['verb']}→ {e['token']}{e['detail']}" for e in events
+    ]
     body = [t for t in chain if not t.startswith("⊕")]
     if len(body) > 1:
         trace_lines.append(" → ".join(body))                                   # 節奏鏈（Coupling）
@@ -272,6 +294,23 @@ def replay(trace_text: str, L: Lexicon, title: str = "語場節奏",
     mod = D.parse_source(trace_text.encode("utf-8"), "trace")
     ops = [o for o in mod.ops if o.kind == "trace"]
     chain = [re.sub(r" #[0-9a-f]{16}$", "", o.f["target"]) for o in ops]
+    expected = semantic_authority(chain, L)
+
+    header = trace_text.splitlines()[0] if trace_text.splitlines() else ""
+    status_match = re.search(r"semantic_status: ([A-Z_]+)", header)
+    authority_lines = [
+        line for line in trace_text.splitlines()
+        if line.startswith("# mrl_semantic_authority: ")
+    ]
+    if status_match is None or len(authority_lines) != 1:
+        raise SemanticAuthorityIntegrityError("missing or duplicate semantic authority metadata")
+    try:
+        serialized = json.loads(authority_lines[0].split(": ", 1)[1])
+    except (json.JSONDecodeError, IndexError) as exc:
+        raise SemanticAuthorityIntegrityError("invalid semantic authority metadata") from exc
+    if status_match.group(1) != expected["semantic_status"] or serialized != expected:
+        raise SemanticAuthorityIntegrityError("semantic authority metadata does not match replayed chain")
+
     r = run(chain, L, Clock(seq=[o.f["ts"] for o in ops]), title,
             allow_provisional=allow_provisional)
     return {**r, "trace_ops": len(ops)}
