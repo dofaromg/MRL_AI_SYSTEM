@@ -45,6 +45,16 @@ res["G_sandbox_marked_noncanonical"] = (
     and bool(r["provisional_mappings"])
     and "semantic_status: PROVISIONAL_NOT_CANONICAL" in r["trace_fltnz"]
 )
+hash_payload = {k: r["field"][k] for k in (
+    "persona", "attributes", "objects", "jumps", "flows", "targets", *F.HASH_POLICY_FIELDS
+)}
+verified_payload = dict(hash_payload)
+verified_payload["semantic_status"] = F.SEMANTIC_VERIFIED
+verified_payload["provisional_mappings"] = []
+res["G_authority_state_bound_to_final_sha256"] = (
+    F.packet_hash(hash_payload) == r["final_sha256"]
+    and F.packet_hash(verified_payload) != r["final_sha256"]
+)
 rp = F.replay(r["trace_fltnz"], L, "EchoPersona", allow_provisional=True)
 res["C_replay_same_packet_sha256"] = rp["final_sha256"] == r["final_sha256"]
 res["C_replay_trace_byte_identical"] = rp["trace_fltnz"] == r["trace_fltnz"]
