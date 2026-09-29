@@ -4,7 +4,8 @@ origin_signature: MrLiouWord ｜ 怎麼過去，就怎麼回來
 
 本體：實作 seed_runner.py 裡標註「尚未實作」的 generate 模式 ——
       「語場生成模擬器（未來支援跳點與人格觸發）」。
-語意不是 Claude 發明的：全部從建構者 2025-07 的原始檔載入
+語意來源分層：粒子分類與模組敘述從建構者 2025-07 原始檔載入；
+軌跡動詞的固定對應若無原檔明文，必須標為 provisional，正典模式預設拒絕
   - FluinSim.DualSet.v1.flsim / flsim_runtime.py 的 module_map（每個粒子「做什麼」）
   - EchoPersona.structure.json、*.flseed/structure.json（pcode ↔ 粒子碼 對照）
   - Fluin_Particle_BilingualDict.csv（詞性、中英）
@@ -161,8 +162,18 @@ def kind_of(tok: str, L: Lexicon) -> str:
     return L.kind.get(tok, "unknown")
 
 
+# 這些字可在原始 MRL 材料中找到，但「詞性／節奏階段 → 軌跡動詞」的
+# 固定映射除 core→initiated 外，尚未取得建構者明文核准（見 EVIDENCE.md）。
+# 因此探索模式可使用，但正典模式必須 fail-closed。
 VERB_OF = {"core": "initiated", "adjective": "resonance", "noun": "absorb", "logic": "jump",
            "verb": "collapse", "target": "trace", "unknown": "pinged"}
+VERIFIED_VERB_KINDS = {"core"}
+SEMANTIC_VERIFIED = "VERIFIED"
+SEMANTIC_PROVISIONAL = "PROVISIONAL_NOT_CANONICAL"
+
+
+class ProvisionalSemanticMappingError(ValueError):
+    """正典輸出遇到未由建構者明文核准的軌跡動詞映射。"""
 
 
 def packet_hash(packet: Dict) -> str:
@@ -186,10 +197,24 @@ class Clock:
         return s
 
 
-def run(chain: List[str], L: Lexicon, clock: Optional[Clock] = None, title: str = "語場節奏") -> Dict:
+def run(chain: List[str], L: Lexicon, clock: Optional[Clock] = None, title: str = "語場節奏",
+        allow_provisional: bool = False) -> Dict:
+    """執行節奏。
+
+    預設為正典 fail-closed。只有明示 allow_provisional=True 的 sandbox／研究執行
+    才能使用尚未由建構者明文核准的固定軌跡動詞映射；輸出會永久標記為非正典。
+    """
     clock = clock or Clock()
+    kinds = [kind_of(tok, L) for tok in chain]
+    provisional = sorted({f"{k}->{VERB_OF[k]}" for k in kinds if k not in VERIFIED_VERB_KINDS})
+    if provisional and not allow_provisional:
+        raise ProvisionalSemanticMappingError(
+            "canonical FlowRhythm refused provisional mappings: " + ", ".join(provisional)
+        )
+    semantic_status = SEMANTIC_PROVISIONAL if provisional else SEMANTIC_VERIFIED
     field_ = {"persona": None, "attributes": [], "objects": [], "jumps": [], "flows": [], "targets": [],
-              "packets": [], "origin_signature": SIGN}
+              "packets": [], "origin_signature": SIGN, "semantic_status": semantic_status,
+              "provisional_mappings": provisional}
     events, pending_cause = [], None
     for tok in chain:
         k = kind_of(tok, L)
@@ -216,9 +241,11 @@ def run(chain: List[str], L: Lexicon, clock: Optional[Clock] = None, title: str 
         elif k == "target":                                  # Trace
             field_["targets"].append(tok)
         events.append({"ts": clock.now(), "verb": verb, "token": tok, "kind": k, "detail": detail,
+                       "mapping_status": SEMANTIC_VERIFIED if k in VERIFIED_VERB_KINDS else SEMANTIC_PROVISIONAL,
                        "narration": L.module_map.get(tok, "未知模組")})
     final = packet_hash({kk: field_[kk] for kk in ("persona", "attributes", "objects", "jumps", "flows", "targets")})
-    header = f"# {title} · FlowRhythm v{ENGINE_VERSION} · origin_signature: {SIGN}"
+    header = (f"# {title} · FlowRhythm v{ENGINE_VERSION} · origin_signature: {SIGN}"
+              f" · semantic_status: {semantic_status}")
     trace_lines = [header, "::initiated::"] + [f"[{e['ts']}] ::{e['verb']}→ {e['token']}{e['detail']}" for e in events]
     body = [t for t in chain if not t.startswith("⊕")]
     if len(body) > 1:
@@ -229,16 +256,19 @@ def run(chain: List[str], L: Lexicon, clock: Optional[Clock] = None, title: str 
                 trace_lines.append(f"⌬map[{pc}]↦{code}")
     narration = "\n".join(f"[{e['token']}] → {e['narration']}" for e in events)
     return {"chain": chain, "field": field_, "events": events, "final_sha256": final,
+            "semantic_status": semantic_status, "provisional_mappings": provisional,
             "trace_fltnz": "\n".join(trace_lines) + "\n", "narration": narration}
 
 
 # ───────────────────────── Replay：只讀軌跡，重建一切 ─────────────────────────
 
-def replay(trace_text: str, L: Lexicon, title: str = "語場節奏") -> Dict:
+def replay(trace_text: str, L: Lexicon, title: str = "語場節奏",
+           allow_provisional: bool = False) -> Dict:
     mod = D.parse_source(trace_text.encode("utf-8"), "trace")
     ops = [o for o in mod.ops if o.kind == "trace"]
     chain = [re.sub(r" #[0-9a-f]{16}$", "", o.f["target"]) for o in ops]
-    r = run(chain, L, Clock(seq=[o.f["ts"] for o in ops]), title)
+    r = run(chain, L, Clock(seq=[o.f["ts"] for o in ops]), title,
+            allow_provisional=allow_provisional)
     return {**r, "trace_ops": len(ops)}
 
 
