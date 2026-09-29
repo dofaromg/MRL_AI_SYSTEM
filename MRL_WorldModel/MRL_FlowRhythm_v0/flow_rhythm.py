@@ -43,7 +43,7 @@ LEX_DIR = _LEX_ORIG if os.path.isdir(_LEX_ORIG) else _LEX_COPY
 sys.path.insert(0, os.path.join(REPO, "MRL_WorldModel", "MRL_Dialect_v0"))
 import mrl_dialect as D  # noqa: E402
 
-ENGINE_VERSION = "0.1.0"
+ENGINE_VERSION = "0.2.0"
 SIGN = "MrLiouWord"
 
 
@@ -170,6 +170,7 @@ VERB_OF = {"core": "initiated", "adjective": "resonance", "noun": "absorb", "log
 VERIFIED_VERB_KINDS = {"core"}
 SEMANTIC_VERIFIED = "VERIFIED"
 SEMANTIC_PROVISIONAL = "PROVISIONAL_NOT_CANONICAL"
+HASH_POLICY_FIELDS = ("semantic_status", "provisional_mappings")
 
 
 class ProvisionalSemanticMappingError(ValueError):
@@ -234,7 +235,9 @@ def run(chain: List[str], L: Lexicon, clock: Optional[Clock] = None, title: str 
                 pending_cause["effect"] = tok
                 pending_cause = None
             field_["flows"].append(tok)
-            snapshot = {kk: field_[kk] for kk in ("persona", "attributes", "objects", "jumps", "flows")}
+            snapshot = {kk: field_[kk] for kk in (
+                "persona", "attributes", "objects", "jumps", "flows", *HASH_POLICY_FIELDS
+            )}
             h = packet_hash(snapshot)
             field_["packets"].append({"flow": tok, "sha256": h})
             detail = f" #{h[:16]}"
@@ -243,7 +246,9 @@ def run(chain: List[str], L: Lexicon, clock: Optional[Clock] = None, title: str 
         events.append({"ts": clock.now(), "verb": verb, "token": tok, "kind": k, "detail": detail,
                        "mapping_status": SEMANTIC_VERIFIED if k in VERIFIED_VERB_KINDS else SEMANTIC_PROVISIONAL,
                        "narration": L.module_map.get(tok, "未知模組")})
-    final = packet_hash({kk: field_[kk] for kk in ("persona", "attributes", "objects", "jumps", "flows", "targets")})
+    final = packet_hash({kk: field_[kk] for kk in (
+        "persona", "attributes", "objects", "jumps", "flows", "targets", *HASH_POLICY_FIELDS
+    )})
     header = (f"# {title} · FlowRhythm v{ENGINE_VERSION} · origin_signature: {SIGN}"
               f" · semantic_status: {semantic_status}")
     trace_lines = [header, "::initiated::"] + [f"[{e['ts']}] ::{e['verb']}→ {e['token']}{e['detail']}" for e in events]
