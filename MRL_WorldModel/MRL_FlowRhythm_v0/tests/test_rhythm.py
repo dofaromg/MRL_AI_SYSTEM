@@ -9,7 +9,7 @@ FlowRhythm v0 驗收 —— 全部用建構者自己的語料（2025-07 粒子�
   G. 未經核准的詞性／階段→軌跡動詞映射在正典模式 fail-closed；sandbox 明示啟用並標記非正典
 origin_signature: MrLiouWord
 """
-import glob, json, os, sys, zipfile
+import glob, json, os, re, shutil, sys, tempfile, zipfile
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
 import flow_rhythm as F
@@ -55,6 +55,33 @@ res["G_authority_state_bound_to_final_sha256"] = (
     F.packet_hash(hash_payload) == r["final_sha256"]
     and F.packet_hash(verified_payload) != r["final_sha256"]
 )
+tampered_status = r["trace_fltnz"].replace(
+    "semantic_status: PROVISIONAL_NOT_CANONICAL",
+    "semantic_status: VERIFIED",
+    1,
+)
+missing_authority = "\n".join(
+    line for line in r["trace_fltnz"].splitlines()
+    if not line.startswith("# mrl_semantic_authority: ")
+) + "\n"
+tampered_mappings = re.sub(
+    r'"provisional_mappings":\[[^\]]*\]',
+    '"provisional_mappings":[]',
+    r["trace_fltnz"],
+    count=1,
+)
+for key, trace in (
+    ("G_replay_rejects_tampered_status", tampered_status),
+    ("G_replay_rejects_missing_authority", missing_authority),
+    ("G_replay_rejects_tampered_mappings", tampered_mappings),
+):
+    try:
+        F.replay(trace, L, "EchoPersona", allow_provisional=True)
+    except F.SemanticAuthorityIntegrityError:
+        res[key] = True
+    else:
+        res[key] = False
+
 rp = F.replay(r["trace_fltnz"], L, "EchoPersona", allow_provisional=True)
 res["C_replay_same_packet_sha256"] = rp["final_sha256"] == r["final_sha256"]
 res["C_replay_trace_byte_identical"] = rp["trace_fltnz"] == r["trace_fltnz"]
@@ -67,7 +94,7 @@ seeds = [os.path.join(LEX, n) for n in ("下載 EchoPersona.pcode", "下載 Echo
          "下載 FluinCoreSeed.v1.flseed", "下載 Memory.Seed.Core.v1.flseed")]
 with zipfile.ZipFile(os.path.join(LEX, "重新下載 FluinSim.DualSet.v1.flsim")) as z:
     extra = {g: z.read(g + ".fltnz").decode("utf-8") for g in ("Group1_EchoPersona", "Group2_ConflictChange")}
-out_dir = os.path.join(ROOT, "traces"); os.makedirs(out_dir, exist_ok=True)
+out_dir = tempfile.mkdtemp(prefix="mrl-flowrhythm-v020-")
 runs = []
 for p in seeds:
     ch, _ = F.load_seed(p, L); runs.append((os.path.basename(p).replace("下載 ", ""), ch))
@@ -96,6 +123,8 @@ after = W.build([src, out_dir])
 res["F_visible_before"] = before["tiers"].get("visible", 0)
 res["F_visible_after"] = after["tiers"].get("visible", 0)
 res["F_visible_nodes"] = [n["id"] for n in after["visible_nodes"]]
+shutil.rmtree(out_dir)
+res["G_historical_traces_untouched"] = not os.path.exists(out_dir)
 
 print(json.dumps(res, ensure_ascii=False, indent=1))
 bools = [v for k, v in res.items() if isinstance(v, bool)]
