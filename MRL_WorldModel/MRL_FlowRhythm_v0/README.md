@@ -38,6 +38,7 @@ origin_signature: MrLiouWord ｜ 怎麼過去，就怎麼回來 ｜ Additive-Onl
 - 預設呼叫 `run(...)`／`replay(...)` 為canonical模式；遇到任何未核准映射會拋出 `ProvisionalSemanticMappingError`，不產生可誤認為正典的軌跡。
 - 研究與相容性驗證必須明示 `allow_provisional=True`。輸出header、field與每個event都會標示 `PROVISIONAL_NOT_CANONICAL`，不得寫入canonical receipt或作為DL580正式閉合證據。
 - 建構者日後逐條核准時，只調整映射狀態，不改寫舊軌跡與舊收據。
+- `semantic_status`與`provisional_mappings`已納入v0.2.0封包／最終SHA-256；不同授權狀態不得共用同一雜湊。v0.1.0既有sandbox雜湊保留為歷史，不覆寫。
 
 軌跡最後還會附上兩種線：
 - 節奏鏈 `a → b → c`（Coupling）
