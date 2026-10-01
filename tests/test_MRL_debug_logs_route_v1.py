@@ -54,7 +54,7 @@ def test_worker_parses_json_safely():
     w = worker()
     assert "JSON.parse(new TextDecoder().decode(bodyBytes))" in w
     pattern = re.compile(
-        r"try\s*\{[^}]*JSON\.parse\(new TextDecoder\(\)\.decode\(bodyBytes\)\)[^}]*\}\s*catch",
+        r"try\s*\{[\s\S]*?JSON\.parse\(new TextDecoder\(\)\.decode\(bodyBytes\)\)[\s\S]*?\}\s*catch",
         re.DOTALL,
     )
     assert pattern.search(w)
