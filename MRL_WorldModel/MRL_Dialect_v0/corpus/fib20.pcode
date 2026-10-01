@@ -1,0 +1,29 @@
+; fib(20) 迭代：a,b = b,a+b
+STORE  a, 0
+STORE  b, 1
+STORE  i, 20
+loop:
+LOAD   i
+JZ     done
+LOAD   a
+SPREAD 1
+LOAD   b
+SPREAD 1
+MERGE  2
+POP
+STORE  t
+LOAD   b
+STORE  a
+LOAD   t
+STORE  b
+PUSH   1
+LOAD   i
+SPREAD 1
+DELTA
+STORE  i
+POP
+POP
+JMP    loop
+done:
+LOAD   a
+HALT

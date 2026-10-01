@@ -97,3 +97,41 @@ origin_signature = `MrLiouWord`
 ### 不回填
 
 - 任何 Runtime「主體已升格」之宣稱（未裁示前）。
+
+---
+
+## v5 — iPhone 本地 Runtime 與內外部節點角色回填
+
+日期：2026-07-28
+
+### 問題來源
+
+- 先前把 iPhone 誤判成單純外部客戶端。
+- 把裝置中的 Server Configuration、`oauth-callback`、Files app 與本地服務入口直接解讀為遠端 SSH 主機設定。
+- 因此把 DL580、GitHub 與 Cloudflare 的角色向內部主控方向錯置。
+
+### 已回填
+
+- `README.md`
+  - 加入 iPhone Local Runtime / Local Server / Control Plane。
+  - 明確區分 DL580、Mac mini、GitHub、Cloudflare 的節點角色。
+- `docs/MRL_母體定義檔_v1.md`
+  - 新增內部執行節點層。
+  - 新增 iPhone、DL580、Mac mini 與外部 Adapter 邊界。
+- `docs/MRL_iPhone本地Runtime_內外部節點回填_v1.md`
+  - 建立完整角色修正、設定判讀規則、工程影響面與後續 canonical 目錄。
+
+### 正式裁定
+
+```text
+iPhone = Local Runtime + Local Server + Control Plane + User Environment
+DL580 = Mother Runtime + Compute + Persistence
+Mac mini = Relay + Bridge + Desktop Runtime
+GitHub = Engineering Mirror + Version Channel
+Cloudflare = Public Edge + Tunnel + Protection Adapter
+```
+
+### 後續掃描範圍
+
+- 搜尋並修正 `mobile client`、`thin client`、`phone remote control`、`DL580 only entry`、`GitHub control plane` 等錯位語意。
+- 將既有手機端、瀏覽器端、Mrliouagi、Files bridge、callback 與 sensor input 資產對位至 `MRL_Nodes/iPhone/`，不另建平行系統。

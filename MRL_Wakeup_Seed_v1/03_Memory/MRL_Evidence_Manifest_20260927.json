@@ -1,0 +1,957 @@
+{
+ "generated_at": "2026-09-27T15:25:32.390000Z",
+ "version": "1.1",
+ "origin_signature": "MrLiouWord",
+ "hash": "sha256",
+ "unique_files": 116,
+ "files": [
+  {
+   "file": "0001-fix-MRL-regenerate-complete-uv-lockfile.patch",
+   "bytes": 153716,
+   "sha256": "c109a207c571831823ebc80aa7fc300427d448c8ba105d08b19f3f19299f26d2",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "0892ff350899f4999a6d19b9fa1df3047f59cbb48feaf74681e254ad5713f07b-filelists.sqlite_1.bz2",
+   "bytes": 11664,
+   "sha256": "0892ff350899f4999a6d19b9fa1df3047f59cbb48feaf74681e254ad5713f07b",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "14cb9f3188b9e04ab8168acd5cdfb7aa934942d4ac806c04c5d2d08bb2f92d01-other.xml.zst",
+   "bytes": 17389,
+   "sha256": "14cb9f3188b9e04ab8168acd5cdfb7aa934942d4ac806c04c5d2d08bb2f92d01",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "2-main.zip",
+   "bytes": 14576330,
+   "sha256": "77728fb5b40b228dada0091cac11604cb80e241b5859e0b8fff45f6b593908f5",
+   "origin_sig_in_file": true,
+   "batch": "20260927a",
+   "zip_entries": 15,
+   "entry_date_min": "2026-08-03",
+   "entry_date_max": "2026-08-03",
+   "entries_with_origin_sig": 11
+  },
+  {
+   "file": "AutoLoop.guardian.mirror.config.json",
+   "bytes": 289,
+   "sha256": "8f2f8244269c9667ea9846ac2c82beee70a17cd4c428be6901f327c8961d956e",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "Claude_3_empathetic.mirror__.zip",
+   "bytes": 595,
+   "sha256": "a258acbc69dd3be82065a50fc0a6999c30ecfc15c94ec0a69880a26d70df37da",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 1,
+   "entry_date_min": "2025-07-22",
+   "entry_date_max": "2025-07-22",
+   "entries_with_origin_sig": 0
+  },
+  {
+   "file": "Dockerfile",
+   "bytes": 199,
+   "sha256": "c34ba7cc06f58ee07d42a4fa4e0380db12af4249893de2c0a53e1fb63d40d592",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "EchoPersona_TranslationModule.flpkg.zip",
+   "bytes": 469557,
+   "sha256": "e55a607df1e6d59268e9559f0c03337079155d037dcf70faa9e0bbf7e1639008",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 142,
+   "entry_date_min": "2025-07-25",
+   "entry_date_max": "2025-07-25",
+   "entries_with_origin_sig": 0
+  },
+  {
+   "file": "ExportBlock-72a742a0-7b54-4514-9ce3-a669df3af6b5-Part-1.zip",
+   "bytes": 12452,
+   "sha256": "2aae04a742d019926291965caca5f78db3fa10b3d9a72a46db2f6353e408e5b2",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 12,
+   "entry_date_min": "2026-01-24",
+   "entry_date_max": "2026-01-24",
+   "entries_with_origin_sig": 2
+  },
+  {
+   "file": "F_____________2_3008eeeec5b58070a8abd2ddc4f89345.md",
+   "bytes": 29055,
+   "sha256": "12d4729364848b5ac213f20e1f43a56984a6d3837ff6d48db182fb3d5bca3285",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "FirebaseUI-Android-master.zip",
+   "bytes": 6816063,
+   "sha256": "8d3bb0655bdd6149157990c47b596af7cd5c385238d7dc1e700f851f300d682c",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 494,
+   "entry_date_min": "2025-10-23",
+   "entry_date_max": "2025-10-23",
+   "entries_with_origin_sig": 0
+  },
+  {
+   "file": "FlowAgent.3D.Viewer.Core.v1.fl3dpkg.zip",
+   "bytes": 875,
+   "sha256": "f73fd6189e011dde7705e98269555241d215559562c21724ab3de4aa8a040fd7",
+   "origin_sig_in_file": true,
+   "batch": "20260927a",
+   "zip_entries": 6,
+   "entry_date_min": "2025-08-04",
+   "entry_date_max": "2025-08-04",
+   "entries_with_origin_sig": 1
+  },
+  {
+   "file": "FlowIOMap_v2k7.txt",
+   "bytes": 814,
+   "sha256": "d2e9a421d2be284ee9bebfbf30431df6ed59771aa7fa2d81e7289272fc9fe450",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "FlowOS_BootSequence_v2k7.txt",
+   "bytes": 808,
+   "sha256": "00fb84cfc8523280a81d4e4d960a55c1d9043e96f8c07f8f347e25449647061c",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "IMG_9414.PNG",
+   "bytes": 416555,
+   "sha256": "5ebfa250501f2fc7ba31cb1df7a4e7067632624e4ecdef5150271426ce08fde2",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "MRL-see-through-main.zip",
+   "bytes": 7690194,
+   "sha256": "a1899e9284fe15113bdea939894470d75fe327abb0ffbbe894b02fb8710622f2",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 324,
+   "entry_date_min": "2026-07-04",
+   "entry_date_max": "2026-07-04",
+   "entries_with_origin_sig": 0
+  },
+  {
+   "file": "MRLIOU_zero.zip",
+   "bytes": 6439467,
+   "sha256": "9c1ea984958d9cf4705a218e8d087ef0252431332aa7ba91778340ef543c0cc7",
+   "origin_sig_in_file": true,
+   "batch": "20260927a",
+   "zip_entries": 82,
+   "entry_date_min": "2025-12-31",
+   "entry_date_max": "2026-01-01",
+   "entries_with_origin_sig": 29
+  },
+  {
+   "file": "MRL_3D_AI_Reconstruction_System_v1_product.zip",
+   "bytes": 88520,
+   "sha256": "f2f6658c770279204a8f96ad2c656d6a0298a5b3ab30df06c0900e1e2aa23d23",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 70,
+   "entry_date_min": "2026-05-05",
+   "entry_date_max": "2026-05-05",
+   "entries_with_origin_sig": 0
+  },
+  {
+   "file": "MRL_AI_SYSTEM-main.zip",
+   "bytes": 102906,
+   "sha256": "3fa161fd82b52656ec71dfbb295eda991ce6951281eed4c031da41964ab893f6",
+   "origin_sig_in_file": true,
+   "batch": "20260927a",
+   "zip_entries": 63,
+   "entry_date_min": "2026-03-19",
+   "entry_date_max": "2026-03-19",
+   "entries_with_origin_sig": 26
+  },
+  {
+   "file": "MRL_Batch03A_Content_Verification_Report.md",
+   "bytes": 1893,
+   "sha256": "fa1f12a9c5957fb3125437f5dcfcbc9bec88033dd73578dad852908e6dcad97b",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "MRL_Branch_Update_Backwrite_Record_20260609.json",
+   "bytes": 24532,
+   "sha256": "12ad852efdfb0c19d0b396c2100a63f4a4c6783b9e5350c1cc5fd20d29920753",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "MRL_Branch_Update_Backwrite_Record_20260609.zip",
+   "bytes": 15848,
+   "sha256": "3e10c5a387e09c3545ee514d48f3b3482473858d92003a9f4afbf2bf90f754ca",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 7,
+   "entry_date_min": "2026-06-08",
+   "entry_date_max": "2026-06-08",
+   "entries_with_origin_sig": 4
+  },
+  {
+   "file": "MRL_CLAUDE_DL580_BUILD_ORDER.md",
+   "bytes": 2352,
+   "sha256": "0618195bb8622d1cccc01405ee5fccd47bbe54e8337e9e6f3576b80accf3eeaa",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "MRL_MDbooks_Product_v1_1__DEPLOYABLE_SOURCE.zip",
+   "bytes": 25128,
+   "sha256": "37373aaa08b149987534e188d7f508534fb16cdbe9ee2b21213c966fec2301df",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 25,
+   "entry_date_min": "2026-06-06",
+   "entry_date_max": "2026-06-06",
+   "entries_with_origin_sig": 6
+  },
+  {
+   "file": "MRL_Mother_Product_Runtime_v1_0_0.zip",
+   "bytes": 5126484,
+   "sha256": "e1fdd754e662665addb3de15065e2c8da5146b9d902084247a26c2962606ae95",
+   "origin_sig_in_file": true,
+   "batch": "20260927a",
+   "zip_entries": 41,
+   "entry_date_min": "2026-05-09",
+   "entry_date_max": "2026-05-09",
+   "entries_with_origin_sig": 23
+  },
+  {
+   "file": "MRL_Round_01_10_Audit_Seed_20260609.json",
+   "bytes": 5555,
+   "sha256": "39079eaa7979ef9a78c239888f982bd0b5c1b42c0e909790b3c4e81a52578499",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "MRL_TopLevel_MasterIndex_v2_Backwrite_Patch_20260609.json",
+   "bytes": 2423,
+   "sha256": "44d3083f0e0a62f19b6aa7460e5122c12798ec906a1f126b27228612f2e2f692",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "MRL_URL_v1.py",
+   "bytes": 10899,
+   "sha256": "15efc0584f861ee9a94389cc7b059de9a164046b93dcdf1f63729789e8e019ae",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "MRL_Window_Recovery_FULL_COMPLETE_2026-07-08_v1_1.docx.txt",
+   "bytes": 22243,
+   "sha256": "0efc4e142ecdd0420b29f82beff7dd96b5377245501c394585b5a85166a20501",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "MRL_Window_Recovery_FULL_COMPLETE_2026-07-08_v1_1.md",
+   "bytes": 22507,
+   "sha256": "ec7d01f8e8bf1ae903a0c260bf6c5738e97de93480d485af9c000a55b59513be",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "MRL_Window_Recovery_FULL_COMPLETE_2026-07-08_v1_1_DELIVERY.zip",
+   "bytes": 55360,
+   "sha256": "12352fe9bdcd5fac67c7bcdbf5215907583adc809d1a5078908785757e2643ba",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 4,
+   "entry_date_min": "2026-07-08",
+   "entry_date_max": "2026-07-08",
+   "entries_with_origin_sig": 2
+  },
+  {
+   "file": "MRL_Window_Recovery_FULL_COMPLETE_2026-07-08_v1_1_machine_index.json",
+   "bytes": 2335,
+   "sha256": "09fec42ceb14a7ba16fa4762784289d9d2fdf24ec82b75a330c0f34f203a38d6",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "MRL_Window_Recovery_FULL_COMPLETE_2026-07-08_v1_1_manifest.json",
+   "bytes": 1274,
+   "sha256": "3301c4cf28e5be571458004c1ae9538f745feba8ddb7e9badaf7f3aefe5b846c",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "MRL_World_Model_Commercial_Governance_20260922_v1.zip",
+   "bytes": 46706,
+   "sha256": "75df21d619f007adb241ce43999d133f6a7004069d815a9af2a4d4089786f469",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 21,
+   "entry_date_min": "2026-09-22",
+   "entry_date_max": "2026-09-22",
+   "entries_with_origin_sig": 10
+  },
+  {
+   "file": "MRL______Seed_Origin.py_________________1_2026-06-13_2026-06-13.md",
+   "bytes": 52939,
+   "sha256": "cf04fa96b51f7ed565ba38099cf93532b12736592f924d74c3c192b186816628",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "MRL_____________v1.zip",
+   "bytes": 7111162,
+   "sha256": "db94c7a7c46920315413cba13dec02acf3cf0f7cd5c07512b38259513d966ff3",
+   "origin_sig_in_file": true,
+   "batch": "20260927a",
+   "zip_entries": 23,
+   "entry_date_min": "2026-04-01",
+   "entry_date_max": "2026-04-01",
+   "entries_with_origin_sig": 6
+  },
+  {
+   "file": "MRLiou_800AI_Integrated_GitHub_Deploy_v1_0_0.zip",
+   "bytes": 9688949,
+   "sha256": "d742ad4fbbaf54ebf228bc1bfa516968e21268c2ab44fe6058eb8ab687dbd438",
+   "origin_sig_in_file": true,
+   "batch": "20260927a",
+   "zip_entries": 67,
+   "entry_date_min": "2026-07-09",
+   "entry_date_max": "2026-07-09",
+   "entries_with_origin_sig": 24
+  },
+  {
+   "file": "MRLiou_______-________68fba42e79f04fa49da978344aade010.md",
+   "bytes": 15238,
+   "sha256": "32a48adcb521a89b84346d8579269535157f8905709eb6893a76b04f610ae952",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "MRLiou_______-___________3c620472fc134876936d573cee125f7a.md",
+   "bytes": 12095,
+   "sha256": "6e72030c247b7cb1d9f931e1ecc61d13089d3493515e0b467ba53ae0728b9e94",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "MRLiou_____________20260315_v02.docx.txt",
+   "bytes": 8863,
+   "sha256": "56ad6f2f811b724329e061574da3d23441ee082104e52a2ed2c4bcd27141a021",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "Mcp.pdf",
+   "bytes": 328498,
+   "sha256": "76f732a3f9c55fac51814c47190c3d1e6915e9461964ab55bde6f392db107353",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "Mrliou11.txt",
+   "bytes": 52860,
+   "sha256": "88457f0ec3557c863042d397c11b9b8be302c5ebadf092879f61075323d24fa8",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "Mrliou_MRL_GitHub_Payment_Provenance_Incident_Record_20260914_v3.docx.txt",
+   "bytes": 14266,
+   "sha256": "3907265f84871c6cf2e5905d08a580d4ddb02506e45dc3a15282da5c344c87ea",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "Mrliou_MRL_WorldModel_LLM_vLLM_20260922_v1.zip",
+   "bytes": 320750,
+   "sha256": "35ca730dc37f28c1be2db664541aee82c6faae959e3d80312c090e85ada8d35e",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 53,
+   "entry_date_min": "2026-09-21",
+   "entry_date_max": "2026-09-21",
+   "entries_with_origin_sig": 27
+  },
+  {
+   "file": "Mrliou_MRL_World_Model_Commercial_Site_v1.tar.gz",
+   "bytes": 5603,
+   "sha256": "b7c4943599f62349138ec490ede64c9a4cdac5073cb9f41de19585e79b525698",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "Mrliouword_3D__.docx.txt",
+   "bytes": 115179,
+   "sha256": "1bb92383ea376e44593388b3bda1477b5344a89750ed76edcb45f46f024c9fde",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "Mrliouword_II.zip",
+   "bytes": 41692,
+   "sha256": "6f7b33f3820501c048b618514f5c2198b22f9fdb1c6e44db4a976bf851e70e55",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 1,
+   "entry_date_min": "2025-12-09",
+   "entry_date_max": "2025-12-09",
+   "entries_with_origin_sig": 1
+  },
+  {
+   "file": "PDF.pdf",
+   "bytes": 2643550,
+   "sha256": "bd92a07224f21009a2d65b4caa9546abe4f59f4bd157e71d339de66b08401c76",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "README_DL580___.md",
+   "bytes": 1227,
+   "sha256": "f5c36ed2d6917b98e7b61cabdd1a152ef86464c4e98dd650b7d8d8b1526787cb",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "SwiftUI___.doc.txt",
+   "bytes": 33152,
+   "sha256": "16b55ba98eb1fa71980d45575ea48992f43d7827c270326af80617699b43f39a",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "___FlowAgent.WorldSeed.v1.flpkg.zip",
+   "bytes": 1105,
+   "sha256": "7d7d53870284e86d696ac9eb6b3a055ecf08a023a11353f98036e91a274ccdf9",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 5,
+   "entry_date_min": "2025-07-17",
+   "entry_date_max": "2025-07-17",
+   "entries_with_origin_sig": 0
+  },
+  {
+   "file": "_____.md",
+   "bytes": 27536,
+   "sha256": "154e0dd3e6986c7a73f7c95f98a4deda956d0bce30fddb51a3c750d376835575",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "________2e28eeeec5b581abbe94c50463e4ac5d.md",
+   "bytes": 1305,
+   "sha256": "49939132eaf859b9635d5e69bf4321f435c5702abe6a4e867287f2073bf459b8",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "_________270__2.txt",
+   "bytes": 50202,
+   "sha256": "8ad960da5c6e62c7de310249df1937a4161d268d7f373a0aec01e2e4205c525d",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "_________2cf8eeeec5b58135a8d2eea6d80ed224.md",
+   "bytes": 26,
+   "sha256": "f2932e67dd199e4d2947c8a7afbf66d304ad38208d5b7257b31205749e6213c7",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "__________2cf8eeeec5b581be9d56e108dd418213.md",
+   "bytes": 29,
+   "sha256": "882198e74a519b88a48e2c8a8066c34e1b95ad444baff40ffa510a4c05e03d80",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "___________.zip",
+   "bytes": 615,
+   "sha256": "b1c0c295d67fea70760c5fd75753bebaa9f73268047f4e239d5f840af73d5cac",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 2,
+   "entry_date_min": "2025-07-22",
+   "entry_date_max": "2025-07-22",
+   "entries_with_origin_sig": 0
+  },
+  {
+   "file": "_mnt_data.pages",
+   "bytes": 212677,
+   "sha256": "d3a05dae9f2d17219157baf71fd6bd3c0728d9d7d34c8a14d17e8ddebdd321c7",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "_mnt_data.txt",
+   "bytes": 10855,
+   "sha256": "a29e54753a0777871a97b2feac3baf7f015fc5309571ceed4f709f66abf879ab",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "_mnt_data_2.pages",
+   "bytes": 212674,
+   "sha256": "65e15787ee47993b83fe75aa78ffac8b1af9ab84187be854e62de2549bf5776c",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "a19f5fe0-d949-4b18-b9aa-65f9f8015d91______LLM_API_________.md",
+   "bytes": 7505,
+   "sha256": "2667065e047c20d386410e38b7ff64719606076023e366a350416d90ba6bd1f4",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "api-gateway.yaml",
+   "bytes": 1955,
+   "sha256": "75531d2c2e76895d75409a64e11922e252f5f23b3a21d437a968a290a3e56533",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "app.py",
+   "bytes": 3621,
+   "sha256": "fdd72e7fa7eb977f486e31833b50d450abeb94febb978996b7bb0ccd363e6265",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "cagent-1.9.7-1.el9.x86_64.rpm",
+   "bytes": 12942495,
+   "sha256": "98f70f24eb2de35a2329db20ed3d636ebeaac005bb4fc4aa960bfd81fdce7ba3",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "containerd_io-1_6_10-3_1_el9_x86_64.rpm",
+   "bytes": 33343323,
+   "sha256": "4ffa892ae04dfd34d5cb1ab726264a79cf0eb5d92c14e668ed0d4dafda7f87ef",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "document__17_.json",
+   "bytes": 599,
+   "sha256": "fad644d4421fd8a23a63af1fca4f578dedfea146ddc1d0ac806907b6d768d25c",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "empathetic.mirror.persona.sync.json",
+   "bytes": 289,
+   "sha256": "87c741db723157772b72e09c61725043158a2a2ae61c9206d880548008da1b29",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "files_111.zip",
+   "bytes": 5736,
+   "sha256": "f847d52892d476da4ccc205ad247bc4d52b1e6928636d8a7b61fa13da1bc7b9d",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 2,
+   "entry_date_min": "2026-03-31",
+   "entry_date_max": "2026-03-31",
+   "entries_with_origin_sig": 1
+  },
+  {
+   "file": "firebase-brand-assets.zip",
+   "bytes": 6218601,
+   "sha256": "ac17065f4790742b247743e7fa1d019afbb1e1da6d9950fc73cd40e9cbbb1235",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 534,
+   "entry_date_min": "2024-05-03",
+   "entry_date_max": "2025-03-13",
+   "entries_with_origin_sig": 0
+  },
+  {
+   "file": "first_message_response.json",
+   "bytes": 1529,
+   "sha256": "b720574128ad8aa02a443d2208d4f5bb34b3e0e84a3371b7e38ba71ae47a639f",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "flowagent_systemd.zip",
+   "bytes": 2164,
+   "sha256": "a5cdae4a9b170346c2d0481c9856ed31f1c64c7c66765215a1e93c0cc62c3d7f",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 3,
+   "entry_date_min": "2025-11-15",
+   "entry_date_max": "2025-11-15",
+   "entries_with_origin_sig": 0
+  },
+  {
+   "file": "flowcore_loop.pdf",
+   "bytes": 117957,
+   "sha256": "d29f195c9c1899ad7b37d947255337f286cb4898e0220e4908052d209094a189",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "flowcore_loop.py",
+   "bytes": 37871,
+   "sha256": "07ae05211a5015120ebc2cba0ac93aaa70bb8504e7c1e4002948d6d02b1bbef4",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "flowcore_loop_v02.zip",
+   "bytes": 9229,
+   "sha256": "9d29b2e7fe6b50f9c8a0353a952164e65e3f69a6a729325c33365c2ea3016ffa",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 1,
+   "entry_date_min": "2026-03-25",
+   "entry_date_max": "2026-03-25",
+   "entries_with_origin_sig": 1
+  },
+  {
+   "file": "flowmind_loader.py",
+   "bytes": 21580,
+   "sha256": "417e372dd5d813b5101d768031e8a5dccc4e8b51ff636acab819c3021f4fab61",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "guardian.mirror.PingFlowMap.svg",
+   "bytes": 607,
+   "sha256": "f3cea1b5e7e7a6fa123595a06bb9ee87c719e4440bf8c2f554b2124313638346",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "guardian.mirror.log.parsed.json",
+   "bytes": 518,
+   "sha256": "d761188ce98d211805a0e037439566e055ad547a2ead6ab9dadfbc3639ad2635",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "guardian.mirror.trace.loop.bundle.v2.flpkg.zip",
+   "bytes": 7149,
+   "sha256": "f9e0c22579bcd3e3415177fef96bb871905fa80614b23032c60526040ba8c6b6",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 7,
+   "entry_date_min": "2025-07-22",
+   "entry_date_max": "2025-07-22",
+   "entries_with_origin_sig": 0
+  },
+  {
+   "file": "guardian.mirror.trace.loop.json",
+   "bytes": 741,
+   "sha256": "391c02bff362ef43fae1f998300c2712620aa77bbd98277213b2f50579bd4819",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "guardian.mirror.v2.sync.json",
+   "bytes": 614,
+   "sha256": "f32a4e01053f5a2f26dc8eeb1d32661121fdb62caa71c4f149076f6f453cb5ad",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "hiring_impact.py",
+   "bytes": 3478,
+   "sha256": "4280efd786c3b8d6b7ed2f6e2e9026b2eb33ac1072f35739f457e4a98cdbe419",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "image.jpg",
+   "bytes": 2720,
+   "sha256": "6c22c299359fbe7df96a3eafc30fabd2ba7bd2e67ecce3dd1d0aaddfdd7ffb58",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "image.png",
+   "bytes": 75834,
+   "sha256": "ef732e93e5d089698bcba272570f04e5bbbbb7e62181ca19175bbcefc33e9fcd",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "image.png",
+   "bytes": 288337,
+   "sha256": "de997afcfd0b77a68ba36b9504fe9c655c06d18c1d4e4e56931a99832ab3ced1",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "image.png",
+   "bytes": 312674,
+   "sha256": "3b465c1ed2b34f39f5b5d892c2133b28e36abc271145cc002d425f0cf5acd6d7",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "main.py",
+   "bytes": 5125,
+   "sha256": "d2f1292693b1f89839787e93cc1e50177c6990c0ee4cc1cc261699c16ee2cc16",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "manifest.md",
+   "bytes": 3615,
+   "sha256": "4615ab77d8c4c2ac17d04103271740cb261903ee0c19509709915607d766e294",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "mcp-particle-team-v1.1.0",
+   "bytes": 14101642,
+   "sha256": "bc0d2c21d7f78f9987bdb07817d38f8d710568e7b58d2e4152af9a4c5c9b72c5",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "meta_world_portal.js",
+   "bytes": 21679,
+   "sha256": "4292365ef256eb6be97e550e9740f756afa74bcf31cfbc2192f337537f475d96",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "models.py",
+   "bytes": 3240,
+   "sha256": "966a7a881e61c1d97f584129a758b2d23dbb295acaa2b389087da63e91fd5270",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "mrl-agi-v3.1.0-seed.js",
+   "bytes": 6799,
+   "sha256": "78e165502b4ad6ca7916feb664893993e67dd4ad0e45e314424e9ef612d58113",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "mrl-engine-v12.zip",
+   "bytes": 42749,
+   "sha256": "9320ddd485fe726e14e37a2ebf886479f6b935e231fd358a033ebe9fbc186974",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 15,
+   "entry_date_min": "2026-03-19",
+   "entry_date_max": "2026-03-19",
+   "entries_with_origin_sig": 15
+  },
+  {
+   "file": "mrl-ton-jetton-distilled.md",
+   "bytes": 3208,
+   "sha256": "9e81020404142554c504f2656e5fef3a39879e392951fb8ae84e44e91d84140d",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "mrliou_asi.docx.txt",
+   "bytes": 15582,
+   "sha256": "1f86fc575a8c16b90ab03c70f9ee6c503166e36ed49b8018519532ecc35383b2",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "postgresql-snapshot.tar.bz2",
+   "bytes": 22362113,
+   "sha256": "dcea1cb15b4f53ad6e13a145a38eb80e0859585263e04158c1165a4ebff052ea",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "postgresql-snapshot.tar.bz2.sha256",
+   "bytes": 94,
+   "sha256": "920f3b96e821e718946898e4b1efbfa29e0c2a9ad4269612adad6d1eca74a42a",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "runtipi-appstore-master.zip",
+   "bytes": 9214613,
+   "sha256": "2863142c4498a3bf1f827c5fbcedd0235f1825fbb6693ede797216f2e72451f7",
+   "origin_sig_in_file": false,
+   "batch": "20260927a",
+   "zip_entries": 1461,
+   "entry_date_min": "2026-07-07",
+   "entry_date_max": "2026-07-07",
+   "entries_with_origin_sig": 0
+  },
+  {
+   "file": "schemas.py",
+   "bytes": 2596,
+   "sha256": "f13218bb6175650f81ccc4d9a495426b6fabae7e388c3181f82bcb7be999aa5f",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "spaces-sdks-docker-first-demo.md",
+   "bytes": 10944,
+   "sha256": "a1200291207cd6ea33921815b9a1d6b86b91d2c2acddea7f665819c14516b6af",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "start.js",
+   "bytes": 3724,
+   "sha256": "b6c591fdf230dc2132f6a6e81f07af8b81294c5bc57c1cc7a3df670b4c1167fa",
+   "origin_sig_in_file": false,
+   "batch": "20260927a"
+  },
+  {
+   "file": "supercomputer_ready.txt.docx.txt",
+   "bytes": 3638,
+   "sha256": "05d9ebd7d189c44ff75e2e974a9b604bc4f3abb6310ec03519fe5a5e8d12ba73",
+   "origin_sig_in_file": true,
+   "batch": "20260927a"
+  },
+  {
+   "file": "劉品妍.zip",
+   "bytes": 70489932,
+   "sha256": "4aaa6c2b54fabcb3049cd2d584b69a370d58d690fd66fb8b10751a8a13ff3b54",
+   "origin_sig_in_file": true,
+   "batch": "20260927a",
+   "zip_entries": 12,
+   "entry_date_min": "2025-11-19",
+   "entry_date_max": "2025-11-19",
+   "entries_with_origin_sig": 1
+  },
+  {
+   "file": "智障系統.zip",
+   "bytes": 46263206,
+   "sha256": "aec8b6a15c7c3b09600a209683a25883101f6d271ea9c8c7e99dc2a0fa6ef953",
+   "origin_sig_in_file": true,
+   "batch": "20260927a",
+   "zip_entries": 3956,
+   "entry_date_min": "2025-07-15",
+   "entry_date_max": "2025-07-26",
+   "entries_with_origin_sig": 95
+  },
+  {
+   "file": "母體_3.zip",
+   "bytes": 34403828,
+   "sha256": "8bcca0e26b453e759145856d902f7d3b95176bc6c7d618ee3bc2b193ed704694",
+   "origin_sig_in_file": true,
+   "batch": "20260927a",
+   "zip_entries": 1920,
+   "entry_date_min": "2025-07-21",
+   "entry_date_max": "2025-08-02",
+   "entries_with_origin_sig": 11
+  },
+  {
+   "file": "Enhanced_Markdown_Specification",
+   "bytes": 13949,
+   "sha256": "604431b6a1d1253fac035c8fe9e8ef678d34de2735c9f93c5ce191d3475548a3",
+   "origin_sig_in_file": false,
+   "batch": "20260927b"
+  },
+  {
+   "file": "FlowAgent_Decompressed_Files.zip",
+   "bytes": 22,
+   "sha256": "8739c76e681f900923b900c9df0ef75cf421d39cabb54650c4b9ad19b6a76d85",
+   "origin_sig_in_file": false,
+   "batch": "20260927b",
+   "zip_entries": 0,
+   "entry_date_min": null,
+   "entry_date_max": null,
+   "entries_with_origin_sig": 0
+  },
+  {
+   "file": "FlowAgent________.pdf",
+   "bytes": 31027,
+   "sha256": "3431aea75ff2581bb86a89d662f2983fa0a0fd222036519645e52a37dde73b0d",
+   "origin_sig_in_file": false,
+   "batch": "20260927b"
+  },
+  {
+   "file": "Flowagent_.pdf",
+   "bytes": 147166,
+   "sha256": "1ea6a4eabb26306d978b9f47d5d73d888392787d5fe32d0c7fca239d5c0c99ec",
+   "origin_sig_in_file": false,
+   "batch": "20260927b"
+  },
+  {
+   "file": "MRL_BaseWorld_DB_v1_SCHEMA_AUDIT.pdf",
+   "bytes": 146865,
+   "sha256": "ecf7f605f38c6ab3901c745b378a4f45288dd29530a187076e8010fe94a59912",
+   "origin_sig_in_file": false,
+   "batch": "20260927b"
+  },
+  {
+   "file": "MRL_Mother_v2_FULL_CANONICAL_DL580_FINAL_FULLSTACK.zip",
+   "bytes": 45844,
+   "sha256": "b79bfdcdc4b94345e2d87256a7a3d94fad3dbd7a4dd8aa6f982312d1be48cdec",
+   "origin_sig_in_file": false,
+   "batch": "20260927b",
+   "zip_entries": 53,
+   "entry_date_min": "2026-04-29",
+   "entry_date_max": "2026-04-29",
+   "entries_with_origin_sig": 2
+  },
+  {
+   "file": "Writing_effective_skills_for_Notion_MCP",
+   "bytes": 4771,
+   "sha256": "4486c0fdd2e8ece1618466f77898dc14f04dcea153deee4ad587b473e25078ae",
+   "origin_sig_in_file": false,
+   "batch": "20260927b"
+  },
+  {
+   "file": "___Fluin______-___________1__3008eeeec5b58078a3c1e5788e5df15d.md",
+   "bytes": 10225,
+   "sha256": "c011d2031e53a49038adb730c5beae3bb4762922e49c5db5a7bc6f921212a5e0",
+   "origin_sig_in_file": true,
+   "batch": "20260927b"
+  },
+  {
+   "file": "fri_jan_16_2026____________.json",
+   "bytes": 153968,
+   "sha256": "59a30ff0d977bac28eeb07bf2955072b66d730d3ee15c8bf253b5babe1e07160",
+   "origin_sig_in_file": true,
+   "batch": "20260927b"
+  },
+  {
+   "file": "metacode_usage.js",
+   "bytes": 14901,
+   "sha256": "ee51df5d38dc914a947b6e3809e0e97969f90eedc844c23d05c36ae8409d6da8",
+   "origin_sig_in_file": false,
+   "batch": "20260927b"
+  },
+  {
+   "file": "mrl-engine-v1.0.1-fix.zip",
+   "bytes": 19767,
+   "sha256": "982271e0604e1f762b89368632890590c11caa8929e4b9d143f0c8ddf44d585f",
+   "origin_sig_in_file": false,
+   "batch": "20260927b",
+   "zip_entries": 11,
+   "entry_date_min": "2026-02-24",
+   "entry_date_max": "2026-02-24",
+   "entries_with_origin_sig": 10
+  },
+  {
+   "file": "refman-9_6-en.pdf",
+   "bytes": 43829116,
+   "sha256": "4f04ab11d1227e348367a0cb70357924b3618bd0f0311dab1758b67319d98c4a",
+   "origin_sig_in_file": false,
+   "batch": "20260927b"
+  }
+ ]
+}
