@@ -52,8 +52,11 @@ def test_worker_contains_no_external_platform_canonicalization():
 
 def test_worker_parses_json_safely():
     w = worker()
-    assert "await request.json()" in w
-    pattern = re.compile(r"try\s*\{[^}]*await\s+request\.json\(\)[^}]*\}\s*catch", re.DOTALL)
+    assert "JSON.parse(new TextDecoder().decode(bodyBytes))" in w
+    pattern = re.compile(
+        r"try\s*\{[\s\S]*?JSON\.parse\(new TextDecoder\(\)\.decode\(bodyBytes\)\)[\s\S]*?\}\s*catch",
+        re.DOTALL,
+    )
     assert pattern.search(w)
     assert "MRL_INVALID_JSON" in w
 
@@ -67,6 +70,10 @@ def test_worker_handles_expected_log_fields():
 def test_worker_guards_payload_size():
     w = worker()
     assert "content-length" in w
+    assert "async function readBoundedBody(request)" in w
+    assert "await reader.read()" in w
+    assert "totalBytes += value.byteLength" in w
+    assert "totalBytes > MAX_BODY_BYTES" in w
     assert "413" in w
     assert "MRL_PAYLOAD_TOO_LARGE" in w
 

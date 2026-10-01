@@ -122,6 +122,41 @@ function emitPacketLog(packet) {
   }
 }
 
+async function readBoundedBody(request) {
+  const reader = request.body?.getReader();
+  const chunks = [];
+  let totalBytes = 0;
+
+  if (reader) {
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        totalBytes += value.byteLength;
+        if (totalBytes > MAX_BODY_BYTES) {
+          try {
+            await reader.cancel();
+          } catch (e) {
+            // The request may already have been cancelled by the runtime.
+          }
+          return null;
+        }
+        chunks.push(value);
+      }
+    } finally {
+      reader.releaseLock();
+    }
+  }
+
+  const body = new Uint8Array(totalBytes);
+  let offset = 0;
+  for (const chunk of chunks) {
+    body.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return body;
+}
+
 const PROXY_PATHS = ["/api/mother/status", "/api/dl580/run", "/api/chat", "/api/monitor", "/mrl/perceive"];
 
 export default {
@@ -156,7 +191,17 @@ export default {
       }
       let body;
       try {
-        body = await request.json();
+        const bodyBytes = await readBoundedBody(request);
+        if (bodyBytes === null) {
+          return J({
+            success: false,
+            product: PRODUCT_NAME,
+            source_owner: SOURCE_OWNER,
+            error: "MRL_PAYLOAD_TOO_LARGE",
+            max_bytes: MAX_BODY_BYTES,
+          }, 413);
+        }
+        body = JSON.parse(new TextDecoder().decode(bodyBytes));
       } catch (e) {
         return J({
           success: false,
