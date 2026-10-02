@@ -1,0 +1,10 @@
+; CALL/RET：2 → dbl → dbl → 8
+PUSH   2
+CALL   dbl
+CALL   dbl
+POP
+HALT
+dbl:
+DUP
+MERGE  2
+RET
