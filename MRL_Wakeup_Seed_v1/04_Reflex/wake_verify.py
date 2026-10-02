@@ -173,6 +173,113 @@ def canonical_wake_check():
             "stdout_tail": p.stdout[-1500:], "stderr_tail": p.stderr[-800:]}
 
 
+def schema_artifacts(
+    s1, s2, s3, s4, s5, receipt_ref, timestamp=None, canonical=None,
+    backfill_target="world_model_state",
+):
+    def result(name, status):
+        return {"check": name, "status": status, "ok": status == "PASS"}
+
+    seed_status = "FAIL" if s1.get("mismatch_or_missing") else "PASS"
+    replay_status = "PARTIAL" if s2.get("pending_recovery", 0) else "PASS"
+    if "roundtrip_fail" in s3:
+        dialect_status = "FAIL" if s3["roundtrip_fail"] else "PASS"
+    else:
+        dialect_status = "PARTIAL"
+    status_by_result = {"PASS": "PASS", "FAIL": "FAIL"}
+    rhythm_status = status_by_result.get(s4.get("status"), "PARTIAL")
+    canonical_status = status_by_result.get(s5.get("status"), "PARTIAL")
+    outcomes = [
+        result("seed_selfcheck", seed_status),
+        result("replay", replay_status),
+        result("dialect_roundtrip", dialect_status),
+        result("flow_rhythm", rhythm_status),
+        result("canonical_wake", canonical_status),
+    ]
+
+    missing = [
+        f"replay:{item.get('file', 'unknown')}"
+        for item in s2.get("pending_list", [])
+    ]
+    missing.extend(
+        f"{item['check']}: pending"
+        for item in outcomes if item["status"] == "PARTIAL"
+    )
+    mismatches = [f"seed_selfcheck:{item}" for item in s1.get("mismatch_or_missing", [])]
+    mismatches.extend(f"dialect_roundtrip:{item}" for item in s3.get("failed", []))
+    mismatches.extend(
+        f"{item['check']}: failed"
+        for item in outcomes
+        if item["status"] == "FAIL"
+        and not any(message.startswith(f"{item['check']}:") for message in mismatches)
+    )
+
+    statuses = {item["status"] for item in outcomes}
+    report_status = "FAIL" if "FAIL" in statuses else (
+        "PARTIAL" if "PARTIAL" in statuses else "PASS"
+    )
+    timestamp = timestamp or s1.get("timestamp")
+    report = {
+        "report_id": f"wake-verification-{os.path.basename(receipt_ref)}",
+        "generated_at": timestamp,
+        "origin_signature": "MrLiouWord",
+        "subject_ref": "MRL_Wakeup_Seed_v1",
+        "status": report_status,
+        "coverage": sum(item["status"] != "PARTIAL" for item in outcomes) / len(outcomes),
+        "missing": missing,
+        "mismatch": mismatches,
+        "unexpected": [],
+        "evidence_refs": [
+            receipt_ref,
+            "06_trace/wake_trace.schema.json",
+            "06_trace/wake_verification_report.schema.json",
+        ],
+        "backfill_target": backfill_target,
+        "notes": "當下狀態；PARTIAL 表示此環境或資料範圍未能驗證，不代表來源不存在。",
+    }
+
+    errors = list(mismatches)
+    errors.extend(
+        f"{item['check']}: failed"
+        for item in outcomes
+        if item["status"] == "FAIL"
+        and not any(message.startswith(f"{item['check']}:") for message in errors)
+    )
+    errors.extend(
+        f"{item['check']}: pending"
+        for item in outcomes if item["status"] == "PARTIAL"
+    )
+    trace = {
+        "trace_id": f"wake-{os.path.basename(receipt_ref)}",
+        "created_at": timestamp,
+        "origin_signature": "MrLiouWord",
+        "event_type": "MRL_WORLD_MODEL_WAKE_VERIFY",
+        "status": "PASS" if report_status == "PASS" else "FAIL",
+        "error_count": len(errors),
+        "errors": errors,
+        "checks": outcomes,
+        "canonical": canonical or {},
+        "backfill_target": backfill_target,
+    }
+    return report, trace
+
+
+def canonical_metadata():
+    pointer_path = os.path.join(REPO, "00_rootlaw", "canonical_pointer.yaml")
+    manifest_path = os.path.join(REPO, "00_rootlaw", "MRL_WAKE_MANIFEST.yaml")
+    try:
+        with open(pointer_path, encoding="utf-8") as f:
+            canonical = json.load(f).get("canonical", {})
+    except (OSError, ValueError):
+        canonical = {}
+    try:
+        with open(manifest_path, encoding="utf-8") as f:
+            backfill_target = json.load(f).get("backfill", {}).get("target")
+    except (OSError, ValueError):
+        backfill_target = None
+    return canonical, backfill_target
+
+
 def main(argv):
     roots = argv or (["D:\\"] if os.name == "nt" else [os.getcwd()])
     host = socket.gethostname()
@@ -194,6 +301,12 @@ def main(argv):
     os.makedirs(RECEIPTS, exist_ok=True)
     name = f"wake_receipt_{now.strftime('%Y%m%dT%H%M%S')}_{host}.json"
     path = os.path.join(RECEIPTS, name)
+    receipt_ref = os.path.relpath(path, REPO).replace(os.sep, "/")
+    canonical, backfill_target = canonical_metadata()
+    receipt["verification_report"], receipt["wake_trace"] = schema_artifacts(
+        s1, s2, s3, s4, s5, receipt_ref, receipt["timestamp"],
+        canonical, backfill_target,
+    )
     with open(path, "x", encoding="utf-8") as f:  # "x"：已存在就失敗，絕不覆蓋
         json.dump(receipt, f, ensure_ascii=False, indent=1)
     print("收據：", path)
