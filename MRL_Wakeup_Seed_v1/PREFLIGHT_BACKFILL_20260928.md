@@ -55,3 +55,9 @@ Wake Memory → Origin Registry → Workspace Node Registry → Canonical Regist
 - 收據欄位對齊 `wake_trace.schema.json`：待做。
 - Notion Origin Registry／Workspace Node Registry 回填本檔：待做（需在 Notion 寫入，未經建構者確認前不寫）。
 - `FlowAgent_Wakeup_Core_v1.txt` 原檔位元組的 SHA-256：這次只讀到文字內容，未下載原位元組，雜湊待補。
+
+## 6. 後續補記（2026-10-02；當下狀態）
+
+- `04_Reflex/wake_verify.py` 現在會在新收據中附加 `wake_trace` 與 `verification_report`，欄位依既有 `06_trace` schema 建立；保留舊收據欄位、不改 schema，並帶入本地 canonical/backfill metadata。
+- 收據轉換測試、母體 FlowRhythm 測試與 `wake_loader.py --no-write-trace`：**PASS（沙盒）— 當下狀態 2026-10-02**。完整 `wake_verify.py` 收據寫入流程未在此次沙盒執行；DL580 實機驗收仍待做。
+- 本次只核對目前 clone 可見的本地錨點；`MRL_STARTUP_WAKE.md` 未在此副本找到，Notion／Google Drive registry 未由此環境查驗。此局部觀測不推定其全局不存在，完整 Create Preflight／外部 registry 回填仍待確認。
