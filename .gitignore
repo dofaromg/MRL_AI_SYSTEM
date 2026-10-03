@@ -237,3 +237,4 @@ data/conversations.json
 # 平行世界人格模擬器執行期產物
 parallel_output/
 .wrangler/
+.dev.vars

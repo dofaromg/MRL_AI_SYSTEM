@@ -5,7 +5,10 @@
   "compatibility_date": "2026-05-30",
   "observability": { "enabled": true },
   "vars": {
-    "MRL_PLATFORM_DOMAIN": "mrliouword.com"
+    "MRL_PLATFORM_DOMAIN": "mrliouword.com",
+    // 奇異點（固定 IP）優先，Tunnel 備援；兩者皆經 Cloudflare Access（service token 存為 secret）
+    "MRL_DL580_ORIGIN": "https://origin.mrliouword.com",
+    "MRL_DL580_ORIGIN_FALLBACK": "https://dl580.mrliouword.com"
   }
   // 動態母體端點轉發到 DL580：在 Cloudflare 後台或此處設
   //   "MRL_DL580_ORIGIN": "https://<你的 DL580 cloudflared 對外網址>"
