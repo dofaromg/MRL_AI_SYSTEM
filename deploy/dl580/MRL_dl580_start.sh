@@ -32,5 +32,8 @@ fi
 npm run MRL_boot
 
 # 4. 啟動 Runtime（母體自行運行）
+# canonical base does not start Platform; an explicit runtime port supports a separately started Platform.
+MRL_PORT="${MRL_RUNTIME_PORT:-${MRL_PORT}}"
+export MRL_PORT
 echo "starting MRL Runtime on port ${MRL_PORT}..."
 exec node MRL_RuntimeServer.js

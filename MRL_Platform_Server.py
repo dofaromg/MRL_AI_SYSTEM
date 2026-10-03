@@ -115,6 +115,8 @@ def api_chat(body):
     try:
         if hasattr(m, "chat"):
             out = m.chat(msg)
+            if isinstance(out, dict) and out.get("error"):
+                return {"ok": False, "via": "MotherAssembly.chat", "reason": str(out["error"])}
             return {"ok": True, "via": "MotherAssembly.chat",
                     "reply": out if isinstance(out, (str, dict, list)) else str(out)}
     except Exception:  # noqa: BLE001

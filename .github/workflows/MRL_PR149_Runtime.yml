@@ -1,0 +1,28 @@
+name: MRL PR149 Runtime
+on:
+  pull_request:
+    paths: ['MRL_RuntimeServer.js', 'MRL_Platform_Server.py', 'deploy/dl580/MRL_dl580_start.sh', 'tests/MRL_pr149_runtime_test.py', '.github/workflows/MRL_PR149_Runtime.yml']
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --ignore-scripts
+      - run: node --check MRL_RuntimeServer.js
+      - run: bash -n deploy/dl580/MRL_dl580_start.sh
+      - run: python3 tests/MRL_pr149_runtime_test.py
+      - name: Runtime acceptance
+        run: |
+          node MRL_RuntimeServer.js &
+          runtime_pid=$!
+          trap 'kill "$runtime_pid"' EXIT
+          for attempt in $(seq 1 50); do
+            if curl -fsS http://127.0.0.1:8790/health >/dev/null; then break; fi
+            sleep 0.1
+          done
+          npm run MRL_acceptance

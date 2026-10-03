@@ -1,5 +1,19 @@
 const express = require("express");
 const app = express();
+// origin_signature: MrLiouWord — base-aligned adaptation of b07a7de.
+app.use((req, res, next) => {
+  if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) return next();
+  const authRequired = String(process.env.MRL_AUTH_REQUIRED || 'false').toLowerCase() === 'true';
+  if (authRequired) {
+    const token = process.env.MRL_API_TOKEN;
+    if (!token || req.headers.authorization !== `Bearer ${token}`) {
+      return res.status(401).json({ error: 'MRL_UNAUTHORIZED' });
+    }
+  } else if (String(process.env.MRL_ALLOW_UNAUTHENTICATED_WRITES || 'false').toLowerCase() !== 'true') {
+    return res.status(403).json({ error: 'MRL_AUTH_REQUIRED_FOR_WRITE' });
+  }
+  next();
+});
 app.use(express.json());
 const MRL_STATE = {
   origin_signature: "MrLiouWord",
