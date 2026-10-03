@@ -58,6 +58,9 @@ export function semanticAuthority(chain, L) {
   const prov = new Set();
   for (const t of chain) {
     const k = kindOf(t, L);
+    if (!Object.prototype.hasOwnProperty.call(L.verb_of, k)) {
+      throw new SemanticAuthorityIntegrityError(`no verb mapping for particle kind: ${k}`);
+    }
     if (!L.verified.has(k)) prov.add(`${k}->${L.verb_of[k]}`);
   }
   const provisional = [...prov].sort(cmpCodePoint);
@@ -121,6 +124,9 @@ export class Clock {
 
 // ── 節奏執行：Jump → Collapse → Trace
 export async function run(chain, L, { clock = new Clock(), title = "語場節奏", allowProvisional = false } = {}) {
+  if (/[\r\n]/.test(title)) {
+    throw new SemanticAuthorityIntegrityError("trace title must not contain CR/LF");
+  }
   const authority = semanticAuthority(chain, L);
   const provisional = authority.provisional_mappings;
   if (provisional.length && !allowProvisional) {
