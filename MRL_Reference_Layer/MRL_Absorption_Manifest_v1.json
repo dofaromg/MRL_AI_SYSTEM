@@ -83,6 +83,17 @@
       "held_as": "section in MRL_NeuroSymbolic_CoReasoning_System_v1.md",
       "relation": "Conceptually parallels the repo's existing 03_memory/vector/vector_store.py (symbolic+neural stores + map index).",
       "honest_status": "First runnable component realized as 09_workflow/MRL_Hybrid_Knowledge_Base_v1.py (symbolic triple store + neural store reusing vector_store + map index + consistency [report-only] + KnowledgeGraph BFS; 18 sandbox tests pass). Formal-logic systems (first-order/modal/temporal) and subsumption detection remain DESIGN targets, not implemented (no_proof)."
+    },
+    {
+      "original_name": "README.md (Apple sample code: Bringing robust navigation structure to your SwiftUI app)",
+      "canonical_name": "MRL_SwiftUI_NavigationCookbook_Reference_v1",
+      "reclaim_rule": "rl_12 (external -> MRL_ canonical)",
+      "type": "third-party technical reference",
+      "identity": "Apple sample code README; WWDC22 session 10054 'The SwiftUI cookbook for navigation'",
+      "license": "Apple sample code license (LICENSE not included in upload; not asserted)",
+      "held_as": "MRL_Reference_Layer/MRL_SwiftUI_NavigationCookbook_Reference_v1.md (README verbatim, 8 lines + positioning)",
+      "target": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Views/ScansListView.swift (NavigationView -> NavigationStack migration candidate)",
+      "honest_status": "待起動. README only; sample source NOT included. No Swift code changed. Not compiled/verified (sandbox cannot build SwiftUI); migration requires real Xcode/iOS 16+ acceptance."
     }
   ]
 }

@@ -28,5 +28,6 @@ canonical 改名為 `MRL_<描述>_v<n>`（rl_12 命名回收）、origin 歸 `Mr
 | `particleteammcp.ts` | `MRL_ParticleTeam_MCP_v1` | 多代理協作 Worker（可運行碼）| 原碼保留;Cloudflare 形,建議 re-home DL580 |
 | `Cloud_code.pages` | `MRL_PublicSuffixList_Reference_v1` | 第三方參考資料 | Mozilla MPL-2.0;僅存出處,未全文擷取 |
 | 神經符號協同推理系統（Notion×4）| `MRL_NeuroSymbolic_CoReasoning_System_v1` | 設計規格 + 碼草稿 | **設計**;基準數字為願景非實測,碼多為 stub |
+| `README.md`（Apple SwiftUI navigation sample）| `MRL_SwiftUI_NavigationCookbook_Reference_v1` | 第三方技術參考 | **待起動**;僅 README,無本體;對接 3DScanner iOS 導航遷移,未改碼 |
 
 詳見 `MRL_Absorption_Manifest_v1.json`。
