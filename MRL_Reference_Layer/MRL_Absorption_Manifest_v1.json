@@ -102,6 +102,22 @@
       "type": "SwiftUI source (iOS 16+ NavigationStack variant of ScansListView)",
       "held_as": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Views/ScansStackListView.swift + docs/04_PATCH_NOTES_NavigationStack_v1.md",
       "honest_status": "待起動 / 待實機驗證 (2026-10-03 sandbox). New file only; PhotogramApp still uses ScansListView(); existing Swift files byte-identical. NOT compiled (no swiftc/Xcode in sandbox); URL scheme mrl3d not registered (no Xcode project in repo)."
+    },
+    {
+      "original_name": "particle_wire_bridge.py",
+      "canonical_name": "MRL_ParticleWireBridge_v1",
+      "reclaim_rule": "rl_12 (external -> MRL_ canonical)",
+      "type": "runnable code — Python <-> PD_AI wire protocol bridge",
+      "held_as": "MRL_Adapter_Layer/MRL_ParticleWireBridge_v1.py (verbatim, sha256 c13ae05395bb34b1458fafc1a274b4388d6eb32420648a08f6bb0000f1a87bf0) + .NOTES.md",
+      "dependencies_pending_recovery": ["memory_quick_mount.AdvancedParticleCompressor", "PD_AI_wire.h"],
+      "duplicates_not_restored": {
+        "fluin_bridge.py": "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260725/RawArtifact/MRL_FlowAgent_MotherSystem_V20_1_RawArtifact.zip :: flowagent_final/vendor/flowagent-core-v1.0.0/flowagent-core/fluin_bridge.py (byte-identical)",
+        "MRL_start_bridge.ps1": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/scripts/MRL_start_bridge.ps1 (byte-identical)"
+      },
+      "not_absorbed": {
+        "MRL_Bridge_v3.1.0_DL580_Pkg_20260508.zip": "contains plaintext credentials; original held by user; owner decides whether a redacted copy enters the repo"
+      },
+      "honest_status": "待起動 (2026-10-03 sandbox). Wire round-trip verified with compression off using a test-only import placeholder; compression path and C-side PD_AI interop NOT verified."
     }
   ]
 }

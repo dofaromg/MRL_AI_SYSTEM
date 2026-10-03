@@ -56,6 +56,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### 粒子線協橋接層吸收：MRL_ParticleWireBridge_v1（Additive-Only，待起動 — 當下狀態 2026-10-03 沙盒）
+- `MRL_Adapter_Layer/MRL_ParticleWireBridge_v1.py` — 上傳 `particle_wire_bridge.py` 逐字保存（sha256 `c13ae053…7bf0`）；Python ⟷ `PD_AI` wire protocol（16-byte header + JSON payload）。依賴 `memory_quick_mount.AdvancedParticleCompressor` 與 `PD_AI_wire.h` 皆**待找回**。
+- `MRL_Adapter_Layer/MRL_ParticleWireBridge_v1.NOTES.md` — 吸收註記；沙盒以測試佔位滿足 import、關壓縮驗 wire 往返一致／過短 frame 拒收（壓縮路徑與 C 端互通未驗）。
+- 同批 `fluin_bridge.py`、`MRL_start_bridge.ps1` 與 repo 既有檔逐位元一致，只登記位置不重存。
+- 同批 `MRL_Bridge_v3.1.0_DL580_Pkg_20260508.zip` **未入庫**（含明碼憑證）；檢查結果記於 NOTES，不含憑證內容。
+
 #### 3DScanner iOS：NavigationStack 遷移實作（Additive-Only，待起動 / 待實機驗證 — 當下狀態 2026-10-03 沙盒）
 - `MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Views/ScansStackListView.swift` — 新檔（iOS 16+，`@available(iOS 16.0, *)`）：`ScanRoute`（`Hashable, Codable` 值路由 `.detail(UUID)` / `.bridge(UUID)`）、`ScanNavigationModel`（`[ScanRoute]` path、`jsonData` / `restore(from:)` 狀態還原、`open(url:)` 處理 `mrl3d://scan/<uuid>[/bridge]`，非法 URL 忽略回 false）、`ScansStackListView`（`NavigationStack(path:)` + 單一 `navigationDestination(for:)`，找不到 scan 顯示「Scan not found」；`@SceneStorage("mrl3d.navigation.path")` + `onOpenURL`）、`ScanStackDetailView`（Bridge 改 `NavigationLink(value:)`，沿用既有 `ReconstructionBridgeView`）。
 - `MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/docs/04_PATCH_NOTES_NavigationStack_v1.md` — 設計、起動（`PhotogramApp` 一行 `ScansListView()` → `ScansStackListView()`，需 iOS 16+ deployment target）/ 回退（改回該行）、URL scheme `mrl3d` 須於 Xcode target URL Types 註冊（本包無 Xcode 專案 / Info.plist，未設定）、實機驗收清單。
