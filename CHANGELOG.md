@@ -56,6 +56,13 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+#### 3DScanner iOS：NavigationStack 遷移實作（Additive-Only，待起動 / 待實機驗證 — 當下狀態 2026-10-03 沙盒）
+- `MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Views/ScansStackListView.swift` — 新檔（iOS 16+，`@available(iOS 16.0, *)`）：`ScanRoute`（`Hashable, Codable` 值路由 `.detail(UUID)` / `.bridge(UUID)`）、`ScanNavigationModel`（`[ScanRoute]` path、`jsonData` / `restore(from:)` 狀態還原、`open(url:)` 處理 `mrl3d://scan/<uuid>[/bridge]`，非法 URL 忽略回 false）、`ScansStackListView`（`NavigationStack(path:)` + 單一 `navigationDestination(for:)`，找不到 scan 顯示「Scan not found」；`@SceneStorage("mrl3d.navigation.path")` + `onOpenURL`）、`ScanStackDetailView`（Bridge 改 `NavigationLink(value:)`，沿用既有 `ReconstructionBridgeView`）。
+- `MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/docs/04_PATCH_NOTES_NavigationStack_v1.md` — 設計、起動（`PhotogramApp` 一行 `ScansListView()` → `ScansStackListView()`，需 iOS 16+ deployment target）/ 回退（改回該行）、URL scheme `mrl3d` 須於 Xcode target URL Types 註冊（本包無 Xcode 專案 / Info.plist，未設定）、實機驗收清單。
+- `MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/CHECKSUMS.sha256` / `MANIFEST.json` — 追加兩檔條目；`file_count` 30→32；`sha256sum -c` 32/32 OK（沙盒）。
+- `MRL_Reference_Layer/MRL_SwiftUI_NavigationCookbook_Reference_v1.md` — 追加「更新 2026-10-03」段，記錄實作路徑與狀態（原段落不改）。
+- 誠實邊界：既有 `ScansListView.swift` / `PhotogramApp.swift` / `ReconstructionBridgeView.swift` / `Scan.swift` 皆未改動；入口未接線（待起動）。沙盒 Linux 無 `swiftc` / `xcodebuild`、無 SwiftUI，**未編譯、未實跑**，須實機 Xcode / iOS 16+ build 與 UI 驗收後才可標 PASS。
+
 #### 母體原生粒子包吸收：MRL 粒子包 v1 / MUSAR v1（MRL_AbsorbedArtifacts_20260716）
 - `MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260716/MRL_ParticlePackage_MUSAR_v1_RawArtifact_v1.zip` — 母體整合法則（Additive-Only）逐字保全（rl_15；8,671,734 bytes / 239 檔；sha256 `1bdba5f0…a2176`）。50,359 顆 canonical 粒子 + 59 蒸餾，MUSAR v1，PID `MRL.{layer}.{fx}.{simhash64}`，自 200 個 Google Cloud SDK 包蒸餾。
 - `.../MRL_AbsorbedArtifacts_20260716/particle_package/` — 自 zip 逐字攤開之小型可瀏覽檔（`index/*.json`、`README.md`、`distilled_L2_L6.jsonl`），不解壓 90 MB 全量以免脹庫（by_layer/by_fx/by_pkg 為同組粒子重複分組，唯一內容 ~25 MB）。

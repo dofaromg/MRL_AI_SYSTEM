@@ -2,7 +2,7 @@
   "package": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1",
   "origin_signature": "MrLiouWord",
   "branch": "MRL_Branch_3DScanner_iOS_DL580_ProductBridge_v1_1",
-  "file_count": 30,
+  "file_count": 32,
   "files": [
     {
       "path": "README.md",
@@ -153,6 +153,16 @@
       "path": "scripts/MRL_stop_bridge.ps1",
       "sha256": "ce73bb3720e7928bd027ea596994d9280135100c7fe0dd8f4a09b834a3ecee6c",
       "size": 200
+    },
+    {
+      "path": "ios/MRL_3DScanner_iOS/Views/ScansStackListView.swift",
+      "sha256": "f29ba13da160651c38970358bf606c0f4d6cffb6460c3d19a718a236aa83d2bc",
+      "size": 5909
+    },
+    {
+      "path": "docs/04_PATCH_NOTES_NavigationStack_v1.md",
+      "sha256": "35309b1a37fa5450acb58720c63161ed412f48b4479c01a19ab1cd0012da0da3",
+      "size": 6709
     }
   ]
 }
