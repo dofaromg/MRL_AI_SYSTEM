@@ -48,5 +48,11 @@ if [ -f "${MRL_HOME}/MRL_Platform_Server.py" ]; then
 fi
 
 # 6. 啟動 Runtime（母體 Node 節點,前景常駐）
-echo "starting MRL Runtime on port ${MRL_PORT}..."
-exec node MRL_RuntimeServer.js
+#    Platform 已佔 MRL_PORT 時,Runtime 改用 MRL_RUNTIME_PORT(預設 MRL_PORT+1),避免 EADDRINUSE。
+if [ -f "${MRL_HOME}/MRL_Platform_Server.py" ]; then
+  MRL_RUNTIME_PORT="${MRL_RUNTIME_PORT:-$((MRL_PORT + 1))}"
+else
+  MRL_RUNTIME_PORT="${MRL_PORT}"
+fi
+echo "starting MRL Runtime on port ${MRL_RUNTIME_PORT}..."
+MRL_PORT="${MRL_RUNTIME_PORT}" exec node MRL_RuntimeServer.js

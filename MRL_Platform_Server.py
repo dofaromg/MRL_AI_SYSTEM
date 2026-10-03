@@ -129,6 +129,9 @@ def api_chat(body):
     try:
         if hasattr(m, "chat"):
             out = m.chat(msg)
+            # chat() 以 {"error": ...} 回報失敗（無預設模型/閘道不可用/供應商失敗）——不可包成 ok:true
+            if isinstance(out, dict) and out.get("error"):
+                return {"ok": False, "via": "MotherAssembly.chat", "reason": str(out["error"])}
             return {"ok": True, "via": "MotherAssembly.chat",
                     "reply": out if isinstance(out, (str, dict, list)) else str(out)}
     except Exception:  # noqa: BLE001

@@ -39,6 +39,14 @@ function readBody(req) {
   });
 }
 
+// 驗證關閉時，不把會改狀態的 runtime 路由（ingest/execute/job/artifact…）公開委派出去。
+const MRL_SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
+function MRL_blockUnauthenticatedWrite(req) {
+  if (MRL_SAFE_METHODS.has(req.method)) return false;
+  if (runtime.MRL_CFG.auth_required) return false;
+  return String(process.env.MRL_ALLOW_UNAUTHENTICATED_WRITES || 'false').toLowerCase() !== 'true';
+}
+
 const server = http.createServer(async (req, res) => {
   try {
     if (req.method === 'GET' && req.url === '/health') {
@@ -58,6 +66,12 @@ const server = http.createServer(async (req, res) => {
         input,
         flow: MRL_PERCEPTION.flow,
         sovereignty: MRL_PERCEPTION.sovereignty
+      });
+    }
+    if (MRL_blockUnauthenticatedWrite(req)) {
+      return sendJSON(res, 403, {
+        error: 'MRL_AUTH_REQUIRED_FOR_WRITE',
+        message: 'State-changing runtime routes need MRL_AUTH_REQUIRED=true and MRL_API_TOKEN (or MRL_ALLOW_UNAUTHENTICATED_WRITES=true for local dev).'
       });
     }
     return runtimeHandler(req, res);
