@@ -1,0 +1,312 @@
+{
+  "generated_at": "2026-10-04T11:20:24Z",
+  "total": 194,
+  "by_branch": {
+    "MRL_Branch_DL580_PIDScope_Layer_v1": [
+      "MRL_Runtime/MRL_Workflow_PIDScope/MRL_Runtime_Recovery/runtime_recovery.js",
+      "MRL_Runtime/MRL_Workflow_PIDScope/MRL_ScopeIsolation/scope_isolation.js",
+      "acceptance/MRL_PIDScope_Acceptance/run.js"
+    ],
+    "MRL_Branch_DL580_Workflow_PIDScope_v1": [
+      ".github/workflows/MRL_DL580_selfhosted_deploy.yml"
+    ],
+    "MRL_Branch_MotherMatrix_Integration_Stack_v1": [
+      "09_workflow/MRL_mother_assembly.py"
+    ],
+    "MRL_Branch_StructureField_Rename_Alignment_v1": [
+      "README.md"
+    ],
+    "MRL_mother_system_v1": [
+      "docs/MRL_工程日誌.md",
+      "docs/MRL_母體定義檔_v1.md"
+    ],
+    "MrliouAI": [
+      "CHANGELOG.md",
+      "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/CHECKSUMS.sha256",
+      "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/MANIFEST.json",
+      "MRL_Adapter_Layer/MRL_ParticleWireBridge_v1.NOTES.md",
+      "MRL_Adapter_Layer/MRL_ParticleWireBridge_v1.py",
+      "MRL_Platform_Server.py",
+      "MRL_Reference_Layer/MRL_Absorption_Manifest_v1.json",
+      "MRL_Reference_Layer/README.md",
+      "MRL_RuntimeServer.js",
+      "deploy/dl580/MRL_dl580_start.sh",
+      "pyproject.toml",
+      "src/mrl_worker.js",
+      "tests/test_MRL_debug_logs_route_v1.py"
+    ],
+    "claude/dl580-7700-engine-recovery-ex6mrc": [
+      "00_rootlaw/MRL_ASI_Entry_Contract_v1.yaml",
+      "00_rootlaw/MRL_ASI_Entry_Contract_v1_1.yaml",
+      "00_rootlaw/MRL_ASI_Entry_Contract_v1_3.yaml",
+      "00_rootlaw/rootlaw.yaml",
+      "02_principles/MRL_Origin_ClosedLoop_Runtime_v1.yaml",
+      "02_principles/MRL_URL_Format_v1.yaml",
+      "02_principles/MRL_World_Transparency_Constitution_v1.yaml",
+      "02_principles/MRL_World_Transparency_Constitution_v1_1.yaml",
+      "02_principles/MRL_World_Transparency_Constitution_v1_3.yaml",
+      "04_runtime/MRL_ASI_EnvironmentParameters_v1.yaml",
+      "04_runtime/MRL_URL_v1.py",
+      "05_persona/MRL_ASI_WorldRuntime_v1.py",
+      "05_persona/MRL_ASI_WorldRuntime_v1_1.py",
+      "05_persona/MRL_ASI_WorldRuntime_v1_2.py",
+      "05_persona/MRL_WorldRuntime_TransparencyLayer_v1.yaml",
+      "05_persona/MRL_WorldRuntime_TransparencyLayer_v1_1.yaml",
+      "05_persona/MRL_WorldRuntime_TransparencyLayer_v1_3.yaml",
+      "06_trace/proofs/MRL_OriginClosedLoop_v1_verification_2026-08-05.json",
+      "08_sources/MRL_Origin_ClosedLoop/MRL_循環_OriginClosedLoop_v1.txt",
+      "08_sources/MRL_Origin_ClosedLoop/manifest.yaml",
+      "09_workflow/MRL_ASI_EntryGate_v1.py",
+      "09_workflow/MRL_ASI_VisibilityPolicy_v1.py",
+      "09_workflow/MRL_OriginClosedLoop_v1.py",
+      "docs/MRL_世界運行層透明憲法_v1.md",
+      "docs/MRL_世界運行層透明憲法_v1_1.md",
+      "docs/MRL_世界運行層透明憲法_v1_3.md",
+      "tests/test_MRL_ASI_EntryGate_v1.py",
+      "tests/test_MRL_ASI_VisibilityPolicy_v1.py",
+      "tests/test_MRL_OriginClosedLoop_v1.py",
+      "tests/test_MRL_URL_v1.py"
+    ],
+    "claude/hi-rj50dh": [
+      "MRL_Platform_Server.py",
+      "tests/test_MRL_debug_logs_route_v1.py"
+    ],
+    "claude/mrl-longterm-memory-engine-v1": [
+      "03_memory/vector/vector_store.py",
+      "09_workflow/MRL_LongTermMemory_v1.py",
+      "tests/test_MRL_longterm_memory_v1.py"
+    ],
+    "claude/new-session-00raqm": [
+      "08_sources/sources.manifest.yaml",
+      "CHANGELOG.md",
+      "MRL_ParticleArchive/External/MRL_AbsorbedArtifacts_20260716/MRL_Absorption_Ledger_v1.yaml",
+      "MRL_ParticleArchive/MRL_ParticleArchive_manifest.json"
+    ],
+    "copilot/28729581812": [
+      "05_persona/codepartner/persona.yaml",
+      "08_sources/flowagent_codepartner_recovery/RECOVERY_MANIFEST.md",
+      "08_sources/sources.manifest.yaml",
+      "CHANGELOG.md",
+      "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/CHECKSUMS.sha256",
+      "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/MANIFEST.json",
+      "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/backend/MRL_3D_Reconstruction_Server/server.js",
+      "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/docs/01_CLAUDE_BUILD_COMMAND_DL580_PRODUCT_BRIDGE.md",
+      "MRL_FireCore_v1_0/MRL_FireCore_v1_0_BACKFILL_MANIFEST.json",
+      "MRL_FireCore_v1_0/MRL_FireCore_v1_0_SHA256SUMS.txt",
+      "MRL_FireCore_v1_0/modules/mrl-firecore-auth/src/index.ts",
+      "MRL_FireCore_v1_0/modules/mrl-firecore-live/src/index.ts",
+      "MRL_FireCore_v1_0/modules/mrl-firecore-push/src/index.ts",
+      "MRL_FireCore_v1_0/modules/mrl-firecore-store/src/index.ts",
+      "MRL_FireCore_v1_0/modules/mrl-firecore-trace/src/index.ts",
+      "MRL_FireCore_v1_0/modules/mrl-firecore-vault/src/index.ts",
+      "MRL_FireCore_v1_0/scripts/healthcheck_local.ps1"
+    ],
+    "copilot/add-creation-rights-evidence-index": [
+      "MRL_Mother_Flow_Definition_v1.md",
+      "MRL_PR10_Alignment_Report.md"
+    ],
+    "copilot/add-gpu-support": [
+      "MRL_Platform_Server.py",
+      "data/prompt_templates.json",
+      "tests/test_MRL_mcp_server.py"
+    ],
+    "copilot/add-new-feature-to-ai-system": [
+      "MRL_WorldModel/MRL_FlowRhythm_v0/edge/MRL_fail_closed.test.mjs",
+      "MRL_WorldModel/MRL_FlowRhythm_v0/edge/flow_rhythm.mjs",
+      "MRL_WorldModel/MRL_FlowRhythm_v0/flow_rhythm.py"
+    ],
+    "copilot/continue-optimization-integration": [
+      "MRL_Wakeup_Seed_v1/04_Reflex/test_wake_verify.py",
+      "MRL_Wakeup_Seed_v1/04_Reflex/wake_verify.py",
+      "MRL_Wakeup_Seed_v1/PREFLIGHT_BACKFILL_20260928.md"
+    ],
+    "copilot/dofaromg-mrliouword-setup": [
+      "CHANGELOG.md"
+    ],
+    "copilot/enhance-user-profile-ui": [
+      "09_workflow/MRL_Naming_Sovereignty_Auditor_v1.py",
+      "tests/test_MRL_naming_sovereignty_auditor.py"
+    ],
+    "copilot/fix-code-for-review-comment": [
+      "data/prompt_templates.json"
+    ],
+    "copilot/fix-code-for-review-comment-again": [
+      "tests/test_api_gateway.py"
+    ],
+    "copilot/fix-comments-from-review-thread-again": [
+      "tests/test_MRL_mcp_server.py"
+    ],
+    "copilot/fix-review-comment-3524988019": [
+      "data/prompt_templates.json"
+    ],
+    "copilot/https-github-com-dofaromg-mrl-ai-system-actions-ru": [
+      "03_memory/flowseed_origin/seed_index.json",
+      "06_trace/trace_contract.md",
+      "09_workflow/evidence_reconstruction_workflow.md"
+    ],
+    "copilot/https-github-com-mrliou": [
+      "README.md"
+    ],
+    "copilot/mrl-ai-system": [
+      "data/prompt_templates.json"
+    ],
+    "copilot/mrl-ai-system-another-one": [
+      "08_sources/sources.manifest.yaml",
+      "CHANGELOG.md"
+    ],
+    "copilot/task-217537952-1172186696-343e46bc-5cbb-44ba-a34b-295479e8afe7": [
+      "09_workflow/MRL_mother_assembly.py",
+      "09_workflow/MRL_utils.py",
+      "09_workflow/api_gateway.py",
+      "09_workflow/mother_assembly.py",
+      "data/prompt_templates.json",
+      "ui/streamlit_app/app.py"
+    ],
+    "copilot/update-ml-model-parameters": [
+      "MRL_WorldModel/MRL_FlowRhythm_v0/edge/MRL_fail_closed.test.mjs",
+      "MRL_WorldModel/MRL_FlowRhythm_v0/edge/flow_rhythm.mjs",
+      "MRL_WorldModel/MRL_FlowRhythm_v0/flow_rhythm.py"
+    ],
+    "dl580-network-wiring-r01": [
+      "deploy/dl580/MRL_Network_Receipt.ps1",
+      "deploy/dl580/MRL_Tunnel_Recover.ps1"
+    ],
+    "dl580-tunnel-recover-20261004": [
+      "MRL_Docs/Evidence/20261004/R04_通道復原_Invalid_tunnel_secret.md",
+      "MRL_Docs/Evidence/20261004/R05_FlowRhythm模組接通母體.md",
+      "MRL_Docs/Evidence/20261004/R07_模組管線接通_本機AI接通_排程納管.md",
+      "MRL_Docs/Evidence/20261004/R08_全域資產治理層_scaffold.md",
+      "MRL_Docs/Evidence/20261004/R09_治理層補完_lineage_asset_capability_evidence.md",
+      "MRL_Docs/Evidence/20261004/dl580_group1_live.trace.fltnz",
+      "MRL_Global_Repository_Asset_Governance/01_Repository_Inventory/README.md",
+      "MRL_Global_Repository_Asset_Governance/01_Repository_Inventory/repositories.json",
+      "MRL_Global_Repository_Asset_Governance/01_Repository_Inventory/repository_inventory.csv",
+      "MRL_Global_Repository_Asset_Governance/01_Repository_Inventory/repository_status_map.json",
+      "MRL_Global_Repository_Asset_Governance/02_Branch_Registry/README.md",
+      "MRL_Global_Repository_Asset_Governance/02_Branch_Registry/branch_counts.json",
+      "MRL_Global_Repository_Asset_Governance/02_Branch_Registry/branch_registry.json",
+      "MRL_Global_Repository_Asset_Governance/02_Branch_Registry/branches_raw.jsonl",
+      "MRL_Global_Repository_Asset_Governance/03_Asset_Registry/README.md",
+      "MRL_Global_Repository_Asset_Governance/03_Asset_Registry/asset_hash_index.json",
+      "MRL_Global_Repository_Asset_Governance/03_Asset_Registry/asset_registry.json",
+      "MRL_Global_Repository_Asset_Governance/03_Asset_Registry/dl580_mother_inventory.json",
+      "MRL_Global_Repository_Asset_Governance/03_Asset_Registry/duplicate_asset_groups.json",
+      "MRL_Global_Repository_Asset_Governance/03_Asset_Registry/parent_module_summary.json",
+      "MRL_Global_Repository_Asset_Governance/03_dedupe/head_sha_duplicates.json",
+      "MRL_Global_Repository_Asset_Governance/04_Lineage_Engine/README.md",
+      "MRL_Global_Repository_Asset_Governance/04_Lineage_Engine/branch_diff_matrix.json",
+      "MRL_Global_Repository_Asset_Governance/04_Lineage_Engine/branch_lineage.json",
+      "MRL_Global_Repository_Asset_Governance/04_Lineage_Engine/orphan_branches.json",
+      "MRL_Global_Repository_Asset_Governance/05_Mainline_Subline_Resolver/MRL_Mainline_Subline_Map.html",
+      "MRL_Global_Repository_Asset_Governance/05_Mainline_Subline_Resolver/archive_candidate_report.json",
+      "MRL_Global_Repository_Asset_Governance/05_Mainline_Subline_Resolver/branch_role_map.json",
+      "MRL_Global_Repository_Asset_Governance/05_Mainline_Subline_Resolver/mainline_registry.json",
+      "MRL_Global_Repository_Asset_Governance/05_Mainline_Subline_Resolver/unmerged_asset_report.json",
+      "MRL_Global_Repository_Asset_Governance/06_CrossRepo_Deduplicator/README.md",
+      "MRL_Global_Repository_Asset_Governance/06_CrossRepo_Deduplicator/cross_source_asset_map.json",
+      "MRL_Global_Repository_Asset_Governance/07_Capability_Mapper/MRL_Capability_Lineage.json",
+      "MRL_Global_Repository_Asset_Governance/07_Capability_Mapper/README.md",
+      "MRL_Global_Repository_Asset_Governance/08_NeuralGraph_Engine/MRL_Branch_NeuralGraph.graphml",
+      "MRL_Global_Repository_Asset_Governance/08_NeuralGraph_Engine/MRL_Branch_NeuralGraph.json",
+      "MRL_Global_Repository_Asset_Governance/09_Evidence_Registry/README.md",
+      "MRL_Global_Repository_Asset_Governance/09_Evidence_Registry/evidence_index.json",
+      "MRL_Global_Repository_Asset_Governance/10_Recovery_Action_Queue/README.md",
+      "MRL_Global_Repository_Asset_Governance/README.md",
+      "MRL_Global_Repository_Asset_Governance/_lib/branch_role_rules.yaml",
+      "MRL_Global_Repository_Asset_Governance/_lib/build_map_html.py",
+      "MRL_Global_Repository_Asset_Governance/_lib/neural_graph.py",
+      "MRL_Global_Repository_Asset_Governance/_lib/resolve_mainline.py",
+      "MRL_Global_Repository_Asset_Governance/_lib/role_infer.py",
+      "MRL_WorldModel/MRL_FlowRhythm_v0/dl580_module/MRL_flowrhythm_adapter.py",
+      "MRL_WorldModel/MRL_FlowRhythm_v0/dl580_module/MRL_flowrhythm_selftest.py",
+      "MRL_WorldModel/MRL_FlowRhythm_v0/dl580_module/README.md",
+      "MRL_WorldModel/MRL_FlowRhythm_v0/dl580_module/install_dl580.py",
+      "MRL_WorldModel/MRL_FlowRhythm_v0/dl580_module/r07/MRL_R07_patch.py",
+      "MRL_WorldModel/MRL_FlowRhythm_v0/dl580_module/r07/MRL_R07_peek.py",
+      "MRL_WorldModel/MRL_FlowRhythm_v0/dl580_module/r07/MRL_R07_replay.py",
+      "MRL_WorldModel/MRL_FlowRhythm_v0/dl580_module/r07/MRL_R07_test.py"
+    ],
+    "dofaromg-patch-2": [
+      "MRL_全套交付_20260531 2.tar.gz",
+      "MRL_全套交付_20260531.tar.gz",
+      "README_DL580_自架.md",
+      "intellij.ml.llm.embeddings.zip",
+      "mrliouhan.ai 檢查報告.md"
+    ],
+    "evidence/mrl-cognition-20260927": [
+      "MRL_Docs/Evidence/20260927/MRL_Addendum_20260927b.md",
+      "MRL_Docs/Evidence/20260927/MRL_Evidence_Manifest.json",
+      "MRL_Docs/Evidence/20260927/MRL_Session_Summary_20260927.md",
+      "MRL_Docs/Evidence/20260927/MRL_System_Cognition_Record_v1.md",
+      "MRL_Docs/Evidence/20260927/MRL_System_Cognition_Record_v1_1.md",
+      "MRL_Docs/Evidence/20260927/SHA256SUMS"
+    ],
+    "flowrhythm-edge-carrier-v0": [
+      "src/mrl_worker.js"
+    ],
+    "mrl/pr149-swiftui-assets": [
+      ".github/workflows/MRL_PR149_SwiftUI.yml",
+      "scripts/MRL_pr149_swiftui_verify.py"
+    ],
+    "mrl/pr151-ios-hardening": [
+      ".github/workflows/MRL_PR149_SwiftUI.yml",
+      ".github/workflows/MRL_PR151_Hardening.yml",
+      "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/Package.swift",
+      "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/Tests/HardeningTests/Fixtures/upload_server.py",
+      "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/Tests/HardeningTests/HardeningTests.swift",
+      "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Models/Scan.swift",
+      "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Reconstruction/MRLReconstructionClient.swift",
+      "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Views/ReconstructionBridgeView.swift",
+      "docs/MRL_PR151_Hardening.md",
+      "docs/MRL_PR151_Hardening_Provenance.json",
+      "scripts/MRL_pr149_swiftui_verify.py",
+      "tests/test_MRL_pr151_provenance.py"
+    ],
+    "worldmodel/mrl-dialect-v0": [
+      "MRL_WorldModel/MRL_Dialect_v0/README.md",
+      "MRL_WorldModel/MRL_Dialect_v0/mrl_world_graph.py"
+    ]
+  },
+  "top_10_branches_by_unique_count": [
+    {
+      "branch_name": "dl580-tunnel-recover-20261004",
+      "unique_file_count": 53
+    },
+    {
+      "branch_name": "claude/dl580-7700-engine-recovery-ex6mrc",
+      "unique_file_count": 30
+    },
+    {
+      "branch_name": "copilot/28729581812",
+      "unique_file_count": 17
+    },
+    {
+      "branch_name": "MrliouAI",
+      "unique_file_count": 13
+    },
+    {
+      "branch_name": "mrl/pr151-ios-hardening",
+      "unique_file_count": 12
+    },
+    {
+      "branch_name": "copilot/task-217537952-1172186696-343e46bc-5cbb-44ba-a34b-295479e8afe7",
+      "unique_file_count": 6
+    },
+    {
+      "branch_name": "evidence/mrl-cognition-20260927",
+      "unique_file_count": 6
+    },
+    {
+      "branch_name": "dofaromg-patch-2",
+      "unique_file_count": 5
+    },
+    {
+      "branch_name": "claude/new-session-00raqm",
+      "unique_file_count": 4
+    },
+    {
+      "branch_name": "MRL_Branch_DL580_PIDScope_Layer_v1",
+      "unique_file_count": 3
+    }
+  ]
+}

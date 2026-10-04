@@ -1,5 +1,115 @@
 [
  {
+  "repository": "dofaromg/-Mr.liouagi",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "651ab1b7a03d059abb689337bb7c06f924f519f0",
+  "sub_mainlines": [],
+  "total_branches": 4,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 1,
+   "MIRROR_BRANCH": 2,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/_mnt_data",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "a0d925d5d3857ffa8d757de8319d23c1dedd0246",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/APFS",
+  "active_mainline": "claude/mrl-selfhost-deploy-setup-FBLPw",
+  "active_mainline_head_sha": "b3176d269945ab6b53924c96393c44bacf395a4e",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "MIRROR_BRANCH": 1
+  }
+ },
+ {
+  "repository": "dofaromg/fastapi",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "4f644c577e3c62f7bcedc1a0191fb066540a7537",
+  "sub_mainlines": [],
+  "total_branches": 19,
+  "role_counts": {
+   "MIRROR_BRANCH": 17,
+   "FEATURE_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/flow-tasks-01",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "33422c2e666632b198e51c762b9fb2b2e4ef04bc",
+  "sub_mainlines": [],
+  "total_branches": 65,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 10,
+   "MIRROR_BRANCH": 54,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/growthbook-flags-sdk-example",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "2d56b08a9acdbe78331d7f5face9b429bae48910",
+  "sub_mainlines": [],
+  "total_branches": 11,
+  "role_counts": {
+   "MIRROR_BRANCH": 8,
+   "ROOT_MAINLINE": 1,
+   "UNKNOWN_BRANCH": 2
+  }
+ },
+ {
+  "repository": "dofaromg/model-context-protocol-mcp-with-next-js",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "56ce7598c378a140f97006243f260790d8dc03db",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "MIRROR_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mrl-ai-chatbot",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "28d0b43ce03209f1c65ab035d48e8da79926486f",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mrl-family-ai-platform",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "350e5c3c645d47b8b18ba1370581ffc1acb1a247",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-lecrev",
+  "active_mainline": "canary",
+  "active_mainline_head_sha": "0809aef2ce707af942973bd3a5e7f77e2045fa84",
+  "sub_mainlines": [],
+  "total_branches": 4,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 3,
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
   "repository": "dofaromg/MRL_AI_SYSTEM",
   "active_mainline": "MRL_AI_SYSTEM/memory-system-rules-prep",
   "active_mainline_head_sha": "d836143fb4320e1359f2d3e4a8b0c4fec4d70b05",
@@ -24,6 +134,225 @@
    "RECOVERY_BRANCH": 32,
    "ARCHIVE_BRANCH": 4,
    "FEATURE_BRANCH": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrl_w01234567",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "0b80c54dbc5f148d7f6df39d3addcc724a4c7a16",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrliou_AIworld",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "19fbffbc20e7b5abdc71381d959b9c6900c9625f",
+  "sub_mainlines": [],
+  "total_branches": 11,
+  "role_counts": {
+   "MIRROR_BRANCH": 8,
+   "UNKNOWN_BRANCH": 2,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MrliouAI-box",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "ffb31627d895dcb3f64844b2be3988208789fe24",
+  "sub_mainlines": [],
+  "total_branches": 6,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 3,
+   "MIRROR_BRANCH": 2,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mrlioudb",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "246018fa66eecce387a766b74e7e039c25db9982",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrliouword-",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "216733ec8caba0fa6d8e10d2ee337bacbfb81873",
+  "sub_mainlines": [],
+  "total_branches": 34,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 12,
+   "MIRROR_BRANCH": 21,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mrliouword-root",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "df74139528189e71b458861c98b5953d8a49e68f",
+  "sub_mainlines": [],
+  "total_branches": 9,
+  "role_counts": {
+   "MIRROR_BRANCH": 5,
+   "UNKNOWN_BRANCH": 3,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mrliouword-system",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "0f43326282d8df20ae6825fc7f6e918bb19ba9f1",
+  "sub_mainlines": [],
+  "total_branches": 93,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 11,
+   "MIRROR_BRANCH": 78,
+   "FEATURE_BRANCH": 3,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/omniroute-deploy",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "5bffbb12d838762e3308753727eb6d2c0f6324fb",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/particle-file-system",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "349bad2a98d3c635193ec58167aed6db7249059d",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/rox-one-terminal",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "c1b87b865c2f1b0552bc3ff15ed77b965dfcc2d5",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/tool-silk-",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "a62b2de7deb9c101368afbb974f8cf7c895e6dcf",
+  "sub_mainlines": [],
+  "total_branches": 12,
+  "role_counts": {
+   "MIRROR_BRANCH": 11,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/welcome-to-working-copy",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "76e0e291c88a6e2718439db6515b4a173219ef42",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/z814241",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "b4638626c6888240d6b4c9621d2286280498cfdc",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/demo-repository",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "2f746649a2d91b89167dda895f4cde6cdf0d6137",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/flow-tasks",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "138578b2c9bd30d949fd6b17235c297f42f05852",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "37e0a4c96ba47674e189ed9955525b73e392da25",
+  "sub_mainlines": [],
+  "total_branches": 8,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 1,
+   "MIRROR_BRANCH": 6,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/MRL_AI_SYSTEM_fork",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "4d335e4da3f47616ff4711c81e20e4d42698ec7a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/Mrl_asi_system",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "1e1b8654d44fb0ff52ec6199f562179420657deb",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/Mrl_Mother",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "689491edd83317989779172ea5b9f72ab3e14f72",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/silly",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "b7bf5c4ef674d17e1c454573d67ef100d2337e5d",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
   }
  }
 ]

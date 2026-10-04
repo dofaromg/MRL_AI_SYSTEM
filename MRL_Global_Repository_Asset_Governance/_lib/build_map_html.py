@@ -56,6 +56,7 @@ def build(registry_path: str, role_map_path: str, lineage_path: str, out_path: s
     counts = {r: len(by_role.get(r, [])) for r in ROLE_ORDER}
     absorbed = sum(1 for r in rows if r["absorbed"])
     unique_total = sum(r["unique_files"] or 0 for r in rows)
+    repo_count = len({b["full_name"] for b in reg})
 
     cards = []
     for role in ROLE_ORDER:
@@ -123,7 +124,7 @@ h1{{margin:0 0 4px;font-size:22px}}.subtitle{{color:var(--mut);margin:0 0 16px}}
 footer{{margin-top:20px;color:var(--mut);font-size:12px;text-align:center}}
 </style></head><body><div class="wrap">
 <h1>MRL Mainline / Subline Map</h1>
-<p class="subtitle">dofaromg/MRL_AI_SYSTEM · 230 branches · origin_signature: MrLiouWord · 2026-10-04</p>
+<p class="subtitle">{repo_count} repositories · {len(rows)} branches · origin_signature: MrLiouWord · 2026-10-04</p>
 <div class="stats">
   <div class="stat"><div class="k">分支總數</div><div class="v">{len(rows)}</div></div>
   <div class="stat"><div class="k">完全吸收</div><div class="v">{absorbed}</div></div>

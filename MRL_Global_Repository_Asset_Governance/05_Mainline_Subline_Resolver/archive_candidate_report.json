@@ -1,7 +1,16 @@
 {
- "total": 34,
+ "total": 39,
  "note": "封存候選 ≠ 允許刪除",
  "items": [
+  {
+   "branch_id": "dca2271a1cfc3210",
+   "full_name": "dofaromg/flow-tasks-01",
+   "branch_name": "revert-1-dofaromg-patch-1",
+   "head_sha": "da9798d3a1640a5dd2dfe86c03a33b3e63adebf8",
+   "canonical": "dofaromg/flow-tasks-01@宥麟",
+   "confidence": 0.9,
+   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
+  },
   {
    "branch_id": "b85b4eceb2638ca6",
    "full_name": "dofaromg/MRL_AI_SYSTEM",
@@ -306,6 +315,42 @@
    "head_sha": "4a4db8a29cf732327e406c204fc69d3d07886281",
    "canonical": "dofaromg/MRL_AI_SYSTEM@MRL_MRL_naming_auditor_v2",
    "confidence": 0.9,
+   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
+  },
+  {
+   "branch_id": "f29f142731b373a8",
+   "full_name": "dofaromg/MrliouAI-box",
+   "branch_name": "copilot/commit-242b82b0408bd62d8ea71f585ae571336540d837",
+   "head_sha": "4096d5d8731a09398bbda102b6743b20a189a67d",
+   "canonical": "dofaromg/MrliouAI-box@MrliouAI",
+   "confidence": 0.95,
+   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
+  },
+  {
+   "branch_id": "4bb6f0e7d136255f",
+   "full_name": "dofaromg/mrliouword-system",
+   "branch_name": "copilot/task-217537952-1130234040-a91fdd17-dfec-4bb3-88b9-c2f35efd1f27",
+   "head_sha": "8bd3b48b6322882b66507d272530c6aadfdeacb8",
+   "canonical": "dofaromg/mrliouword-system@copilot/deploy-wrangler-secrets",
+   "confidence": 0.95,
+   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
+  },
+  {
+   "branch_id": "e378bf3918bd3ee3",
+   "full_name": "dofaromg/tool-silk-",
+   "branch_name": "1-exercise-github-pages",
+   "head_sha": "52f31e91046560f81228ad5ebdf6111d67ff893d",
+   "canonical": "dofaromg/tool-silk-@dofaromg-patch-1",
+   "confidence": 0.9,
+   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
+  },
+  {
+   "branch_id": "5cdd59e3016b5aa1",
+   "full_name": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
+   "branch_name": "copilot/copilotupdate-naming-convention",
+   "head_sha": "e8c2215854f8f7e17a75b7a2292e709134d3d472",
+   "canonical": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-@copilot/mrl-mother-core-engine",
+   "confidence": 0.95,
    "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
   }
  ]

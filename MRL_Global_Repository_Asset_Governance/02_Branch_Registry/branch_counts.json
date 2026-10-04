@@ -1,28 +1,74 @@
 {
-  "total_branches": 230,
+  "total_branches": 530,
   "total_repos_in_inventory": 500,
-  "repos_fetched": 1,
-  "repos_pending_access": 499,
+  "repos_fetched": 31,
+  "repos_pending_access": 469,
   "repos_with_errors": 0,
   "by_owner": {
-    "dofaromg": 230
+    "dofaromg": 513,
+    "Mrliou": 17
   },
   "by_fork": {
-    "fork_true": 0,
-    "fork_false": 1,
-    "fork_unknown": 0
+    "origin": 530
   },
   "by_archived": {
-    "archived_true": 0,
-    "archived_false": 1,
-    "archived_unknown": 0
+    "active": 530
   },
-  "repos_with_only_default_branch": [],
-  "repos_with_only_default_branch_count": 0,
+  "repos_with_only_default_branch": [
+    "Mrliou/MRL_AI_SYSTEM_fork",
+    "Mrliou/Mrl_asi_system",
+    "Mrliou/silly",
+    "dofaromg/APFS",
+    "dofaromg/_mnt_data",
+    "dofaromg/mrl-ai-chatbot",
+    "dofaromg/mrl-family-ai-platform",
+    "dofaromg/omniroute-deploy",
+    "dofaromg/particle-file-system",
+    "dofaromg/rox-one-terminal",
+    "dofaromg/welcome-to-working-copy",
+    "dofaromg/z814241"
+  ],
+  "repos_with_only_default_branch_count": 12,
   "max_branches_top10": [
-    [
-      "dofaromg/MRL_AI_SYSTEM",
-      230
-    ]
+    {
+      "full_name": "dofaromg/MRL_AI_SYSTEM",
+      "branches": 230
+    },
+    {
+      "full_name": "dofaromg/mrliouword-system",
+      "branches": 93
+    },
+    {
+      "full_name": "dofaromg/flow-tasks-01",
+      "branches": 65
+    },
+    {
+      "full_name": "dofaromg/Mrliouword-",
+      "branches": 34
+    },
+    {
+      "full_name": "dofaromg/fastapi",
+      "branches": 19
+    },
+    {
+      "full_name": "dofaromg/tool-silk-",
+      "branches": 12
+    },
+    {
+      "full_name": "dofaromg/growthbook-flags-sdk-example",
+      "branches": 11
+    },
+    {
+      "full_name": "dofaromg/Mrliou_AIworld",
+      "branches": 11
+    },
+    {
+      "full_name": "dofaromg/mrliouword-root",
+      "branches": 9
+    },
+    {
+      "full_name": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
+      "branches": 8
+    }
   ]
 }

@@ -1,4 +1,985 @@
 {
+ "1d49b2a63a8aa219": {
+  "full_name": "dofaromg/-Mr.liouagi",
+  "branch_name": "Mrliou/mrl-authorization-repair-r07",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "19dafe0625938ed5586d93eaa5cf45ace459c463",
+  "canonical_of": null
+ },
+ "7a1c07560f328dba": {
+  "full_name": "dofaromg/-Mr.liouagi",
+  "branch_name": "copilot/construct-deployment",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "a2e21beb59a256af4fbba7a96bf0b8aee0f14b79",
+  "canonical_of": null
+ },
+ "c524b71f8dc2c3f6": {
+  "full_name": "dofaromg/-Mr.liouagi",
+  "branch_name": "copilot/task-217537952-1287894039-6fbdb916-c8ca-4968-a8ac-bb746afff72a",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "5b905e011d798a6e48a503346bd63957f0bcb31d",
+  "canonical_of": null
+ },
+ "e5698dc14d31e5f5": {
+  "full_name": "dofaromg/-Mr.liouagi",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "651ab1b7a03d059abb689337bb7c06f924f519f0",
+  "canonical_of": null
+ },
+ "a4619aacbde640a3": {
+  "full_name": "dofaromg/_mnt_data",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "a0d925d5d3857ffa8d757de8319d23c1dedd0246",
+  "canonical_of": null
+ },
+ "a4892175b28e298e": {
+  "full_name": "dofaromg/APFS",
+  "branch_name": "claude/mrl-selfhost-deploy-setup-FBLPw",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "b3176d269945ab6b53924c96393c44bacf395a4e",
+  "canonical_of": null
+ },
+ "66bf48a69e65a314": {
+  "full_name": "dofaromg/fastapi",
+  "branch_name": "copilot/add-commit-reference",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "c93c358a3bfcefab90ed8a548d3daed83bf1f095",
+  "canonical_of": null
+ },
+ "d076af6081019c34": {
+  "full_name": "dofaromg/fastapi",
+  "branch_name": "copilot/add-firebase-authentication",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "00fbb95588f74470e979d1fcbea1d55b0acb92b9",
+  "canonical_of": null
+ },
+ "258a97a57f78a466": {
+  "full_name": "dofaromg/fastapi",
+  "branch_name": "copilot/add-particle-system-architecture",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "309e29d5a440cae85edc7a8fc69651799a0298d7",
+  "canonical_of": null
+ },
+ "c4895e68d7ad16e2": {
+  "full_name": "dofaromg/fastapi",
+  "branch_name": "copilot/check-deployment-status-v12",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "330b6e40a3f3a7ce86f4e2f60fd301edbbca35dc",
+  "canonical_of": null
+ },
+ "356cd0fee691d1d7": {
+  "full_name": "dofaromg/fastapi",
+  "branch_name": "copilot/create-live-terminal-receiver",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "c19e17f119d708f44d05fb48eaa69cbeb3a5d275",
+  "canonical_of": null
+ },
+ "c675db464c1fbe32": {
+  "full_name": "dofaromg/fastapi",
+  "branch_name": "copilot/create-live-terminal-system",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "b0ccca70b837c2334f281129ce7048a2e24f2b5d",
+  "canonical_of": null
+ },
+ "c55b2d6fc918724a": {
+  "full_name": "dofaromg/fastapi",
+  "branch_name": "copilot/fix-issue-in-fastapi",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "2c71b87e170b302ac26e986cda0fd7518cefb3a1",
+  "canonical_of": null
+ },
+ "d2935d48f42c5fa3": {
+  "full_name": "dofaromg/fastapi",
+  "branch_name": "copilot/identify-and-improve-slow-code",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "9adbc2fced64cbe8a1f777b556ac35ab4c6a95c6",
+  "canonical_of": null
+ },
+ "a9b5e6e95ea85914": {
+  "full_name": "dofaromg/fastapi",
+  "branch_name": "copilot/improve-code-efficiency",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "76cdb1a6ec8379879c220f2c3f3024af211cd44b",
+  "canonical_of": null
+ },
+ "7cc1d5075e2aa2c0": {
+  "full_name": "dofaromg/fastapi",
+  "branch_name": "copilot/improve-slow-code",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "abb617f423edc985ef840bcdec7e9d58b390a87e",
+  "canonical_of": null
+ },
+ "13c4110de49af7da": {
+  "full_name": "dofaromg/fastapi",
+  "branch_name": "copilot/improve-variable-function-names",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "876d78bcc1093030434bde6c30e6909c783eab1f",
+  "canonical_of": null
+ },
+ "871b5e6437628f7b": {
+  "full_name": "dofaromg/fastapi",
+  "branch_name": "copilot/integrate-core-systems-v1-2",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "039ce417deb01a01ad14fc5ed27afa0411b36f03",
+  "canonical_of": null
+ },
+ "5a17328dd5f8bf34": {
+  "full_name": "dofaromg/fastapi",
+  "branch_name": "copilot/refactor-duplicated-code",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "d1c406c9280a10e45058cf30e3c164ce1ab26f6c",
+  "canonical_of": null
+ },
+ "b9efd8bc4794ccf1": {
+  "full_name": "dofaromg/fastapi",
+  "branch_name": "copilot/suggest-variable-function-names",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "1c67a0167bfca9935e18da35c7388c41bfba844c",
+  "canonical_of": null
+ },
+ "fdda512f3272fd83": {
+  "full_name": "dofaromg/fastapi",
+  "branch_name": "copilot/update-fastapi-dependencies",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "9a67a31f45e9edf846ebe2047205734226169444",
+  "canonical_of": null
+ },
+ "4c0fbd3ea3ce8d13": {
+  "full_name": "dofaromg/fastapi",
+  "branch_name": "copilot/update-fastapi-dependencies-again",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "7cc1206d8c12df82fa5ef8031034d37e8d143d46",
+  "canonical_of": null
+ },
+ "1a24d4bfe7f500f9": {
+  "full_name": "dofaromg/fastapi",
+  "branch_name": "copilot/update-fastapi-dependency-version",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "cb20e2a903f83e449f4e6cf1337ae0967197d56f",
+  "canonical_of": null
+ },
+ "e459a6253c7ff47e": {
+  "full_name": "dofaromg/fastapi",
+  "branch_name": "fix/mdbook-workflow-and-structure",
+  "role": "FEATURE_BRANCH",
+  "confidence": 0.8,
+  "is_default": false,
+  "head_sha": "5c173caba8f459e7c1d4f16bb8046c64a2a5f85c",
+  "canonical_of": null
+ },
+ "07f88c764b24999e": {
+  "full_name": "dofaromg/fastapi",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "4f644c577e3c62f7bcedc1a0191fb066540a7537",
+  "canonical_of": null
+ },
+ "6563e13275ac1bd3": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "231",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "47e89a5ef7b9a07855aa591b140869e069faa329",
+  "canonical_of": null
+ },
+ "a49f7d823426eda4": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "codex/add-ai-3d-character-module",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "38626c590fbe4ba79d24200d28f7ba2d8dd11831",
+  "canonical_of": null
+ },
+ "824ff2605931a46f": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "codex/add-decompress-dll-functionality",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "7bd4c2eee1d1e20d0e53d28bff75128e3df891c5",
+  "canonical_of": null
+ },
+ "f69ccc8850f92cbd": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "codex/add-github-actions-deployment-workflow",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "590a0c1abaa000dd0199919e488675471a4d6c20",
+  "canonical_of": null
+ },
+ "bbc3374cf4ed254f": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "codex/add-github-actions-deployment-workflow-7ng8le",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "c41dfa22b4f8fc9bd7e8b6a89b292ea68d7e71ec",
+  "canonical_of": null
+ },
+ "4b953a85eb46b045": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "codex/add-github-actions-deployment-workflow-daf4g6",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "91bb437c2bf86a861ae01346510cc28995abbb07",
+  "canonical_of": null
+ },
+ "82c7e38b79eef3c1": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "codex/add-issue-templates-to-repository",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "e11fd1bf832d09a15f06090cc9c8ebe2abc6926c",
+  "canonical_of": null
+ },
+ "d67565abd4ca5b1a": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "codex/add-json-file-for-earth-globe-development",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "babd05abcb6695d7c9cb725c896655d55ceacba2",
+  "canonical_of": null
+ },
+ "808c3ea447471e51": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "codex/deploy-amp-and-verify-functionality",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "92d452d0fbc23d35804836f36642453ea6460207",
+  "canonical_of": null
+ },
+ "78a79ddd8ecfd4fb": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "codex/fix-error",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "9d5ef4bb27ec68c3d3691e48ce68a6815c8bff48",
+  "canonical_of": null
+ },
+ "5dffbdd8529a3b32": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "codex/fix-github-actions-build-failure",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "ff379e4c21bc44fd4c29efe918e30bb6516a4037",
+  "canonical_of": null
+ },
+ "f3862e186db09f8b": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/add-commit-references",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "a28664214da25e756088e4574b3cd3d7487829f4",
+  "canonical_of": null
+ },
+ "776f2fd940d75c77": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/add-memory-quick-mount-module",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "8965d4905befa0465e29b32baaaf79ba45c1870f",
+  "canonical_of": null
+ },
+ "8f52edfe113a3685": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/add-placeholder-appstore-doc",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "fc62078528905748161b11ec5593735bad173074",
+  "canonical_of": null
+ },
+ "2d9c11753aac21a4": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/complete-global-integration",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "d954e42aaa1407d859545250f47018a35763c95f",
+  "canonical_of": null
+ },
+ "880ec873e1ba8f89": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/continue-appstore-md-update",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "560c20d8f588b53d1f1f7331af9d9a784f95d6ef",
+  "canonical_of": null
+ },
+ "eb12d8c587431eec": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/deploy-cluster-setup",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "149c157e53a5e4aa74be44a31303a56fb3fc194c",
+  "canonical_of": null
+ },
+ "c16b4633cd0fe773": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/deploy-mlriou-structural-earth",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "8374112f16352d8ebce34febe5f01d6d801dbe8a",
+  "canonical_of": null
+ },
+ "3a37fafed63e8e4d": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/deploy-mlriou-structural-earth-runtime",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "d358523f4d3276741b065db94dfb71066cfe84e1",
+  "canonical_of": null
+ },
+ "79b005c3f47adee6": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/fix-050d097b-2b58-443a-b584-f8eb57d46978",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "202b9f4ac884d80685430ad1e35a6c73fe7678ea",
+  "canonical_of": null
+ },
+ "c30bc68fd605e4c9": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/fix-15",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "bc228f6237bc0dc533da22295fedbe5ee2759a40",
+  "canonical_of": null
+ },
+ "012029eb6e07b27f": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/fix-17",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "d8ba96b22b271b5a24a3b4de1ee143ddcc5bfff4",
+  "canonical_of": null
+ },
+ "d9c199a74de92b31": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/fix-4a232350-aeb1-4e82-ae09-860f1af0241d",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "8b7d486e95d46c2983f7c0e9ca3f055050275e50",
+  "canonical_of": null
+ },
+ "91414ff9f7abbd9f": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/fix-5dd50b6f-3961-418d-bd10-e6b7f0c19e23",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "fa9bb65fc49fdc3bc3ce7f1b14d36f4a4d6913f7",
+  "canonical_of": null
+ },
+ "060dd8e435427158": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/fix-b55b703a-be67-45d4-96a4-4a423fcc5b6b",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "e6471d98e2b79920eee158160979c4322d34d668",
+  "canonical_of": null
+ },
+ "a888fa187a59bc68": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/fix-bug-in-flow-tasks",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "ef90eec5f3b429ffe93b6ca9843990133ecbdd93",
+  "canonical_of": null
+ },
+ "07cadc6a876e41c7": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/fix-bug-in-flow-tasks-again",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "e4abccf81dd4cc34240e0eed8b4138c2a8191e6c",
+  "canonical_of": null
+ },
+ "0bdfd56fc3d986ce": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/fix-ca673fc0-1d23-4657-9505-0a090bea44ca",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "3ca9c5186cb5d034e64e55b23ca19657524d15ad",
+  "canonical_of": null
+ },
+ "7e650c470737f0c2": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/fix-ca692daa-44f5-42e9-bf52-5b1a5c70f081",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "c1edfd0571193bbd135939eb9ba1cd8756537a00",
+  "canonical_of": null
+ },
+ "5a6a09693a746576": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/fix-issue-in-flow-tasks",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "4956eb4c3b0704ab9a2662413db32e68de17841d",
+  "canonical_of": null
+ },
+ "7f7bd784b3e3a74d": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/fix-issue-with-commit",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "d8ea3193d96d67843f4f1fd9da080c26dd3f568c",
+  "canonical_of": null
+ },
+ "a948ff5c4f5cfd90": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/fix-issue-with-pull-request-30",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "fbc60191da114cc44d4ff470cc3634ec0b8b7be5",
+  "canonical_of": null
+ },
+ "85b27a3c6cec3c41": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/fix-pull-request-208",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "6b998bfc3b2358d6ea7a1de4aff45955eeb9a6d5",
+  "canonical_of": null
+ },
+ "dff365b74a821dd4": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/fix-pull-request-225",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "3f00cda305f34abd2f6b636c71934f44cb380eef",
+  "canonical_of": null
+ },
+ "0f9c97038019be75": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/fix-syntax-error-in-process-tasks",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "743fa59d0c0c0b68407a49fceb9335e4556edc36",
+  "canonical_of": null
+ },
+ "5cb4c5ebfe72e66a": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/fix-typo-in-documentation",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "6f36779392e1f0f4b8411726f24cd20e541089f0",
+  "canonical_of": null
+ },
+ "4cc46a7cc6f4a87e": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/fix-typo-in-documentation-again",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "37275e96063a51ecd1ff01c72b2efe9c9b8bb3e3",
+  "canonical_of": null
+ },
+ "41bb7d4f3b811ff6": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/implement-deployment-features",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "e6ffc7290fba29cfc9eb6899b3e1fe6663f89f91",
+  "canonical_of": null
+ },
+ "1e75dd9b766b8480": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/improve-variable-function-names",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "2558d557ea8961bf527fe28826326f85ffb3e21c",
+  "canonical_of": null
+ },
+ "fb5a8d801a61dc6f": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/sub-pr-186",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "c8fa4117be8804c07adda040eaee128e5afc7180",
+  "canonical_of": null
+ },
+ "6ab44005b4a2a911": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/sub-pr-225",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "763ff396e58dee21fe7d82a9ab51179022fd0318",
+  "canonical_of": null
+ },
+ "72179a903e49779b": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/sub-pr-225-again",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "958d9d8d6595eae0f56ad62b136b4360d9096859",
+  "canonical_of": null
+ },
+ "e344fb2d6b9bf4c3": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/sub-pr-232",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "92980659f58886818ca159bc218c4059ec83fa67",
+  "canonical_of": null
+ },
+ "bc6b0a438abc714b": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/sub-pr-232-another-one",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "aff9acee22e4537b3ed82683426fa9042206e09c",
+  "canonical_of": null
+ },
+ "997792369c0e9ea4": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/sub-pr-328-again",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "6343dfd7f215b208714519396fd168c1f7b7a74e",
+  "canonical_of": null
+ },
+ "127cead0f5cc863d": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/sync-all-repositories",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "868bce71fab9b46d9b46166a32dccefe133f7513",
+  "canonical_of": null
+ },
+ "a8af09d63b4c1241": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/update-flow-tasks",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "b1549def2a243035c38975a8d1e3ea70c8adf6da",
+  "canonical_of": null
+ },
+ "a323279501a0cb4f": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/update-flow-tasks-documentation",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "23d53e2dc632e5674887a99842923781aa6a41b3",
+  "canonical_of": null
+ },
+ "6e27f37cf4c87bfc": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/update-flow-tasks-logic",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "508c7c421d0c23b8ea6400adf9f578fa4cd738b8",
+  "canonical_of": null
+ },
+ "d345830dd36ab209": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/update-mrliou-system-integration",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "8d5848c129b1aea487b3d0bd4ce6f7f8611b9f31",
+  "canonical_of": null
+ },
+ "fa524239f15c97cb": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/update-project-dependencies",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "6b8bafafa9760b6c62a2947b85840a89664d89db",
+  "canonical_of": null
+ },
+ "90f7bbc4a7aa3528": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/update-pull-request-191",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "c0f9e25dcf1d4ad6de50addf992811c6f760e198",
+  "canonical_of": null
+ },
+ "74b6f69a8959704d": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "copilot/update-readme-file",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "6aca555f7242c87ab7ef7b56138fbdd5aa45acb6",
+  "canonical_of": null
+ },
+ "f8dbeee709fdbbc2": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "33422c2e666632b198e51c762b9fb2b2e4ef04bc",
+  "canonical_of": null
+ },
+ "dca2271a1cfc3210": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "revert-1-dofaromg-patch-1",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "da9798d3a1640a5dd2dfe86c03a33b3e63adebf8",
+  "canonical_of": "dofaromg/flow-tasks-01@宥麟"
+ },
+ "9db77af6e3c251ff": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "revert-2-revert-1-dofaromg-patch-1",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "62ec9e8229d81843a4fff8582467b7c9e3dfbee8",
+  "canonical_of": null
+ },
+ "4b732fb66e2729c6": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "revert-3-revert-2-revert-1-dofaromg-patch-1",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "ce0d87fb5bcf66db9ea8abcf81fd97cb503be28e",
+  "canonical_of": null
+ },
+ "b1ec5ff577af2272": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "revert-4-revert-3-revert-2-revert-1-dofaromg-patch-1",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "07f05731c1d110a2f44a682d6f92f9b430521f6a",
+  "canonical_of": null
+ },
+ "7de36164f7327334": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "revert-5-revert-4-revert-3-revert-2-revert-1-dofaromg-patch-1",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "cc56f0e1b8dd0e7a08d7772983876f0b1991a55e",
+  "canonical_of": null
+ },
+ "13646208fbe9e05b": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "revert-6-revert-5-revert-4-revert-3-revert-2-revert-1-dofaromg-patch-1",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "33a10d9fd28c48c92475e4562a0018e8dcc0a4f4",
+  "canonical_of": null
+ },
+ "1f3330013d09424e": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "vercel/react-server-components-cve-vu-hfn95b",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "0c30fb8f88294e2246cf4fafca256a79040d0b34",
+  "canonical_of": null
+ },
+ "5fb8975d3e0f4ece": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "vercel/vercel-speed-insights-integrat-vhdad9",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "8084dfb491fce885f012216dad899f1f0f42b38a",
+  "canonical_of": null
+ },
+ "31e12af28a5a45f5": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "劉",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "4acb69de0bab4d9f335814437c6038ea34cf5686",
+  "canonical_of": null
+ },
+ "f0c7d61e70921194": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "宥麟",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "da9798d3a1640a5dd2dfe86c03a33b3e63adebf8",
+  "canonical_of": null
+ },
+ "eba1546a087d5a3a": {
+  "full_name": "dofaromg/flow-tasks-01",
+  "branch_name": "記憶",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "247050e5b95511515efc3a9b3eb813064bb1c507",
+  "canonical_of": null
+ },
+ "c6f7222222e450be": {
+  "full_name": "dofaromg/growthbook-flags-sdk-example",
+  "branch_name": "copilot/fix-commit-reference-issue",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "cf388b74bb55b6b742353678865b7aa7c85b00ae",
+  "canonical_of": null
+ },
+ "621d8161aae0103c": {
+  "full_name": "dofaromg/growthbook-flags-sdk-example",
+  "branch_name": "copilot/optimize-growthbook-flags-sdk",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "bb35ced48ec7951e564d512b1abb54d3461bce15",
+  "canonical_of": null
+ },
+ "90cb723ab27f9969": {
+  "full_name": "dofaromg/growthbook-flags-sdk-example",
+  "branch_name": "copilot/update-development-dependencies",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "f557f4ff035880debb60a0057a7f8f5aae05b0cc",
+  "canonical_of": null
+ },
+ "a6c84a8e756be57e": {
+  "full_name": "dofaromg/growthbook-flags-sdk-example",
+  "branch_name": "copilot/update-example-documentation",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "66b8913f4cf93b083cf53b74f1acc5710fbab469",
+  "canonical_of": null
+ },
+ "5cd42bea0c95b31a": {
+  "full_name": "dofaromg/growthbook-flags-sdk-example",
+  "branch_name": "copilot/update-example-repo",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "20bc3df9abcd16329b41171167e9bf78fe882d02",
+  "canonical_of": null
+ },
+ "598155d22103eaea": {
+  "full_name": "dofaromg/growthbook-flags-sdk-example",
+  "branch_name": "copilot/update-example-repo-readme",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "45b9e4709dafc04c7b1f0bedc07b7c463c58e5e4",
+  "canonical_of": null
+ },
+ "0e435b1c2cfd2e65": {
+  "full_name": "dofaromg/growthbook-flags-sdk-example",
+  "branch_name": "copilot/update-flags-sdk-example",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "567bf2f491b57f428006dfca84b44a52fd442816",
+  "canonical_of": null
+ },
+ "5a7a9288b8a4b94b": {
+  "full_name": "dofaromg/growthbook-flags-sdk-example",
+  "branch_name": "copilot/update-sdk-example-commit",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "746f5e86b3f8dd2ad9a128971133065e0f23e480",
+  "canonical_of": null
+ },
+ "cfcfc7783df1da83": {
+  "full_name": "dofaromg/growthbook-flags-sdk-example",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "2d56b08a9acdbe78331d7f5face9b429bae48910",
+  "canonical_of": null
+ },
+ "6389cbff7fae710b": {
+  "full_name": "dofaromg/growthbook-flags-sdk-example",
+  "branch_name": "vercel/dependencies-for-react-flight-8xh3gy",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "e726ee5fadc8b4ce703cd7afd4dc1b3d174a3dda",
+  "canonical_of": null
+ },
+ "6322de4d9c3c843b": {
+  "full_name": "dofaromg/growthbook-flags-sdk-example",
+  "branch_name": "vercel/vercel-web-analytics-to-nextjs-aj1a4g",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "45e1fa070066976c98f7129ca13526c4342c1db3",
+  "canonical_of": null
+ },
+ "f750622024dcba25": {
+  "full_name": "dofaromg/model-context-protocol-mcp-with-next-js",
+  "branch_name": "claude/mrl-ai-system-sdk-refactor-67gx2s",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "b37285300f7fea27c2e82eb13642ffdabb5997b4",
+  "canonical_of": null
+ },
+ "cd8ff9a174fc4e54": {
+  "full_name": "dofaromg/model-context-protocol-mcp-with-next-js",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "56ce7598c378a140f97006243f260790d8dc03db",
+  "canonical_of": null
+ },
+ "c7c52ce0bfd8636d": {
+  "full_name": "dofaromg/mrl-ai-chatbot",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "28d0b43ce03209f1c65ab035d48e8da79926486f",
+  "canonical_of": null
+ },
+ "fe44ba7f383906bd": {
+  "full_name": "dofaromg/mrl-family-ai-platform",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "350e5c3c645d47b8b18ba1370581ffc1acb1a247",
+  "canonical_of": null
+ },
+ "6f3b6df6f4274661": {
+  "full_name": "dofaromg/MRL-lecrev",
+  "branch_name": "MRL_fix_reusable_permissions_20260915",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "832c074339098194839cfe8405806dd80c1a8a70",
+  "canonical_of": null
+ },
+ "841c4acc258724bd": {
+  "full_name": "dofaromg/MRL-lecrev",
+  "branch_name": "Mrliou_fix_trigger_release_startup_20260914",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "a5d8e5210dc7ecfdc2f438badc982a0c7adb6d16",
+  "canonical_of": null
+ },
+ "fd1ca202b7224221": {
+  "full_name": "dofaromg/MRL-lecrev",
+  "branch_name": "Mrliou_workflow_owner_guard_followup_20260914",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "6a0f137c755b1fec23c7175b7f9cd60a677eef1b",
+  "canonical_of": null
+ },
+ "54610433913d3028": {
+  "full_name": "dofaromg/MRL-lecrev",
+  "branch_name": "canary",
+  "role": "ACTIVE_MAINLINE",
+  "confidence": 0.85,
+  "is_default": true,
+  "head_sha": "0809aef2ce707af942973bd3a5e7f77e2045fa84",
+  "canonical_of": null
+ },
  "293a48865d20fece": {
   "full_name": "dofaromg/MRL_AI_SYSTEM",
   "branch_name": "MRL_AI_SYSTEM/memory-system-rules-prep",
@@ -2067,6 +3048,1725 @@
   "confidence": 0.2,
   "is_default": false,
   "head_sha": "8c973afe4995c3bb4c93be4c9feb6f6ba0baf029",
+  "canonical_of": null
+ },
+ "81ea03dd9306480e": {
+  "full_name": "dofaromg/Mrl_w01234567",
+  "branch_name": "Mrliou/mrl-authorization-repair-r07",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "04d3a8dec40227b0d9caf74f0092aafff8b707d2",
+  "canonical_of": null
+ },
+ "256c1ed5fbd6d0b0": {
+  "full_name": "dofaromg/Mrl_w01234567",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "0b80c54dbc5f148d7f6df39d3addcc724a4c7a16",
+  "canonical_of": null
+ },
+ "a4b3f68a26f23a7c": {
+  "full_name": "dofaromg/Mrliou_AIworld",
+  "branch_name": "claude/cloudflare-connection-setup-teqomh",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "8a2ae9e91695ce746dc28f551b43fd68e34d2ff4",
+  "canonical_of": null
+ },
+ "842d7e1d5d664738": {
+  "full_name": "dofaromg/Mrliou_AIworld",
+  "branch_name": "claude/file-analysis-guide-f5lwf1",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "d0b309a4e87760ce8811611f99540af69bbd0f3f",
+  "canonical_of": null
+ },
+ "b1aa8201cb09baad": {
+  "full_name": "dofaromg/Mrliou_AIworld",
+  "branch_name": "claude/sovereignty-positioning-naming-ynz6e1",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "735332d8ff2191444f5cc2fc74f6c74a1ba910fa",
+  "canonical_of": null
+ },
+ "aec64cbb1a881bb8": {
+  "full_name": "dofaromg/Mrliou_AIworld",
+  "branch_name": "copilot/2",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "0789a3e34e687accfa2350a433eacb79af2b5b10",
+  "canonical_of": null
+ },
+ "db6fea89db3d5c4b": {
+  "full_name": "dofaromg/Mrliou_AIworld",
+  "branch_name": "copilot/continue-research-data-storage",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "278cdc36abcf8c6d8ffa4ac7fd8e1f0293157c86",
+  "canonical_of": null
+ },
+ "0dde5b915deed6c7": {
+  "full_name": "dofaromg/Mrliou_AIworld",
+  "branch_name": "copilot/dofaromg",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "641706219ed451a2ddaceaa2e663b8031e823cb8",
+  "canonical_of": null
+ },
+ "272c36eebffc9896": {
+  "full_name": "dofaromg/Mrliou_AIworld",
+  "branch_name": "copilot/task-217537952-1040653851-7c409848-b424-4ece-9bd8-8df2643bacee",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "d1c52e6a3c3e15b8deea2e35d28f4e8806512b35",
+  "canonical_of": null
+ },
+ "dde6a6ec7b4d5891": {
+  "full_name": "dofaromg/Mrliou_AIworld",
+  "branch_name": "copilot/update-document-role-assignment",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "52b1281f8064794f1a78c37f5850231e7909dcc8",
+  "canonical_of": null
+ },
+ "20e51c5f4c4a09fc": {
+  "full_name": "dofaromg/Mrliou_AIworld",
+  "branch_name": "ingest/mrl-lineage-20260725",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "6413fcebd9eec186b83bc2eba4007c1920916359",
+  "canonical_of": null
+ },
+ "9d10b555f50616a5": {
+  "full_name": "dofaromg/Mrliou_AIworld",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "19fbffbc20e7b5abdc71381d959b9c6900c9625f",
+  "canonical_of": null
+ },
+ "7dfcd3abbbd259c0": {
+  "full_name": "dofaromg/Mrliou_AIworld",
+  "branch_name": "粒子2",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "294363bea3e4c34bc7f628a848b9dfac77ff1ac5",
+  "canonical_of": null
+ },
+ "9a3acfef994012d9": {
+  "full_name": "dofaromg/MrliouAI-box",
+  "branch_name": "Mrliou/mrl-authorization-repair-r07",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "817c2496a7eb2c7bc8baa78d2a03709d76cd3e38",
+  "canonical_of": null
+ },
+ "0825c21492e18979": {
+  "full_name": "dofaromg/MrliouAI-box",
+  "branch_name": "MrliouAI",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "4096d5d8731a09398bbda102b6743b20a189a67d",
+  "canonical_of": null
+ },
+ "f29f142731b373a8": {
+  "full_name": "dofaromg/MrliouAI-box",
+  "branch_name": "copilot/commit-242b82b0408bd62d8ea71f585ae571336540d837",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "4096d5d8731a09398bbda102b6743b20a189a67d",
+  "canonical_of": "dofaromg/MrliouAI-box@MrliouAI"
+ },
+ "b12520455c8ce493": {
+  "full_name": "dofaromg/MrliouAI-box",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "ffb31627d895dcb3f64844b2be3988208789fe24",
+  "canonical_of": null
+ },
+ "4ef5f7fc1710a8bf": {
+  "full_name": "dofaromg/MrliouAI-box",
+  "branch_name": "mrl-direct-product-source",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "d87ec57e5453b3518696dbbfe07db8adc873a3af",
+  "canonical_of": null
+ },
+ "17e171b6045838af": {
+  "full_name": "dofaromg/MrliouAI-box",
+  "branch_name": "mrliouai",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "5beba78a744798144b5072265075e5969a5b6315",
+  "canonical_of": null
+ },
+ "968996d9c4f629cf": {
+  "full_name": "dofaromg/mrlioudb",
+  "branch_name": "Mrliou/mrl-authorization-repair-r07",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "ac1253f0853bcd2c4891ea4aee4c04e501c5f827",
+  "canonical_of": null
+ },
+ "78f679aee6aaec72": {
+  "full_name": "dofaromg/mrlioudb",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "246018fa66eecce387a766b74e7e039c25db9982",
+  "canonical_of": null
+ },
+ "0080c1815282fd8b": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "231",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "15e1ad08ece7b6c76da2041949a6871df1cb6c22",
+  "canonical_of": null
+ },
+ "bda2da2fb8c4b44f": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "codex/add-ai-3d-character-module",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "298580afbd0fec4eda631e3622a8047874054ce3",
+  "canonical_of": null
+ },
+ "6fb726b6f147d574": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "codex/add-decompress-dll-functionality",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "a0854dc55cdbf8eceefdd18e1a42349277fcf5bf",
+  "canonical_of": null
+ },
+ "2d54e0f2fb5f92fa": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "codex/add-issue-templates-to-repository",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "cf85f73a39ee5844439e7d520677243245d10917",
+  "canonical_of": null
+ },
+ "b47ce423dbd941d5": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "codex/add-json-file-for-earth-globe-development",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "e1d681d6390e20cc5dd1d4fe9742463ab93252da",
+  "canonical_of": null
+ },
+ "247806c602aba453": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "codex/add-ping-sync-script-for-vercel-and-notion",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "46c816b682cbb8634c376d7e39425a05b1430a8e",
+  "canonical_of": null
+ },
+ "73f094168cb62be6": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "codex/fix-error",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "a864212642e577fba3ee292f81f1e95186f6e47a",
+  "canonical_of": null
+ },
+ "33085446982cff55": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "copilot/add-config-to-application",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "975b47b24ee913c3bd63c676833d9d03bc4e7adb",
+  "canonical_of": null
+ },
+ "fd318ba40db74070": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "copilot/deploy-cluster-setup",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "441359e0eb42a7fe3d4bc6bb0ec5fd81782aba46",
+  "canonical_of": null
+ },
+ "617e93f4b7e95e65": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "copilot/fix-050d097b-2b58-443a-b584-f8eb57d46978",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "172cf952cca505a696a5c2a7896e524f88e11f6c",
+  "canonical_of": null
+ },
+ "5e0c848ec3ad4d26": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "copilot/fix-15",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "5e13ec9073663326e964f199596228fd60afba6d",
+  "canonical_of": null
+ },
+ "8be4a94c6193308f": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "copilot/fix-17",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "c46d27d56a287e91cd7428a332b4266680ee28d6",
+  "canonical_of": null
+ },
+ "933b24cc9f266369": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "copilot/fix-4a232350-aeb1-4e82-ae09-860f1af0241d",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "10c475558b6e014eb89f6722d6a33affee5bad61",
+  "canonical_of": null
+ },
+ "71ce17687820cb01": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "copilot/fix-5dd50b6f-3961-418d-bd10-e6b7f0c19e23",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "de252f9c874df38a982839074f2c3f45c5229e69",
+  "canonical_of": null
+ },
+ "f944944c83e9062c": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "copilot/fix-action-run-issue",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "5dbe37e93390f5e29d0a9adb55861dabd357bbcc",
+  "canonical_of": null
+ },
+ "fca82b4b70e46cef": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "copilot/fix-actions-job-errors",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "a8f75df632e2f46796048c3d5365f93a3165882d",
+  "canonical_of": null
+ },
+ "8218951f1d1a671a": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "copilot/fix-b55b703a-be67-45d4-96a4-4a423fcc5b6b",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "a75a2e348d899b14f37fa1834c59b15272223ad5",
+  "canonical_of": null
+ },
+ "c3f3d0903de96783": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "copilot/fix-ca673fc0-1d23-4657-9505-0a090bea44ca",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "1997a8e3461e2d73a0fdfd1707883d32e12fc72c",
+  "canonical_of": null
+ },
+ "24d39a4d6f74639f": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "copilot/fix-ca692daa-44f5-42e9-bf52-5b1a5c70f081",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "b7ce3ce8804a6e1aa1b5f839647e26849abc9131",
+  "canonical_of": null
+ },
+ "5afd061b88b99097": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "copilot/identify-improve-slow-code",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "d11a503f3d94748365976795075e2f780d6042f8",
+  "canonical_of": null
+ },
+ "eb64448666bbb960": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "copilot/improve-variable-function-names",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "e15e5041743d4eb09d290c48b70b127e31b5cca2",
+  "canonical_of": null
+ },
+ "97ba7ad887f00864": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "copilot/setup-copilot-instructions",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "06d20e74cabb6f40006b1b898bc793918ba52fff",
+  "canonical_of": null
+ },
+ "592e96db0bec81a5": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "dofaromg-patch-1",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "cd5fb59ace4615e7054dcadd486a6b717ffe5c51",
+  "canonical_of": null
+ },
+ "a31a0576ef8ce317": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "dofaromg-patch-2",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "ca786bf387cbfb0bf71af85a980cbfa09a23ebd8",
+  "canonical_of": null
+ },
+ "b22f8010136035fc": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "216733ec8caba0fa6d8e10d2ee337bacbfb81873",
+  "canonical_of": null
+ },
+ "fb7c6642022b7e38": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "revert-1-dofaromg-patch-1",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "b689601459750b31361b20cad79f3aec87e0c23a",
+  "canonical_of": null
+ },
+ "a11ac619854e77fa": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "revert-2-revert-1-dofaromg-patch-1",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "1d1e10cad32df93e53bae117f1b2325d000ce8d9",
+  "canonical_of": null
+ },
+ "dbf3a52ae9d823e9": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "revert-3-revert-2-revert-1-dofaromg-patch-1",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "346e6880cb7c57b4507b5f0831a42ffa7f284995",
+  "canonical_of": null
+ },
+ "45dc0cd758778b02": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "revert-4-revert-3-revert-2-revert-1-dofaromg-patch-1",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "1e5106a66a94b4bacb0b8dedc5dd28f3d9259f0d",
+  "canonical_of": null
+ },
+ "e7e9ee1501afe995": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "revert-5-revert-4-revert-3-revert-2-revert-1-dofaromg-patch-1",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "8682bac99c17772fa477817b77740df4c268b04b",
+  "canonical_of": null
+ },
+ "4000ec4e09333ad1": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "revert-6-revert-5-revert-4-revert-3-revert-2-revert-1-dofaromg-patch-1",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "58911bbd1b3a4230e945a2d70dc27454a5ed91a8",
+  "canonical_of": null
+ },
+ "d6babbf0b78c9765": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "劉",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "428066180bcf56dfbd31f3041f9065687224b31e",
+  "canonical_of": null
+ },
+ "2277b5d8524805ac": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "宥麟",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "26dfb2e235858aef114d96ce4c82b32e86a54810",
+  "canonical_of": null
+ },
+ "4b7df56affe94c92": {
+  "full_name": "dofaromg/Mrliouword-",
+  "branch_name": "記憶",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "641e040a590948d02e250cc570e55f9a61a1765c",
+  "canonical_of": null
+ },
+ "83a633f2a82f3d6f": {
+  "full_name": "dofaromg/mrliouword-root",
+  "branch_name": "claude/cloudflare-connection-setup-teqomh",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "1222110b8017dec46147b76ebeff9f1dfb6841e1",
+  "canonical_of": null
+ },
+ "8cec73a3fcdfb13d": {
+  "full_name": "dofaromg/mrliouword-root",
+  "branch_name": "claude/sovereignty-positioning-naming-ynz6e1",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "99f8102808470ad5cfbca298396b84e6c839e93e",
+  "canonical_of": null
+ },
+ "e605e98e3fd0a3b7": {
+  "full_name": "dofaromg/mrliouword-root",
+  "branch_name": "copilot/2",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "5fff20c12702b491ff676785a55d317889c68bb3",
+  "canonical_of": null
+ },
+ "bc34a677a27ade1a": {
+  "full_name": "dofaromg/mrliouword-root",
+  "branch_name": "copilot/task-217537952-1040653851-7c409848-b424-4ece-9bd8-8df2643bacee",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "6a380a7c411946142d6c29abfc449a077ce8c7ad",
+  "canonical_of": null
+ },
+ "4fd1918a4bdc1b1e": {
+  "full_name": "dofaromg/mrliouword-root",
+  "branch_name": "copilot/update-document-role-assignment",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "d9f930aafe4f87701204e517b0a63a8861ec7156",
+  "canonical_of": null
+ },
+ "41b3d59aec43d6b3": {
+  "full_name": "dofaromg/mrliouword-root",
+  "branch_name": "ingest/mrl-lineage-20260725",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "464e594a5246196ab5569fb9cad074efa6b0c117",
+  "canonical_of": null
+ },
+ "561e7d92c3ebe489": {
+  "full_name": "dofaromg/mrliouword-root",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "df74139528189e71b458861c98b5953d8a49e68f",
+  "canonical_of": null
+ },
+ "62faa6492901611e": {
+  "full_name": "dofaromg/mrliouword-root",
+  "branch_name": "record/mrl-openai-model-notion-structure-20260907",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "efea86111ffac0d90818115072be8dc6ce6885b9",
+  "canonical_of": null
+ },
+ "5da9afff608304cc": {
+  "full_name": "dofaromg/mrliouword-root",
+  "branch_name": "粒子2",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "9a20c7d136521e608a9102bc4121a3172da818d6",
+  "canonical_of": null
+ },
+ "38a7bd5a46014032": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "Mrliou_fix_provenance_20260925",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "bb2ff6c37206aa717c4a40374f058ba9bb6716d5",
+  "canonical_of": null
+ },
+ "d2306a9b65fb6339": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "Mrliou_fix_scope_rights_20260926",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "fec599d8d18bda5648db6c44cee4dcc45a55faf7",
+  "canonical_of": null
+ },
+ "de7273b17a1035bf": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "MrliouwordS1.2",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "a9c90bbf42ede4707a55044a44a7d2a9dc53957f",
+  "canonical_of": null
+ },
+ "d877293ea2f4f343": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "agent/mrlhub-github-relationship",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.85,
+  "is_default": false,
+  "head_sha": "dc79bf943f17c794ceb32b151161187558504ff9",
+  "canonical_of": null
+ },
+ "70673cefd440ccfc": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "agent/mrliouai-universal-container-v1",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.85,
+  "is_default": false,
+  "head_sha": "297c052612e11d19165e2f9117bd6fc9665c1015",
+  "canonical_of": null
+ },
+ "5f2a42af7cac1c6d": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "agent/particle-api-deploy-20260921",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.85,
+  "is_default": false,
+  "head_sha": "395d58d239b5a1379c9d5dfd31b503898961398e",
+  "canonical_of": null
+ },
+ "36de63f544582087": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "claude/build-failure-issue-yi25qe",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "a05e6f5cbaf096119019b3b851c2711162097b9b",
+  "canonical_of": null
+ },
+ "7cb0ba23280efdf2": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "claude/explore-repository-structure",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "ff5137e73027cce057f10670869cdb7d4b0e3bcd",
+  "canonical_of": null
+ },
+ "383decfd6cce3a13": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "claude/new-session-oo1zf9",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "28eb92ad5f4ce6e73f4f8588c1190ffd3ef565ad",
+  "canonical_of": null
+ },
+ "45f1416f68a8d7e1": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "claude/partner-jjchvg",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "99a1a31e8fbff8bf1308f67c87fe64468e303a67",
+  "canonical_of": null
+ },
+ "d33125d4205fe19f": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "claude/partner-jjchvg-all",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "bc0e3439cf302a944e6ed7d55215e7ec662afd95",
+  "canonical_of": null
+ },
+ "10d54f260996591c": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "claude/partner-jjchvg-baseline",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "3c3217a528052a55497c9e169fec22920d38fae7",
+  "canonical_of": null
+ },
+ "93e84ad6d46aeeb2": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "claude/partner-jjchvg-connect",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "6a16d52f7f9a50bacd308f225ce3eeec94542060",
+  "canonical_of": null
+ },
+ "5110c64287b59879": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "claude/partner-jjchvg-merkle",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "e803786b5fd07e5226d21846327a05bf013a41bd",
+  "canonical_of": null
+ },
+ "8ad291eb2c60c0e3": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "claude/partner-jjchvg-particle-api",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "e916ce29abea61a42ecd2f589927db3af5793083",
+  "canonical_of": null
+ },
+ "e1956c2b1646f716": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "claude/partner-jjchvg-provenance",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "8164e2d45d2592b1674ff9bfe5f00725c520177f",
+  "canonical_of": null
+ },
+ "c5e33bb9c3a70c30": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "claude/partner-jjchvg-r2-paging",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "b0d83c5004dd97006d85e0344dae9b43909c57a8",
+  "canonical_of": null
+ },
+ "41963a993190ed39": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "cloud",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "1a2af59c71fb77b3e71546bc402bf45cd76a9990",
+  "canonical_of": null
+ },
+ "3c7b03017380a412": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "codex/mrl-channel-single-writer-20260922",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "759edfe40016e8d790e7f1b4bb4d9f731c15941e",
+  "canonical_of": null
+ },
+ "8d69f3388d5ad8cd": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "codex/mrl-core-deployment-bindings-20260926",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "85655319fced8e89676cc7cf8b333e8d5745e57d",
+  "canonical_of": null
+ },
+ "21c6f95b44f8193c": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "codex/mrl-core-public-gate-20260924",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "7ff34e5c404ec9fc8e562336750f5b6563a9ef85",
+  "canonical_of": null
+ },
+ "23599f32917360fc": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "codex/task-217537952-1130234040-1577bffa-f56c-4387-83fb-98f5a4803455",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "80584a281523fb207931c6eeffbf87b3d9d0a7fd",
+  "canonical_of": null
+ },
+ "91f050e6f2d50f93": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "codex/update-align-mainline",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "5d6ca452052d7b700807571c9c93563eb3823335",
+  "canonical_of": null
+ },
+ "41d7ad8662cd343e": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/add-adapter-architecture",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "ad43d29d15806443ae4eeee231533a979da006ba",
+  "canonical_of": null
+ },
+ "f7ad964309eccf00": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/add-ai-world-particle-register",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "b5df908333af975bec9fe05701814e0357219ddb",
+  "canonical_of": null
+ },
+ "30cda7e3213be895": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/add-daily-external-repo-pull",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "ef4b6f4dc65cc9550edd7ed3a6a088073c505e35",
+  "canonical_of": null
+ },
+ "7764a7e29b5f2bf1": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/add-duplicate-file-check",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "ede279fa18e2ed044eba1c56dff95678c625c1db",
+  "canonical_of": null
+ },
+ "29f2ac6189bdfe36": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/add-file-overview-to-system-engineering",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "4cf4ebdb2e5140134e6ff5eebc12971e6459d0d1",
+  "canonical_of": null
+ },
+ "d0d4421136f3efff": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/add-global-log-sync-system",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "f42c56e5f3c8ffe39d8be346945b891d5ed6596a",
+  "canonical_of": null
+ },
+ "83025f6c22663e01": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/add-global-log-sync-system-again",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "d0371a2158f6c176b6f597741d091defbdcc2134",
+  "canonical_of": null
+ },
+ "feb7c72a0e5e0932": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/add-homebrew-install-instructions",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "efcec61b0800b705e0f6be0b94047db9c0fe5cfb",
+  "canonical_of": null
+ },
+ "2e54a814e173e967": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/add-mcp-header-authorization",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "b20303826836b9edc423eb640569662493759a5d",
+  "canonical_of": null
+ },
+ "045a09b5be386fbe": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/add-multi-vendor-ai-support",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "72f6c3be9ae15f9f2f7547edf523f7c736a2ff23",
+  "canonical_of": null
+ },
+ "9e840e8c2943cfb3": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/add-particle-plugin-runtime",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "1088882f5a48cd722555dc4c8b01167e5a138b0b",
+  "canonical_of": null
+ },
+ "9b4c2d234704c066": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/add-patterns-file",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "40c2af4fc59db241cdbd1439a6477e429b19db49",
+  "canonical_of": null
+ },
+ "611f1ed3decf4cde": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/add-universal-container-runtime",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "4ee978fdece037af16b70e37114795445f6184c9",
+  "canonical_of": null
+ },
+ "0edfc08f8fcf4c45": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/add-universal-container-runtime-again",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "1cdfdbc6668a4c0da2528458a3d59cc679a6e648",
+  "canonical_of": null
+ },
+ "bbbd1419e22abbed": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/add-workflow-optimizer-skill",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "81dcf3afed4c67b1f94755ee96d6704468accfec",
+  "canonical_of": null
+ },
+ "72eec7f12726b402": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/auth-token-integration",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "bb54c072d42398f55f291f84076624eb3b073dd8",
+  "canonical_of": null
+ },
+ "af2a646f1eaec701": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/check-recent-task-issues",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "ddd7e721c7f76dac88ad8c276f6c818bd2e2facf",
+  "canonical_of": null
+ },
+ "e05618dcc504e025": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/checkout-pull-request-11325",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "062f7912743084d7e8b4366ba24801c29eb8aa0e",
+  "canonical_of": null
+ },
+ "6e55ae65e7fe3a28": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/create-cloudflare-containers",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "c6600ee0d428bc225771ac8058346b0d47809d74",
+  "canonical_of": null
+ },
+ "cc2f4747a5ecdf65": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/create-unified-system",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "e398306c4383c6f2e4c8c2717d10bc029085bd47",
+  "canonical_of": null
+ },
+ "63fe52daea01866b": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/create-universal-runtime",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "9ec9f1147dcac1508657c32633587b56f66c0ef5",
+  "canonical_of": null
+ },
+ "18b11196a35eea57": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/deploy-wrangler-secrets",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "8bd3b48b6322882b66507d272530c6aadfdeacb8",
+  "canonical_of": null
+ },
+ "5eecae8d881a5c1c": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/dofaromg-2",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "fb00214e12ea5123c07255a7abe2ccaf72325a14",
+  "canonical_of": null
+ },
+ "9529afcd7e38c238": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/dofaromg-mrl-ai-system",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "cfef8f88efb61a242f564ea8f67e57a850653c62",
+  "canonical_of": null
+ },
+ "73fec9c0478a88a8": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/fix-container-runtime-ci-errors",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "9cc605c7766da9f2f11be08abf85194cd40a9a7f",
+  "canonical_of": null
+ },
+ "cfbe7a2151ce820d": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/fix-external-brand-issues",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "58f8a591b5213c90fa1ad41090e8875be9c8b0a8",
+  "canonical_of": null
+ },
+ "16c2139af9bc93ad": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/fix-github-actions-job",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "211889aca1593436061f7320c00d63c1f766cd42",
+  "canonical_of": null
+ },
+ "b979190445383d22": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/fix-pull-request-issues",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "fbae122af503d033ae01f2f8e23666c9ee2bba68",
+  "canonical_of": null
+ },
+ "0398ae5075e758e8": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/fix-review-comments",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "7d576d54f883e03db1380d3ad655be3ce032656e",
+  "canonical_of": null
+ },
+ "460b1cb6ca538b4f": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/fix-typo-in-documentation",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "4dd914c334b0b1eae73cca4fec3535e8d2050eb4",
+  "canonical_of": null
+ },
+ "96e2ba4836e455da": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/fix-with-copilot",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "e331f361236fd41b8498e4edea678bd2dd7593d6",
+  "canonical_of": null
+ },
+ "802e6de85576a99b": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/integrate-core-docs",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "9815a18b152298bd6cb61de4077ed6c9219380ee",
+  "canonical_of": null
+ },
+ "39f93e0626fc1f0e": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/integrate-core-docs-to-mrliouword-system",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "a168b33d0c583d59d0d9970ba6f6e14537cef7e0",
+  "canonical_of": null
+ },
+ "db51fe0419a91dfe": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/integrate-core-docs-to-repo",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "1394639ae3233ff1de5022de3f78894039c9c32e",
+  "canonical_of": null
+ },
+ "2b0858683a76c6e3": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/investigate-domain-binding-issue",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "b973b746b85f4c8481ccf1519c554d10cf32d730",
+  "canonical_of": null
+ },
+ "34b6a504b6b9f2c7": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/main",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "131406a0e857c9bd0f0b76f2308d93b3eaf4e1ca",
+  "canonical_of": null
+ },
+ "1314fd9f8ef39222": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/optimize-repositories-integration",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "660d309269fe0453efb27b3a8c46a92b29e53382",
+  "canonical_of": null
+ },
+ "a458f09b2d00c268": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/pr-57-update-docs",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "d4a02db3d6e331ac836541f2a9d75e9bc8d757ea",
+  "canonical_of": null
+ },
+ "d42225bd5723be02": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/pull-56",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "223f5b15c6bfc28e12eb06579fdc6d18efac9eba",
+  "canonical_of": null
+ },
+ "28be0fa9f42265bf": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/refactor-commit-log-formatting",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "3d9f6afd7ab77b7a68cf9d6ca5fccaa6caea752f",
+  "canonical_of": null
+ },
+ "5504c3363ff8dd70": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/resolve-gi2-issue",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "1d4963ab3bc412a53041d8cf5eab50bb0da4c376",
+  "canonical_of": null
+ },
+ "3ddcd437b25b6d73": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/restore-deleted-files-and-tasks",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "2cda2a7511a7850b57daf8e46c509de00d3bfb64",
+  "canonical_of": null
+ },
+ "e880979d0b3dd855": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/restore-missing-core-files",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "ed7bfaec074388a7d74d531f71a2805df5350700",
+  "canonical_of": null
+ },
+ "07f095722c97a54f": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/setup-closed-loop-sync",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "ca1ff285610ebaf244248e85802a2df20130afbe",
+  "canonical_of": null
+ },
+ "22d1f7b9651afdbc": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/suggest-variable-function-names",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "ac48e803927500f803e7a906b15284020869755b",
+  "canonical_of": null
+ },
+ "a88ce22b29359f78": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/task-217537952-1130234040-1cb5e536-4d33-46b9-b103-4854f12f42c3",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "42dcff175babba5e0cbd92dd30fd2cbcbfe2c023",
+  "canonical_of": null
+ },
+ "79997df1414cf773": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/task-217537952-1130234040-5ea7a8a5-2d04-4091-9ab0-f0d24678f344",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "21019e032aa4b86871b4cfee9d70eed2f9993abd",
+  "canonical_of": null
+ },
+ "4bb6f0e7d136255f": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/task-217537952-1130234040-a91fdd17-dfec-4bb3-88b9-c2f35efd1f27",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "8bd3b48b6322882b66507d272530c6aadfdeacb8",
+  "canonical_of": "dofaromg/mrliouword-system@copilot/deploy-wrangler-secrets"
+ },
+ "9f1fd107ea8c5a7f": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/task-217537952-1130234040-d0224c92-3fbd-47cf-83cd-2d97e54e09f3",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "aef18eecd44b80909a1b642dccc93381b5036a72",
+  "canonical_of": null
+ },
+ "f35d03abfc066c46": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/troubleshoot-push-limit",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "1d7986d0bd95e85f7dfefd69f7b5d3d775e9d4d5",
+  "canonical_of": null
+ },
+ "7a8cebacb001d6ed": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/update-action-run-logs",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "f58a155d19e24b1019ecabdfdbf806f97eb71ab0",
+  "canonical_of": null
+ },
+ "e738f95eda94299e": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/update-code-implementation",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "19a4f659a6fcf36c4b096322146a2e6318419fc5",
+  "canonical_of": null
+ },
+ "74e13d503fea9d99": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/update-deployment-guide-v4-0-0",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "c889c2db2f8cb6ab7a301e24c30ad573cce7dec2",
+  "canonical_of": null
+ },
+ "80d0babc77213908": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/update-documentation-for-team",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "69dd2b4aefdc474c5446ff5ed9c5cde976f63152",
+  "canonical_of": null
+ },
+ "d7b926ffe8110de7": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/update-pr-6",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "884f519b6e86bcafd1f2656d8f2cd86ecf00d6ce",
+  "canonical_of": null
+ },
+ "cd70923835394025": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/update-project-description",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "0cebe84b3fcaa231bccbe0bc39d364d92d5fa278",
+  "canonical_of": null
+ },
+ "051a5a98561be53c": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/update-readme-documentation",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "5b350a09d9ffac54e4507ae53aca40f419f93e38",
+  "canonical_of": null
+ },
+ "ebff058becae0737": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/update-version-completion-ability",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "21087e9fd700a8e4b60d8af52cd1ba035b705775",
+  "canonical_of": null
+ },
+ "55e4d509e8bfda3c": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "copilot/upgrade-sync-functionality",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "aae64293dd967cb09821020edc2d6570f206cf54",
+  "canonical_of": null
+ },
+ "765888d4862bc365": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "docs/mrl-mother-runtime-blueprint-v1",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "dbedb49f62b0ceaf040b0a3a4eb9097d73556096",
+  "canonical_of": null
+ },
+ "8a493eda9b3a4b95": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "feature/intelligent-repo-sync-v2",
+  "role": "FEATURE_BRANCH",
+  "confidence": 0.8,
+  "is_default": false,
+  "head_sha": "9aa20c8e8c880ec1a7891f431f2065eba193dbab",
+  "canonical_of": null
+ },
+ "ff3aa875bf330987": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "feature/mrl-cf-mother-gateway-v0.1",
+  "role": "FEATURE_BRANCH",
+  "confidence": 0.8,
+  "is_default": false,
+  "head_sha": "98baf11e666069bff59a2b6cf7fbcc5528b25768",
+  "canonical_of": null
+ },
+ "e1985cae225496de": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "feature/mrl-systema-particlelayer-v0.1",
+  "role": "FEATURE_BRANCH",
+  "confidence": 0.8,
+  "is_default": false,
+  "head_sha": "05c4d3fccd98d46d469452aad079c9be47a873c3",
+  "canonical_of": null
+ },
+ "cdfabba60ac077f0": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "0f43326282d8df20ae6825fc7f6e918bb19ba9f1",
+  "canonical_of": null
+ },
+ "4ead23cf89e2151c": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "mrl/full-platform-connect",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "66fb2493d8c1870c7aadbb24fb2c68659e6c207c",
+  "canonical_of": null
+ },
+ "b2cf0b6687ef7301": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "mrl/website-cross-source-reconciliation-v1.2",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "81e49516133e214dba18ee59f66426ea314a5b58",
+  "canonical_of": null
+ },
+ "81244c2a72eed8b9": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "mrliou/clean-rebuild-data-recovery-2026-08-03",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "002d7e1fe445974ba8879635276379d0877bdfd0",
+  "canonical_of": null
+ },
+ "ffe6ac1276346ede": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "mrlious/sev1-authority-equality-rebuild-2026-08-03",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "7301974015741d4f135eb9714a0a9282415884fd",
+  "canonical_of": null
+ },
+ "d65e71495740ca6b": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "revert-15-copilot/checkout-pull-request-11325",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "14b7cf592f7e1ed4426896704564ad1945856ccc",
+  "canonical_of": null
+ },
+ "531d0fbd8f6e6474": {
+  "full_name": "dofaromg/mrliouword-system",
+  "branch_name": "update_worker_name_to_mrliouword-system",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "c7838801143cdf5091a5bc52b72f8b4f004bafc3",
+  "canonical_of": null
+ },
+ "449051e56d64c0ca": {
+  "full_name": "dofaromg/omniroute-deploy",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "5bffbb12d838762e3308753727eb6d2c0f6324fb",
+  "canonical_of": null
+ },
+ "66791476106e6c51": {
+  "full_name": "dofaromg/particle-file-system",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "349bad2a98d3c635193ec58167aed6db7249059d",
+  "canonical_of": null
+ },
+ "08ac079669640675": {
+  "full_name": "dofaromg/rox-one-terminal",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "c1b87b865c2f1b0552bc3ff15ed77b965dfcc2d5",
+  "canonical_of": null
+ },
+ "e378bf3918bd3ee3": {
+  "full_name": "dofaromg/tool-silk-",
+  "branch_name": "1-exercise-github-pages",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "52f31e91046560f81228ad5ebdf6111d67ff893d",
+  "canonical_of": "dofaromg/tool-silk-@dofaromg-patch-1"
+ },
+ "e3887794f20454f7": {
+  "full_name": "dofaromg/tool-silk-",
+  "branch_name": "copilot/add-mrliouworld-browser",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "a1e4317d26e44ee424d344f9efe519e87bde3c2f",
+  "canonical_of": null
+ },
+ "9dad90bc6c9e79c4": {
+  "full_name": "dofaromg/tool-silk-",
+  "branch_name": "copilot/add-particle-access-tests",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "249a51809ad2acf67524d1fa367170ee864a4715",
+  "canonical_of": null
+ },
+ "c06d82513c24d2a2": {
+  "full_name": "dofaromg/tool-silk-",
+  "branch_name": "copilot/enhance-system-dimension-function",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "09e7240e9a97f60869a004945f74536b9ed26623",
+  "canonical_of": null
+ },
+ "701e57aaf8cfb378": {
+  "full_name": "dofaromg/tool-silk-",
+  "branch_name": "copilot/implement-language-personality-modules",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "de638211c1a67812dd62bd0a655a190b70bbad98",
+  "canonical_of": null
+ },
+ "7cf5c04023bee508": {
+  "full_name": "dofaromg/tool-silk-",
+  "branch_name": "copilot/restore-system-and-deploy",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "4da8e05489418b8da2809c0f906d32aa2be694b6",
+  "canonical_of": null
+ },
+ "e41aebccdb1e64b2": {
+  "full_name": "dofaromg/tool-silk-",
+  "branch_name": "copilot/update-flow-agent-version",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "9b6b55fb0cc529cc8c2de23b3288d07b7594c6a0",
+  "canonical_of": null
+ },
+ "287a5824e4755f52": {
+  "full_name": "dofaromg/tool-silk-",
+  "branch_name": "copilot/update-pull-request-templates",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "93596ecd576251bc9e691351734c35a335143272",
+  "canonical_of": null
+ },
+ "f037cfdda6e2c712": {
+  "full_name": "dofaromg/tool-silk-",
+  "branch_name": "copilot/update-quiche-repo-url",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "e3fd084078a53ed5bbfddee2735be6f950880ed9",
+  "canonical_of": null
+ },
+ "96a5db34265f533b": {
+  "full_name": "dofaromg/tool-silk-",
+  "branch_name": "copilot/update-repo-align-new-quantity",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "846784719c23e98ac5b62041a78877c0c835c2a7",
+  "canonical_of": null
+ },
+ "4e344517cfe47a28": {
+  "full_name": "dofaromg/tool-silk-",
+  "branch_name": "dofaromg-patch-1",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.9,
+  "is_default": false,
+  "head_sha": "52f31e91046560f81228ad5ebdf6111d67ff893d",
+  "canonical_of": null
+ },
+ "64e15ba98d912014": {
+  "full_name": "dofaromg/tool-silk-",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "a62b2de7deb9c101368afbb974f8cf7c895e6dcf",
+  "canonical_of": null
+ },
+ "c85425205255121d": {
+  "full_name": "dofaromg/welcome-to-working-copy",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "76e0e291c88a6e2718439db6515b4a173219ef42",
+  "canonical_of": null
+ },
+ "dda757acce972cbe": {
+  "full_name": "dofaromg/z814241",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "b4638626c6888240d6b4c9621d2286280498cfdc",
+  "canonical_of": null
+ },
+ "e585d226261692e8": {
+  "full_name": "Mrliou/demo-repository",
+  "branch_name": "add-badges-to-readme",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "6cd721debb18f5e6725d3a821ad561c08ca11d04",
+  "canonical_of": null
+ },
+ "81f847adee10cef6": {
+  "full_name": "Mrliou/demo-repository",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "2f746649a2d91b89167dda895f4cde6cdf0d6137",
+  "canonical_of": null
+ },
+ "cfa671043bbe248b": {
+  "full_name": "Mrliou/flow-tasks",
+  "branch_name": "Mrliou/mrl-authorization-repair-r07",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "eb37dffe259adf2dd92c1dff75dcc87a9a339562",
+  "canonical_of": null
+ },
+ "ca30673c71997a52": {
+  "full_name": "Mrliou/flow-tasks",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "138578b2c9bd30d949fd6b17235c297f42f05852",
+  "canonical_of": null
+ },
+ "a82cf0a57e823470": {
+  "full_name": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
+  "branch_name": "Mrliou/mrl-authorization-repair-r07",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "a1284ee61b99ed7c70880dac652e77d02de96b19",
+  "canonical_of": null
+ },
+ "5cdd59e3016b5aa1": {
+  "full_name": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
+  "branch_name": "copilot/copilotupdate-naming-convention",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "e8c2215854f8f7e17a75b7a2292e709134d3d472",
+  "canonical_of": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-@copilot/mrl-mother-core-engine"
+ },
+ "0cf054d723b81494": {
+  "full_name": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
+  "branch_name": "copilot/create-mrl-aes-structure",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "e54309668d5fdb9fa532c222ac3ae88c123183f5",
+  "canonical_of": null
+ },
+ "092b06dcad74b4e0": {
+  "full_name": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
+  "branch_name": "copilot/mrl-mother-core-engine",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "e8c2215854f8f7e17a75b7a2292e709134d3d472",
+  "canonical_of": null
+ },
+ "e4a50a049b2fab33": {
+  "full_name": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
+  "branch_name": "copilot/mrliou-mrl-evolution-kernel-v1",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "dbfd9b8fad239dded73c3aac2c8844e256ed8654",
+  "canonical_of": null
+ },
+ "bf85302d3bf6501b": {
+  "full_name": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
+  "branch_name": "copilot/mrliou-mrl-mother-v2",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "8b5821f1bf7a29faef1a964f169faabbf177c67f",
+  "canonical_of": null
+ },
+ "edb94c35cf273ea6": {
+  "full_name": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
+  "branch_name": "copilot/update-naming-convention",
+  "role": "MIRROR_BRANCH",
+  "confidence": 0.95,
+  "is_default": false,
+  "head_sha": "24a3654091d4f5a028fccfeb9c827af01809605f",
+  "canonical_of": null
+ },
+ "85b1c233b42de7c3": {
+  "full_name": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "37e0a4c96ba47674e189ed9955525b73e392da25",
+  "canonical_of": null
+ },
+ "d86f74eb56c439bc": {
+  "full_name": "Mrliou/MRL_AI_SYSTEM_fork",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "4d335e4da3f47616ff4711c81e20e4d42698ec7a",
+  "canonical_of": null
+ },
+ "b493b62b7d3b1b52": {
+  "full_name": "Mrliou/Mrl_asi_system",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "1e1b8654d44fb0ff52ec6199f562179420657deb",
+  "canonical_of": null
+ },
+ "938754dc5521f14e": {
+  "full_name": "Mrliou/Mrl_Mother",
+  "branch_name": "Mrliou/mrl-authorization-repair-r07",
+  "role": "UNKNOWN_BRANCH",
+  "confidence": 0.2,
+  "is_default": false,
+  "head_sha": "27fe965915f9726b26108665a77fe7ec5f9b082a",
+  "canonical_of": null
+ },
+ "976b0a23e92309d9": {
+  "full_name": "Mrliou/Mrl_Mother",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "689491edd83317989779172ea5b9f72ab3e14f72",
+  "canonical_of": null
+ },
+ "ab9063678708d6d5": {
+  "full_name": "Mrliou/silly",
+  "branch_name": "main",
+  "role": "ROOT_MAINLINE",
+  "confidence": 0.95,
+  "is_default": true,
+  "head_sha": "b7bf5c4ef674d17e1c454573d67ef100d2337e5d",
   "canonical_of": null
  }
 }

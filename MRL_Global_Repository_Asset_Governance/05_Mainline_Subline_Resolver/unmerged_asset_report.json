@@ -1,7 +1,160 @@
 {
- "total": 71,
+ "total": 128,
  "note": "P1b/P2 之前不得封存",
  "items": [
+  {
+   "branch_id": "1d49b2a63a8aa219",
+   "full_name": "dofaromg/-Mr.liouagi",
+   "branch_name": "Mrliou/mrl-authorization-repair-r07",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "19dafe0625938ed5586d93eaa5cf45ace459c463",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "e459a6253c7ff47e",
+   "full_name": "dofaromg/fastapi",
+   "branch_name": "fix/mdbook-workflow-and-structure",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "5c173caba8f459e7c1d4f16bb8046c64a2a5f85c",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6563e13275ac1bd3",
+   "full_name": "dofaromg/flow-tasks-01",
+   "branch_name": "231",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "47e89a5ef7b9a07855aa591b140869e069faa329",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "9db77af6e3c251ff",
+   "full_name": "dofaromg/flow-tasks-01",
+   "branch_name": "revert-2-revert-1-dofaromg-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "62ec9e8229d81843a4fff8582467b7c9e3dfbee8",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "4b732fb66e2729c6",
+   "full_name": "dofaromg/flow-tasks-01",
+   "branch_name": "revert-3-revert-2-revert-1-dofaromg-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "ce0d87fb5bcf66db9ea8abcf81fd97cb503be28e",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "b1ec5ff577af2272",
+   "full_name": "dofaromg/flow-tasks-01",
+   "branch_name": "revert-4-revert-3-revert-2-revert-1-dofaromg-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "07f05731c1d110a2f44a682d6f92f9b430521f6a",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "7de36164f7327334",
+   "full_name": "dofaromg/flow-tasks-01",
+   "branch_name": "revert-5-revert-4-revert-3-revert-2-revert-1-dofaromg-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "cc56f0e1b8dd0e7a08d7772983876f0b1991a55e",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "13646208fbe9e05b",
+   "full_name": "dofaromg/flow-tasks-01",
+   "branch_name": "revert-6-revert-5-revert-4-revert-3-revert-2-revert-1-dofaromg-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "33a10d9fd28c48c92475e4562a0018e8dcc0a4f4",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "1f3330013d09424e",
+   "full_name": "dofaromg/flow-tasks-01",
+   "branch_name": "vercel/react-server-components-cve-vu-hfn95b",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "0c30fb8f88294e2246cf4fafca256a79040d0b34",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "5fb8975d3e0f4ece",
+   "full_name": "dofaromg/flow-tasks-01",
+   "branch_name": "vercel/vercel-speed-insights-integrat-vhdad9",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "8084dfb491fce885f012216dad899f1f0f42b38a",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "31e12af28a5a45f5",
+   "full_name": "dofaromg/flow-tasks-01",
+   "branch_name": "劉",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "4acb69de0bab4d9f335814437c6038ea34cf5686",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "eba1546a087d5a3a",
+   "full_name": "dofaromg/flow-tasks-01",
+   "branch_name": "記憶",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "247050e5b95511515efc3a9b3eb813064bb1c507",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6389cbff7fae710b",
+   "full_name": "dofaromg/growthbook-flags-sdk-example",
+   "branch_name": "vercel/dependencies-for-react-flight-8xh3gy",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "e726ee5fadc8b4ce703cd7afd4dc1b3d174a3dda",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6322de4d9c3c843b",
+   "full_name": "dofaromg/growthbook-flags-sdk-example",
+   "branch_name": "vercel/vercel-web-analytics-to-nextjs-aj1a4g",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "45e1fa070066976c98f7129ca13526c4342c1db3",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6f3b6df6f4274661",
+   "full_name": "dofaromg/MRL-lecrev",
+   "branch_name": "MRL_fix_reusable_permissions_20260915",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "832c074339098194839cfe8405806dd80c1a8a70",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "841c4acc258724bd",
+   "full_name": "dofaromg/MRL-lecrev",
+   "branch_name": "Mrliou_fix_trigger_release_startup_20260914",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "a5d8e5210dc7ecfdc2f438badc982a0c7adb6d16",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "fd1ca202b7224221",
+   "full_name": "dofaromg/MRL-lecrev",
+   "branch_name": "Mrliou_workflow_owner_guard_followup_20260914",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "6a0f137c755b1fec23c7175b7f9cd60a677eef1b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
   {
    "branch_id": "d997957f52448500",
    "full_name": "dofaromg/MRL_AI_SYSTEM",
@@ -639,6 +792,366 @@
    "role": "UNKNOWN_BRANCH",
    "confidence": 0.2,
    "head_sha": "8c973afe4995c3bb4c93be4c9feb6f6ba0baf029",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "81ea03dd9306480e",
+   "full_name": "dofaromg/Mrl_w01234567",
+   "branch_name": "Mrliou/mrl-authorization-repair-r07",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "04d3a8dec40227b0d9caf74f0092aafff8b707d2",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "20e51c5f4c4a09fc",
+   "full_name": "dofaromg/Mrliou_AIworld",
+   "branch_name": "ingest/mrl-lineage-20260725",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "6413fcebd9eec186b83bc2eba4007c1920916359",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "7dfcd3abbbd259c0",
+   "full_name": "dofaromg/Mrliou_AIworld",
+   "branch_name": "粒子2",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "294363bea3e4c34bc7f628a848b9dfac77ff1ac5",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "9a3acfef994012d9",
+   "full_name": "dofaromg/MrliouAI-box",
+   "branch_name": "Mrliou/mrl-authorization-repair-r07",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "817c2496a7eb2c7bc8baa78d2a03709d76cd3e38",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "4ef5f7fc1710a8bf",
+   "full_name": "dofaromg/MrliouAI-box",
+   "branch_name": "mrl-direct-product-source",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "d87ec57e5453b3518696dbbfe07db8adc873a3af",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "17e171b6045838af",
+   "full_name": "dofaromg/MrliouAI-box",
+   "branch_name": "mrliouai",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "5beba78a744798144b5072265075e5969a5b6315",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "968996d9c4f629cf",
+   "full_name": "dofaromg/mrlioudb",
+   "branch_name": "Mrliou/mrl-authorization-repair-r07",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "ac1253f0853bcd2c4891ea4aee4c04e501c5f827",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "0080c1815282fd8b",
+   "full_name": "dofaromg/Mrliouword-",
+   "branch_name": "231",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "15e1ad08ece7b6c76da2041949a6871df1cb6c22",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "592e96db0bec81a5",
+   "full_name": "dofaromg/Mrliouword-",
+   "branch_name": "dofaromg-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "cd5fb59ace4615e7054dcadd486a6b717ffe5c51",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a31a0576ef8ce317",
+   "full_name": "dofaromg/Mrliouword-",
+   "branch_name": "dofaromg-patch-2",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "ca786bf387cbfb0bf71af85a980cbfa09a23ebd8",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "fb7c6642022b7e38",
+   "full_name": "dofaromg/Mrliouword-",
+   "branch_name": "revert-1-dofaromg-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "b689601459750b31361b20cad79f3aec87e0c23a",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a11ac619854e77fa",
+   "full_name": "dofaromg/Mrliouword-",
+   "branch_name": "revert-2-revert-1-dofaromg-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "1d1e10cad32df93e53bae117f1b2325d000ce8d9",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "dbf3a52ae9d823e9",
+   "full_name": "dofaromg/Mrliouword-",
+   "branch_name": "revert-3-revert-2-revert-1-dofaromg-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "346e6880cb7c57b4507b5f0831a42ffa7f284995",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "45dc0cd758778b02",
+   "full_name": "dofaromg/Mrliouword-",
+   "branch_name": "revert-4-revert-3-revert-2-revert-1-dofaromg-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "1e5106a66a94b4bacb0b8dedc5dd28f3d9259f0d",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "e7e9ee1501afe995",
+   "full_name": "dofaromg/Mrliouword-",
+   "branch_name": "revert-5-revert-4-revert-3-revert-2-revert-1-dofaromg-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "8682bac99c17772fa477817b77740df4c268b04b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "4000ec4e09333ad1",
+   "full_name": "dofaromg/Mrliouword-",
+   "branch_name": "revert-6-revert-5-revert-4-revert-3-revert-2-revert-1-dofaromg-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "58911bbd1b3a4230e945a2d70dc27454a5ed91a8",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "d6babbf0b78c9765",
+   "full_name": "dofaromg/Mrliouword-",
+   "branch_name": "劉",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "428066180bcf56dfbd31f3041f9065687224b31e",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "2277b5d8524805ac",
+   "full_name": "dofaromg/Mrliouword-",
+   "branch_name": "宥麟",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "26dfb2e235858aef114d96ce4c82b32e86a54810",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "4b7df56affe94c92",
+   "full_name": "dofaromg/Mrliouword-",
+   "branch_name": "記憶",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "641e040a590948d02e250cc570e55f9a61a1765c",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "41b3d59aec43d6b3",
+   "full_name": "dofaromg/mrliouword-root",
+   "branch_name": "ingest/mrl-lineage-20260725",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "464e594a5246196ab5569fb9cad074efa6b0c117",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "62faa6492901611e",
+   "full_name": "dofaromg/mrliouword-root",
+   "branch_name": "record/mrl-openai-model-notion-structure-20260907",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "efea86111ffac0d90818115072be8dc6ce6885b9",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "5da9afff608304cc",
+   "full_name": "dofaromg/mrliouword-root",
+   "branch_name": "粒子2",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "9a20c7d136521e608a9102bc4121a3172da818d6",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "38a7bd5a46014032",
+   "full_name": "dofaromg/mrliouword-system",
+   "branch_name": "Mrliou_fix_provenance_20260925",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "bb2ff6c37206aa717c4a40374f058ba9bb6716d5",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "d2306a9b65fb6339",
+   "full_name": "dofaromg/mrliouword-system",
+   "branch_name": "Mrliou_fix_scope_rights_20260926",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "fec599d8d18bda5648db6c44cee4dcc45a55faf7",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "de7273b17a1035bf",
+   "full_name": "dofaromg/mrliouword-system",
+   "branch_name": "MrliouwordS1.2",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "a9c90bbf42ede4707a55044a44a7d2a9dc53957f",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "41963a993190ed39",
+   "full_name": "dofaromg/mrliouword-system",
+   "branch_name": "cloud",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "1a2af59c71fb77b3e71546bc402bf45cd76a9990",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "765888d4862bc365",
+   "full_name": "dofaromg/mrliouword-system",
+   "branch_name": "docs/mrl-mother-runtime-blueprint-v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "dbedb49f62b0ceaf040b0a3a4eb9097d73556096",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "8a493eda9b3a4b95",
+   "full_name": "dofaromg/mrliouword-system",
+   "branch_name": "feature/intelligent-repo-sync-v2",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "9aa20c8e8c880ec1a7891f431f2065eba193dbab",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "ff3aa875bf330987",
+   "full_name": "dofaromg/mrliouword-system",
+   "branch_name": "feature/mrl-cf-mother-gateway-v0.1",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "98baf11e666069bff59a2b6cf7fbcc5528b25768",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "e1985cae225496de",
+   "full_name": "dofaromg/mrliouword-system",
+   "branch_name": "feature/mrl-systema-particlelayer-v0.1",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "05c4d3fccd98d46d469452aad079c9be47a873c3",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "4ead23cf89e2151c",
+   "full_name": "dofaromg/mrliouword-system",
+   "branch_name": "mrl/full-platform-connect",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "66fb2493d8c1870c7aadbb24fb2c68659e6c207c",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "b2cf0b6687ef7301",
+   "full_name": "dofaromg/mrliouword-system",
+   "branch_name": "mrl/website-cross-source-reconciliation-v1.2",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "81e49516133e214dba18ee59f66426ea314a5b58",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "81244c2a72eed8b9",
+   "full_name": "dofaromg/mrliouword-system",
+   "branch_name": "mrliou/clean-rebuild-data-recovery-2026-08-03",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "002d7e1fe445974ba8879635276379d0877bdfd0",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "ffe6ac1276346ede",
+   "full_name": "dofaromg/mrliouword-system",
+   "branch_name": "mrlious/sev1-authority-equality-rebuild-2026-08-03",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "7301974015741d4f135eb9714a0a9282415884fd",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "d65e71495740ca6b",
+   "full_name": "dofaromg/mrliouword-system",
+   "branch_name": "revert-15-copilot/checkout-pull-request-11325",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "14b7cf592f7e1ed4426896704564ad1945856ccc",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "531d0fbd8f6e6474",
+   "full_name": "dofaromg/mrliouword-system",
+   "branch_name": "update_worker_name_to_mrliouword-system",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "c7838801143cdf5091a5bc52b72f8b4f004bafc3",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "e585d226261692e8",
+   "full_name": "Mrliou/demo-repository",
+   "branch_name": "add-badges-to-readme",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "6cd721debb18f5e6725d3a821ad561c08ca11d04",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "cfa671043bbe248b",
+   "full_name": "Mrliou/flow-tasks",
+   "branch_name": "Mrliou/mrl-authorization-repair-r07",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "eb37dffe259adf2dd92c1dff75dcc87a9a339562",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a82cf0a57e823470",
+   "full_name": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
+   "branch_name": "Mrliou/mrl-authorization-repair-r07",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "a1284ee61b99ed7c70880dac652e77d02de96b19",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "938754dc5521f14e",
+   "full_name": "Mrliou/Mrl_Mother",
+   "branch_name": "Mrliou/mrl-authorization-repair-r07",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "27fe965915f9726b26108665a77fe7ec5f9b082a",
    "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
   }
  ]

@@ -1,11 +1,13 @@
 {
-  "note": "head_sha equivalence groups across (owner, repo, branch) coordinates — mirrors or divergence points.",
-  "total_groups": 38,
+  "note": "Groups of branches that share the same HEAD commit sha. 'distinct_repos' >= 2 indicates cross-repo mirrors/forks.",
+  "total_groups": 43,
+  "cross_repo_groups": 0,
   "top_50": [
     {
       "head_sha": "4a4db8a29cf732327e406c204fc69d3d07886281",
       "occurrences": 6,
       "distinct_locations": 6,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -61,6 +63,7 @@
       "head_sha": "073ec1027f055c1f446113ba38e63f71112ecdb2",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -92,6 +95,7 @@
       "head_sha": "1f68e42ecd8687f003fbdab3cb18d37724b0e740",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -123,6 +127,7 @@
       "head_sha": "29a192e8e0695df5a0efc2dab167cb5e54ef283f",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -154,6 +159,7 @@
       "head_sha": "351e73707272ad84b518e8b41156afa18161e5fd",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -185,6 +191,7 @@
       "head_sha": "3e5fd1ee35fa212753869dae32bf912bb6db2cab",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -216,6 +223,7 @@
       "head_sha": "48ed778b281a597c9823e56b118a0b14951323a2",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -247,6 +255,7 @@
       "head_sha": "5c3ee9e329d0f77298d8ccc13dc055a5ebe2a6a6",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -278,6 +287,7 @@
       "head_sha": "6086cc0599f2164a8d043b4bff45598f923e990b",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -309,6 +319,7 @@
       "head_sha": "6091fd0a74c5cf2d9498e36ca56b36dd4795cd6b",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -340,6 +351,7 @@
       "head_sha": "66db124f393fceeafe3a5456b9610202109dc217",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -371,6 +383,7 @@
       "head_sha": "6f3c9a3a56ea57dbdd791a7483e41c8da5d5ad80",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -402,6 +415,7 @@
       "head_sha": "776536bddda43891a692491f5fe69c85f213c401",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -433,6 +447,7 @@
       "head_sha": "8dbcc105a88a36ca4e73ae1961e43b22b7b9980b",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -464,6 +479,7 @@
       "head_sha": "95e68bcd3f2bbeeed6492651a2608c8266567f9f",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -495,6 +511,7 @@
       "head_sha": "9b78805615c734a99dcdf50a7699f5ea07cfbdbe",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -526,6 +543,7 @@
       "head_sha": "a00f42c59178cafe4eda98226a4fd6cb780b4e2b",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -557,6 +575,7 @@
       "head_sha": "a8a1c431da987459f1d43b3ba53530f25fdf0df7",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -588,6 +607,7 @@
       "head_sha": "aec422e05990b19082c67c97f7b7e396bfcde461",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -619,6 +639,7 @@
       "head_sha": "b93a818f7d1c448c40d955731581d03b1c24f735",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -650,6 +671,7 @@
       "head_sha": "d48d498f32bec8f8d8d3d0f7ee644521733ec371",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -681,6 +703,7 @@
       "head_sha": "df42da5d11b9f060c43926b5b60d691f1db9ed0d",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -712,6 +735,7 @@
       "head_sha": "e503744ad2974058064e0e25d80d48edfb5ceafc",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -743,6 +767,7 @@
       "head_sha": "e9440bfa78865c83431959494627c146e3f97bef",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -774,6 +799,7 @@
       "head_sha": "f744bab77634aba5eb85d4502997e00c8e5cd808",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -805,6 +831,7 @@
       "head_sha": "f7ac56433dd9e393f195379d1414664a2e16383f",
       "occurrences": 3,
       "distinct_locations": 3,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -836,6 +863,7 @@
       "head_sha": "016e22c26b58f74ee9bb4c365b67ffa2901565bb",
       "occurrences": 2,
       "distinct_locations": 2,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -859,6 +887,7 @@
       "head_sha": "1f11777ff3c377b0330589bcadda1f872c23c7d0",
       "occurrences": 2,
       "distinct_locations": 2,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -882,6 +911,7 @@
       "head_sha": "2348fa899202c238282a16daccb815ac6067c8ac",
       "occurrences": 2,
       "distinct_locations": 2,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -905,6 +935,7 @@
       "head_sha": "29ec405c7ce2d44f308315e894358ddc5af63403",
       "occurrences": 2,
       "distinct_locations": 2,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -925,9 +956,34 @@
       ]
     },
     {
+      "head_sha": "4096d5d8731a09398bbda102b6743b20a189a67d",
+      "occurrences": 2,
+      "distinct_locations": 2,
+      "distinct_repos": 1,
+      "members": [
+        {
+          "owner": "dofaromg",
+          "repo": "MrliouAI-box",
+          "branch_name": "MrliouAI",
+          "full_name": "dofaromg/MrliouAI-box",
+          "is_default": false,
+          "protected": false
+        },
+        {
+          "owner": "dofaromg",
+          "repo": "MrliouAI-box",
+          "branch_name": "copilot/commit-242b82b0408bd62d8ea71f585ae571336540d837",
+          "full_name": "dofaromg/MrliouAI-box",
+          "is_default": false,
+          "protected": false
+        }
+      ]
+    },
+    {
       "head_sha": "456cbb19fbfe3b0a70ab1174e712bcfca3fbe414",
       "occurrences": 2,
       "distinct_locations": 2,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -948,9 +1004,34 @@
       ]
     },
     {
+      "head_sha": "52f31e91046560f81228ad5ebdf6111d67ff893d",
+      "occurrences": 2,
+      "distinct_locations": 2,
+      "distinct_repos": 1,
+      "members": [
+        {
+          "owner": "dofaromg",
+          "repo": "tool-silk-",
+          "branch_name": "1-exercise-github-pages",
+          "full_name": "dofaromg/tool-silk-",
+          "is_default": false,
+          "protected": false
+        },
+        {
+          "owner": "dofaromg",
+          "repo": "tool-silk-",
+          "branch_name": "dofaromg-patch-1",
+          "full_name": "dofaromg/tool-silk-",
+          "is_default": false,
+          "protected": false
+        }
+      ]
+    },
+    {
       "head_sha": "68ff275d94efc3f3aab2d07b6ea98f4ecc2b29a7",
       "occurrences": 2,
       "distinct_locations": 2,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -974,6 +1055,7 @@
       "head_sha": "8b691c161febff598e1a144aabd8c3cdda74520a",
       "occurrences": 2,
       "distinct_locations": 2,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -994,9 +1076,34 @@
       ]
     },
     {
+      "head_sha": "8bd3b48b6322882b66507d272530c6aadfdeacb8",
+      "occurrences": 2,
+      "distinct_locations": 2,
+      "distinct_repos": 1,
+      "members": [
+        {
+          "owner": "dofaromg",
+          "repo": "mrliouword-system",
+          "branch_name": "copilot/deploy-wrangler-secrets",
+          "full_name": "dofaromg/mrliouword-system",
+          "is_default": false,
+          "protected": false
+        },
+        {
+          "owner": "dofaromg",
+          "repo": "mrliouword-system",
+          "branch_name": "copilot/task-217537952-1130234040-a91fdd17-dfec-4bb3-88b9-c2f35efd1f27",
+          "full_name": "dofaromg/mrliouword-system",
+          "is_default": false,
+          "protected": false
+        }
+      ]
+    },
+    {
       "head_sha": "ad4a0ba730e2052cf6524c8993b5344bcc7ac56f",
       "occurrences": 2,
       "distinct_locations": 2,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -1020,6 +1127,7 @@
       "head_sha": "b72673dae071abd7c6443dd03f9c1c65b1684564",
       "occurrences": 2,
       "distinct_locations": 2,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -1040,9 +1148,34 @@
       ]
     },
     {
+      "head_sha": "da9798d3a1640a5dd2dfe86c03a33b3e63adebf8",
+      "occurrences": 2,
+      "distinct_locations": 2,
+      "distinct_repos": 1,
+      "members": [
+        {
+          "owner": "dofaromg",
+          "repo": "flow-tasks-01",
+          "branch_name": "revert-1-dofaromg-patch-1",
+          "full_name": "dofaromg/flow-tasks-01",
+          "is_default": false,
+          "protected": false
+        },
+        {
+          "owner": "dofaromg",
+          "repo": "flow-tasks-01",
+          "branch_name": "宥麟",
+          "full_name": "dofaromg/flow-tasks-01",
+          "is_default": false,
+          "protected": false
+        }
+      ]
+    },
+    {
       "head_sha": "dbf0ebc87f6c8acceb034ba3fad328d45fb99ec1",
       "occurrences": 2,
       "distinct_locations": 2,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -1066,6 +1199,7 @@
       "head_sha": "ddce340d09642204e2941051746364833474c60b",
       "occurrences": 2,
       "distinct_locations": 2,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -1089,6 +1223,7 @@
       "head_sha": "df8baba8469df1afe20a94fef630c94c6f179fb6",
       "occurrences": 2,
       "distinct_locations": 2,
+      "distinct_repos": 1,
       "members": [
         {
           "owner": "dofaromg",
@@ -1103,6 +1238,30 @@
           "repo": "MRL_AI_SYSTEM",
           "branch_name": "copilot/update-documentation-for-api",
           "full_name": "dofaromg/MRL_AI_SYSTEM",
+          "is_default": false,
+          "protected": false
+        }
+      ]
+    },
+    {
+      "head_sha": "e8c2215854f8f7e17a75b7a2292e709134d3d472",
+      "occurrences": 2,
+      "distinct_locations": 2,
+      "distinct_repos": 1,
+      "members": [
+        {
+          "owner": "Mrliou",
+          "repo": "MRL-Autonomous-Evolution-Stack-AES-",
+          "branch_name": "copilot/copilotupdate-naming-convention",
+          "full_name": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
+          "is_default": false,
+          "protected": false
+        },
+        {
+          "owner": "Mrliou",
+          "repo": "MRL-Autonomous-Evolution-Stack-AES-",
+          "branch_name": "copilot/mrl-mother-core-engine",
+          "full_name": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
           "is_default": false,
           "protected": false
         }
