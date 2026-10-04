@@ -183,6 +183,9 @@ class SemanticAuthorityIntegrityError(ValueError):
 
 def semantic_authority(chain: List[str], L: Lexicon) -> Dict:
     kinds = [kind_of(tok, L) for tok in chain]
+    for k in kinds:
+        if k not in VERB_OF:
+            raise SemanticAuthorityIntegrityError(f"no verb mapping for particle kind: {k}")
     provisional = sorted({f"{k}->{VERB_OF[k]}" for k in kinds if k not in VERIFIED_VERB_KINDS})
     return {
         "engine_version": ENGINE_VERSION,
@@ -224,6 +227,8 @@ def run(chain: List[str], L: Lexicon, clock: Optional[Clock] = None, title: str 
     預設為正典 fail-closed。只有明示 allow_provisional=True 的 sandbox／研究執行
     才能使用尚未由建構者明文核准的固定軌跡動詞映射；輸出會永久標記為非正典。
     """
+    if "\r" in title or "\n" in title:
+        raise SemanticAuthorityIntegrityError("trace title must not contain CR/LF")
     clock = clock or Clock()
     authority = semantic_authority(chain, L)
     provisional = authority["provisional_mappings"]

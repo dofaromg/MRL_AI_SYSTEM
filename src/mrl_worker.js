@@ -252,7 +252,16 @@ export default {
     // FlowRhythm：POST 純文字。預設正典 fail-closed；?sandbox=1 才允許 PROVISIONAL_NOT_CANONICAL（輸出永久標記）
     if (p === "/api/rhythm/replay" || p === "/api/rhythm/run") {
       if (request.method !== "POST") return J({ ok: false, error: "POST text/plain" }, 405);
-      const text = await request.text();
+      let text;
+      try {
+        const bodyBytes = await readBoundedBody(request);
+        if (bodyBytes === null) {
+          return J({ ok: false, error: "MRL_PAYLOAD_TOO_LARGE", max_bytes: MAX_BODY_BYTES }, 413);
+        }
+        text = new TextDecoder().decode(bodyBytes);
+      } catch (e) {
+        return J({ ok: false, error: "MRL_BODY_READ_ERROR" }, 400);
+      }
       const allowProvisional = url.searchParams.get("sandbox") === "1";
       const title = url.searchParams.get("title") || "語場節奏";
       try {
