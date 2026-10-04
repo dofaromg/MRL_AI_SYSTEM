@@ -1,7 +1,7 @@
 name: MRL PR149 SwiftUI Assets
 on:
   pull_request:
-    paths: ['MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/docs/04_PATCH_NOTES_NavigationStack_v1.md', 'MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/**', 'MRL_Reference_Layer/MRL_SwiftUI_NavigationCookbook_Reference_v1.md', 'docs/MRL_PR149_SwiftUI_Provenance.json', 'scripts/MRL_pr149_swiftui_verify.py', '.github/workflows/MRL_PR149_SwiftUI.yml']
+    paths: ['MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/docs/04_PATCH_NOTES_NavigationStack_v1.md', 'MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/**', 'MRL_Reference_Layer/MRL_SwiftUI_NavigationCookbook_Reference_v1.md', 'docs/MRL_PR149_SwiftUI_Provenance.json', 'docs/MRL_PR151_Hardening_Provenance.json', 'scripts/MRL_pr149_swiftui_verify.py', '.github/workflows/MRL_PR149_SwiftUI.yml']
 permissions:
   contents: read
 jobs:
@@ -9,4 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
       - run: python3 scripts/MRL_pr149_swiftui_verify.py
