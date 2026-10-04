@@ -43,7 +43,10 @@ for (const token of ['⋄fx.time.010', '⋄fx.gate.001', '⋄fx.per.001']) {
     assert.equal(python({ trace: forged, title: 'MRL', sandbox }).error, 'SemanticAuthorityIntegrityError');
   });
 }
-for (const title of ['MRL\rbreak', 'MRL\nbreak', 'MRL\r\nbreak']) test(`reject title ${JSON.stringify(title)}`, async () => {
+const lineSeparators = ['\r', '\n', '\v', '\f', '\x1c', '\x1d', '\x1e', '\x85', '\u2028', '\u2029'];
+for (const separator of lineSeparators) {
+  const title = `MRL${separator}break`;
+  test(`reject title separator ${JSON.stringify(separator)}`, async () => {
   for (const sandbox of [false, true]) {
     const opts = { title, allowProvisional: sandbox };
     await assert.rejects(R.run(['⊕:MRL'], L, opts), R.SemanticAuthorityIntegrityError);
@@ -52,7 +55,8 @@ for (const title of ['MRL\rbreak', 'MRL\nbreak', 'MRL\r\nbreak']) test(`reject t
     await assert.rejects(R.replay(base.trace_fltnz, L, opts), R.SemanticAuthorityIntegrityError);
     assert.equal(python({ trace: base.trace_fltnz, title, sandbox }).error, 'SemanticAuthorityIntegrityError');
   }
-});
+  });
+}
 test('valid Unicode title preserves JS/Python run and bidirectional replay', async () => {
   const title = 'MRL 語場 🌀';
   const chain = ['⊕:MRL'];
@@ -104,9 +108,10 @@ for (const path of ['run', 'replay']) {
     const stream = new ReadableStream({ pull(c) { c.error(new Error('broken stream')); } });
     assert.equal((await call(path, stream)).status, 400);
   });
-  test(`${path} percent-encoded CR/LF title rejected`, async () => {
+  test(`${path} percent-encoded line separators rejected`, async () => {
     const base = await R.run(['⊕:MRL'], L);
-    for (const title of ['x%0Ay', 'x%0Dy', 'x%0D%0Ay']) {
+    for (const separator of lineSeparators) {
+      const title = encodeURIComponent(`x${separator}y`);
       assert.equal((await call(path, path === 'run' ? '⊕:MRL' : base.trace_fltnz, `?title=${title}`)).status, 422);
     }
   });

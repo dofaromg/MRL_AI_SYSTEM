@@ -39,7 +39,7 @@ export function prepareLexicon(doc) {
 // ── 粒子語句 .fltnz → 粒子鏈（同 chain_from_fltnz）
 export function chainFromFltnz(text) {
   const out = [];
-  for (const line of text.split(/\r\n|\r|\n/)) {   // ≈ str.splitlines()（常見換行）
+  for (const line of text.split(/\r\n|[\n\r\v\f\x1c-\x1e\x85\u2028\u2029]/)) {
     const s = line.split("#")[0].trim();
     if (!s || s.startsWith("//")) continue;
     out.push(s);
@@ -124,8 +124,8 @@ export class Clock {
 
 // ── 節奏執行：Jump → Collapse → Trace
 export async function run(chain, L, { clock = new Clock(), title = "語場節奏", allowProvisional = false } = {}) {
-  if (/[\r\n]/.test(title)) {
-    throw new SemanticAuthorityIntegrityError("trace title must not contain CR/LF");
+  if (/[\n\r\v\f\x1c-\x1e\x85\u2028\u2029]/.test(title)) {
+    throw new SemanticAuthorityIntegrityError("trace title must not contain line separators");
   }
   const authority = semanticAuthority(chain, L);
   const provisional = authority.provisional_mappings;
@@ -177,7 +177,7 @@ export async function run(chain, L, { clock = new Clock(), title = "語場節奏
 
 // ── Replay：只讀軌跡，重建一切
 export async function replay(traceText, L, { title = "語場節奏", allowProvisional = false } = {}) {
-  const textLines = traceText.split(/\r\n|\r|\n/);
+  const textLines = traceText.split(/\r\n|[\n\r\v\f\x1c-\x1e\x85\u2028\u2029]/);
   if (textLines.length && textLines[textLines.length - 1] === "") textLines.pop();
   const ops = [];
   for (const line of textLines) {
