@@ -109,3 +109,73 @@ conflict to resolve. The reason for a historical false response remains unknown;
 no conflict repair or mainline rebase is invented. After the workflow-only commit,
 the API reported `mergeable=true`, `mergeable_state=unstable` while checks updated;
 that status is not evidence of a textual conflict or of completed validation.
+
+## Continuation 2026-10-04 — current review disposition
+
+The preceding 10-file/two-derivative section records the first delivery at
+`fec1a17948c67339693e185914ae89f314565443`. This continuation incorporates absorption
+commit `54a698cabbb9769ac04ee04e96dd92dbc2ba445c` as an additional parent, preserving
+both branch histories. The current follow-up has **12 files relative to that
+absorption base**, with **11 unchanged working assets and three explicit Swift
+derivatives**. All 14 original blobs and the original manifest remain intact.
+The third derivative is `Views/ReconstructionBridgeView.swift`; it only clears
+stale error text when beginning each request. The independent manifest records
+its original source entry and new hash, as for the two earlier derivatives.
+
+Additional changes:
+
+- Propagate raw-directory listing errors instead of replacing them with an empty
+  image list. The empty-scan behavior is retained for actual empty directories.
+- Percent-encode server job IDs as a single path segment. Existing UUID job IDs
+  and endpoint routes are unchanged.
+- Disable persisted checkout credentials on all scoped jobs.
+- Exercise the production default URLSession file upload against a loopback-only
+  Python fixture, checking parsed multipart bytes, field/file names, scan headers,
+  returned JSON and temporary-body cleanup. This uses synthetic data and neither
+  contacts nor substitutes for the DL580 server.
+- Add 4 shared import regression tests (13 Python tests total) and 3 Swift tests
+  (14 Swift tests total). Typecheck the changed bridge view separately against the
+  iOS 16 simulator SDK; core source typechecking remains on iOS 15. No app launch
+  or NavigationStack activation is performed.
+
+Current expected file list relative to the absorption base (12):
+
+1. `.github/workflows/MRL_PR149_SwiftUI.yml`
+2. `.github/workflows/MRL_PR151_Hardening.yml`
+3. `MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/Package.swift`
+4. `MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/Tests/HardeningTests/HardeningTests.swift`
+5. `MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/Tests/HardeningTests/Fixtures/upload_server.py`
+6. `MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Models/Scan.swift`
+7. `MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Reconstruction/MRLReconstructionClient.swift`
+8. `MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Views/ReconstructionBridgeView.swift`
+9. `docs/MRL_PR151_Hardening.md`
+10. `docs/MRL_PR151_Hardening_Provenance.json`
+11. `scripts/MRL_pr149_swiftui_verify.py`
+12. `tests/test_MRL_pr151_provenance.py`
+
+The absorption base supplies `tests/test_MRL_pr149_swiftui_integrity.py` and
+`docs/MRL_PR151_Import_Notes.md`; they are inherited dependencies, not omissions
+from the 12-file follow-up diff. SwiftPM copies the Python fixture into its test
+bundle; the real-network test invokes that exact fixture through Bundle.module.
+
+Review findings needing separate treatment:
+
+- **Non-ASCII scan-name wire format remains open.** The source backend at
+  `e72d2534102fca416e285d28ee9b4774ff870026`, path
+  `MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/backend/MRL_3D_Reconstruction_Server/server.js`,
+  reads `X-MRL-Scan-Name` directly at line 61 and stores it without percent
+  decoding. A client-only percent-encoding change would persist an encoded name,
+  not the original Chinese name. A lossless fix needs a coordinated client/server
+  contract with backward compatibility; this client-only follow-up does not claim
+  to fix it or to verify a currently deployed backend.
+- **Server URL editing retains explicit Save semantics.** The UI already has a
+  Save Server URL action; typing alone does not change the destination. The
+  suggestion to silently save before each request is a behavior change, not a
+  required fix for streamed uploads or container relocation. No such change is
+  introduced. The active saved URL continues to be used until Save is selected.
+- **Source patch-note context** is clarified additively in
+  `docs/MRL_PR151_Import_Notes.md`. The historical asset itself remains unchanged.
+
+The latest PR body contains the exact-head CI receipts and per-file SHA256.
+Passing the scoped regression suite does not close the open Unicode contract
+issue, establish app UI acceptance, or authorize merging either PR.

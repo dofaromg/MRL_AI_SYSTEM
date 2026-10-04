@@ -31,9 +31,26 @@
         "source_blob": "e32a38f528d81e2aec3a8e0e015a2355c79c0d1d"
       },
       "derived": {
-        "size": 6698,
-        "sha256": "1ee36ba22ade4f361a6e2103479d4a4d5085b02d89bd76ebab3bf5664fa77f10"
+        "size": 7055,
+        "sha256": "93384a40e392707b15846d3a668685a6e95c84ee6893d3e7e3aa5326eff157a4"
+      }
+    },
+    {
+      "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Views/ReconstructionBridgeView.swift",
+      "original": {
+        "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Views/ReconstructionBridgeView.swift",
+        "size": 2444,
+        "sha256": "6fe6d55ac1ff0dcccf093025cacc9ee408f36eb69257e95fcf00702b77820382",
+        "source_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+        "last_change_commit": "0579c8d9e1f95b5499736c8fdc00497f6ae82b24",
+        "source_blob": "324ce9182000977b4fd94858820ea53eef13243a"
+      },
+      "derived": {
+        "size": 2516,
+        "sha256": "eeabb796b50933704f47dd42d7fcc953c039799edfd10d021e2ded035d9bdbf7"
       }
     }
-  ]
+  ],
+  "review_followup_base": "54a698cabbb9769ac04ee04e96dd92dbc2ba445c",
+  "previous_hardening_commit": "fec1a17948c67339693e185914ae89f314565443"
 }

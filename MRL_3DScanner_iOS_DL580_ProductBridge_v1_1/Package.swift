@@ -14,7 +14,8 @@ let package = Package(
             sources: ["Models/Scan.swift", "Reconstruction/MRLReconstructionClient.swift",
                       "Reconstruction/MRLReconstructionJob.swift", "Utilities/FileManager+Tools.swift"]
         ),
-        .testTarget(name: "HardeningTests", dependencies: ["MRLScannerCore"], path: "Tests/HardeningTests")
+        .testTarget(name: "HardeningTests", dependencies: ["MRLScannerCore"], path: "Tests/HardeningTests",
+                    resources: [.copy("Fixtures")])
     ],
     swiftLanguageVersions: [.v5]
 )

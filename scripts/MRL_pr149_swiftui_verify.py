@@ -9,7 +9,7 @@ ORIGINAL_MANIFEST = "docs/MRL_PR149_SwiftUI_Provenance.json"
 ORIGINAL_MANIFEST_SHA256 = "16406bd9aa9a3b32eeb62d73a4ddd7699bac9bec7493e1e8cae8af3da2cdc85c"
 HARDENING_MANIFEST = "docs/MRL_PR151_Hardening_Provenance.json"
 CLIENT_ROOT = "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/"
-DERIVED_PATHS = {CLIENT_ROOT + "Models/Scan.swift", CLIENT_ROOT + "Reconstruction/MRLReconstructionClient.swift"}
+DERIVED_PATHS = {CLIENT_ROOT + "Models/Scan.swift", CLIENT_ROOT + "Reconstruction/MRLReconstructionClient.swift", CLIENT_ROOT + "Views/ReconstructionBridgeView.swift"}
 
 
 def check(condition, message):
@@ -34,8 +34,8 @@ def verify(root):
         check(extension["origin_signature"] == manifest["origin_signature"], "Origin mismatch")
         check(extension["source_import_commit"] == IMPORT_COMMIT, "Import parent mismatch")
         derived = {entry["path"]: entry for entry in extension["files"]}
-        check(len(derived) == len(extension["files"]) == 2 and set(derived) == DERIVED_PATHS,
-              "Only the two explicit hardening derivatives are allowed")
+        check(len(derived) == len(extension["files"]) == 3 and set(derived) == DERIVED_PATHS,
+              "Only the three explicit hardening derivatives are allowed")
     git(root, "merge-base", "--is-ancestor", IMPORT_COMMIT, "HEAD")
     for path, entry in entries.items():
         original = git(root, "show", f"{IMPORT_COMMIT}:{path}")

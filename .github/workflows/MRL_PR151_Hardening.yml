@@ -8,6 +8,8 @@ on:
       - 'docs/MRL_PR151_Hardening*'
       - 'scripts/MRL_pr149_swiftui_verify.py'
       - 'tests/test_MRL_pr151_provenance.py'
+      - 'tests/test_MRL_pr149_swiftui_integrity.py'
+      - 'docs/MRL_PR151_Import_Notes.md'
       - '.github/workflows/MRL_PR149_SwiftUI.yml'
       - '.github/workflows/MRL_PR151_Hardening.yml'
 permissions:
@@ -18,16 +20,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          persist-credentials: false
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
       - run: python3 scripts/MRL_pr149_swiftui_verify.py
       - run: python3 -m unittest discover -s tests -p test_MRL_pr151_provenance.py -v
+      - run: python3 -m unittest discover -s tests -p test_MRL_pr149_swiftui_integrity.py -v
   swift-core-regression:
     runs-on: macos-14
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
+          persist-credentials: false
           ref: ${{ github.event.pull_request.head.sha }}
       - run: swift test --package-path MRL_3DScanner_iOS_DL580_ProductBridge_v1_1
       - name: Typecheck actual core sources against iOS simulator SDK
@@ -37,3 +42,11 @@ jobs:
           xcrun swiftc -typecheck -sdk "$MRL_IOS_SDK" -target arm64-apple-ios15.0-simulator \
             Models/Scan.swift Reconstruction/MRLReconstructionClient.swift \
             Reconstruction/MRLReconstructionJob.swift Utilities/FileManager+Tools.swift
+      - name: Typecheck bridge view without NavigationStack activation
+        working-directory: MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS
+        run: |
+          MRL_IOS_SDK="$(xcrun --sdk iphonesimulator --show-sdk-path)"
+          xcrun swiftc -typecheck -sdk "$MRL_IOS_SDK" -target arm64-apple-ios16.0-simulator \
+            Models/Scan.swift Reconstruction/MRLReconstructionClient.swift \
+            Reconstruction/MRLReconstructionJob.swift Utilities/FileManager+Tools.swift \
+            Views/ReconstructionBridgeView.swift

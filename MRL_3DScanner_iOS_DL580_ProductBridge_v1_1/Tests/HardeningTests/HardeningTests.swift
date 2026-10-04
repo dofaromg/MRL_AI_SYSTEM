@@ -124,6 +124,74 @@ final class HardeningTests: XCTestCase {
         XCTAssertTrue(try temporaryBodies().isEmpty)
     }
 
+    func testFileListingErrorIsNotReportedAsAnEmptyScan() async throws {
+        let scan = try Scan.makeNew(base: root, name: "invalid raw folder")
+        try FileManager.default.removeItem(at: scan.rawFolder)
+        try Data([1]).write(to: URL(fileURLWithPath: scan.rawFolder.path, isDirectory: false))
+        let client = MRLReconstructionClient(temporaryDirectory: root) { _, _ in
+            XCTFail("A listing failure must not upload")
+            throw URLError(.unknown)
+        }
+        do { _ = try await client.upload(scan: scan); XCTFail("Expected file listing failure") }
+        catch is MRLReconstructionClientError { XCTFail("Must retain the filesystem error") }
+        catch { XCTAssertEqual((error as NSError).domain, NSCocoaErrorDomain) }
+        XCTAssertTrue(try temporaryBodies().isEmpty)
+    }
+
+    func testJobIdentifierCannotBecomeAnotherPathQueryOrFragment() throws {
+        let client = MRLReconstructionClient()
+        client.serverBaseURL = "https://example.invalid"
+        let job = "job/a b?#%片段"
+        let url = try client.jobEndpoint(jobId: job)
+        let components = try XCTUnwrap(URLComponents(url: url, resolvingAgainstBaseURL: false))
+        XCTAssertNil(components.query)
+        XCTAssertNil(components.fragment)
+        XCTAssertEqual(components.percentEncodedPath, "/api/reconstruction/jobs/job%2Fa%20b%3F%23%25%E7%89%87%E6%AE%B5")
+        let id = UUID().uuidString
+        XCTAssertEqual(try client.jobEndpoint(jobId: id).path, "/api/reconstruction/jobs/\(id)")
+    }
+
+    func testRealURLSessionUploadReachesLoopbackServer() async throws {
+        let fixture = try XCTUnwrap(Bundle.module.url(forResource: "upload_server", withExtension: "py", subdirectory: "Fixtures"))
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/env")
+        process.arguments = ["python3", "-u", fixture.path, root.path]
+        process.standardOutput = FileHandle.nullDevice
+        process.standardError = FileHandle.nullDevice
+        try process.run()
+        defer {
+            if process.isRunning { process.terminate() }
+            process.waitUntilExit()
+        }
+        let ready = root.appendingPathComponent("port")
+        let deadline = Date().addingTimeInterval(10)
+        var port: Int?
+        while Date() < deadline && process.isRunning {
+            if let value = try? String(contentsOf: ready, encoding: .utf8), let parsed = Int(value) {
+                port = parsed
+                break
+            }
+            try await Task.sleep(nanoseconds: 50_000_000)
+        }
+        let serverPort = try XCTUnwrap(port, "Loopback fixture did not become ready")
+        let scan = try scanWithImage()
+        // Uses the production default URLSession.upload(for:fromFile:), not a transport mock.
+        let client = MRLReconstructionClient(temporaryDirectory: root)
+        client.serverBaseURL = "http://127.0.0.1:\(serverPort)"
+        let result = try await client.upload(scan: scan)
+        XCTAssertTrue(result.ok)
+        XCTAssertEqual(result.uploaded, 1)
+        let receipt = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: root.appendingPathComponent("received.json"))) as? [String: Any])
+        XCTAssertEqual(receipt["scanId"] as? String, scan.id.uuidString)
+        XCTAssertEqual(receipt["scanName"] as? String, scan.name)
+        let parts = try XCTUnwrap(receipt["files"] as? [[String: String]])
+        XCTAssertEqual(parts.count, 1)
+        XCTAssertEqual(parts[0]["name"], "files")
+        XCTAssertEqual(parts[0]["filename"], "image.jpg")
+        XCTAssertEqual(Data(base64Encoded: try XCTUnwrap(parts[0]["data"])), Data([0, 1, 255, 13, 10]))
+        XCTAssertTrue(try temporaryBodies().isEmpty)
+    }
+
     func testCancellationBeforeBodyCreationLeavesNoFiles() async throws {
         let input = try file("a.jpg", Data([1]))
         let directory = root!

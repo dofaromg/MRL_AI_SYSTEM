@@ -40,7 +40,7 @@ final class MRLReconstructionClient: ObservableObject {
         request.setValue(scan.id.uuidString, forHTTPHeaderField: "X-MRL-Scan-ID")
         request.setValue(scan.name, forHTTPHeaderField: "X-MRL-Scan-Name")
 
-        let files = (try? FileManager.default.imageFileURLs(in: scan.rawFolder)) ?? []
+        let files = try FileManager.default.imageFileURLs(in: scan.rawFolder)
         guard !files.isEmpty else { throw MRLReconstructionClientError.noCaptureFiles(scan.rawFolder.path) }
 
         let body = try MRLMultipartBody.write(files: files, boundary: boundary, in: temporaryDirectory)
@@ -64,9 +64,17 @@ final class MRLReconstructionClient: ObservableObject {
     }
 
     func getJob(jobId: String) async throws -> MRLReconstructionJob {
-        let (data, response) = try await URLSession.shared.data(from: try endpoint("/api/reconstruction/jobs/\(jobId)"))
+        let (data, response) = try await URLSession.shared.data(from: try jobEndpoint(jobId: jobId))
         guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode) else { throw URLError(.badServerResponse) }
         return try JSONDecoder().decode(MRLReconstructionJob.self, from: data)
+    }
+
+    func jobEndpoint(jobId: String) throws -> URL {
+        let allowed = CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~")
+        guard let segment = jobId.addingPercentEncoding(withAllowedCharacters: allowed) else {
+            throw URLError(.badURL)
+        }
+        return try endpoint("/api/reconstruction/jobs/\(segment)")
     }
 
     private func endpoint(_ path: String) throws -> URL {

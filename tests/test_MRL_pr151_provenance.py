@@ -36,7 +36,7 @@ class ProvenanceTests(unittest.TestCase):
         path.write_text(json.dumps(manifest))
 
     def test_baseline_and_explicit_derivatives(self):
-        self.assertEqual(verifier.verify(self.root), (14, 2))
+        self.assertEqual(verifier.verify(self.root), (14, 3))
 
     def test_undeclared_asset_mutation_fails(self):
         path = self.root / 'MRL_Reference_Layer/MRL_SwiftUI_NavigationCookbook_Reference_v1.md'
@@ -57,12 +57,12 @@ class ProvenanceTests(unittest.TestCase):
 
     def test_extra_derivative_fails(self):
         self.change_extension(lambda m: m['files'].append({'path': 'unrelated.swift'}))
-        with self.assertRaisesRegex(ValueError, 'Only the two'):
+        with self.assertRaisesRegex(ValueError, 'Only the three'):
             verifier.verify(self.root)
 
     def test_duplicate_derivative_fails(self):
         self.change_extension(lambda m: m['files'].append(m['files'][0]))
-        with self.assertRaisesRegex(ValueError, 'Only the two'):
+        with self.assertRaisesRegex(ValueError, 'Only the three'):
             verifier.verify(self.root)
 
     def test_missing_declaration_fails(self):
