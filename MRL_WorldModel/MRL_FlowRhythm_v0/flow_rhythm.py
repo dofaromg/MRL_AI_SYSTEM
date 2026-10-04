@@ -227,8 +227,8 @@ def run(chain: List[str], L: Lexicon, clock: Optional[Clock] = None, title: str 
     預設為正典 fail-closed。只有明示 allow_provisional=True 的 sandbox／研究執行
     才能使用尚未由建構者明文核准的固定軌跡動詞映射；輸出會永久標記為非正典。
     """
-    if "\r" in title or "\n" in title:
-        raise SemanticAuthorityIntegrityError("trace title must not contain CR/LF")
+    if any(separator in title for separator in "\r\n\v\f\x1c\x1d\x1e\x85\u2028\u2029"):
+        raise SemanticAuthorityIntegrityError("trace title must not contain line separators")
     clock = clock or Clock()
     authority = semantic_authority(chain, L)
     provisional = authority["provisional_mappings"]

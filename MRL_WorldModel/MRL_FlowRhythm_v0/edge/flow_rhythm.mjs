@@ -124,8 +124,8 @@ export class Clock {
 
 // ── 節奏執行：Jump → Collapse → Trace
 export async function run(chain, L, { clock = new Clock(), title = "語場節奏", allowProvisional = false } = {}) {
-  if (/[\r\n]/.test(title)) {
-    throw new SemanticAuthorityIntegrityError("trace title must not contain CR/LF");
+  if (/[\r\n\v\f\x1c-\x1e\x85\u2028\u2029]/.test(title)) {
+    throw new SemanticAuthorityIntegrityError("trace title must not contain line separators");
   }
   const authority = semanticAuthority(chain, L);
   const provisional = authority.provisional_mappings;
