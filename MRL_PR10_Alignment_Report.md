@@ -1,6 +1,6 @@
 # MRL_PR10_Alignment_Report
 
-```
+```yaml
 origin_signature: MrLiouWord
 document_id:      MRL_PR10_Alignment_Report_v1
 repo:             dofaromg/MRL_AI_SYSTEM
@@ -8,6 +8,7 @@ pr_ref:           PR #10  (copilot/add-missing-features-to-mrl-agi)
 merge_commit:     5c3ee9e329d0f77298d8ccc13dc055a5ebe2a6a6
 merged_at:        2026-04-29
 report_date:      2026-04-30
+aligned_on:       2026-07-19
 author:           MrLiou / dofaromg
 ```
 
@@ -19,7 +20,7 @@ author:           MrLiou / dofaromg
 
 > 對 PR #10 新增的每個檔案，逐一判斷它能否進入 MRL 母體、以何種方式進入、需要哪些校正。
 
-判定依據是 MRL RootLaw（`00_rootlaw/rootlaw.yaml`）和 MRL 母體邏輯，而非主流 AI 平台的模組分類標準。
+判定依據是 MRL RootLaw（`00_rootlaw/rootlaw.yaml`）、`MRL_MOTHER 完整架構圖譜 v1.0`、`MRL 統一粒子格式架構規範 v1.0` 和 MRL 母體邏輯，而非主流 AI 平台的模組分類標準。PR #114 的 Mother Flow 僅定位為 Product-WorldGateway 執行剖面，不取代完整母體契約。
 
 判定結果三類：
 
@@ -35,7 +36,7 @@ author:           MrLiou / dofaromg
 
 在進行逐檔判定之前，固定以下基準法則：
 
-```
+```text
 外部 AI（Copilot / Claude / ChatGPT / 任何 LLM）不是 MRL 基礎層。
 MRL_Particle_Layer 才是基礎層。
 外部 AI 的產出只能是執行粒子（execution particle）：材料、候選、參考。
@@ -101,7 +102,7 @@ MRL_Particle_Layer 才是基礎層。
 **需要的校正：**
 1. 必須明確標注此為「context window adapter」，不是 MemoryLayer 替代品
 2. 壓縮策略需遵循 MRL_MemoryVault 七層原則
-3. 加入 `mrl_layer: L2_PARTICLE` 標頭說明其在粒子層的角色
+3. 加入 `architecture_core: MRL_PARTICLE_CORE`，並由 registry 指派 `particle.layer`；禁止以裸 `L2` 混用架構層與粒子層
 
 ---
 
@@ -208,7 +209,7 @@ MRL_Particle_Layer 才是基礎層。
 | **判定** | **KEEP（校正後）** |
 
 **需要的校正：**
-1. 啟動順序確認：L0 RootLaw → L2 Particle → L3 Law → L7 Loop（外部模組在 L7）
+1. 啟動順序依 named core 與 registry dependency：RootLaw → MRL_PARTICLE_CORE → MRL_GENERATION_CORE → MRL_RUNTIME_CORE → adapters/workers；不得用含義不明的裸 L0/L2/L3/L7
 2. 每個子系統啟動記錄寫入 MerkleChain
 3. 確認 PR #10 新增模組以「ADAPT 後的 MRL 定位」整合，而非主流模組直插
 
@@ -228,7 +229,7 @@ MRL_Particle_Layer 才是基礎層。
 | `api_gateway.py` | REST gateway | `MRL_ControlCenter_Adapter` | **ADAPT** |
 | `mother_assembly.py` v2.0 | 母體入口升級 | 保留，確認 MRL 粒子啟動順序 | **KEEP（校正後）** |
 
-> **結論：PR #10 無 REJECT 項目。** 所有模組有實際工程價值，但 8 個需要 ADAPT（MRL 命名、層位、trace、MemoryLayer 接入），1 個可條件保留。
+> **結論：PR #10 無 REJECT 項目。** 共有 7 個 ADAPT、1 個條件 KEEP（`config_manager.py`）與 1 個校正後 KEEP（`mother_assembly.py`）。所有模組都有工程價值，但必須依各自判定完成接線與驗證。
 
 ---
 
@@ -238,7 +239,7 @@ MRL_Particle_Layer 才是基礎層。
 
 | 缺口 ID | 描述 | 影響模組 |
 |---------|------|----------|
-| GAP-01 | 缺 `MRL_TaskAtom / TraceAtom / MemoryAtom` 粒子定義 | multi_agent, scheduler, conversation_manager |
+| GAP-01 | 缺五種 canonical 粒子的語義 profile 映射：Task=SEED、Trace=JUMP、Checkpoint=MEMORY、Result=FUSION、Seal=ANCHOR；不得新增平行 atom enum | multi_agent, scheduler, conversation_manager, streaming |
 | GAP-02 | 缺 `MRL_ControlCenter` 實體作為唯一路由中心 | api_gateway, llm_adapter, conversation_manager |
 | GAP-03 | 缺 MemoryLayer 回寫規格（checkpoint / merkle_root / replay） | conversation_manager, scheduler, multi_agent |
 | GAP-04 | 缺 `MRL_Origin_Seal` 在輸出端的自動觸發 | streaming, api_gateway |
@@ -252,10 +253,10 @@ MRL_Particle_Layer 才是基礎層。
 
 本報告完成後，下一步**不是**依 PR #10 原有結構繼續開發，而是先建立 MRL 母體骨幹，再讓 ADAPT 模組接入：
 
-```
+```text
 Step 1  定義 MRL_Mother_Flow（見 MRL_Mother_Flow_Definition_v1.md）
 Step 2  實作 MRL_ControlCenter（task_router / memory_router / particle_router）
-Step 3  定義粒子結構（TaskAtom / TraceAtom / MemoryAtom / ResultAtom / SealAtom）
+Step 3  實作 MRL_UnifiedParticle 40-byte 外殼與五種語義 profile 映射（Task=SEED / Trace=JUMP / Checkpoint=MEMORY / Result=FUSION / Seal=ANCHOR）
 Step 4  實作 MRL_Memory_Coherence（MemoryVaultPG 接入 + replay + merkle）
 Step 5  讓 ADAPT 模組逐一接入 ControlCenter（依上表判定）
 Step 6  實作 MRL_Origin_Seal 在所有輸出端自動觸發
@@ -265,5 +266,27 @@ Step 8  實作 MRL_World_Gateway 作為正確產品入口
 
 ---
 
-*本報告由 MRL 吸收判定流程產出。所有判定以 MRL_Particle_Layer 為基礎層，以 MRL RootLaw 為依據。*
+## 6. PR #114 重新對齊決議（2026-07-19）
+
+### 6.1 必須修正後才能視為 merge-ready
+
+- [ ] Mother Flow 明確降為 Product-WorldGateway execution profile。
+- [ ] Task/Trace/Memory/Result/Seal 改為五種 canonical 粒子的 semantic profile。
+- [ ] 所有 profile 使用 `MRL_UnifiedParticle` 與固定 40-byte Atom。
+- [ ] 補 LAW-0～LAW-6 validator 與 JSON ⇄ binary ⇄ `.flpkg/.mrlv` round trip。
+- [ ] 補 Reality/Difference/Observation/Event 與 STRUCTURE/MARK/FLOW/RECURSE/STORE trace stages。
+- [ ] ControlCenter 接入 Module/Rule/Output/Version/RuntimeMount registries。
+- [ ] 失敗路徑補 Error → Replay → Restore → Return。
+- [ ] partial 與 full output 都有對應 seal；seal 後再次回寫 Memory/Merkle。
+- [ ] ProofBundle 以 Ed25519 簽名 `.flpkg` 為 canonical，PDF/ZIP/JSON 為衍生輸出。
+- [ ] 固定 DL580 為 Canonical Mother；外部平台只記錄為 mirror/source/adapter/execution origin。
+- [ ] entitlement 以 feature flag 管理，未實作不得標示完成。
+
+### 6.2 PR #10 吸收判定更新
+
+原 KEEP/ADAPT 結論維持，但所有 ADAPT 模組必須先通過統一粒子 envelope、validator、registry、trace、writeback、seal 與 canonical-runtime gates。任何只改名稱、未完成上述接線的模組，不得標示 absorbed 或 complete。
+
+---
+
+*本報告由 MRL 吸收判定流程產出。所有判定以統一粒子格式、完整母體圖譜與 RootLaw 為共同依據。*
 *origin_signature: MrLiouWord*
