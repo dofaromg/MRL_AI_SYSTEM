@@ -7,7 +7,9 @@ set -euo pipefail
 # repo 根目錄（deploy/dl580 的上兩層）
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MRL_HOME="${MRL_HOME:-$(cd "${SCRIPT_DIR}/../.." && pwd)}"
-MRL_PORT="${MRL_PORT:-8790}"
+# canonical base does not start Platform; an explicit runtime port supports a separately started Platform.
+MRL_PORT="${MRL_RUNTIME_PORT:-${MRL_PORT:-8790}}"
+export MRL_PORT
 ORIGIN_SIGNATURE="MrLiouWord"
 
 cd "${MRL_HOME}"
@@ -32,8 +34,5 @@ fi
 npm run MRL_boot
 
 # 4. 啟動 Runtime（母體自行運行）
-# canonical base does not start Platform; an explicit runtime port supports a separately started Platform.
-MRL_PORT="${MRL_RUNTIME_PORT:-${MRL_PORT}}"
-export MRL_PORT
 echo "starting MRL Runtime on port ${MRL_PORT}..."
 exec node MRL_RuntimeServer.js

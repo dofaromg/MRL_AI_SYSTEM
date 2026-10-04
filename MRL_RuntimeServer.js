@@ -6,7 +6,10 @@ app.use((req, res, next) => {
   const authRequired = String(process.env.MRL_AUTH_REQUIRED || 'false').toLowerCase() === 'true';
   if (authRequired) {
     const token = process.env.MRL_API_TOKEN;
-    if (!token || req.headers.authorization !== `Bearer ${token}`) {
+    const authorization = req.headers.authorization;
+    const credentials = typeof authorization === 'string'
+      ? /^Bearer +(.+)$/i.exec(authorization) : null;
+    if (!token || !credentials || credentials[1] !== token) {
       return res.status(401).json({ error: 'MRL_UNAUTHORIZED' });
     }
   } else if (String(process.env.MRL_ALLOW_UNAUTHENTICATED_WRITES || 'false').toLowerCase() !== 'true') {
