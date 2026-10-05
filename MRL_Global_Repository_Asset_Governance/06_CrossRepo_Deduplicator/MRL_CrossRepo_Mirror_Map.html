@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang="zh-Hant"><head>
+<meta charset="utf-8"><title>MRL Cross-Repo Mirror Map</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{color-scheme:light dark;--bg:#f8fafc;--card:#fff;--fg:#111827;--mut:#6b7280;--br:#e5e7eb;--acc:#8b5cf6}
+@media(prefers-color-scheme:dark){:root{--bg:#0b1220;--card:#111827;--fg:#f3f4f6;--mut:#9ca3af;--br:#1f2937}}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"Noto Sans TC",sans-serif}
+.wrap{max-width:1200px;margin:0 auto;padding:24px 16px 48px}
+h1{margin:0 0 4px;font-size:22px}.subtitle{color:var(--mut);margin:0 0 20px}
+.stats{display:flex;flex-wrap:wrap;gap:16px;margin:0 0 24px}
+.stat{background:var(--card);border:1px solid var(--br);border-radius:10px;padding:12px 16px;min-width:160px}
+.stat .k{font-size:12px;color:var(--mut)}.stat .v{font-size:22px;font-weight:600;margin-top:2px}
+section{background:var(--card);border:1px solid var(--br);border-radius:12px;margin:0 0 16px;overflow:hidden}
+section h2{margin:0;padding:12px 16px;font-size:15px;border-bottom:1px solid var(--br);background:color-mix(in oklch,var(--card) 95%,transparent)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--br)}
+th{color:var(--mut);font-weight:600;font-size:12px}
+tr:last-child td{border-bottom:none}
+td.n{font-variant-numeric:tabular-nums;text-align:right;color:var(--mut)}
+td.mono{font-family:ui-monospace,SF Mono,Menlo,monospace;color:var(--mut);font-size:12px}
+td.path{font-family:ui-monospace,SF Mono,Menlo,monospace;font-size:12px;color:var(--fg);word-break:break-all}
+.hero{background:color-mix(in oklch,var(--acc) 12%,var(--card));padding:16px 20px;margin:0 0 20px;border-radius:12px;border:1px solid var(--br)}
+.hero p{margin:4px 0;color:var(--fg)}
+.hero strong{color:var(--acc)}
+footer{margin-top:20px;color:var(--mut);font-size:12px;text-align:center}
+</style></head><body><div class="wrap">
+<h1>MRL Cross-Repo Mirror Map</h1>
+<p class="subtitle">origin_signature: MrLiouWord · 2026-10-05 · based on blob_sha equivalence across 31 repos</p>
+
+<div class="hero">
+  <p><strong>重要發現</strong>：母體內容在 31 個 repo 間不是單向複製，而是**雪球**。</p>
+  <p>• 10 個 repo 共用整包 <code>MRL_MotherSource_ZhiZhang_FlowAgent_Lineage_v1/</code> → 「母體 → mirror 分支」事實骨架</p>
+  <p>• 17 個 repo 共用 <code>06_trace/chronicle/.gitkeep</code>、13 個共用 <code>03_memory/vector/.gitkeep</code> → scaffolding 大範圍 copy-paste</p>
+  <p>• 神經圖收斂第一刀建議從 <code>MRL_MotherSource</code> 下</p>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="k">跨 repo 共用 blob 分組</div><div class="v">3,116</div></div>
+  <div class="stat"><div class="k">涉及 repo 數</div><div class="v">21</div></div>
+  <div class="stat"><div class="k">repo 配對數</div><div class="v">156</div></div>
+</div>
+
+<section>
+  <h2>Top 20 repo 配對（共用 blob 數量）</h2>
+  <table><thead><tr><th>Repo A</th><th>Repo B</th><th>Shared Blobs</th></tr></thead>
+  <tbody><tr><td>Mrliou/Mrl_Mother</td><td>dofaromg/MrliouAI-box</td><td class="n">3034</td></tr><tr><td>Mrliou/Mrl_Mother</td><td>dofaromg/MRL_AI_SYSTEM</td><td class="n">1486</td></tr><tr><td>dofaromg/MRL_AI_SYSTEM</td><td>dofaromg/MrliouAI-box</td><td class="n">1486</td></tr><tr><td>Mrliou/flow-tasks</td><td>dofaromg/mrlioudb</td><td class="n">1012</td></tr><tr><td>Mrliou/MRL-Autonomous-Evolution-Stack-AES-</td><td>Mrliou/flow-tasks</td><td class="n">1006</td></tr><tr><td>Mrliou/MRL-Autonomous-Evolution-Stack-AES-</td><td>dofaromg/mrlioudb</td><td class="n">1004</td></tr><tr><td>Mrliou/Mrl_Mother</td><td>Mrliou/flow-tasks</td><td class="n">988</td></tr><tr><td>dofaromg/-Mr.liouagi</td><td>dofaromg/Mrl_w01234567</td><td class="n">987</td></tr><tr><td>Mrliou/flow-tasks</td><td>dofaromg/-Mr.liouagi</td><td class="n">986</td></tr><tr><td>dofaromg/-Mr.liouagi</td><td>dofaromg/mrlioudb</td><td class="n">986</td></tr><tr><td>Mrliou/flow-tasks</td><td>dofaromg/MrliouAI-box</td><td class="n">985</td></tr><tr><td>Mrliou/Mrl_Mother</td><td>dofaromg/mrlioudb</td><td class="n">984</td></tr><tr><td>dofaromg/MrliouAI-box</td><td>dofaromg/mrlioudb</td><td class="n">984</td></tr><tr><td>Mrliou/MRL-Autonomous-Evolution-Stack-AES-</td><td>Mrliou/Mrl_Mother</td><td class="n">978</td></tr><tr><td>Mrliou/MRL-Autonomous-Evolution-Stack-AES-</td><td>dofaromg/MrliouAI-box</td><td class="n">978</td></tr><tr><td>Mrliou/MRL-Autonomous-Evolution-Stack-AES-</td><td>dofaromg/-Mr.liouagi</td><td class="n">976</td></tr><tr><td>Mrliou/flow-tasks</td><td>dofaromg/Mrl_w01234567</td><td class="n">974</td></tr><tr><td>dofaromg/Mrl_w01234567</td><td>dofaromg/mrlioudb</td><td class="n">974</td></tr><tr><td>Mrliou/MRL-Autonomous-Evolution-Stack-AES-</td><td>dofaromg/Mrl_w01234567</td><td class="n">966</td></tr><tr><td>Mrliou/Mrl_Mother</td><td>dofaromg/-Mr.liouagi</td><td class="n">965</td></tr></tbody></table>
+</section>
+
+<section>
+  <h2>Fan-out Top 30（一個 blob 散佈到最多 repo）</h2>
+  <table><thead><tr><th>Repos</th><th>Size (B)</th><th>Blob SHA</th><th>Sample Path</th></tr></thead>
+  <tbody><tr><td class="n">17</td><td class="n">0</td><td class="mono">e69de29bb2d1</td><td class="path"></td></tr><tr><td class="n">13</td><td class="n">1</td><td class="mono">8b137891791f</td><td class="path"></td></tr><tr><td class="n">10</td><td class="n">58,060</td><td class="mono">4eeeca4110d7</td><td class="path"></td></tr><tr><td class="n">10</td><td class="n">54,227</td><td class="mono">acc4ca7c3166</td><td class="path"></td></tr><tr><td class="n">10</td><td class="n">25,627</td><td class="mono">ec8ac71a0627</td><td class="path"></td></tr><tr><td class="n">10</td><td class="n">7,114</td><td class="mono">d43d0590c654</td><td class="path"></td></tr><tr><td class="n">10</td><td class="n">4,841</td><td class="mono">2684601a3f97</td><td class="path"></td></tr><tr><td class="n">10</td><td class="n">3,436</td><td class="mono">42eb65a80638</td><td class="path"></td></tr><tr><td class="n">10</td><td class="n">3,192</td><td class="mono">26ec655f45b6</td><td class="path"></td></tr><tr><td class="n">10</td><td class="n">2,486</td><td class="mono">31e4065191b0</td><td class="path"></td></tr><tr><td class="n">10</td><td class="n">2,362</td><td class="mono">ffca4188f81c</td><td class="path"></td></tr><tr><td class="n">10</td><td class="n">1,637</td><td class="mono">4db9fb9f1ba8</td><td class="path"></td></tr><tr><td class="n">10</td><td class="n">67</td><td class="mono">e1549769a9cf</td><td class="path"></td></tr><tr><td class="n">10</td><td class="n">61</td><td class="mono">5c81c9280b07</td><td class="path"></td></tr><tr><td class="n">10</td><td class="n">40</td><td class="mono">bffb357a7122</td><td class="path"></td></tr><tr><td class="n">9</td><td class="n">2,344,365</td><td class="mono">37b23cf0b36a</td><td class="path"></td></tr><tr><td class="n">9</td><td class="n">644,092</td><td class="mono">5a598783c9e8</td><td class="path"></td></tr><tr><td class="n">9</td><td class="n">595,595</td><td class="mono">88282f4e7cfc</td><td class="path"></td></tr><tr><td class="n">9</td><td class="n">412,978</td><td class="mono">137431a847ae</td><td class="path"></td></tr><tr><td class="n">9</td><td class="n">288,553</td><td class="mono">77c0dd291cc5</td><td class="path"></td></tr><tr><td class="n">9</td><td class="n">278,423</td><td class="mono">585a8ebe3dd2</td><td class="path"></td></tr><tr><td class="n">9</td><td class="n">196,226</td><td class="mono">77352a8fc9ce</td><td class="path"></td></tr><tr><td class="n">9</td><td class="n">144,713</td><td class="mono">5ee5e21794d0</td><td class="path"></td></tr><tr><td class="n">9</td><td class="n">142,077</td><td class="mono">ac9e2ef9b13f</td><td class="path"></td></tr><tr><td class="n">9</td><td class="n">126,717</td><td class="mono">5188dd1c0124</td><td class="path"></td></tr><tr><td class="n">9</td><td class="n">90,373</td><td class="mono">65f282fc94a4</td><td class="path"></td></tr><tr><td class="n">9</td><td class="n">44,045</td><td class="mono">c90e3245fd82</td><td class="path"></td></tr><tr><td class="n">9</td><td class="n">39,770</td><td class="mono">48fcd41170b5</td><td class="path"></td></tr><tr><td class="n">9</td><td class="n">39,501</td><td class="mono">4a8008645a60</td><td class="path"></td></tr><tr><td class="n">9</td><td class="n">38,958</td><td class="mono">e03f09ca04f0</td><td class="path"></td></tr></tbody></table>
+</section>
+
+<section>
+  <h2>Top 20 大型跨 repo 共用檔（&gt;1KB）</h2>
+  <table><thead><tr><th>Size (B)</th><th>Repos</th><th>Blob SHA</th><th>Sample Path</th></tr></thead>
+  <tbody><tr><td class="n">19,318,243</td><td class="n">2</td><td class="mono">39c91f65d0b4</td><td class="path"></td></tr><tr><td class="n">12,515,926</td><td class="n">7</td><td class="mono">c572fd8c0746</td><td class="path"></td></tr><tr><td class="n">10,876,865</td><td class="n">7</td><td class="mono">42a0fedbaf53</td><td class="path"></td></tr><tr><td class="n">9,356,148</td><td class="n">2</td><td class="mono">ed5f035cfb4f</td><td class="path"></td></tr><tr><td class="n">8,851,527</td><td class="n">2</td><td class="mono">9d113c2b4863</td><td class="path"></td></tr><tr><td class="n">7,966,150</td><td class="n">7</td><td class="mono">3c70b4cb8129</td><td class="path"></td></tr><tr><td class="n">5,944,972</td><td class="n">2</td><td class="mono">1616dde94999</td><td class="path"></td></tr><tr><td class="n">2,344,365</td><td class="n">9</td><td class="mono">37b23cf0b36a</td><td class="path"></td></tr><tr><td class="n">1,492,338</td><td class="n">7</td><td class="mono">e10ff45818a8</td><td class="path"></td></tr><tr><td class="n">1,024,952</td><td class="n">3</td><td class="mono">551f8cdb9fbd</td><td class="path"></td></tr><tr><td class="n">1,024,181</td><td class="n">3</td><td class="mono">d08ef347f78d</td><td class="path"></td></tr><tr><td class="n">1,023,130</td><td class="n">3</td><td class="mono">819d1b307fe3</td><td class="path"></td></tr><tr><td class="n">1,013,760</td><td class="n">3</td><td class="mono">ebbfb819b15b</td><td class="path"></td></tr><tr><td class="n">987,085</td><td class="n">3</td><td class="mono">773a087ca30f</td><td class="path"></td></tr><tr><td class="n">977,750</td><td class="n">3</td><td class="mono">f94db1bcc5c7</td><td class="path"></td></tr><tr><td class="n">953,151</td><td class="n">2</td><td class="mono">b423f2363aa6</td><td class="path"></td></tr><tr><td class="n">947,592</td><td class="n">3</td><td class="mono">17d2e1dc0504</td><td class="path"></td></tr><tr><td class="n">879,443</td><td class="n">2</td><td class="mono">7eb1c1a215ac</td><td class="path"></td></tr><tr><td class="n">841,675</td><td class="n">2</td><td class="mono">723d0672d199</td><td class="path"></td></tr><tr><td class="n">819,109</td><td class="n">2</td><td class="mono">d9c191d6181e</td><td class="path"></td></tr></tbody></table>
+</section>
+
+<section>
+  <h2>Top 20 repo 參與（出現在最多共用組）</h2>
+  <table><thead><tr><th>Repository</th><th>Shared Groups</th></tr></thead>
+  <tbody><tr><td>Mrliou/Mrl_Mother</td><td class="n">3037</td></tr><tr><td>dofaromg/MrliouAI-box</td><td class="n">3035</td></tr><tr><td>dofaromg/MRL_AI_SYSTEM</td><td class="n">1503</td></tr><tr><td>Mrliou/flow-tasks</td><td class="n">1017</td></tr><tr><td>dofaromg/mrlioudb</td><td class="n">1014</td></tr><tr><td>Mrliou/MRL-Autonomous-Evolution-Stack-AES-</td><td class="n">1007</td></tr><tr><td>dofaromg/-Mr.liouagi</td><td class="n">999</td></tr><tr><td>dofaromg/Mrl_w01234567</td><td class="n">987</td></tr><tr><td>dofaromg/flow-tasks-01</td><td class="n">446</td></tr><tr><td>dofaromg/Mrliouword-</td><td class="n">151</td></tr><tr><td>Mrliou/MRL_AI_SYSTEM_fork</td><td class="n">90</td></tr><tr><td>dofaromg/mrliouword-system</td><td class="n">31</td></tr><tr><td>dofaromg/tool-silk-</td><td class="n">13</td></tr><tr><td>dofaromg/Mrliou_AIworld</td><td class="n">7</td></tr><tr><td>dofaromg/mrliouword-root</td><td class="n">7</td></tr><tr><td>dofaromg/MRL-lecrev</td><td class="n">6</td></tr><tr><td>dofaromg/APFS</td><td class="n">6</td></tr><tr><td>dofaromg/growthbook-flags-sdk-example</td><td class="n">5</td></tr><tr><td>dofaromg/fastapi</td><td class="n">2</td></tr><tr><td>Mrliou/silly</td><td class="n">1</td></tr></tbody></table>
+</section>
+
+<footer>這張圖以 git blob SHA-1 為同一性判準；若有 size &lt;= 1 的 .gitkeep 類 scaffolding，會自然聚在高 fan-out 區。</footer>
+</div></body></html>

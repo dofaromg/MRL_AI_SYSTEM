@@ -1,47 +1,169 @@
 {
-  "total": 230,
-  "fully_absorbed": 51,
-  "has_unique_commits": 179,
-  "has_unique_files": 179,
-  "errors": 0,
-  "default_branch": "MRL_AI_SYSTEM/memory-system-rules-prep",
-  "by_role_absorbed": {
-    "ACTIVE_MAINLINE": "1/1",
-    "ARCHIVE_BRANCH": "0/4",
-    "FEATURE_BRANCH": "0/1",
-    "MIRROR_BRANCH": "27/154",
-    "RECOVERY_BRANCH": "13/32",
-    "SUB_MAINLINE": "2/2",
-    "UNKNOWN_BRANCH": "8/36"
-  },
-  "by_role_detail": {
+  "total_branches": 530,
+  "unique_repos": 31,
+  "errors": 38,
+  "default_lines": 30,
+  "fully_absorbed": 161,
+  "not_absorbed": 301,
+  "unknown_absorbed": 68,
+  "ahead_sum": 14089,
+  "behind_sum": 68729,
+  "unique_files_total": 42402,
+  "unique_commits_total": 14089,
+  "by_role": {
     "UNKNOWN_BRANCH": {
-      "total": 36,
-      "absorbed": 8
-    },
-    "ACTIVE_MAINLINE": {
-      "total": 1,
-      "absorbed": 1
+      "count": 89,
+      "fully_absorbed": 25,
+      "not_absorbed": 49,
+      "unknown": 15,
+      "ahead_sum": 1930,
+      "behind_sum": 8340,
+      "unique_files_total": 5853,
+      "absorption_rate": 0.33783783783783783
     },
     "MIRROR_BRANCH": {
-      "total": 154,
-      "absorbed": 27
+      "count": 368,
+      "fully_absorbed": 118,
+      "not_absorbed": 226,
+      "unknown": 24,
+      "ahead_sum": 11173,
+      "behind_sum": 52849,
+      "unique_files_total": 34047,
+      "absorption_rate": 0.3430232558139535
+    },
+    "ROOT_MAINLINE": {
+      "count": 28,
+      "fully_absorbed": 0,
+      "not_absorbed": 0,
+      "unknown": 28,
+      "ahead_sum": 0,
+      "behind_sum": 0,
+      "unique_files_total": 0,
+      "absorption_rate": null
+    },
+    "ACTIVE_MAINLINE": {
+      "count": 2,
+      "fully_absorbed": 1,
+      "not_absorbed": 0,
+      "unknown": 1,
+      "ahead_sum": 0,
+      "behind_sum": 0,
+      "unique_files_total": 0,
+      "absorption_rate": 1.0
     },
     "SUB_MAINLINE": {
-      "total": 2,
-      "absorbed": 2
+      "count": 2,
+      "fully_absorbed": 2,
+      "not_absorbed": 0,
+      "unknown": 0,
+      "ahead_sum": 0,
+      "behind_sum": 146,
+      "unique_files_total": 0,
+      "absorption_rate": 1.0
     },
     "ARCHIVE_BRANCH": {
-      "total": 4,
-      "absorbed": 0
+      "count": 4,
+      "fully_absorbed": 0,
+      "not_absorbed": 4,
+      "unknown": 0,
+      "ahead_sum": 645,
+      "behind_sum": 349,
+      "unique_files_total": 1659,
+      "absorption_rate": 0.0
     },
     "FEATURE_BRANCH": {
-      "total": 1,
-      "absorbed": 0
+      "count": 5,
+      "fully_absorbed": 2,
+      "not_absorbed": 3,
+      "unknown": 0,
+      "ahead_sum": 209,
+      "behind_sum": 1061,
+      "unique_files_total": 550,
+      "absorption_rate": 0.4
     },
     "RECOVERY_BRANCH": {
-      "total": 32,
-      "absorbed": 13
+      "count": 32,
+      "fully_absorbed": 13,
+      "not_absorbed": 19,
+      "unknown": 0,
+      "ahead_sum": 132,
+      "behind_sum": 5984,
+      "unique_files_total": 293,
+      "absorption_rate": 0.40625
     }
-  }
+  },
+  "top_unmerged_repos": [
+    [
+      "dofaromg/MRL_AI_SYSTEM",
+      40000
+    ],
+    [
+      "dofaromg/flow-tasks-01",
+      1660
+    ],
+    [
+      "dofaromg/mrliouword-system",
+      256
+    ],
+    [
+      "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
+      137
+    ],
+    [
+      "dofaromg/fastapi",
+      101
+    ],
+    [
+      "dofaromg/growthbook-flags-sdk-example",
+      55
+    ],
+    [
+      "dofaromg/MrliouAI-box",
+      37
+    ],
+    [
+      "dofaromg/-Mr.liouagi",
+      29
+    ],
+    [
+      "dofaromg/mrliouword-root",
+      28
+    ],
+    [
+      "dofaromg/mrlioudb",
+      22
+    ],
+    [
+      "dofaromg/Mrl_w01234567",
+      22
+    ],
+    [
+      "Mrliou/flow-tasks",
+      20
+    ],
+    [
+      "Mrliou/Mrl_Mother",
+      19
+    ],
+    [
+      "dofaromg/tool-silk-",
+      6
+    ],
+    [
+      "dofaromg/Mrliou_AIworld",
+      4
+    ],
+    [
+      "dofaromg/Mrliouword-",
+      4
+    ],
+    [
+      "Mrliou/demo-repository",
+      1
+    ],
+    [
+      "dofaromg/model-context-protocol-mcp-with-next-js",
+      1
+    ]
+  ]
 }

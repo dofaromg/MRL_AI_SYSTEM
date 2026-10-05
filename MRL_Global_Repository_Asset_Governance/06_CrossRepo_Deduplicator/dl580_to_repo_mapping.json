@@ -1,0 +1,602 @@
+{
+ "origin_signature": "MrLiouWord",
+ "generated_at": "2026-10-05",
+ "total_dl580_only_dirs": 30,
+ "by_kind": {
+  "runtime-cache/data": 3,
+  "mother-component": 5,
+  "ingested-materials": 1,
+  "runtime-output": 2,
+  "unknown": 8,
+  "live-service": 11
+ },
+ "mappings": [
+  {
+   "dl580_dir": "models",
+   "file_count": 651,
+   "total_size": 125211771712,
+   "kind": "runtime-cache/data",
+   "repo_candidates": [
+    {
+     "repo": "dofaromg/rox-one-terminal",
+     "match_hits": 8
+    },
+    {
+     "repo": "dofaromg/MrliouAI-box",
+     "match_hits": 3
+    },
+    {
+     "repo": "Mrliou/Mrl_Mother",
+     "match_hits": 3
+    },
+    {
+     "repo": "dofaromg/fastapi",
+     "match_hits": 2
+    },
+    {
+     "repo": "dofaromg/mrl-ai-chatbot",
+     "match_hits": 2
+    }
+   ]
+  },
+  {
+   "dl580_dir": "pip-cache",
+   "file_count": 8,
+   "total_size": 5285552576,
+   "kind": "runtime-cache/data",
+   "repo_candidates": []
+  },
+  {
+   "dl580_dir": "MRL_Index",
+   "file_count": 7,
+   "total_size": 537961773,
+   "kind": "mother-component",
+   "repo_candidates": []
+  },
+  {
+   "dl580_dir": "absorb",
+   "file_count": 335,
+   "total_size": 307959744,
+   "kind": "ingested-materials",
+   "repo_candidates": [
+    {
+     "repo": "dofaromg/MrliouAI-box",
+     "match_hits": 6
+    },
+    {
+     "repo": "Mrliou/Mrl_Mother",
+     "match_hits": 6
+    },
+    {
+     "repo": "dofaromg/MRL_AI_SYSTEM",
+     "match_hits": 4
+    }
+   ]
+  },
+  {
+   "dl580_dir": "workspace",
+   "file_count": 481,
+   "total_size": 179487301,
+   "kind": "runtime-output",
+   "repo_candidates": [
+    {
+     "repo": "dofaromg/rox-one-terminal",
+     "match_hits": 39
+    },
+    {
+     "repo": "dofaromg/MRL-lecrev",
+     "match_hits": 23
+    },
+    {
+     "repo": "dofaromg/flow-tasks-01",
+     "match_hits": 2
+    },
+    {
+     "repo": "Mrliou/flow-tasks",
+     "match_hits": 2
+    },
+    {
+     "repo": "dofaromg/mrlioudb",
+     "match_hits": 2
+    }
+   ]
+  },
+  {
+   "dl580_dir": "particle_imports",
+   "file_count": 12,
+   "total_size": 106259524,
+   "kind": "unknown",
+   "repo_candidates": [
+    {
+     "repo": "dofaromg/MrliouAI-box",
+     "match_hits": 317
+    },
+    {
+     "repo": "Mrliou/Mrl_Mother",
+     "match_hits": 317
+    },
+    {
+     "repo": "Mrliou/flow-tasks",
+     "match_hits": 180
+    },
+    {
+     "repo": "dofaromg/mrlioudb",
+     "match_hits": 180
+    },
+    {
+     "repo": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
+     "match_hits": 180
+    }
+   ]
+  },
+  {
+   "dl580_dir": "MRL_GenesisLanguage_System_CPP_DL580_v2_1_RuntimeDaemon_API",
+   "file_count": 1040,
+   "total_size": 71854684,
+   "kind": "mother-component",
+   "repo_candidates": []
+  },
+  {
+   "dl580_dir": "entry",
+   "file_count": 8,
+   "total_size": 70963778,
+   "kind": "live-service",
+   "repo_candidates": [
+    {
+     "repo": "dofaromg/MRL-lecrev",
+     "match_hits": 66
+    },
+    {
+     "repo": "dofaromg/rox-one-terminal",
+     "match_hits": 5
+    },
+    {
+     "repo": "Mrliou/Mrl_Mother",
+     "match_hits": 4
+    },
+    {
+     "repo": "dofaromg/MrliouAI-box",
+     "match_hits": 4
+    },
+    {
+     "repo": "dofaromg/mrliouword-system",
+     "match_hits": 2
+    }
+   ]
+  },
+  {
+   "dl580_dir": "nerve_link",
+   "file_count": 98,
+   "total_size": 27366487,
+   "kind": "live-service",
+   "repo_candidates": []
+  },
+  {
+   "dl580_dir": "product",
+   "file_count": 57,
+   "total_size": 20000954,
+   "kind": "unknown",
+   "repo_candidates": [
+    {
+     "repo": "Mrliou/Mrl_Mother",
+     "match_hits": 126
+    },
+    {
+     "repo": "dofaromg/MrliouAI-box",
+     "match_hits": 126
+    },
+    {
+     "repo": "dofaromg/MRL-lecrev",
+     "match_hits": 94
+    },
+    {
+     "repo": "dofaromg/rox-one-terminal",
+     "match_hits": 24
+    },
+    {
+     "repo": "dofaromg/growthbook-flags-sdk-example",
+     "match_hits": 4
+    }
+   ]
+  },
+  {
+   "dl580_dir": "faceswap",
+   "file_count": 8,
+   "total_size": 19362774,
+   "kind": "live-service",
+   "repo_candidates": [
+    {
+     "repo": "Mrliou/Mrl_asi_system",
+     "match_hits": 2
+    }
+   ]
+  },
+  {
+   "dl580_dir": "MRL_AI_OS",
+   "file_count": 653,
+   "total_size": 17633145,
+   "kind": "mother-component",
+   "repo_candidates": []
+  },
+  {
+   "dl580_dir": "downloads",
+   "file_count": 1,
+   "total_size": 15073280,
+   "kind": "runtime-cache/data",
+   "repo_candidates": [
+    {
+     "repo": "dofaromg/MRL-lecrev",
+     "match_hits": 5
+    },
+    {
+     "repo": "dofaromg/rox-one-terminal",
+     "match_hits": 1
+    },
+    {
+     "repo": "dofaromg/tool-silk-",
+     "match_hits": 1
+    }
+   ]
+  },
+  {
+   "dl580_dir": "MRL_Law0_Foundation",
+   "file_count": 47,
+   "total_size": 14020542,
+   "kind": "mother-component",
+   "repo_candidates": [
+    {
+     "repo": "Mrliou/Mrl_Mother",
+     "match_hits": 3
+    },
+    {
+     "repo": "dofaromg/MRL_AI_SYSTEM",
+     "match_hits": 3
+    },
+    {
+     "repo": "dofaromg/MrliouAI-box",
+     "match_hits": 3
+    }
+   ]
+  },
+  {
+   "dl580_dir": "disk_inventory",
+   "file_count": 8,
+   "total_size": 12796771,
+   "kind": "runtime-output",
+   "repo_candidates": []
+  },
+  {
+   "dl580_dir": "layer_a",
+   "file_count": 29,
+   "total_size": 12667670,
+   "kind": "live-service",
+   "repo_candidates": [
+    {
+     "repo": "Mrliou/Mrl_asi_system",
+     "match_hits": 1
+    },
+    {
+     "repo": "dofaromg/MRL-lecrev",
+     "match_hits": 1
+    },
+    {
+     "repo": "dofaromg/rox-one-terminal",
+     "match_hits": 1
+    }
+   ]
+  },
+  {
+   "dl580_dir": "sessions",
+   "file_count": 2,
+   "total_size": 7973285,
+   "kind": "unknown",
+   "repo_candidates": [
+    {
+     "repo": "dofaromg/rox-one-terminal",
+     "match_hits": 16
+    },
+    {
+     "repo": "Mrliou/Mrl_Mother",
+     "match_hits": 1
+    },
+    {
+     "repo": "dofaromg/Mrl_w01234567",
+     "match_hits": 1
+    },
+    {
+     "repo": "dofaromg/MrliouAI-box",
+     "match_hits": 1
+    },
+    {
+     "repo": "dofaromg/mrlioudb",
+     "match_hits": 1
+    }
+   ]
+  },
+  {
+   "dl580_dir": "inference",
+   "file_count": 59,
+   "total_size": 7232286,
+   "kind": "live-service",
+   "repo_candidates": []
+  },
+  {
+   "dl580_dir": "reasoning_engine",
+   "file_count": 12,
+   "total_size": 5952277,
+   "kind": "live-service",
+   "repo_candidates": [
+    {
+     "repo": "dofaromg/MrliouAI-box",
+     "match_hits": 2
+    },
+    {
+     "repo": "Mrliou/Mrl_Mother",
+     "match_hits": 2
+    },
+    {
+     "repo": "dofaromg/mrl-ai-chatbot",
+     "match_hits": 2
+    },
+    {
+     "repo": "dofaromg/mrliouword-system",
+     "match_hits": 2
+    }
+   ]
+  },
+  {
+   "dl580_dir": "flowos",
+   "file_count": 2,
+   "total_size": 5705756,
+   "kind": "live-service",
+   "repo_candidates": [
+    {
+     "repo": "Mrliou/Mrl_Mother",
+     "match_hits": 51
+    },
+    {
+     "repo": "dofaromg/MrliouAI-box",
+     "match_hits": 51
+    },
+    {
+     "repo": "dofaromg/-Mr.liouagi",
+     "match_hits": 34
+    },
+    {
+     "repo": "dofaromg/Mrl_w01234567",
+     "match_hits": 34
+    },
+    {
+     "repo": "Mrliou/flow-tasks",
+     "match_hits": 34
+    }
+   ]
+  },
+  {
+   "dl580_dir": "bridge",
+   "file_count": 63,
+   "total_size": 4056298,
+   "kind": "live-service",
+   "repo_candidates": [
+    {
+     "repo": "dofaromg/MrliouAI-box",
+     "match_hits": 53
+    },
+    {
+     "repo": "Mrliou/Mrl_Mother",
+     "match_hits": 53
+    },
+    {
+     "repo": "dofaromg/MRL_AI_SYSTEM",
+     "match_hits": 17
+    },
+    {
+     "repo": "dofaromg/rox-one-terminal",
+     "match_hits": 8
+    },
+    {
+     "repo": "dofaromg/mrlioudb",
+     "match_hits": 4
+    }
+   ]
+  },
+  {
+   "dl580_dir": "mother",
+   "file_count": 140,
+   "total_size": 3353608,
+   "kind": "live-service",
+   "repo_candidates": [
+    {
+     "repo": "Mrliou/Mrl_Mother",
+     "match_hits": 4018
+    },
+    {
+     "repo": "dofaromg/MrliouAI-box",
+     "match_hits": 4018
+    },
+    {
+     "repo": "dofaromg/MRL_AI_SYSTEM",
+     "match_hits": 3052
+    },
+    {
+     "repo": "dofaromg/APFS",
+     "match_hits": 229
+    },
+    {
+     "repo": "dofaromg/mrliouword-system",
+     "match_hits": 5
+    }
+   ]
+  },
+  {
+   "dl580_dir": "operations",
+   "file_count": 8,
+   "total_size": 3254719,
+   "kind": "unknown",
+   "repo_candidates": [
+    {
+     "repo": "dofaromg/MRL-lecrev",
+     "match_hits": 15
+    },
+    {
+     "repo": "Mrliou/Mrl_Mother",
+     "match_hits": 1
+    },
+    {
+     "repo": "dofaromg/MrliouAI-box",
+     "match_hits": 1
+    },
+    {
+     "repo": "dofaromg/mrliouword-root",
+     "match_hits": 1
+    },
+    {
+     "repo": "dofaromg/mrliouword-system",
+     "match_hits": 1
+    }
+   ]
+  },
+  {
+   "dl580_dir": "voice_agent",
+   "file_count": 2,
+   "total_size": 2855125,
+   "kind": "live-service",
+   "repo_candidates": []
+  },
+  {
+   "dl580_dir": "archive",
+   "file_count": 13,
+   "total_size": 1501607,
+   "kind": "unknown",
+   "repo_candidates": [
+    {
+     "repo": "dofaromg/MrliouAI-box",
+     "match_hits": 41
+    },
+    {
+     "repo": "Mrliou/Mrl_Mother",
+     "match_hits": 41
+    },
+    {
+     "repo": "dofaromg/MRL_AI_SYSTEM",
+     "match_hits": 28
+    },
+    {
+     "repo": "dofaromg/mrliouword-system",
+     "match_hits": 6
+    },
+    {
+     "repo": "dofaromg/flow-tasks-01",
+     "match_hits": 3
+    }
+   ]
+  },
+  {
+   "dl580_dir": "engines",
+   "file_count": 117,
+   "total_size": 1380202,
+   "kind": "live-service",
+   "repo_candidates": [
+    {
+     "repo": "Mrliou/flow-tasks",
+     "match_hits": 3
+    },
+    {
+     "repo": "dofaromg/mrlioudb",
+     "match_hits": 3
+    },
+    {
+     "repo": "dofaromg/MrliouAI-box",
+     "match_hits": 3
+    },
+    {
+     "repo": "Mrliou/Mrl_Mother",
+     "match_hits": 3
+    },
+    {
+     "repo": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
+     "match_hits": 3
+    }
+   ]
+  },
+  {
+   "dl580_dir": "packages",
+   "file_count": 370,
+   "total_size": 1262856,
+   "kind": "unknown",
+   "repo_candidates": [
+    {
+     "repo": "dofaromg/MRL-lecrev",
+     "match_hits": 3703
+    },
+    {
+     "repo": "dofaromg/rox-one-terminal",
+     "match_hits": 1191
+    },
+    {
+     "repo": "dofaromg/mrliouword-system",
+     "match_hits": 1
+    }
+   ]
+  },
+  {
+   "dl580_dir": "assembly",
+   "file_count": 79,
+   "total_size": 1112061,
+   "kind": "unknown",
+   "repo_candidates": [
+    {
+     "repo": "Mrliou/Mrl_Mother",
+     "match_hits": 3
+    },
+    {
+     "repo": "dofaromg/MrliouAI-box",
+     "match_hits": 3
+    },
+    {
+     "repo": "dofaromg/MRL_AI_SYSTEM",
+     "match_hits": 2
+    },
+    {
+     "repo": "Mrliou/MRL_AI_SYSTEM_fork",
+     "match_hits": 2
+    }
+   ]
+  },
+  {
+   "dl580_dir": "modules",
+   "file_count": 15,
+   "total_size": 929758,
+   "kind": "unknown",
+   "repo_candidates": [
+    {
+     "repo": "dofaromg/MrliouAI-box",
+     "match_hits": 105
+    },
+    {
+     "repo": "Mrliou/Mrl_Mother",
+     "match_hits": 105
+    },
+    {
+     "repo": "dofaromg/MRL_AI_SYSTEM",
+     "match_hits": 79
+    },
+    {
+     "repo": "dofaromg/MRL-lecrev",
+     "match_hits": 53
+    },
+    {
+     "repo": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
+     "match_hits": 21
+    }
+   ]
+  },
+  {
+   "dl580_dir": "MRL_zlib_src",
+   "file_count": 20,
+   "total_size": 884483,
+   "kind": "mother-component",
+   "repo_candidates": []
+  }
+ ]
+}
