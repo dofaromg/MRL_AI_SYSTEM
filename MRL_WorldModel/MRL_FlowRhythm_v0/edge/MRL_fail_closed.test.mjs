@@ -43,7 +43,7 @@ for (const token of ['⋄fx.time.010', '⋄fx.gate.001', '⋄fx.per.001']) {
     assert.equal(python({ trace: forged, title: 'MRL', sandbox }).error, 'SemanticAuthorityIntegrityError');
   });
 }
-for (const title of ['MRL\rbreak', 'MRL\nbreak', 'MRL\r\nbreak']) test(`reject title ${JSON.stringify(title)}`, async () => {
+for (const title of ['\n', '\r', '\r\n', '\v', '\f', '\x1c', '\x1d', '\x1e', '\x85', '\u2028', '\u2029'].map(sep => `MRL${sep}break`)) test(`reject title ${JSON.stringify(title)}`, async () => {
   for (const sandbox of [false, true]) {
     const opts = { title, allowProvisional: sandbox };
     await assert.rejects(R.run(['⊕:MRL'], L, opts), R.SemanticAuthorityIntegrityError);
@@ -104,9 +104,9 @@ for (const path of ['run', 'replay']) {
     const stream = new ReadableStream({ pull(c) { c.error(new Error('broken stream')); } });
     assert.equal((await call(path, stream)).status, 400);
   });
-  test(`${path} percent-encoded CR/LF title rejected`, async () => {
+  test(`${path} percent-encoded Python line separator title rejected`, async () => {
     const base = await R.run(['⊕:MRL'], L);
-    for (const title of ['x%0Ay', 'x%0Dy', 'x%0D%0Ay']) {
+    for (const title of ['%0A', '%0D', '%0D%0A', '%0B', '%0C', '%1C', '%1D', '%1E', '%C2%85', '%E2%80%A8', '%E2%80%A9'].map(sep => `x${sep}y`)) {
       assert.equal((await call(path, path === 'run' ? '⊕:MRL' : base.trace_fltnz, `?title=${title}`)).status, 422);
     }
   });
