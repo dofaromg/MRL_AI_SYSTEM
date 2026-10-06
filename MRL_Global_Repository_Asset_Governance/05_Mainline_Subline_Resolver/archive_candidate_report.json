@@ -1,14 +1,41 @@
 {
- "total": 39,
+ "total": 43,
  "note": "封存候選 ≠ 允許刪除",
  "items": [
   {
-   "branch_id": "dca2271a1cfc3210",
-   "full_name": "dofaromg/flow-tasks-01",
-   "branch_name": "revert-1-dofaromg-patch-1",
-   "head_sha": "da9798d3a1640a5dd2dfe86c03a33b3e63adebf8",
-   "canonical": "dofaromg/flow-tasks-01@宥麟",
-   "confidence": 0.9,
+   "branch_id": "dd3ee218c056275b",
+   "full_name": "Mrliou/mrliouword-system",
+   "branch_name": "copilot/34099860062-add-new-feature",
+   "head_sha": "1ac0d546b8f1ac57ab2719ec807943e8998862e9",
+   "canonical": "Mrliou/mrliouword-system@copilot/mrl",
+   "confidence": 0.95,
+   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
+  },
+  {
+   "branch_id": "1f2fd5d3b0ecc0cd",
+   "full_name": "Mrliou/mrliouword-system",
+   "branch_name": "copilot/34468849513",
+   "head_sha": "1ac0d546b8f1ac57ab2719ec807943e8998862e9",
+   "canonical": "Mrliou/mrliouword-system@copilot/mrl",
+   "confidence": 0.95,
+   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
+  },
+  {
+   "branch_id": "ddfc9263201a7fd3",
+   "full_name": "Mrliou/mrliouword-system",
+   "branch_name": "copilot/task-266179900-1299084244-043c9e6b-5f60-4236-8056-bcc140b47337",
+   "head_sha": "43a56676c8b8e084230bb3ece2625ed225f8e148",
+   "canonical": "Mrliou/mrliouword-system@copilot/add-custom-font-feature",
+   "confidence": 0.95,
+   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
+  },
+  {
+   "branch_id": "f4f357f94d6dc548",
+   "full_name": "Mrliou/mrliouword-system",
+   "branch_name": "copilot/task-266179900-1299084244-273c6921-3267-4d33-9534-01354ad4cc6f",
+   "head_sha": "43a56676c8b8e084230bb3ece2625ed225f8e148",
+   "canonical": "Mrliou/mrliouword-system@copilot/add-custom-font-feature",
+   "confidence": 0.95,
    "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
   },
   {
@@ -57,15 +84,6 @@
    "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
   },
   {
-   "branch_id": "659ee76a6f9b00cb",
-   "full_name": "dofaromg/MRL_AI_SYSTEM",
-   "branch_name": "claude/mrl-cloudflare-logs-route-7vz3nf",
-   "head_sha": "df8baba8469df1afe20a94fef630c94c6f179fb6",
-   "canonical": "dofaromg/MRL_AI_SYSTEM@copilot/update-documentation-for-api",
-   "confidence": 0.95,
-   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
-  },
-  {
    "branch_id": "892819983b0243ab",
    "full_name": "dofaromg/MRL_AI_SYSTEM",
    "branch_name": "claude/mrl-mother-runtime-v1-krte6",
@@ -90,24 +108,6 @@
    "head_sha": "5c3ee9e329d0f77298d8ccc13dc055a5ebe2a6a6",
    "canonical": "dofaromg/MRL_AI_SYSTEM@MRL_discussion_with_partner",
    "confidence": 0.9,
-   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
-  },
-  {
-   "branch_id": "e133ae3152440067",
-   "full_name": "dofaromg/MRL_AI_SYSTEM",
-   "branch_name": "copilot/52-rspack-nextjs-integration-tests",
-   "head_sha": "016e22c26b58f74ee9bb4c365b67ffa2901565bb",
-   "canonical": "dofaromg/MRL_AI_SYSTEM@copilot/claudepr77-merge-resolution",
-   "confidence": 0.95,
-   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
-  },
-  {
-   "branch_id": "8f8ad9bd39c239af",
-   "full_name": "dofaromg/MRL_AI_SYSTEM",
-   "branch_name": "copilot/5dbeff653a6ec62f3b09ac107c6bdf20cac30f45",
-   "head_sha": "1f11777ff3c377b0330589bcadda1f872c23c7d0",
-   "canonical": "dofaromg/MRL_AI_SYSTEM@claude/memory-system-rules-prep-EuBXH",
-   "confidence": 0.95,
    "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
   },
   {
@@ -143,15 +143,6 @@
    "branch_name": "copilot/add-missing-features-to-mrl-agi",
    "head_sha": "073ec1027f055c1f446113ba38e63f71112ecdb2",
    "canonical": "dofaromg/MRL_AI_SYSTEM@MRL_add_missing_features_to_mrl_agi",
-   "confidence": 0.95,
-   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
-  },
-  {
-   "branch_id": "7019dd062792462c",
-   "full_name": "dofaromg/MRL_AI_SYSTEM",
-   "branch_name": "copilot/add-missing-world-definition-components",
-   "head_sha": "68ff275d94efc3f3aab2d07b6ea98f4ecc2b29a7",
-   "canonical": "dofaromg/MRL_AI_SYSTEM@claude/pull-133",
    "confidence": 0.95,
    "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
   },
@@ -282,15 +273,6 @@
    "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
   },
   {
-   "branch_id": "dfdfc3ab9baacdd4",
-   "full_name": "dofaromg/MRL_AI_SYSTEM",
-   "branch_name": "copilot/task-217537952-1172186696-12c36977-393a-4fcc-b66b-8071473570c2",
-   "head_sha": "ddce340d09642204e2941051746364833474c60b",
-   "canonical": "dofaromg/MRL_AI_SYSTEM@copilot/mrl-mother-all-deliverables",
-   "confidence": 0.95,
-   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
-  },
-  {
    "branch_id": "90a8f288c7c73538",
    "full_name": "dofaromg/MRL_AI_SYSTEM",
    "branch_name": "copilot/update-directory-structure",
@@ -318,39 +300,93 @@
    "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
   },
   {
-   "branch_id": "f29f142731b373a8",
-   "full_name": "dofaromg/MrliouAI-box",
-   "branch_name": "copilot/commit-242b82b0408bd62d8ea71f585ae571336540d837",
-   "head_sha": "4096d5d8731a09398bbda102b6743b20a189a67d",
-   "canonical": "dofaromg/MrliouAI-box@MrliouAI",
-   "confidence": 0.95,
-   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
-  },
-  {
-   "branch_id": "4bb6f0e7d136255f",
-   "full_name": "dofaromg/mrliouword-system",
-   "branch_name": "copilot/task-217537952-1130234040-a91fdd17-dfec-4bb3-88b9-c2f35efd1f27",
-   "head_sha": "8bd3b48b6322882b66507d272530c6aadfdeacb8",
-   "canonical": "dofaromg/mrliouword-system@copilot/deploy-wrangler-secrets",
-   "confidence": 0.95,
-   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
-  },
-  {
-   "branch_id": "e378bf3918bd3ee3",
-   "full_name": "dofaromg/tool-silk-",
-   "branch_name": "1-exercise-github-pages",
-   "head_sha": "52f31e91046560f81228ad5ebdf6111d67ff893d",
-   "canonical": "dofaromg/tool-silk-@dofaromg-patch-1",
+   "branch_id": "9c0f992d4f64b72c",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "MRL_historical_reextension_v1",
+   "head_sha": "689491edd83317989779172ea5b9f72ab3e14f72",
+   "canonical": "dofaromg/flow-tasks@copilot/verify-code-coverage",
    "confidence": 0.9,
    "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
   },
   {
-   "branch_id": "5cdd59e3016b5aa1",
-   "full_name": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
-   "branch_name": "copilot/copilotupdate-naming-convention",
-   "head_sha": "e8c2215854f8f7e17a75b7a2292e709134d3d472",
-   "canonical": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-@copilot/mrl-mother-core-engine",
+   "branch_id": "c36533e4233e02cf",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "claude/76d70e5b66a9cf5fa623a155f72d1475a364548d",
+   "head_sha": "76d70e5b66a9cf5fa623a155f72d1475a364548d",
+   "canonical": "dofaromg/flow-tasks@Mrliou_PR614_Scope_Restore_20260929_v1",
    "confidence": 0.95,
+   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
+  },
+  {
+   "branch_id": "c922f2a66acdbbc1",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "claude/reference-commit-76d70e5b66a9cf5fa623a155f72d1475a",
+   "head_sha": "76d70e5b66a9cf5fa623a155f72d1475a364548d",
+   "canonical": "dofaromg/flow-tasks@Mrliou_PR614_Scope_Restore_20260929_v1",
+   "confidence": 0.95,
+   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
+  },
+  {
+   "branch_id": "27f047794de4ba78",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "copilot/health-monitor-concept-discussion",
+   "head_sha": "689491edd83317989779172ea5b9f72ab3e14f72",
+   "canonical": "dofaromg/flow-tasks@copilot/verify-code-coverage",
+   "confidence": 0.95,
+   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
+  },
+  {
+   "branch_id": "ef250b300bf15010",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "copilot/law-definition-structure",
+   "head_sha": "689491edd83317989779172ea5b9f72ab3e14f72",
+   "canonical": "dofaromg/flow-tasks@copilot/verify-code-coverage",
+   "confidence": 0.95,
+   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
+  },
+  {
+   "branch_id": "9e15568b655dcc29",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "copilot/optimize-core-performance",
+   "head_sha": "689491edd83317989779172ea5b9f72ab3e14f72",
+   "canonical": "dofaromg/flow-tasks@copilot/verify-code-coverage",
+   "confidence": 0.95,
+   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
+  },
+  {
+   "branch_id": "e3e6094b921327a2",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "revert-1-dofaromg-patch-1",
+   "head_sha": "da9798d3a1640a5dd2dfe86c03a33b3e63adebf8",
+   "canonical": "dofaromg/flow-tasks@宥麟",
+   "confidence": 0.9,
+   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
+  },
+  {
+   "branch_id": "dca2271a1cfc3210",
+   "full_name": "dofaromg/flow-tasks-01",
+   "branch_name": "revert-1-dofaromg-patch-1",
+   "head_sha": "da9798d3a1640a5dd2dfe86c03a33b3e63adebf8",
+   "canonical": "dofaromg/flow-tasks-01@宥麟",
+   "confidence": 0.9,
+   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
+  },
+  {
+   "branch_id": "076b6ce97d28d280",
+   "full_name": "dofaromg/flowhub",
+   "branch_name": "dev",
+   "head_sha": "d4be839b440876fda4d0e70ef4cb7e98efd522eb",
+   "canonical": "dofaromg/flowhub@master",
+   "confidence": 0.9,
+   "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
+  },
+  {
+   "branch_id": "369e5ba0204e738d",
+   "full_name": "dofaromg/flowhub",
+   "branch_name": "release",
+   "head_sha": "d4be839b440876fda4d0e70ef4cb7e98efd522eb",
+   "canonical": "dofaromg/flowhub@master",
+   "confidence": 0.9,
    "reason": "shares HEAD with another branch; safe to archive (NOT delete)"
   }
  ]

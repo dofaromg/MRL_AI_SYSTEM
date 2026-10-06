@@ -1,7 +1,178 @@
 {
- "total": 128,
+ "total": 480,
  "note": "P1b/P2 之前不得封存",
  "items": [
+  {
+   "branch_id": "a82cf0a57e823470",
+   "full_name": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
+   "branch_name": "Mrliou/mrl-authorization-repair-r07",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "a1284ee61b99ed7c70880dac652e77d02de96b19",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "938754dc5521f14e",
+   "full_name": "Mrliou/Mrl_Mother",
+   "branch_name": "Mrliou/mrl-authorization-repair-r07",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "27fe965915f9726b26108665a77fe7ec5f9b082a",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "49b6bbf005ca4289",
+   "full_name": "Mrliou/Mrliouai-mcp",
+   "branch_name": "Mcp-sever",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "043b8decd3a0cd57c1fdb79b4c62915b297e9734",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "5dd64245a688c264",
+   "full_name": "Mrliou/bookish-waddle",
+   "branch_name": "Mrliou/mrl-authorization-repair-r07",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "b1c1ef2f5952fcdf1fc2d0d7a21999a5fac1be84",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "e585d226261692e8",
+   "full_name": "Mrliou/demo-repository",
+   "branch_name": "add-badges-to-readme",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "6cd721debb18f5e6725d3a821ad561c08ca11d04",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "cfa671043bbe248b",
+   "full_name": "Mrliou/flow-tasks",
+   "branch_name": "Mrliou/mrl-authorization-repair-r07",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "eb37dffe259adf2dd92c1dff75dcc87a9a339562",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "dd94a73dffe074ed",
+   "full_name": "Mrliou/mrliouword-system",
+   "branch_name": "Mrliou_MRL_closure_sync_safety_20260910",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "79d177700df067c532d40f45d6db4a74e2194c35",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "602211edd588b655",
+   "full_name": "Mrliou/mrliouword-system",
+   "branch_name": "Mrliou_fix/closure-sync-config-20260926",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "e645e8af992f96a53095b08999cc5064f7e82ff5",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "baf6f726045868af",
+   "full_name": "Mrliou/mrliouword-system",
+   "branch_name": "chore/codeql-dormant",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "847c8a4a76d6008d5499d29f3a8aa30f0aa8e059",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "52f8bc22947ef85f",
+   "full_name": "Mrliou/mrliouword-system",
+   "branch_name": "dofaromg-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "8e003a1567091cdb5a88c23c560a5ffdd96f5692",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "1712a102a156e941",
+   "full_name": "Mrliou/mrliouword-system",
+   "branch_name": "feat/closure-sync-all-repos",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "b4669a8dbf872e6ee4c5f2752a252d716b535549",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "59608dca48876717",
+   "full_name": "Mrliou/mrliouword-system",
+   "branch_name": "fix/closure-sync-report-guard",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "0c2d71633ed4b1e5298fe1afbb2540a9dd136b9c",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "0b412277c499f71b",
+   "full_name": "Mrliou/mrliouword-system",
+   "branch_name": "fix/mrl-public-interface-attestations",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "6f26319cad21caedcfb27cfbb3f9c94ba6c26aa3",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "7b23324ffcf0a4ef",
+   "full_name": "Mrliou/mrliouword-system",
+   "branch_name": "fix/sdk-ci-green",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "d0952489f48a303930ab18b62680c04158c8a408",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f38b1ebb61fc7821",
+   "full_name": "Mrliou/mrliouword-system",
+   "branch_name": "mrl-wake-public-interface-v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "e1b89a5b4b1172a9f720e7a338209874fd4eabe5",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "89a32bfda8c355d0",
+   "full_name": "Mrliou/mrliouword-system",
+   "branch_name": "mrlioiword-system",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "c6f33d3e3504fb47969888fc6ad00f8e949d8c67",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "78e0c2c75d3c2bd0",
+   "full_name": "Mrliou/mrliouword-system",
+   "branch_name": "mrliouword",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "c6f33d3e3504fb47969888fc6ad00f8e949d8c67",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "dd3dc6435bd39387",
+   "full_name": "Mrliou/mrliouword-system",
+   "branch_name": "mrliouword-system02",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "b5df908333af975bec9fe05701814e0357219ddb",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "7ccf7d3be09ee974",
+   "full_name": "Mrliou/mrlsome",
+   "branch_name": "mrlsome2",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "7cb5c8371c0fe73e5444a42d5542f6280c38b1a6",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
   {
    "branch_id": "1d49b2a63a8aa219",
    "full_name": "dofaromg/-Mr.liouagi",
@@ -12,120 +183,12 @@
    "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
   },
   {
-   "branch_id": "e459a6253c7ff47e",
-   "full_name": "dofaromg/fastapi",
-   "branch_name": "fix/mdbook-workflow-and-structure",
-   "role": "FEATURE_BRANCH",
-   "confidence": 0.8,
-   "head_sha": "5c173caba8f459e7c1d4f16bb8046c64a2a5f85c",
-   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
-  },
-  {
-   "branch_id": "6563e13275ac1bd3",
-   "full_name": "dofaromg/flow-tasks-01",
-   "branch_name": "231",
+   "branch_id": "186e7d4d61430fba",
+   "full_name": "dofaromg/500-ai-machine-learning-deep-learning-computer-vision-nlp-projects-with-code",
+   "branch_name": "dofaromg-patch-1",
    "role": "UNKNOWN_BRANCH",
    "confidence": 0.2,
-   "head_sha": "47e89a5ef7b9a07855aa591b140869e069faa329",
-   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
-  },
-  {
-   "branch_id": "9db77af6e3c251ff",
-   "full_name": "dofaromg/flow-tasks-01",
-   "branch_name": "revert-2-revert-1-dofaromg-patch-1",
-   "role": "UNKNOWN_BRANCH",
-   "confidence": 0.2,
-   "head_sha": "62ec9e8229d81843a4fff8582467b7c9e3dfbee8",
-   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
-  },
-  {
-   "branch_id": "4b732fb66e2729c6",
-   "full_name": "dofaromg/flow-tasks-01",
-   "branch_name": "revert-3-revert-2-revert-1-dofaromg-patch-1",
-   "role": "UNKNOWN_BRANCH",
-   "confidence": 0.2,
-   "head_sha": "ce0d87fb5bcf66db9ea8abcf81fd97cb503be28e",
-   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
-  },
-  {
-   "branch_id": "b1ec5ff577af2272",
-   "full_name": "dofaromg/flow-tasks-01",
-   "branch_name": "revert-4-revert-3-revert-2-revert-1-dofaromg-patch-1",
-   "role": "UNKNOWN_BRANCH",
-   "confidence": 0.2,
-   "head_sha": "07f05731c1d110a2f44a682d6f92f9b430521f6a",
-   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
-  },
-  {
-   "branch_id": "7de36164f7327334",
-   "full_name": "dofaromg/flow-tasks-01",
-   "branch_name": "revert-5-revert-4-revert-3-revert-2-revert-1-dofaromg-patch-1",
-   "role": "UNKNOWN_BRANCH",
-   "confidence": 0.2,
-   "head_sha": "cc56f0e1b8dd0e7a08d7772983876f0b1991a55e",
-   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
-  },
-  {
-   "branch_id": "13646208fbe9e05b",
-   "full_name": "dofaromg/flow-tasks-01",
-   "branch_name": "revert-6-revert-5-revert-4-revert-3-revert-2-revert-1-dofaromg-patch-1",
-   "role": "UNKNOWN_BRANCH",
-   "confidence": 0.2,
-   "head_sha": "33a10d9fd28c48c92475e4562a0018e8dcc0a4f4",
-   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
-  },
-  {
-   "branch_id": "1f3330013d09424e",
-   "full_name": "dofaromg/flow-tasks-01",
-   "branch_name": "vercel/react-server-components-cve-vu-hfn95b",
-   "role": "UNKNOWN_BRANCH",
-   "confidence": 0.2,
-   "head_sha": "0c30fb8f88294e2246cf4fafca256a79040d0b34",
-   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
-  },
-  {
-   "branch_id": "5fb8975d3e0f4ece",
-   "full_name": "dofaromg/flow-tasks-01",
-   "branch_name": "vercel/vercel-speed-insights-integrat-vhdad9",
-   "role": "UNKNOWN_BRANCH",
-   "confidence": 0.2,
-   "head_sha": "8084dfb491fce885f012216dad899f1f0f42b38a",
-   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
-  },
-  {
-   "branch_id": "31e12af28a5a45f5",
-   "full_name": "dofaromg/flow-tasks-01",
-   "branch_name": "劉",
-   "role": "UNKNOWN_BRANCH",
-   "confidence": 0.2,
-   "head_sha": "4acb69de0bab4d9f335814437c6038ea34cf5686",
-   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
-  },
-  {
-   "branch_id": "eba1546a087d5a3a",
-   "full_name": "dofaromg/flow-tasks-01",
-   "branch_name": "記憶",
-   "role": "UNKNOWN_BRANCH",
-   "confidence": 0.2,
-   "head_sha": "247050e5b95511515efc3a9b3eb813064bb1c507",
-   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
-  },
-  {
-   "branch_id": "6389cbff7fae710b",
-   "full_name": "dofaromg/growthbook-flags-sdk-example",
-   "branch_name": "vercel/dependencies-for-react-flight-8xh3gy",
-   "role": "UNKNOWN_BRANCH",
-   "confidence": 0.2,
-   "head_sha": "e726ee5fadc8b4ce703cd7afd4dc1b3d174a3dda",
-   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
-  },
-  {
-   "branch_id": "6322de4d9c3c843b",
-   "full_name": "dofaromg/growthbook-flags-sdk-example",
-   "branch_name": "vercel/vercel-web-analytics-to-nextjs-aj1a4g",
-   "role": "UNKNOWN_BRANCH",
-   "confidence": 0.2,
-   "head_sha": "45e1fa070066976c98f7129ca13526c4342c1db3",
+   "head_sha": "6b071f1932fa54a0476dd480b1e2fa21f3e5b052",
    "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
   },
   {
@@ -273,6 +336,24 @@
    "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
   },
   {
+   "branch_id": "baf7ea2231931a60",
+   "full_name": "dofaromg/MRL_AI_SYSTEM",
+   "branch_name": "MRL_add_creation_rights_evidence_index",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "b72673dae071abd7c6443dd03f9c1c65b1684564",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "1616bef60e45c17d",
+   "full_name": "dofaromg/MRL_AI_SYSTEM",
+   "branch_name": "MRL_codex_add_final_product_checklist",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "ad4a0ba730e2052cf6524c8993b5344bcc7ac56f",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
    "branch_id": "f56bec849b899ee6",
    "full_name": "dofaromg/MRL_AI_SYSTEM",
    "branch_name": "MRL_fix_flowrhythm_pr147_fail_closed",
@@ -297,6 +378,15 @@
    "role": "UNKNOWN_BRANCH",
    "confidence": 0.2,
    "head_sha": "e0e3090fba0773907911a342de07281480dd8061",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "030a8baf5125951a",
+   "full_name": "dofaromg/MRL_AI_SYSTEM",
+   "branch_name": "MRL_memory_system_rules_prep_EuBXH",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "456cbb19fbfe3b0a70ab1174e712bcfca3fbe414",
    "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
   },
   {
@@ -642,6 +732,15 @@
    "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
   },
   {
+   "branch_id": "de43dd3330babbc8",
+   "full_name": "dofaromg/MRL_AI_SYSTEM",
+   "branch_name": "MRL_set_up_core_versioning_system",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "2348fa899202c238282a16daccb815ac6067c8ac",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
    "branch_id": "2cf340dd1cf61130",
    "full_name": "dofaromg/MRL_AI_SYSTEM",
    "branch_name": "MrliouAI",
@@ -675,6 +774,15 @@
    "role": "UNKNOWN_BRANCH",
    "confidence": 0.2,
    "head_sha": "3ba33144397107c3490dd0a63dd67292060a728b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "d4de35f44956ffac",
+   "full_name": "dofaromg/MRL_AI_SYSTEM",
+   "branch_name": "dofaromg-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "dbf0ebc87f6c8acceb034ba3fad328d45fb99ec1",
    "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
   },
   {
@@ -804,30 +912,21 @@
    "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
   },
   {
-   "branch_id": "20e51c5f4c4a09fc",
-   "full_name": "dofaromg/Mrliou_AIworld",
-   "branch_name": "ingest/mrl-lineage-20260725",
-   "role": "UNKNOWN_BRANCH",
-   "confidence": 0.2,
-   "head_sha": "6413fcebd9eec186b83bc2eba4007c1920916359",
-   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
-  },
-  {
-   "branch_id": "7dfcd3abbbd259c0",
-   "full_name": "dofaromg/Mrliou_AIworld",
-   "branch_name": "粒子2",
-   "role": "UNKNOWN_BRANCH",
-   "confidence": 0.2,
-   "head_sha": "294363bea3e4c34bc7f628a848b9dfac77ff1ac5",
-   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
-  },
-  {
    "branch_id": "9a3acfef994012d9",
    "full_name": "dofaromg/MrliouAI-box",
    "branch_name": "Mrliou/mrl-authorization-repair-r07",
    "role": "UNKNOWN_BRANCH",
    "confidence": 0.2,
    "head_sha": "817c2496a7eb2c7bc8baa78d2a03709d76cd3e38",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "0825c21492e18979",
+   "full_name": "dofaromg/MrliouAI-box",
+   "branch_name": "MrliouAI",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "4096d5d8731a09398bbda102b6743b20a189a67d",
    "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
   },
   {
@@ -849,12 +948,30 @@
    "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
   },
   {
-   "branch_id": "968996d9c4f629cf",
-   "full_name": "dofaromg/mrlioudb",
-   "branch_name": "Mrliou/mrl-authorization-repair-r07",
+   "branch_id": "20e51c5f4c4a09fc",
+   "full_name": "dofaromg/Mrliou_AIworld",
+   "branch_name": "ingest/mrl-lineage-20260725",
    "role": "UNKNOWN_BRANCH",
    "confidence": 0.2,
-   "head_sha": "ac1253f0853bcd2c4891ea4aee4c04e501c5f827",
+   "head_sha": "6413fcebd9eec186b83bc2eba4007c1920916359",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "7dfcd3abbbd259c0",
+   "full_name": "dofaromg/Mrliou_AIworld",
+   "branch_name": "粒子2",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "294363bea3e4c34bc7f628a848b9dfac77ff1ac5",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "84af3db0710233e9",
+   "full_name": "dofaromg/Mrliouhan",
+   "branch_name": "mrliouhan/causal-reversal-world-rebuild-2026-08-03",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "cbf65dcab1d33e312d9f54d1a1e3a75108df74bb",
    "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
   },
   {
@@ -963,6 +1080,3057 @@
    "role": "UNKNOWN_BRANCH",
    "confidence": 0.2,
    "head_sha": "641e040a590948d02e250cc570e55f9a61a1765c",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "ca89e21b892c3330",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "Mrliou_claude",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "4aa45a3e3a89b3c2265e67e51e5136a3e42e83c6",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "ddf3311e7c21b119",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "add-colab-button",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "9202f26da7447a74d4d69215ae013ebc53db5f44",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "57a03f874e3ca5c7",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "add-notebook-diff-workflow",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "72d1ebe2c721b4843ce5a3513a44d81c2b5b267f",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "c27ff23d211119ed",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "adriaan/elevenlabs-voice-assistant",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "2b94c717af4668f918b5d23a12a02bc1fb9fd1d4",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "29adf07899ddfdcb",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "alexander/memory-cookbook-suggestions",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "a64862bd554b8df7cef67286635b5f22c4d64eaf",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "53cf82e8f89e7a23",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "barryz/agent-cookbook",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "2a4fe5ef9543cf133c224632a24e29a872e223c2",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "3172f9725d9979eb",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "barryz/agent_shape",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "c12e6d8138ac2e517806ea28f5983a79688ea794",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "d8821afd8f17ae65",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "bedrock-finetuning-example",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "feae2a24aca3f2954d964349e1c9de517a352bf8",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "0817095d9359524f",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "benkomalo/claude-3-7-batch-tool",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "fd56f9eaed12212611d330d2cfe5081dce9346d4",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "da8f123888e01c7a",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "briiick/summarization-fixes",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "1c4f6762689ef33fe4a989fa5962657c50b110a6",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "ed562bab97b5652c",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "cal/citations-cookbook",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "8c381aa56b34a580e06ef91442735547248a55da",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "5e5d16d8a0a33a5d",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "citation-highlighting",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "7f46141f0077b26f3b39339230e29c77af4e23d3",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a36e58d07c951fbc",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "citation-skill",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "10512a754963905aceb317fdd5ae3839f8760c3f",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6d35224f2f5bbc07",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "classification-fixes",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "1c0ba71222caa308728ee2575ce62b0f5b91f535",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a6722767e5569916",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "claude-3-7-sonnet",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "da990786bf9e239a5a2274af9155d6a412b0a3f0",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "de1cf497c09f5f77",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "cookbook_update",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "f93243bff527cddeafa7d668575f74714ee9a3cc",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "1ffbd8b14eb98202",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "dofaromg-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "d4b7e2e7a4d65e685b2c1f96b6057e28fb75686b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "0cb3a8e273b30728",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "elie/quick-fix",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "83d4c3e3e9cb8ec1b2ef14e82b91e8e699e0bb08",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "28ab4dd0570783b2",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "ethandixon/cleanup",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "04b3976b2404df2f497961e1b48437e72bd3f139",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "485647eb03d067e9",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "fix-orchestrator-context",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "4a7be656bd1a6e2149f9f1c40678dac379a857a7",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "ec1425493dbb0529",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "fix-orchestrator-prompt-context",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "893db6c17dfce257680aa731d645ba4fe3f1b6e7",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "ae55d5e1486ff2fc",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "fix-orchestrator-workers-prompt",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "170dee9bcc4dd86f298fdbcc777b3748b86d9d53",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "ba87e3c14583c123",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "fix/expand-ci-notebook-coverage",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "cfb97d906647551627ca160b21926a991eb8f3a2",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "7459c3dbb9d70dac",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "fix/issue-141-orchestrator-context",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "2cd4edb1192ac3231cb19896ca1c8af316930e8b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f7e412016d07cc64",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "fix/orchestrator-worker-context",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "ce0737c42dd570dca19f1c0fa99706603439e0be",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "50a6002fafa12641",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "frontend-cookbook",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "514c355745f4ea7cd489ccced14d5e01c38521d0",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f209bdb2b76cffbf",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "jh/open-source-prompts",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "5a01440c3077824a5e920a6e725cfd37eb9c1779",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "79df5978e3764812",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "jh/open_source_prompts",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "b6034e05ee90dbafe8c854e44cb6f0381bf57a5e",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f5f547de5dcfae3e",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "jiri/claude_code_sdk",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "0af2dd6fa4ba9b8839b7da7491f9e917f42d04a9",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "1684407666ea30e3",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "jkim/add-usage-cost-api-cookbook",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "874b3ca2bb03007b9613808578e50067912bfd46",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "bcc941075ae6a86a",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "jkim/fix-timestamp-bucket-alignment",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "a029bcc389713653a12fb2e0217e3dd36699d3f1",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "0e1bef84946cd886",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "kc/update-prompt-caching-cookbook-implicit-reads",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "5c0593a3ff331321fa5d8e29c6a26d134175cb04",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "25501082d4caf471",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "kenaizawa/writing_effective_tools",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "e205ca8903541160d3b49875e42500511a59e2f5",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "3f170bc7716ec7e2",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "mahesh/text2sql",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "609f9364fbd267c3e601236f717d7ce58de373bc",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "53624da4d5495065",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "mahesh/text2sql-updates",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "5a40246dd605f1701fa5ea392eb29f95e05e32ee",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a1914751b8d79c36",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "8a3e9ffaf5a56b9cd002687885eac2c5b550d14f",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "4fe6259df4dc1e0f",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "pdrm/docs-config-dependencies",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "24c6a177efa7e4768b6b2fee203a398b35e1fd7b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "1fd245f01752088f",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "pdrm/docs/prompt-caching-improvements",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "7a7034462ccd08cb33e5c62ee482705f102ca4ad",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "2a11a3976200545a",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "pdrm/feat-ci-enable-slash-commands",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "497579e706a2e7233dfd7394eab15de9acd2b182",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "e822d09579f02ba6",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "pdrm/feat/cookbook-audit-style-guide",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "6122979de2609edec5a709f2dfa05d19e7711379",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "9963a236b9bc783e",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "pdrm/optimize-link-checker",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "b2b09790b72034346af8c6a5ecbb6ca9d6119f06",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6401f909f5df1658",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "pdrm/update-agent-00",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "d31915d79bd4149644443c27225aad59e43551cc",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "cd03f3cadc99b54a",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "pdrm/update-orchestrator",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "078650e4ff7ae1fb971feed463d82fb8e1e11654",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "737a6467e1f28241",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "pdrm/use-skill-for-notebook-review",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "296f75a2425ded7835d664ca16c6aad1bb2d2119",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "5bb473c8e3d90c93",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "prompt-caching",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "812ec1e3c3fca6efbd29bc8b26e7bf7c4ad6661c",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "8e75c319c1c6e711",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "rag-guide-patch",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "a15f75b60cf2d162c438cb60ad4ef3087c66b3d4",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "b73c3490a6d57a56",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "rag-guide-patch-two",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "b83b093b4a78cd4209a4976e1d52b2557c95e9c2",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "c3a77dc936531075",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "revert-261-adriaan/elevenlabs-voice-assistant",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "598cc345948b97aaf34ccb0219382f469ea3ea6a",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "1b5065cb1b1bfa1d",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "sflamini/citations-fixes",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "a456b26911ac8dea5c955cea29b26efceb5bcbbb",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "15bed2394f42fd45",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "sflamini/contextual-embeddings",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "440505fc56eddbff6a88ba30cb3bc64938e6a2f3",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "292bb71093ebdbee",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "sflamini/rag-cookbook-adjustments",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "91d560b16f6259113f46e9a68fc48efbed9a28a4",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6b783a024606ef20",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "sgrider/model-check",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "d2cab0425329fbe8ff39de953492b8705d4d9a4f",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "1fbcf71c4c191ffa",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "speculative-prompt-caching",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "25232bb0141d7fb178845cdfd84beb822762ab30",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a046c337dc0c525c",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "test-notebook-diff-comment",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.55,
+   "head_sha": "e1e33bb4f14e191d574079d25ebfdc1f5b15ccb1",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "739952b5fc9e9d4c",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "text2sql",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "8ade680fb85aab10ab63cb807541503ad999336d",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6a91193b2c432743",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "tool_use_beta_features",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "d977d419aa8b9a511eb4bd1fda8e456d490e86c3",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f79246be848305cb",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "tool_use_ga",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "9d99c5e1a1f05ab02394013256813fc40db826b9",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "9671afe4dcebc292",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "tools/memory-cookbook",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "176aa000a2092849bfde2f9ef0845ce736921ea9",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "17e42c9e0290fac4",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "zh/add-memory-ctx-mgmt-cookbook",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "6233c16b4cd928b8fb102d0d7c5dd76e1465275f",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f593f8a01acef04c",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "zh/add-notebook-ci-validation",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "1653c3b47a22f833824e7ab4a90adf75ea700af5",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "787c0cbb57f83e0f",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "zh/cookbook-naming-plural-update",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "8ca86af7751d7c897943e8cc15988bb918af318b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "b239edfcf2079dde",
+   "full_name": "dofaromg/claude-cookbooks",
+   "branch_name": "zh/fix-context-management-sdk-069",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "aaa76b9c449d92a74461f15cca2f49737a098b0e",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "e459a6253c7ff47e",
+   "full_name": "dofaromg/fastapi",
+   "branch_name": "fix/mdbook-workflow-and-structure",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "5c173caba8f459e7c1d4f16bb8046c64a2a5f85c",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "67f38872a65892d5",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-documentation-update-21595379267",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "96d4bea7485cd486e577de03dd4e31b2ec15a845",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "dac791bb55728fbd",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-documentation-update-30371299604",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "dd4be2185acdf0c9995356626ba76607192b1051",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "c642c04e411c495b",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-documentation-update-30553930272",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "1acc67af35a9b489b4dd6a305a820b7ec21f466e",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a5cfae20b12b7c6d",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-21789339241",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "159f62128934dff47070604b97d471e58a52e078",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "bc20f1a6d145e34f",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-22026699965",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "81e08cbe76ffea485d01046ff4c5c068d044615f",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "bea373be55c8bb6a",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-22267102028",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "de4b3b75379e6fa061b43afa8b3b6d64d75d5c81",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "4375b22b557696e1",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-22532167191",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "4ad5c0783634cc24f99bc3fe356611e64edc349a",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f3c4e889c895de33",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-22810265482",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "f996244b0d7777c820d09080e1e90f4dc373ec71",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6c88f8b7082fb5fd",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-23099563397",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "2f3b0add164f67425e91814bde34567f6d285f6e",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a026541586d3e5d4",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-23391971185",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "4acb40227ca1ee6795d66a7f806271d7518c362c",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "5c10384e9ed14b1c",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-23697595476",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "777125cdbf9ea2146b037dc1bf1dc82207420c57",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a9b6b1a28de11def",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-23990658125",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "6f55e64e5fc4db518d64a078fdd6820b551d33ec",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "e63dc1e5c18e4c2b",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-24294880455",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "d7f40154f99038667a624809ea33863b74f6c519",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "15f31de7fe55bb91",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-24617201234",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "6c58015d6fa1d6eecfdebfdd24a2549d4d80b9ba",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "1ddae8e65df26371",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-24944241892",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "b76b66919e0a1c7725fa153a0be945bba2aa3f2b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6634419ae4fc7203",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-25265691028",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "adf2fdab2f6497e6e49805601eb8a4b4060151aa",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "4990da54d76b12bf",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-25617678748",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "6056da317cbe39b6ed438e1823e6c5b86f87f126",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f819bcc91f150ef8",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-25979289568",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "8468add2acd18ad60806838163660f13421b3df4",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "d93647318b34f972",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-26347625560",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "1b08f601ef129ae642a06307c796aa60180985ca",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "21a7c8e34e204533",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-26699120942",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "a830490080f9cad1efb63e06a69fc35ea3389223",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "5f55badee9bcca9d",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-27078280971",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "4581d77266f0ee3d7ac7b90a676c6841b50341a2",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "50656513e904ab4a",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-27483809517",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "97cb5801b89083b69fd3553f5b8fa0b9604387fc",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "68a5973098d138a5",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-27888789624",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "83bd068738ea29fdefff94536b80c2b8d0ab5d71",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "142a5da77baf47e8",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-28306606928",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "d2af94acebdd3a49e3e85eb06934ebac839247e3",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "2579b486d3fc2f45",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-28724504509",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "26ea2fc12560d46cc415c61500b4decd37727063",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "cbf73512c565f0d6",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-29173786449",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "9a2fa5eb19923e3355f2e16ecbc9649b9c9f8acf",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "4d0aa3678bb8c19b",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-29666993418",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "1c8dd118714b9e969ee2399afd1ad2f693f6fd76",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "8e3d91b28b91e0c4",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-30181305096",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "254de2a011d8b3ae07ef9c26ec00d4daeed30697",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "56e6f378f42ddc7e",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-30725328717",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "80d855f30a0ce04aa6662f71361a788dba0fcbd7",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6376bb44b8b4b9c8",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-31285729630",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "fbe9226758bae80db4470ce59f9de74835449233",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6edeeaace931c260",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-31916539540",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "c6b292747b4b8fd244456cb464a6f9f129a617a7",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "bcc6cfce243d15a9",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-32607126046",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "45d6d10b5be5fedfd16cf5afa328144582f9f0a8",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "161b5acf948f53fd",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-33283126624",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "34d147d76c045325b6510018749649782fc1a1dc",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "cddd2f60839d2c83",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-34006492812",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "d8a2576724f9af33d83593efe64387925c716e10",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "eb41c65fcc9148c5",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-35485242387",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "05b3258d2e95afd53b8f98100ca4635fed5a4988",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "d4d86d2df7339ce9",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-36282313346",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "44879bcb21576d1bad9806417b314d029ac4851d",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "5adbc48421938424",
+   "full_name": "dofaromg/features",
+   "branch_name": "automated-script-update-37166757540",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "209423744815b71c6c821c0b7db9f55d68ef86ce",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "c0c4b76aff85e4a4",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "231",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "7579264263156f4d4a227fefe7889a9c038e8a88",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "c45b626b768bda5f",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "MRL_AI_Mother_Autonomous_Runtime_Baseline_v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "80fdf9fef939a17eab2b8d5dd5f96168a5c04f7c",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f6874fd9e30dfdbe",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "MRL_AI_Partner_Origin_v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "91c53ef08a7d1c10a656944588b97d4f3b30f6db",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "0de5da42a187002c",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "MRL_APIWorks_BYOH_Deployment_Product_v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "c3081301d84e7ad73135d32fc29712b426a1c33e",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "3b29162a57efdd35",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "MRL_APIWorks_First_Transaction_Closure_v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "5a3d0ff2f258cefd49e9485c7b4c8c7e89a3bed7",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "d93f2a0c18f163ee",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "MRL_Causal_Optimization_Review_v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "539e32a166c2fc5f0694a0642b7c7c2f4e6ddcc9",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "37391c7570d07197",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "MRL_Evidence_PR632_PreLinearization_f7ef604",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "d8d253c0c26987c0ba0e3852d2acd97d547844cd",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "014ba9a9d951cfbc",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "MRL_Module_Implementation_v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "9ea48f375f0243d39057417292d6dc6dbaf05161",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "132eea16f357d110",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "MRL_Outer_Automation_Fix_v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "336da1b9c75b88b01f3ea090684f63eefbb56b88",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "e7cc76be6cd8b1c7",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "MRL_RelayStation_Authority_v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "27c1a7064e68a42694d47fd7dedfe5288f36a7c4",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "7f901e64ac2d5458",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "MRL_System_Integration_v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "14082a70a56a809950bddd1ad178d6d57ae877d9",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "7111cef52637a426",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "MRL_auto-expansion-naming-prefix-v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "78a5cf0ded2e61842236270b06e35bffe1a7c9d9",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "eff9927bbeb6da64",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "MRL_fix/cloud-connector-audit-skipped-20261001",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "fb392c2c71fc8a25e65ddbddac3049bd3d0f0369",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a7adbfb2005ddd81",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "MRL_historical_extension_recovery_v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "c2d317e1eefc48a358945f866c05d62aeed1f8d0",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "999105d6d195e7e1",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "MRL_root_recovery_v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "575ef1bbd415e966bfeac7c88a4d5b036acd47b2",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "110f2fae44a0b5cd",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou/fix-structure-delivery-20261001",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "ae8ad536e456f02bc7df1824c0ddd19f5c3212c8",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "11e73c5bad74818b",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou/fix-terminal-command-integrity-20261001",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "7a6311700c33f05efc65d83d8031942a0c7fa5f7",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "65792c23fe679e48",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou/restore-structure-index-20261001",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "54586ec75af33aa9d0577e6000294d0bf62e3075",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "98c8dfe18e5f7865",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou/structure-authorization-reaudit-20260918-r03",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "1bc2c30a597b213eb4d9263f8d5818393a74fe10",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "ab22f4d4c0fba9dd",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou/structure-index-authorization-20260918-v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "7fa3d7421ea67f7fd804e50e6c3d2d805e2c3239",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "1642d11216ce4fff",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_APIWorks_Public_Control_Plane_v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "db3b691b450905e1651a0660fb8373114feb14ed",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "0bf50748f0716da9",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_BYOH_633_Mainline_20260908",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "4e17678e245d3effbb226dcf7c83f7cc6c4cfceb",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6d3bec84bc089a85",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_BYOH_Mainline_Integration_20260908_v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "69733408929099298d09311a09acb85d8105d465",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "3991acd6d68539ba",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_Cloudflare_Entry_20260909",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "68487f54cb77ade8af6887794caee889c53ba30c",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "293ab2f055366034",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_Naming_Repair_20260908_v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "252c432fe90bc6c7927c187fb30f463eb36df45e",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "46d11e5e381656ab",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_OuterAutomation_ProtectedBridge_v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "af4e2f40ed1c297bd65cbcb9bd855d0ec188b8bd",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f5d3a261a7b42117",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_SourceToProduct_ParallelLink_v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "c92e8395572efb98ad0dd4cac01e493defeb0347",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6959a9d6028fa0e4",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_external_sync/ba73806676b4-148dba5ce171",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "5e011938801de3815ee4bd9cda9085fdf879edbe",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6fcbecadbf76faef",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_neural_sync/0b3dc1017641-36851948949",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "34ec00af09513323a360e1cbe3283d47d7255387",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "d7e40470399d37d1",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_neural_sync/0b92d6c0e3eb-34976921701",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "afe4e494f7c797e8cdad16d68f75aca62f9c22bf",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "be66d5ea2163c246",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_neural_sync/10248fd51138-34975285661",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "1aa3ec7eefbf25a98b15c995c22b923831a7f120",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "585f6ae84c8db7de",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_neural_sync/17d3e2e35711-34256954722",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "74a4d3e95446ecb9829b90c459fee11172acd4aa",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "e92123ce802d036c",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_neural_sync/51ced55850de-35070531704",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "da134bdd6bb17c77f59c320e04cf0a31fc06bc70",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "84d2332210696379",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_neural_sync/5b8ec5fb610e-34932121251",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "572244180717dcfa76391a4470f711640a49be5a",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a0612e0346dbcf07",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_neural_sync/5da46c168a6e-35069164303",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "3bf67421317c9e7e326048f5eb5df0f0752ae549",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "3d5f7eb53287f43a",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_neural_sync/848f5d62aa80-35292425260",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "4d347f59b4e5aea3fac7ecb9b002d5290025be11",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "945a62d0acf9e1f9",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_neural_sync/bc648a2dedec-34324512598",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "d49b4bdf9430c5fc6c1019100a121b0959093bb7",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "1169274a7f964d4b",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_neural_sync/c4797c441ba6-35942353110",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "0bd5b9fe8b7ec4d0729c8fbe042bd262505edd1e",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a14b56be0bae847f",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_neural_sync/d3bbf2ebcc81-34978699795",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "4c21719962f6a50d5b3aabe779e8536f57586632",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "d74a7c8558513a81",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_neural_sync/d43e53dee101-35306164636",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "eb91b9bf2ba31017de0dc2c9684301131b11f6d7",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "343a3146eb2ddb64",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_neural_sync/d6ddc0b7d9c8-36851202738",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "ace6355a5779e08e14532c5d2629be05d4df55fb",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "76e9de1911bcd81f",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_neural_sync/dfadd64d5f6d-35304693932",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "57ae7f41bcbaca410961dcffc351b2f9c5a03d4b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "74d2434ffc407b4b",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_MRL_sync_operations_20260907_v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "1ab9632639a9a9f1ebe08e35746cb2e9f698eb15",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "12b1b8a9f479986e",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "Mrliou_fix/cloud-connector-config-20260926",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "e7ad7676f87c146a57334e0a2c9aa0c95674e9c7",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "c244e98ebf5bddd3",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "codex-qgelca",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "71ab347b2ffad4be0680c3a07d47edf4faef9d5f",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "0d088dc444ae4750",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "dofaromg/issue53",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "f8a02218b16b4fd15ee863ade4080234dfd2c43b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a87e895be9241f18",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "feat/mrl-apiworks-evidence-entry-v1-20260916",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "c95df501717753b3d59d6ee79baa71a31e21d005",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "58a0fa9520a1deae",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "feat/mrl-apiworks-live-and-route-receipts-v1-20260916",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "f96400cb8540b32dc9dcbde74a16d2c9bc85ee84",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a663ba7211b03153",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "feat/mrliou-mrl-dual-target-pages-v1",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "cfe691dfffdac5312febcccb45cf02b782b5d027",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "15427600a83bc2c9",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "fix/mrl-apiworks-browser-acceptance-v1-20260916",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "b2d1db76f4022894a8012591a2190e93f997a039",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "454fcca9e7befe31",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "fix/mrl-apiworks-customer-zip-acceptance-v1",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "95e23fbd03a5ee27262d13fa88c660426ad7bf33",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "5a77aabfd6c45871",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "fix/mrl-sync-publication-attribution-20260918",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "c918fc2005049f2fba74421e2f85b5fc494cdbb2",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "945cfddbaa197232",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "fix/mrl-webgpu-ci-allowed-actions-v1-20260921",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "2ca44a37eb38b6eec97432c03665adc3c8d07fee",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "b9099736f5a8e4d8",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "fix/neural-sync-no-feature-writeback-v1",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "ba34318704c86bf712c0ad1bef7b497007b735b6",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "26baf364af10487d",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "mrl-relay-middle-layer",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "bee639a9106a9b47546c6887d39feea32fd845a4",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "b0c38817253ea75a",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "mrl/governance-live-probe-20260826",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "04ab9b4a05eda409bb5ae70369bffd3c5f853e4b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "16f285b4822cd104",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "mrl/mrliou-mobile-interface-v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "ab2780f417c8532dd56452804345c696fea5cae0",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "97a5d2bdf4dcaf70",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "mrl/rnd-team-organization-v1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "572a84f3eb8139bb9d0aea841af10a2f46cc1182",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "4eb663ac95b03200",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "revert-3-revert-2-revert-1-dofaromg-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "ce0d87fb5bcf66db9ea8abcf81fd97cb503be28e",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "821305fbc0c504b9",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "revert-411-copilot/add-login-interface-system",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "e60e765f4c84ec8745a2221711952b94e9b12cc6",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "79ab454863eb91ce",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "vercel/vercel-speed-insights-integrat-vhdad9",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "8084dfb491fce885f012216dad899f1f0f42b38a",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "38af214851ca62a0",
+   "full_name": "dofaromg/flow-tasks",
+   "branch_name": "z8-particle-bridge",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "36161d5e8b0f429d39a80603c5c166e22f3018f3",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6563e13275ac1bd3",
+   "full_name": "dofaromg/flow-tasks-01",
+   "branch_name": "231",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "47e89a5ef7b9a07855aa591b140869e069faa329",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "4b732fb66e2729c6",
+   "full_name": "dofaromg/flow-tasks-01",
+   "branch_name": "revert-3-revert-2-revert-1-dofaromg-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "ce0d87fb5bcf66db9ea8abcf81fd97cb503be28e",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "7de36164f7327334",
+   "full_name": "dofaromg/flow-tasks-01",
+   "branch_name": "revert-5-revert-4-revert-3-revert-2-revert-1-dofaromg-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "cc56f0e1b8dd0e7a08d7772983876f0b1991a55e",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "5fb8975d3e0f4ece",
+   "full_name": "dofaromg/flow-tasks-01",
+   "branch_name": "vercel/vercel-speed-insights-integrat-vhdad9",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "8084dfb491fce885f012216dad899f1f0f42b38a",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "eba1546a087d5a3a",
+   "full_name": "dofaromg/flow-tasks-01",
+   "branch_name": "記憶",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "247050e5b95511515efc3a9b3eb813064bb1c507",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "2464b69503461ff0",
+   "full_name": "dofaromg/flowhub",
+   "branch_name": "a1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "7061bb435b685dacbf185c53b791d97c79245f38",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6389cbff7fae710b",
+   "full_name": "dofaromg/growthbook-flags-sdk-example",
+   "branch_name": "vercel/dependencies-for-react-flight-8xh3gy",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "e726ee5fadc8b4ce703cd7afd4dc1b3d174a3dda",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6322de4d9c3c843b",
+   "full_name": "dofaromg/growthbook-flags-sdk-example",
+   "branch_name": "vercel/vercel-web-analytics-to-nextjs-aj1a4g",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "45e1fa070066976c98f7129ca13526c4342c1db3",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "186e8b5d20a00dc6",
+   "full_name": "dofaromg/kit",
+   "branch_name": "01-17-feat_assign_ports_per-app_for_integration_tests",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.55,
+   "head_sha": "a0f89725f930eb0fd03552b0b29e72dd2f6f7f8c",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "564d0f0df5280856",
+   "full_name": "dofaromg/kit",
+   "branch_name": "01-17-feat_highly_unlikely_to_work_attempt_to_speed_up_integration_tests",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.55,
+   "head_sha": "c3d88292b9921fd7aba0911e2de83bdabbbd75a6",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "d45d6773bca61bcc",
+   "full_name": "dofaromg/kit",
+   "branch_name": "06-17-chore_add_universal_ids_to_client_nodes",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "6ce43eaa8e841cc97c00eb09c8f077bf1a396237",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "3b6e6b4afb2da45c",
+   "full_name": "dofaromg/kit",
+   "branch_name": "5747/sejohnson-fix-tailwind-env-imports",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "f58153276a9f1ae8ced947b43bf90ae0561dbd8d",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "b0ad7cedb89f499b",
+   "full_name": "dofaromg/kit",
+   "branch_name": "Rich-Harris-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "babd37bafba4049bbbc39e3c2f9aa2303f0d6d4e",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6ed87b9b4f2a12e9",
+   "full_name": "dofaromg/kit",
+   "branch_name": "adapter-node-server-timeouts",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "4548cc643595b4ac3cb0c06cd7a2c0d37ab01cc3",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f4b325eb3a29248d",
+   "full_name": "dofaromg/kit",
+   "branch_name": "add-test-to-tsconfig",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.55,
+   "head_sha": "99f4b40ac6bcb2bd5fa57ae451094fd90c8fd609",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "cf0302a2ad5deda0",
+   "full_name": "dofaromg/kit",
+   "branch_name": "allow-command-in-more-places",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "875003af73bfcb9845c0c394e3d35d0520ae038e",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "ec5b6e5048ec7515",
+   "full_name": "dofaromg/kit",
+   "branch_name": "also-await-settled",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "94fcc725e0a6d1bb2a0e3196327d2f52078870df",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f84e7ff326f2a354",
+   "full_name": "dofaromg/kit",
+   "branch_name": "always-fork",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "c01c100e97d4a842968010114a05f245078bf510",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "e8b3e7db5fd62c68",
+   "full_name": "dofaromg/kit",
+   "branch_name": "backticks",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "4aad4ca13fe1909de0e6e92515e382a78b3aefec",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "062e03c04098c7a1",
+   "full_name": "dofaromg/kit",
+   "branch_name": "build-docs",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "b5889181fbdf11805bb5243ad42e6e23d893623a",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "1d371052a1ec70b6",
+   "full_name": "dofaromg/kit",
+   "branch_name": "build-docs-v2",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "e3144a743f192a91f32b164cbe4e3aec0f66519d",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "53649fe90e25fe26",
+   "full_name": "dofaromg/kit",
+   "branch_name": "bundle-with-wrangler",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "4f757f65c99c1482e8a91814814fbe42866f62e6",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a8784c68e5be2ce8",
+   "full_name": "dofaromg/kit",
+   "branch_name": "case-insensitive",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "501782543a0486ef003040a028475c3e607ea1a3",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a56a2a2d0e82a02d",
+   "full_name": "dofaromg/kit",
+   "branch_name": "cc-test",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.55,
+   "head_sha": "2efb3b170c4cc38f1eaa2dd3d9d2e64fae4d332c",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "db34bcf58da3c41b",
+   "full_name": "dofaromg/kit",
+   "branch_name": "changeset-release/main",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "2a054439670ff9c9e7f6de57527fd39aef7d2d55",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "359f2305e77c5da7",
+   "full_name": "dofaromg/kit",
+   "branch_name": "changeset-release/master",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "c8bb0b597a644c6d1e2f0b6e549d4bed1d171945",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "9c5e0cfa09fcadba",
+   "full_name": "dofaromg/kit",
+   "branch_name": "chore-vitest-workspace",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.55,
+   "head_sha": "c83f4c99b8b1ffda1f4c6661bc4d9e800b812a83",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "d199b2caadfe8a12",
+   "full_name": "dofaromg/kit",
+   "branch_name": "chore/test-matrix-vite",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.55,
+   "head_sha": "07365e1c3f4de4e425e96a3fed2318edadedc548",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "5c10b7f3330b7f33",
+   "full_name": "dofaromg/kit",
+   "branch_name": "circleci-project-setup",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "07e2813396de6b18dd7753a118b54cc277a0b617",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "dde738e5a3acd33f",
+   "full_name": "dofaromg/kit",
+   "branch_name": "cleanup-10979",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "83f0acaf06e4ac1a2dd53be646646e88f33978fe",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6abd60f78c0f1ea5",
+   "full_name": "dofaromg/kit",
+   "branch_name": "cloudflare-settings",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "53b78460c34b3c2df1063aa4cbde22250f675f93",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "96933bca27881e04",
+   "full_name": "dofaromg/kit",
+   "branch_name": "compaction-troubles-2",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "cb3dcdeca69268042814997ac50089a6a5c2047a",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "3254b1744382cce9",
+   "full_name": "dofaromg/kit",
+   "branch_name": "cookie-migration-2",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "0882cb5d8724b9ea62f691909b5511c135759ce5",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "ce26dabed502e7cf",
+   "full_name": "dofaromg/kit",
+   "branch_name": "cookie-monster",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "27169081ac35d7edb59bdfbd2dfc7f024f0af720",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f7cafe1f5b2489ba",
+   "full_name": "dofaromg/kit",
+   "branch_name": "decode-remote-fix",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "3afa14a5be969c85b03e072fa9129689504914f9",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "ad5d6f02099f6b8c",
+   "full_name": "dofaromg/kit",
+   "branch_name": "defer-client-hooks-import",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "0e1ab812ba531eb39ee9cab237eb975d417334c5",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "21625698a1e0b564",
+   "full_name": "dofaromg/kit",
+   "branch_name": "dts-buddy-0.3.0",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "a473c898b476df292fcf864a7ed709cc50252c93",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "8fab045eaa6614ce",
+   "full_name": "dofaromg/kit",
+   "branch_name": "edge-functions-3.0.1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "83c9b45f968cac9c3e43c89c71a3a421f75b2abb",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "5fdb83c443c8a80a",
+   "full_name": "dofaromg/kit",
+   "branch_name": "edge-read",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "325e7078fb50e106b325b06b58bae7ebd0466384",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "67ab05ed603f921f",
+   "full_name": "dofaromg/kit",
+   "branch_name": "elliott-with-the-longest-name-on-github-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "01f20317eb9cb17bd3041d83fc84034c07474129",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f069c892324599e7",
+   "full_name": "dofaromg/kit",
+   "branch_name": "elliott-with-the-longest-name-on-github-patch-2",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "c2b73c17bf1589748b7416391be8377885a41562",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f2825881c2ff9c6e",
+   "full_name": "dofaromg/kit",
+   "branch_name": "elliott-with-the-longest-name-on-github-patch-3",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "abb89be0de05ed5e139c05f6787eb866ec3d5d53",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "94999a259382d963",
+   "full_name": "dofaromg/kit",
+   "branch_name": "elliott-with-the-longest-name-on-github-patch-4",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "b5e1ea0a23464b3dea9f21bf8138c08ab84f943b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "b2ae4d10b0a72814",
+   "full_name": "dofaromg/kit",
+   "branch_name": "elliott-with-the-longest-name-on-github-patch-5",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "e47e9b0f6266b6535c0e6d0077d6bf51c06f2308",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "e39c26ee1140cf34",
+   "full_name": "dofaromg/kit",
+   "branch_name": "elliott/9914-scroll-position-in-navigation-callbacks",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "508e9025f51d9903a1cf9a355fd3689c4d28e450",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "93b1ade19bca27bb",
+   "full_name": "dofaromg/kit",
+   "branch_name": "elliott/9974-routing-issues",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "687cd064c534d46caca50e78ece7ff2887847e59",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "c7b059f326991dbb",
+   "full_name": "dofaromg/kit",
+   "branch_name": "elliott/bundle-testing",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.55,
+   "head_sha": "a77bde2ccfd088e023b149148061c8c894e770d4",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "29dfe5e8ead587d8",
+   "full_name": "dofaromg/kit",
+   "branch_name": "elliott/dry-out-tests-for-9987",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.55,
+   "head_sha": "a01a817a9e2ce032557667ea9158cdb27c20b90b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "dcda1aa03cdfd289",
+   "full_name": "dofaromg/kit",
+   "branch_name": "elliott/dumber-fix-for-error-assertions",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "65d0430bc958c5d851db034ae2d0f2da2479a030",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a2edb07b73ad3b00",
+   "full_name": "dofaromg/kit",
+   "branch_name": "elliott/fix-inline-styles",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "600928d7fb385f608e9af4e80702d9e8dcd73f31",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "3369afad163c318e",
+   "full_name": "dofaromg/kit",
+   "branch_name": "elliott/fix-lockfile",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "3b507b7f9d42a9a98eccb825414b67284385694b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "60330b49177a4c11",
+   "full_name": "dofaromg/kit",
+   "branch_name": "elliott/fix-option-override-precedence",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "3e7b838cdb40585c934eaec15f9eb558855da4c4",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "08ce582296ea5721",
+   "full_name": "dofaromg/kit",
+   "branch_name": "elliott/halve-vercel-prerender-routes",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "b8b1758741661f2ee2043a351774dd9367e3ce17",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "41625bf0576adf45",
+   "full_name": "dofaromg/kit",
+   "branch_name": "elliott/impl-remote-functions-new-primitives",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "4c53cdbc5f46499944e9dabe6c8728b00830452b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "afd131f2931e0f80",
+   "full_name": "dofaromg/kit",
+   "branch_name": "elliott/misc-todos",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "e65eda9fc267150ade052d786967890fddceaad7",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "c15f3c45f92eb89b",
+   "full_name": "dofaromg/kit",
+   "branch_name": "elliott/revert-pnpm-upgrade",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "6a34e45f1b970a181ccbaf5a6cde18313e90790f",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "3b5c3351b6c29cdb",
+   "full_name": "dofaromg/kit",
+   "branch_name": "elliott/test-pr-2",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.55,
+   "head_sha": "a11f71f84f844a07d3ae3ddb066d4f59af9407d3",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "217d46bcc8f8a843",
+   "full_name": "dofaromg/kit",
+   "branch_name": "elliott/tracing",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "f52694018c5479fa405840a32a2a982cdd3d217d",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "78a01d8080a219d8",
+   "full_name": "dofaromg/kit",
+   "branch_name": "elliott/vercel-cron-endpoints",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "d4fa6a1cdf21c0916097ad4dbab44b3bcedc6877",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "73af14e2893a6500",
+   "full_name": "dofaromg/kit",
+   "branch_name": "eltigerchino-patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "84423731c67f52bef799c7cd9dfde1019b20eb7c",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "95270ff38cb38608",
+   "full_name": "dofaromg/kit",
+   "branch_name": "encoded-directories",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "853901d76a68768d145932b92ca6abafbdd60313",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6200d2274b0aff94",
+   "full_name": "dofaromg/kit",
+   "branch_name": "environment-api",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "ad109ad18509c8c2ed9944afc771aad30d2a1f5f",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "d22f26fc777ee4a3",
+   "full_name": "dofaromg/kit",
+   "branch_name": "error-overlay",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "0c34b5be993094587a8b607f32e57358e590b136",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "78dc3cccebc889cd",
+   "full_name": "dofaromg/kit",
+   "branch_name": "expose-matched-route",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "22c9ed2c26cf718a7bb48c2c29b3c68d4f9dcbd3",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "001fb7a1dfae40e9",
+   "full_name": "dofaromg/kit",
+   "branch_name": "feat-adapter-auto-workers-ci",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "b622a38dd1ff387d72396a2ddaf859c5ae8598af",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "ed113ff9fe62b8bb",
+   "full_name": "dofaromg/kit",
+   "branch_name": "feat-cloudflare-workers-unbundled",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "435ab6577299dd6fa42867612f68dac63229db85",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "bf47c35660d2dbab",
+   "full_name": "dofaromg/kit",
+   "branch_name": "feat-dynamically-import-preload",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "37352757bc9ad9b2aa02296e844cb2e3fdd024b5",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "3fd4bcf27f90d364",
+   "full_name": "dofaromg/kit",
+   "branch_name": "feat-generated-env",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "9cc1ebeef2238eb748d1aa2057856786ab2a4345",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f5fb1741ba552e51",
+   "full_name": "dofaromg/kit",
+   "branch_name": "feat-preload-error",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "706cbc38739f6062eb85ac900bfd08c0adf0a9f8",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "d6b93a81ec86692c",
+   "full_name": "dofaromg/kit",
+   "branch_name": "feat/vite-8-rolldown-optimizer",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.8,
+   "head_sha": "243eb2730f427d9140eb10f8c40989f82700a705",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "947d6a649ed7636d",
+   "full_name": "dofaromg/kit",
+   "branch_name": "fix-alignment",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "db0e17e83057ab4c9c2e12c0cf8afab0c3ea547b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "3da2984ada9f620e",
+   "full_name": "dofaromg/kit",
+   "branch_name": "fix-create-svelte-5-lint",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "b7c92304f088320b89971ef1f277b37a5c330d65",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "ea7b88db282e7a8d",
+   "full_name": "dofaromg/kit",
+   "branch_name": "fix-docs",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "84a0bb9b4f52ee1a88bed9626836a1bb9f27cd12",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "71c0f58cfd987495",
+   "full_name": "dofaromg/kit",
+   "branch_name": "fix-env-restart",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "e9b717320b012f7f70c3e658c2d04238cd9adb07",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "fc2702fdcf0d88f7",
+   "full_name": "dofaromg/kit",
+   "branch_name": "fix-hash-links-with-preload-data",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "118bf7ac1fe19b78ef9ffdb38b16f04510a68141",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "7e36cc2094c20520",
+   "full_name": "dofaromg/kit",
+   "branch_name": "fix-implicit-download-before-navigate",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "4447ee5af4f20d729de2450c5d30c6eb17905060",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "ae26c5d57385dd3e",
+   "full_name": "dofaromg/kit",
+   "branch_name": "fix-init",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "2ddcf2957371e885908435e0fb9e33c6ad0cdd0f",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "13781ec7e987ca8b",
+   "full_name": "dofaromg/kit",
+   "branch_name": "fix-layout-invalidated-by-parent",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "b2880faa658b74c4f96736eabb99d7ebbf9cef1d",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "94195ebf055ea87f",
+   "full_name": "dofaromg/kit",
+   "branch_name": "fix-remote-form-single-output",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "59e93e5133ba4f990da086a45f30612aad081322",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "5d25704d3fac334f",
+   "full_name": "dofaromg/kit",
+   "branch_name": "fix-reroute-split",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "0ce18bd8678a0f2062d35a4f38a2e148dea12d7a",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a171ee6e0d3bfd17",
+   "full_name": "dofaromg/kit",
+   "branch_name": "fix-sequential-navigation-focus-for-hash-routing",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "71ac4d4b7de412819c60c073140f6fa2567c13c6",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "e9064c462598a27e",
+   "full_name": "dofaromg/kit",
+   "branch_name": "fix-server-app-state",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "0c5ca0784857b46d4ff01b97a1410c251cf313f2",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a48c9e34d813d4ba",
+   "full_name": "dofaromg/kit",
+   "branch_name": "fix-skew-protection",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "8d511865b52fe398a5f8c00963c4a57d24e41308",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "b974c9769340d9de",
+   "full_name": "dofaromg/kit",
+   "branch_name": "fix-stylesheet-inlining",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "a6825f92c2590580ad60d1ba74ea5eef9baaea06",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "3903b0fda750ff71",
+   "full_name": "dofaromg/kit",
+   "branch_name": "fix-target-self",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "f609331ae127af2211d99c1793785d81760c8ec1",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "79385e64ca2b81a5",
+   "full_name": "dofaromg/kit",
+   "branch_name": "fix-tsconfig",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "bc3e5474c7cf37da81bc1cc8179aa7eb54bc4ec5",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "55573b0bc262fb9a",
+   "full_name": "dofaromg/kit",
+   "branch_name": "fix-unwanted-css-files",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "104f19c35696b81a03c8e187530555cd14724fe8",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "738257600443520c",
+   "full_name": "dofaromg/kit",
+   "branch_name": "force-release",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "06ee9b48307ef8b7bdbff9ce8a4f82bd8e11afea",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "95691bfdcde4f965",
+   "full_name": "dofaromg/kit",
+   "branch_name": "fork-redirect-fix",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "20d783c9ce93326618ea51bd8bc4aa1b7ded2cec",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "602ee81e8ab8bdf5",
+   "full_name": "dofaromg/kit",
+   "branch_name": "form-for-evt-listener-fix",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "a315c31bd35ab110fdaafed8b3ddfd0025259191",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "2b5fa68e1f696b37",
+   "full_name": "dofaromg/kit",
+   "branch_name": "form-pending-timing-fix",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "9b2c471f3098b28940569bf6598061dc0bec6387",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "2973d41b728edd9f",
+   "full_name": "dofaromg/kit",
+   "branch_name": "generate-declaration-files",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "b56bbb5dbfb8229b28f82d187dfee40890b7b98e",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "11b04ce0752c5f3e",
+   "full_name": "dofaromg/kit",
+   "branch_name": "gh-2673",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "a959eb75328888ca4c2010beaf30f7e859be2747",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "3a792d2ffc475412",
+   "full_name": "dofaromg/kit",
+   "branch_name": "gh-6337",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "1d4e69a3aba0aa60223c7dbb6d544ee8a5b0af98",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "ec799344acfcf538",
+   "full_name": "dofaromg/kit",
+   "branch_name": "gh-7349",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "4ec94c8c0f6b07aa101b22b58b14d8499d02b84e",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "d9dc896670eae9f2",
+   "full_name": "dofaromg/kit",
+   "branch_name": "gh-7640",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "f02588ef665492a619076b0ca3b345efde2f089f",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "3695b09f92cb6d2d",
+   "full_name": "dofaromg/kit",
+   "branch_name": "gh-8240",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "4f614bc72a8c3007c8de1436b31514d3c21296d4",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "482df21ac5511980",
+   "full_name": "dofaromg/kit",
+   "branch_name": "gh-8614",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "b37eb231f919919e2dce72579324787ea6278446",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "d0a31e146ecbb145",
+   "full_name": "dofaromg/kit",
+   "branch_name": "gh-8756",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "e48c0a25b4d7416d19f6cf2b643622f536663135",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "361ab910a452945e",
+   "full_name": "dofaromg/kit",
+   "branch_name": "gh-9332-race-condition-fix",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "6c2538835a9e030659c339b4f75ff8f615e1b9ab",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "c395cf64522ecc0a",
+   "full_name": "dofaromg/kit",
+   "branch_name": "go-to-definition",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "f6f1b544ac2bb3bb482afa08cdaa2f78c84834e7",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "104d8db5cdc8bdaf",
+   "full_name": "dofaromg/kit",
+   "branch_name": "golf",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "eae75b56cc78e5e5e1628c358697c3e6fbc87240",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "239bdcc139b86bbd",
+   "full_name": "dofaromg/kit",
+   "branch_name": "helpers-class-to-interface",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "7478797ec9902b8ca855d4bb7b1138a5767a838d",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "18f71b71b42baa7b",
+   "full_name": "dofaromg/kit",
+   "branch_name": "html-entities",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "c22a82a672231dc20fe422fc578732bb73458903",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "64fb9ae81634140c",
+   "full_name": "dofaromg/kit",
+   "branch_name": "hydratable-true",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "27f7ceca76fa66dc119005bdb882dcace18f73c8",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f8a5cf7acefce490",
+   "full_name": "dofaromg/kit",
+   "branch_name": "hydration-error-control",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "b7884d34c6932b32675b3d02bdd7854c583170bf",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "7ab03e8086d59345",
+   "full_name": "dofaromg/kit",
+   "branch_name": "ignore-illegal-bodies",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "465df315dc6549f37376d48c220d00347bc8febf",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "00ac29bac9aa1896",
+   "full_name": "dofaromg/kit",
+   "branch_name": "iife",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "12b7e3a879f7f26c9d72763294e4f79dfccf8e58",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "8fd29aa07758e5a7",
+   "full_name": "dofaromg/kit",
+   "branch_name": "image-experiments-imr",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "a28d6acdf74b0f6fa784d74468285439375cbb2d",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6bb260e782c9f25d",
+   "full_name": "dofaromg/kit",
+   "branch_name": "image-optimization",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "eec30aef6302024f7d55424f8eb6feca69e73e34",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "9b93ad79ec37d658",
+   "full_name": "dofaromg/kit",
+   "branch_name": "import-maps",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "0ef72f87ccf8f8288bcca614ca2b405303e71878",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "42687334b6330ae4",
+   "full_name": "dofaromg/kit",
+   "branch_name": "kit-files-src",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "c7afab91379467772f87a9c2581d324d8500b204",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "e3d18407eec521ff",
+   "full_name": "dofaromg/kit",
+   "branch_name": "kit-flow-playground",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "7f3014dfd70e18187084638058f21f09c439aedb",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "cb22b605787d5b50",
+   "full_name": "dofaromg/kit",
+   "branch_name": "kit-stylings",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "1cf9196d5cc19633326831188810fb52011d968d",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "0f66ea1af3c993b5",
+   "full_name": "dofaromg/kit",
+   "branch_name": "loading",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "5953988a5a22581765b76933e1c92adfaaec0f81",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "d86aef6a932bea17",
+   "full_name": "dofaromg/kit",
+   "branch_name": "middleware-take-2",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "f9efcbde5589c383b46ecd9b7c4fe01660d8e73b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6537e39e668d2227",
+   "full_name": "dofaromg/kit",
+   "branch_name": "migration-preprocessor-hint",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "740f3d516f3cb665b48bfa0726a57f2feb1ae8f8",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "7deb4633062e9edf",
+   "full_name": "dofaromg/kit",
+   "branch_name": "move-deps",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "8f2a1d42b66b714a17a3c0177c863dd6a03b2712",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6945319459c9c7a1",
+   "full_name": "dofaromg/kit",
+   "branch_name": "nav-logo",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "e6558f0db3d1a9f7d66f75eadb386095fa142ac3",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "552591c18e8c1a18",
+   "full_name": "dofaromg/kit",
+   "branch_name": "netlify-platform-types",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "2ab030bb51b4efa17ef57f1e8b5fadc8b4a33c8b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f41b4a7d7427e32a",
+   "full_name": "dofaromg/kit",
+   "branch_name": "no-wrangler",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "710b116864f3611aeaad11019e6f496630a171d9",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f3fb2ac0f9e7d7a4",
+   "full_name": "dofaromg/kit",
+   "branch_name": "nodejs_als",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "2c7b63d0512c8e8816c718da870e56f5cfddbc0a",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "604d3f5a7089711e",
+   "full_name": "dofaromg/kit",
+   "branch_name": "null-raw-body",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "86c3d94409b78b791b7fe5fb6d8ea927726751d4",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f5134acb51e774d5",
+   "full_name": "dofaromg/kit",
+   "branch_name": "optional-remote-types",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "d8d8ad1a1c16e074d2ea261f900232749be26231",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "04f11ef891339a0d",
+   "full_name": "dofaromg/kit",
+   "branch_name": "oxfmt",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "a139d6034d7d78e1da6fa1c5de7133903dbe2654",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "e47eeafb69e61fef",
+   "full_name": "dofaromg/kit",
+   "branch_name": "pin-node-types",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "359adb1966eed232d3a78de40546973978e1e94d",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "35a6ef78487c36b7",
+   "full_name": "dofaromg/kit",
+   "branch_name": "pkg-json-customization",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "45bef9e357fe58218ca988af0fec2463b7d8d5b7",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "8facafb6762fce46",
+   "full_name": "dofaromg/kit",
+   "branch_name": "playwright-1.58.0",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "801695a515a50fea60fec7fb649912cda31a4802",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "444fa4258063526e",
+   "full_name": "dofaromg/kit",
+   "branch_name": "preflight-issues-reset",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "692e03e1bc0ef5581080a19d7d36473ca59bcf97",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "1cefe1abf84be798",
+   "full_name": "dofaromg/kit",
+   "branch_name": "preload-check",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "037309f6cd882436322689863c60466259ecc38f",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "818ccc3bff185a25",
+   "full_name": "dofaromg/kit",
+   "branch_name": "preloadStrategy",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "cf29d090cad73a8c10db750d3df1bdd6baef77f2",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "e81660bf5f2a6269",
+   "full_name": "dofaromg/kit",
+   "branch_name": "publicDir",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "e1d80c8010ec42f1a7db676d2ced2abf60a78d7d",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "2eb7df6d5aafc1a8",
+   "full_name": "dofaromg/kit",
+   "branch_name": "query-override-fetch-fix",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "12ed0370240dd956204877f717c641e93a9c4a2b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "aaf79c40d5beaf7e",
+   "full_name": "dofaromg/kit",
+   "branch_name": "query-stream",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "a1de6dcb2d4bd99d0957146e197d11a742f7f41a",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "0b797f1b02a7b0b8",
+   "full_name": "dofaromg/kit",
+   "branch_name": "refactor-render",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "9499c41a39434af57532cd18fd7dc7ac6fe93694",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6bc5e68b8a54077a",
+   "full_name": "dofaromg/kit",
+   "branch_name": "remote-function-helpers",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "af8ca19e8112deff3b5c9da11843cddcdd391505",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f7747e5505b24774",
+   "full_name": "dofaromg/kit",
+   "branch_name": "remote-functions-simplify-status",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "c4200842387eabb811cd9cc9904c11d435fa20eb",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "246dd8508d87d1e5",
+   "full_name": "dofaromg/kit",
+   "branch_name": "remove-site-kit-fork",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "f26c634b18188300fdde996355e822048917f858",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "9c7c82e89fbcd8a8",
+   "full_name": "dofaromg/kit",
+   "branch_name": "remove-top-level-promise-awaiting",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "e9cf405193137504ffaa7989d66a3a0eedb4af81",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "d9bdd56583713609",
+   "full_name": "dofaromg/kit",
+   "branch_name": "render-dont-wait-unnecessarily",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "0e19c157edc50c3520d58412b1ece06280747473",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "6c1964a3f7bb9527",
+   "full_name": "dofaromg/kit",
+   "branch_name": "revert-10856-fix-hash-link-to-new-page-focus",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "b9a137e47b921f48730df7e891010c33a04f254a",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "ca09da6988cf95ce",
+   "full_name": "dofaromg/kit",
+   "branch_name": "revert-9332-iterator-fix",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "45337bd8a80df8f66cff047e9ba6820bdc6be175",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "82dc0f876835646c",
+   "full_name": "dofaromg/kit",
+   "branch_name": "revert-9768-respect-status",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "9a6b49198b73399c063fb42dd904fa339a8ece3b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a4c38b413b9d3f73",
+   "full_name": "dofaromg/kit",
+   "branch_name": "revert-internal-alias-change",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "f6d08ca531d012fd8dd94bd3086254da6b0c5462",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "22bb12ac04f35d6d",
+   "full_name": "dofaromg/kit",
+   "branch_name": "rm-sade",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "eeb86628c7cc6d8ca4e7e1ea139f1f8f62503af9",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "630b291b49724ba4",
+   "full_name": "dofaromg/kit",
+   "branch_name": "rm-writes-test",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.55,
+   "head_sha": "ee09118d1fb4bbcf9ae3afa9122717072b492d1d",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "4bee44e132316f6e",
+   "full_name": "dofaromg/kit",
+   "branch_name": "rolldown-node",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "7173e3c3a55c126eba2eac3198a314e411c71537",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a73fa0bd3cfc8147",
+   "full_name": "dofaromg/kit",
+   "branch_name": "root-layout-error",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "987d94f0994a14b7e458b67653e34c50681137d9",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "94bd546bc3ba48c4",
+   "full_name": "dofaromg/kit",
+   "branch_name": "rpc",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "ad73a46de67d31df72148dbb94eeff23fd1663e8",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "4cf50582b80e3543",
+   "full_name": "dofaromg/kit",
+   "branch_name": "rpc-ssr",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "09f81ab5440c8b669c3d8708c7f7089a43ce8ff1",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "35e24713527b45c8",
+   "full_name": "dofaromg/kit",
+   "branch_name": "self-closing-tags",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "db6b295c3022ec1878368075a0e87e6faaa482fa",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "fec2c7ab49ef8b6b",
+   "full_name": "dofaromg/kit",
+   "branch_name": "server-assets",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "95279b4148960fe5e3eed817e22cb5bbf1f6ca7b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "ffad156abd2e0843",
+   "full_name": "dofaromg/kit",
+   "branch_name": "server-load-data",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "f92a8349a0f0c3c8c326dcc73ab6964f183ed3a1",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "c1e56ba2b2e4a6f1",
+   "full_name": "dofaromg/kit",
+   "branch_name": "server-reroute",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "637709b54f68e8dd8b71ea2e9bf68865a194a1a5",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "3c2f9d8efbd660e4",
+   "full_name": "dofaromg/kit",
+   "branch_name": "shallow-routing",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "c8b99dd5c19ad72d45668d8ba0d39c9e3630ce42",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "f07d2f14e869819f",
+   "full_name": "dofaromg/kit",
+   "branch_name": "since",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "0a2f2e83a6e3959b9e298b1773c168398e35ab41",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "70cf16b5eca681af",
+   "full_name": "dofaromg/kit",
+   "branch_name": "split-changelog",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "0ed7b075cfbd05fea07bb9e7d592d9e0dc5e36e5",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "7c2db538fdd62f2e",
+   "full_name": "dofaromg/kit",
+   "branch_name": "squelch-cookie-warning",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "3131db4f8ac8e83a00a9d34a88ccf515271ed5e2",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "2f8651c19974c152",
+   "full_name": "dofaromg/kit",
+   "branch_name": "ssr-option2",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "6a7b8c533bb4ecec9e81380e341c5c725fbd2f9f",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "da7b9ba2a4876fbe",
+   "full_name": "dofaromg/kit",
+   "branch_name": "statically-analyse-exports-v2",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "2027c7d041813760d84e936bdb1689d68cb65745",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "edf6ffc877e504c4",
+   "full_name": "dofaromg/kit",
+   "branch_name": "strip-component-if-no-ssr",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "f783a825c054b12cfd047760f9da3ef9a1074302",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "917c9c2620dc37dc",
+   "full_name": "dofaromg/kit",
+   "branch_name": "svelte-5-bind",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "c7692a3382e11e93a211363aab495abd854b9163",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "8342ec40b050e985",
+   "full_name": "dofaromg/kit",
+   "branch_name": "sveltekit-html-block",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "832131f74226d02aaad28853be9141e90dd8f23c",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "c491a5dd05976f1c",
+   "full_name": "dofaromg/kit",
+   "branch_name": "test-reruns-handling",
+   "role": "FEATURE_BRANCH",
+   "confidence": 0.55,
+   "head_sha": "708130f993ff8dc02e1e75e69092b32af1f6fffc",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "37044ffde3fe5f78",
+   "full_name": "dofaromg/kit",
+   "branch_name": "tsconfig",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "8aed793cb792c7125fc5a2057942e81851708af4",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "0b1293727d8013fa",
+   "full_name": "dofaromg/kit",
+   "branch_name": "tsconfig-include-svelte-config",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "2ced202904c4949893c2694fc4710e4e4de09e47",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a64f32dede54bfee",
+   "full_name": "dofaromg/kit",
+   "branch_name": "unstate-dev-mode",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "33c944b63b3404771bc87fa07528c7b20ef15eae",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "c099bd0645a873c9",
+   "full_name": "dofaromg/kit",
+   "branch_name": "update-playwright",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "588f04d3434b07adc6d2611989a150aed8213982",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "53f2b330d7b44dcb",
+   "full_name": "dofaromg/kit",
+   "branch_name": "upgrade-wrangler",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "f809b0a73cb0072e915abc8391df14f1d3c483d0",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "a08c63ee4e264cd0",
+   "full_name": "dofaromg/kit",
+   "branch_name": "vercel-symlinks",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "162de5a26a5f42397ff4df9c2472bbc2333eec55",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "cdb0f8b113fe16d9",
+   "full_name": "dofaromg/kit",
+   "branch_name": "version-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "e62e962d66f472ec01e008f0a50fa14c4a0bc7f0",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "2761d265303ace31",
+   "full_name": "dofaromg/kit",
+   "branch_name": "warn-non-deterministic-version-name",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "4e607b4d93a8ff76910ddb02159f33966db2bf8b",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "ec4bcd3f02819c1e",
+   "full_name": "dofaromg/mkdocs-material",
+   "branch_name": "patch-1",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "64aabc2d2b0ead6badade62028b757726845ab52",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "3ea5e9d0a5386f81",
+   "full_name": "dofaromg/mkdocs-material",
+   "branch_name": "patch-2",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "e04910f4c921f89d282031745b2eed708205553a",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "e8f3de028d011206",
+   "full_name": "dofaromg/mkdocs-material",
+   "branch_name": "patch-3",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "8b9362c90c0caa3baf37686002485ec85cd22343",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "1cdfb83f9c1bcb5b",
+   "full_name": "dofaromg/mkdocs-material",
+   "branch_name": "patch-4",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "8b9362c90c0caa3baf37686002485ec85cd22343",
+   "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
+  },
+  {
+   "branch_id": "968996d9c4f629cf",
+   "full_name": "dofaromg/mrlioudb",
+   "branch_name": "Mrliou/mrl-authorization-repair-r07",
+   "role": "UNKNOWN_BRANCH",
+   "confidence": 0.2,
+   "head_sha": "ac1253f0853bcd2c4891ea4aee4c04e501c5f827",
    "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
   },
   {
@@ -1119,39 +4287,39 @@
    "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
   },
   {
-   "branch_id": "e585d226261692e8",
-   "full_name": "Mrliou/demo-repository",
-   "branch_name": "add-badges-to-readme",
+   "branch_id": "0e83e928d70bb588",
+   "full_name": "dofaromg/nebula-docs",
+   "branch_name": "MrliouAI",
    "role": "UNKNOWN_BRANCH",
    "confidence": 0.2,
-   "head_sha": "6cd721debb18f5e6725d3a821ad561c08ca11d04",
+   "head_sha": "aaba350f23c9f15fe21e48525783f0366974b703",
    "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
   },
   {
-   "branch_id": "cfa671043bbe248b",
-   "full_name": "Mrliou/flow-tasks",
-   "branch_name": "Mrliou/mrl-authorization-repair-r07",
+   "branch_id": "efbf303feda3703c",
+   "full_name": "dofaromg/sse4_crc32",
+   "branch_name": "dofaromg-patch-1",
    "role": "UNKNOWN_BRANCH",
    "confidence": 0.2,
-   "head_sha": "eb37dffe259adf2dd92c1dff75dcc87a9a339562",
+   "head_sha": "6d954cab10f6feeba47c1c8150da3d994d8ce24f",
    "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
   },
   {
-   "branch_id": "a82cf0a57e823470",
-   "full_name": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
-   "branch_name": "Mrliou/mrl-authorization-repair-r07",
+   "branch_id": "e378bf3918bd3ee3",
+   "full_name": "dofaromg/tool-silk-",
+   "branch_name": "1-exercise-github-pages",
    "role": "UNKNOWN_BRANCH",
    "confidence": 0.2,
-   "head_sha": "a1284ee61b99ed7c70880dac652e77d02de96b19",
+   "head_sha": "52f31e91046560f81228ad5ebdf6111d67ff893d",
    "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
   },
   {
-   "branch_id": "938754dc5521f14e",
-   "full_name": "Mrliou/Mrl_Mother",
-   "branch_name": "Mrliou/mrl-authorization-repair-r07",
+   "branch_id": "4e344517cfe47a28",
+   "full_name": "dofaromg/tool-silk-",
+   "branch_name": "dofaromg-patch-1",
    "role": "UNKNOWN_BRANCH",
    "confidence": 0.2,
-   "head_sha": "27fe965915f9726b26108665a77fe7ec5f9b082a",
+   "head_sha": "52f31e91046560f81228ad5ebdf6111d67ff893d",
    "note": "non-default & not mirror/archive — may hold unique assets; verify in P1b/P2 before archiving"
   }
  ]

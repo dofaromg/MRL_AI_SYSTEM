@@ -1,145 +1,60 @@
 [
  {
-  "repository": "dofaromg/-Mr.liouagi",
-  "active_mainline": "main",
-  "active_mainline_head_sha": "651ab1b7a03d059abb689337bb7c06f924f519f0",
-  "sub_mainlines": [],
-  "total_branches": 4,
-  "role_counts": {
-   "UNKNOWN_BRANCH": 1,
-   "MIRROR_BRANCH": 2,
-   "ROOT_MAINLINE": 1
-  }
- },
- {
-  "repository": "dofaromg/_mnt_data",
-  "active_mainline": "main",
-  "active_mainline_head_sha": "a0d925d5d3857ffa8d757de8319d23c1dedd0246",
+  "repository": "Mrliou/.MRL_AI_SYSTEM",
+  "active_mainline": "MRL_AI_SYSTEM/memory-system-rules-prep",
+  "active_mainline_head_sha": "8453cb28254a04550c229659f018ca9a1233e8ac",
   "sub_mainlines": [],
   "total_branches": 1,
   "role_counts": {
-   "ROOT_MAINLINE": 1
-  }
- },
- {
-  "repository": "dofaromg/APFS",
-  "active_mainline": "claude/mrl-selfhost-deploy-setup-FBLPw",
-  "active_mainline_head_sha": "b3176d269945ab6b53924c96393c44bacf395a4e",
-  "sub_mainlines": [],
-  "total_branches": 1,
-  "role_counts": {
-   "MIRROR_BRANCH": 1
-  }
- },
- {
-  "repository": "dofaromg/fastapi",
-  "active_mainline": "main",
-  "active_mainline_head_sha": "4f644c577e3c62f7bcedc1a0191fb066540a7537",
-  "sub_mainlines": [],
-  "total_branches": 19,
-  "role_counts": {
-   "MIRROR_BRANCH": 17,
-   "FEATURE_BRANCH": 1,
-   "ROOT_MAINLINE": 1
-  }
- },
- {
-  "repository": "dofaromg/flow-tasks-01",
-  "active_mainline": "main",
-  "active_mainline_head_sha": "33422c2e666632b198e51c762b9fb2b2e4ef04bc",
-  "sub_mainlines": [],
-  "total_branches": 65,
-  "role_counts": {
-   "UNKNOWN_BRANCH": 10,
-   "MIRROR_BRANCH": 54,
-   "ROOT_MAINLINE": 1
-  }
- },
- {
-  "repository": "dofaromg/growthbook-flags-sdk-example",
-  "active_mainline": "main",
-  "active_mainline_head_sha": "2d56b08a9acdbe78331d7f5face9b429bae48910",
-  "sub_mainlines": [],
-  "total_branches": 11,
-  "role_counts": {
-   "MIRROR_BRANCH": 8,
-   "ROOT_MAINLINE": 1,
-   "UNKNOWN_BRANCH": 2
-  }
- },
- {
-  "repository": "dofaromg/model-context-protocol-mcp-with-next-js",
-  "active_mainline": "main",
-  "active_mainline_head_sha": "56ce7598c378a140f97006243f260790d8dc03db",
-  "sub_mainlines": [],
-  "total_branches": 2,
-  "role_counts": {
-   "MIRROR_BRANCH": 1,
-   "ROOT_MAINLINE": 1
-  }
- },
- {
-  "repository": "dofaromg/mrl-ai-chatbot",
-  "active_mainline": "main",
-  "active_mainline_head_sha": "28d0b43ce03209f1c65ab035d48e8da79926486f",
-  "sub_mainlines": [],
-  "total_branches": 1,
-  "role_counts": {
-   "ROOT_MAINLINE": 1
-  }
- },
- {
-  "repository": "dofaromg/mrl-family-ai-platform",
-  "active_mainline": "main",
-  "active_mainline_head_sha": "350e5c3c645d47b8b18ba1370581ffc1acb1a247",
-  "sub_mainlines": [],
-  "total_branches": 1,
-  "role_counts": {
-   "ROOT_MAINLINE": 1
-  }
- },
- {
-  "repository": "dofaromg/MRL-lecrev",
-  "active_mainline": "canary",
-  "active_mainline_head_sha": "0809aef2ce707af942973bd3a5e7f77e2045fa84",
-  "sub_mainlines": [],
-  "total_branches": 4,
-  "role_counts": {
-   "UNKNOWN_BRANCH": 3,
    "ACTIVE_MAINLINE": 1
   }
  },
  {
-  "repository": "dofaromg/MRL_AI_SYSTEM",
-  "active_mainline": "MRL_AI_SYSTEM/memory-system-rules-prep",
-  "active_mainline_head_sha": "d836143fb4320e1359f2d3e4a8b0c4fec4d70b05",
-  "sub_mainlines": [
-   {
-    "name": "MRL_AI_SYSTEM/multi-domain-sync-core-v1",
-    "head_sha": "aa8bb83e6239b45203f8cba5c77af39168758d9a",
-    "confidence": 0.8
-   },
-   {
-    "name": "worldmodel/mrl-dialect-v0",
-    "head_sha": "bdafe70e53333369222d2aaa7b9e12d732caaef6",
-    "confidence": 0.75
-   }
-  ],
-  "total_branches": 230,
+  "repository": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "37e0a4c96ba47674e189ed9955525b73e392da25",
+  "sub_mainlines": [],
+  "total_branches": 8,
   "role_counts": {
-   "ACTIVE_MAINLINE": 1,
-   "SUB_MAINLINE": 2,
-   "UNKNOWN_BRANCH": 36,
-   "MIRROR_BRANCH": 154,
-   "RECOVERY_BRANCH": 32,
-   "ARCHIVE_BRANCH": 4,
-   "FEATURE_BRANCH": 1
+   "UNKNOWN_BRANCH": 1,
+   "MIRROR_BRANCH": 6,
+   "ROOT_MAINLINE": 1
   }
  },
  {
-  "repository": "dofaromg/Mrl_w01234567",
+  "repository": "Mrliou/MRL_AI_SYSTEM_fork",
   "active_mainline": "main",
-  "active_mainline_head_sha": "0b80c54dbc5f148d7f6df39d3addcc724a4c7a16",
+  "active_mainline_head_sha": "4d335e4da3f47616ff4711c81e20e4d42698ec7a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/MRL_agent-browser",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "82eadcee41240b1c8477870f846bc8528e77a8a6",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/Mrl-cargo-xwin",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "e2020c7caaa6d074df7291817eeafc31f96def7a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/Mrl_Mother",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "689491edd83317989779172ea5b9f72ab3e14f72",
   "sub_mainlines": [],
   "total_branches": 2,
   "role_counts": {
@@ -148,33 +63,39 @@
   }
  },
  {
-  "repository": "dofaromg/Mrliou_AIworld",
+  "repository": "Mrliou/Mrl_asi_system",
   "active_mainline": "main",
-  "active_mainline_head_sha": "19fbffbc20e7b5abdc71381d959b9c6900c9625f",
+  "active_mainline_head_sha": "1e1b8654d44fb0ff52ec6199f562179420657deb",
   "sub_mainlines": [],
-  "total_branches": 11,
+  "total_branches": 1,
   "role_counts": {
-   "MIRROR_BRANCH": 8,
-   "UNKNOWN_BRANCH": 2,
    "ROOT_MAINLINE": 1
   }
  },
  {
-  "repository": "dofaromg/MrliouAI-box",
+  "repository": "Mrliou/Mrlcoreutils",
   "active_mainline": "main",
-  "active_mainline_head_sha": "ffb31627d895dcb3f64844b2be3988208789fe24",
+  "active_mainline_head_sha": "76c63ee6fda53c2ce08b4f237ace9862a955da0f",
   "sub_mainlines": [],
-  "total_branches": 6,
+  "total_branches": 1,
   "role_counts": {
-   "UNKNOWN_BRANCH": 3,
-   "MIRROR_BRANCH": 2,
    "ROOT_MAINLINE": 1
   }
  },
  {
-  "repository": "dofaromg/mrlioudb",
+  "repository": "Mrliou/Mrlcristalina-v4",
   "active_mainline": "main",
-  "active_mainline_head_sha": "246018fa66eecce387a766b74e7e039c25db9982",
+  "active_mainline_head_sha": "f59e2e242126d258e637ee2daf7c5d12cbf89be8",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/Mrliouai-mcp",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "043b8decd3a0cd57c1fdb79b4c62915b297e9734",
   "sub_mainlines": [],
   "total_branches": 2,
   "role_counts": {
@@ -183,46 +104,30 @@
   }
  },
  {
-  "repository": "dofaromg/Mrliouword-",
-  "active_mainline": "main",
-  "active_mainline_head_sha": "216733ec8caba0fa6d8e10d2ee337bacbfb81873",
+  "repository": "Mrliou/Mrlopencode",
+  "active_mainline": "dev",
+  "active_mainline_head_sha": "b7fdb595df64a0114d3a955cb0610757ad9a9b42",
   "sub_mainlines": [],
-  "total_branches": 34,
+  "total_branches": 1,
   "role_counts": {
-   "UNKNOWN_BRANCH": 12,
-   "MIRROR_BRANCH": 21,
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/bookish-waddle",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "60b9e1c02276b265d8325c6d7ca1ddc2ddc1a0d5",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 1,
    "ROOT_MAINLINE": 1
   }
  },
  {
-  "repository": "dofaromg/mrliouword-root",
+  "repository": "Mrliou/cfe",
   "active_mainline": "main",
-  "active_mainline_head_sha": "df74139528189e71b458861c98b5953d8a49e68f",
-  "sub_mainlines": [],
-  "total_branches": 9,
-  "role_counts": {
-   "MIRROR_BRANCH": 5,
-   "UNKNOWN_BRANCH": 3,
-   "ROOT_MAINLINE": 1
-  }
- },
- {
-  "repository": "dofaromg/mrliouword-system",
-  "active_mainline": "main",
-  "active_mainline_head_sha": "0f43326282d8df20ae6825fc7f6e918bb19ba9f1",
-  "sub_mainlines": [],
-  "total_branches": 93,
-  "role_counts": {
-   "UNKNOWN_BRANCH": 11,
-   "MIRROR_BRANCH": 78,
-   "FEATURE_BRANCH": 3,
-   "ROOT_MAINLINE": 1
-  }
- },
- {
-  "repository": "dofaromg/omniroute-deploy",
-  "active_mainline": "main",
-  "active_mainline_head_sha": "5bffbb12d838762e3308753727eb6d2c0f6324fb",
+  "active_mainline_head_sha": "432c9302bddfd7ebcbbede3fbd797c91ee2a13e8",
   "sub_mainlines": [],
   "total_branches": 1,
   "role_counts": {
@@ -230,9 +135,9 @@
   }
  },
  {
-  "repository": "dofaromg/particle-file-system",
+  "repository": "Mrliou/claude-cookbooks",
   "active_mainline": "main",
-  "active_mainline_head_sha": "349bad2a98d3c635193ec58167aed6db7249059d",
+  "active_mainline_head_sha": "50e31d4e554ff25f1f670f847cac0f7cba133dd0",
   "sub_mainlines": [],
   "total_branches": 1,
   "role_counts": {
@@ -240,40 +145,9 @@
   }
  },
  {
-  "repository": "dofaromg/rox-one-terminal",
+  "repository": "Mrliou/claude-honcho",
   "active_mainline": "main",
-  "active_mainline_head_sha": "c1b87b865c2f1b0552bc3ff15ed77b965dfcc2d5",
-  "sub_mainlines": [],
-  "total_branches": 1,
-  "role_counts": {
-   "ROOT_MAINLINE": 1
-  }
- },
- {
-  "repository": "dofaromg/tool-silk-",
-  "active_mainline": "main",
-  "active_mainline_head_sha": "a62b2de7deb9c101368afbb974f8cf7c895e6dcf",
-  "sub_mainlines": [],
-  "total_branches": 12,
-  "role_counts": {
-   "MIRROR_BRANCH": 11,
-   "ROOT_MAINLINE": 1
-  }
- },
- {
-  "repository": "dofaromg/welcome-to-working-copy",
-  "active_mainline": "main",
-  "active_mainline_head_sha": "76e0e291c88a6e2718439db6515b4a173219ef42",
-  "sub_mainlines": [],
-  "total_branches": 1,
-  "role_counts": {
-   "ROOT_MAINLINE": 1
-  }
- },
- {
-  "repository": "dofaromg/z814241",
-  "active_mainline": "main",
-  "active_mainline_head_sha": "b4638626c6888240d6b4c9621d2286280498cfdc",
+  "active_mainline_head_sha": "7f78a2d031e194cb4875b2e70c0f173899fafe76",
   "sub_mainlines": [],
   "total_branches": 1,
   "role_counts": {
@@ -303,21 +177,159 @@
   }
  },
  {
-  "repository": "Mrliou/MRL-Autonomous-Evolution-Stack-AES-",
+  "repository": "Mrliou/mrl_ai_os--",
   "active_mainline": "main",
-  "active_mainline_head_sha": "37e0a4c96ba47674e189ed9955525b73e392da25",
+  "active_mainline_head_sha": "a33ed37152932d51b82fb685a5cfdd70228c618b",
   "sub_mainlines": [],
-  "total_branches": 8,
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/mrliouairules",
+  "active_mainline": "mrliouai",
+  "active_mainline_head_sha": "8eb08970b164ffdfcd44d7bad60c710ed9525c6f",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/mrliouword-system",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "5c98c9105000b2de1687c4b8b8b08d39da6e3ef0",
+  "sub_mainlines": [],
+  "total_branches": 27,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 8,
+   "MIRROR_BRANCH": 11,
+   "ARCHIVE_BRANCH": 3,
+   "FEATURE_BRANCH": 4,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/mrlsome",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "7cb5c8371c0fe73e5444a42d5542f6280c38b1a6",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "ROOT_MAINLINE": 1,
+   "UNKNOWN_BRANCH": 1
+  }
+ },
+ {
+  "repository": "Mrliou/nemori",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "853e7252dc362b87ce0cf98627cf6b7923926b49",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/open-remote-ssh",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "78c9365f218dae42ed5c66dbd0e08eeac8bc3f37",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/scylladb",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "25fd1001c2a11278d30a16c3651c75c845145f21",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/sfquickstarts",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "17579b64ec11e04f7ccaba514386e780b50fa4d4",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/silly",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "b7bf5c4ef674d17e1c454573d67ef100d2337e5d",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/skills",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "0399eda05c2c9f80aef9bc701ac8287b9cc0af1b",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "Mrliou/unicornstudio-react",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "09fc501e042413dc23c40751543ba5d04111e52d",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/-Mr.liouagi",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "651ab1b7a03d059abb689337bb7c06f924f519f0",
+  "sub_mainlines": [],
+  "total_branches": 4,
   "role_counts": {
    "UNKNOWN_BRANCH": 1,
-   "MIRROR_BRANCH": 6,
+   "MIRROR_BRANCH": 2,
    "ROOT_MAINLINE": 1
   }
  },
  {
-  "repository": "Mrliou/MRL_AI_SYSTEM_fork",
+  "repository": "dofaromg/.github",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "ed66662cbf3a422f7435a24331cedf2ac95d2d70",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "MIRROR_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/500-ai-machine-learning-deep-learning-computer-vision-nlp-projects-with-code",
   "active_mainline": "main",
-  "active_mainline_head_sha": "4d335e4da3f47616ff4711c81e20e4d42698ec7a",
+  "active_mainline_head_sha": "3999e378d78f50a28b7adbb0f195f176251361a1",
+  "sub_mainlines": [],
+  "total_branches": 13,
+  "role_counts": {
+   "MIRROR_BRANCH": 11,
+   "UNKNOWN_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/6502-is",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "a428e2b2d6828c46e30ebc86ba95b49a07490cd2",
   "sub_mainlines": [],
   "total_branches": 1,
   "role_counts": {
@@ -325,9 +337,30 @@
   }
  },
  {
-  "repository": "Mrliou/Mrl_asi_system",
+  "repository": "dofaromg/APFS",
+  "active_mainline": "claude/mrl-selfhost-deploy-setup-FBLPw",
+  "active_mainline_head_sha": "b3176d269945ab6b53924c96393c44bacf395a4e",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "MIRROR_BRANCH": 1
+  }
+ },
+ {
+  "repository": "dofaromg/ARM_NEON_2_x86_SSE",
+  "active_mainline": "hunter",
+  "active_mainline_head_sha": "cda62ee18d4cab688bf4e64105180fb291adcf49",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "MIRROR_BRANCH": 1,
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/ASAP-pipeline",
   "active_mainline": "main",
-  "active_mainline_head_sha": "1e1b8654d44fb0ff52ec6199f562179420657deb",
+  "active_mainline_head_sha": "be7a24e518b1deeb573f1f9194964ac57f22c200",
   "sub_mainlines": [],
   "total_branches": 1,
   "role_counts": {
@@ -335,9 +368,782 @@
   }
  },
  {
-  "repository": "Mrliou/Mrl_Mother",
+  "repository": "dofaromg/ArchiveTune",
   "active_mainline": "main",
-  "active_mainline_head_sha": "689491edd83317989779172ea5b9f72ab3e14f72",
+  "active_mainline_head_sha": "81c25bc5bdc6e0bf86e91c65e67855c37d58a4d7",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Awesome-Hacking",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "68c4476f58f7694f7cc61c9ed8ce62686baa14ae",
+  "sub_mainlines": [],
+  "total_branches": 4,
+  "role_counts": {
+   "MIRROR_BRANCH": 3,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/CheatSheetSeries",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "7b0b7b52c7912018da01c28b36b9837d136758a1",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/ClickHouse",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "dae85714127301f3dd015e908d2ab0489278620e",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/DSC",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "afa4ad287c862b91a9a9f32b4b98cbe401961019",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Deep-Live-Cam",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "fea5a4c2d2ae4e33b89f5b194d16304aa94c87d0",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Falcon-Perception",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "0aad1a1a48d4e5668c9af1908ec7cfef5c3b4635",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/GLD",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "5f4ce094d62ca59149bb140e998699e68d071304",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/GLM-OCR",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "b069c6f44fad65c35e0f2d3cf6ababba3e3f6d82",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Gemini--3-5-FlashDance",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "c1ccdc60010a7879dc92857af2557212519ba460",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/GeoLibre",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "fe8466c603cb68f7d23f9780d4fd08670171cdf9",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/HeapSentinel",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "10b4f5456187f7fa343261e112e899efb6429ed9",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/HelloGitHub",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "66855b201764ff892cfe8f12cde70709ca906366",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/HipKittens",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "cd090ae98ee4e7b8d3d5291fc62cfd716aecb946",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/LLMs-from-scratch",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "afec22f316189b2a24939fb9a902597ef6380229",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/LiteRT-LM",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "5f96a061a404f19fcfd3df399a6e12c83e928bba",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MR-Lscience",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "10cc980e5e38480027c8d3078f2f6ae9c368b79e",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-FreeCAD",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "b4b2966d4e253cecccc043e09d382908648ae472",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-Karpathy-llm-wiki-bootstrap-skill",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "c69ee549f72976057f1ad83ddce92857b47b5385",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-NEO",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "87ab2803dd288e3265ba78fd61d250f64bcf1bdc",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-agentskills",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "0c0c5673846d0a1c983d910b189e329ef3ab8f2a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-android_device_xiaomi_sm8250-common",
+  "active_mainline": "lineage-23.2",
+  "active_mainline_head_sha": "a0c6ad95004a862d4a80e9fecf0e3a97aaa7f5d7",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-anonize-ts",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "548ec7567c341224724282e6b2afcca0df20100d",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-antigravity-sdk-python",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "5dfce403d1747a12c5697fc2969cf004dba48a57",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "MIRROR_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-anubis",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "9a9411eb65e7c2aa5ef2672b21e34f214c69629b",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-awesome-react",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "c06a4d2d59da6891101044bf66a37c58fe447c1a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-awesome-singapore-cs1010",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "48096e8b3b42d789cf740a0ecee1e0d9cbc90d45",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-context-kit",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "9c2d2dc4f23fbcea13b81885fce5c8ef42dbf6f9",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-custom-agents-template",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "6444167487b35ee3b68a4dd3049492d7cbf45c0a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-daisyui",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "d67ad739ef79a1a0cb697019561a9d966f4e97a2",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-eslint-plugin-unicorn",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "1af1d1a4dcaa29f03f2f106a0046894792e304c5",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-gitoxide",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "0052e4256803a9905eacf80eb27be23cbffe7359",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-gitpython",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "b920dcd4d97242e5a40ccbd742ecc9d5ef2511d1",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-lecrev",
+  "active_mainline": "canary",
+  "active_mainline_head_sha": "0809aef2ce707af942973bd3a5e7f77e2045fa84",
+  "sub_mainlines": [],
+  "total_branches": 4,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 3,
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-mcp",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "caa3d670bf2814171dba4f7346ece5080964021e",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-oauthlib",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "b3f9edffed6b370e3eb92721cea0da22ec7e18b9",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-opennlp",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "2260b55ec77d9f0e52c4101734592bd135783b33",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-see-through",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "0e19fa2fd977bc5536249f2dcd712629227498e1",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-storm",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "605beff6c4fa3140a9cd3e19b786f01a3a3abfe3",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-termux-packages",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "ec3c9d0dd3796c69d235a163a6435c286ac715f3",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-texera",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "4c9d30a132672b9a0e8ecfe1d480a473dae16e4d",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL-workers-oauth-provider",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "f8e3ddd5581e87dff1dafaeba3e513b87b724c51",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRLNoteDiscovery",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "d61fdf2471534525ffe06c41ce2ab5e8cae0b01a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL_AI_SYSTEM",
+  "active_mainline": "MRL_AI_SYSTEM/memory-system-rules-prep",
+  "active_mainline_head_sha": "d836143fb4320e1359f2d3e4a8b0c4fec4d70b05",
+  "sub_mainlines": [
+   {
+    "name": "MRL_AI_SYSTEM/multi-domain-sync-core-v1",
+    "head_sha": "aa8bb83e6239b45203f8cba5c77af39168758d9a",
+    "confidence": 0.8
+   },
+   {
+    "name": "worldmodel/mrl-dialect-v0",
+    "head_sha": "bdafe70e53333369222d2aaa7b9e12d732caaef6",
+    "confidence": 0.75
+   }
+  ],
+  "total_branches": 230,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1,
+   "SUB_MAINLINE": 2,
+   "UNKNOWN_BRANCH": 41,
+   "MIRROR_BRANCH": 149,
+   "RECOVERY_BRANCH": 32,
+   "ARCHIVE_BRANCH": 4,
+   "FEATURE_BRANCH": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL_JS",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "7faac4041e8a9e6a4fb92be99dbd2a8183ee78bf",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL_Unciv",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "518daddf0a06b273f16b481a0464626889307df7",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL_c15t",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "8c004cff04bbb631af11891eb31ce28b8380b1fb",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL_metadata-interoperability",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "f0bb8202db3efce72b9c073ec38d3db72c5ee24c",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL_mrbs-code",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "d770cbb489f1433321162c05bf37816627b52da1",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL_opentui",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "76b2668b5208f3fc28adaa70b5a526f2702b591c",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL_type-fest",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "3fe02d33596f8afa167bc465d9d9ac9ab81b497e",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRL_wpt",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "b86e7702bb511e40f60302f352e8cde84d0eca6f",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "MIRROR_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRLagent-starter-node",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "e5c32a82b005e9f0b41100214c6c6e45949f5079",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRLairi",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "95915923e15adb42a3ace55af9f731206ac63b5c",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRLerpnext",
+  "active_mainline": "develop",
+  "active_mainline_head_sha": "a4fd593e7ddaf25b8567c6ba454f74bc9361aff5",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "MIRROR_BRANCH": 1,
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRLonlook",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "a242be584fa9c71ca5be9e5e7a2640595c4200be",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRLpiecesjs",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "a5a08169fdfe8909e1449fd5acbe35416ba090bd",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRLwebrtc",
+  "active_mainline": "m144_release",
+  "active_mainline_head_sha": "dd8fe80937e0d8f9388aa1f7b5f6d80510efa35c",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MRlquickstart-ios",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "9da4ad1a5baed141792a7d771ba249477ad611e6",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Megatron-LM",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "779c5b748dbcf00ad9e36d539c576b404ab4abe9",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Memoh",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "0a2a17ecc8dfa5ba12f9af03657e53521e577f5a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrl-Fast-LeWorldModel",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "e989411a24587b4881f02921a41adb18fe24cb0b",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrl-agents-js",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "6f0a2a98910c2e1bf9bfd556e3d1cc5093f371b7",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrl-hypermail",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "699e4ad65342d5851099920deb1141bcbf70fd78",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrl-lDE-CLls",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "ac031f68b00bcf5baa19a073c06dc1fe250a222a",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "MIRROR_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrl-mission-analysis",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "734e9ec7d30bfccc463186e276580200371bc322",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrl-moshi-skill",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "8e6f987d21c95176b16b0611bbfe923922c05a68",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrl-nix",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "55cc1cab880a60cd204e36e9398fee536371f06e",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrl-sdk-for-net",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "20ad966fd8221d04218d79201dab3af2bdc98064",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrl-system_prompts_leaks",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "86e3ed58eb1d94c581367f3d0b0716fc6d32d37b",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrl-ui",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "ea56654906d421703f0838428a57a24e730d3f67",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrl-vue-core",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "c0606e91798c8dca4f33d101e1dd836d672592c1",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MrlElementalTask",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "fc08c31851024a81c5c4143c1bb6e8ec82f84345",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MrlNexus",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "116b62c62a33ff7db124aeb70b2cc0891b0ed1bf",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrl_manifest",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "7a1bfd0ad0189b87b75c31b2e0287749aa8c146e",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrl_w01234567",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "0b80c54dbc5f148d7f6df39d3addcc724a4c7a16",
   "sub_mainlines": [],
   "total_branches": 2,
   "role_counts": {
@@ -346,9 +1152,3846 @@
   }
  },
  {
-  "repository": "Mrliou/silly",
+  "repository": "dofaromg/Mrlai-youtube-studio",
   "active_mainline": "main",
-  "active_mainline_head_sha": "b7bf5c4ef674d17e1c454573d67ef100d2337e5d",
+  "active_mainline_head_sha": "75f61455aa5db0da751515933c37f80e5e26f182",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrlawesome-feature-flags",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "bccd11cf49ba31adff5c31f979b0bdba348aa365",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrlclawd.rip",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "d324da8b23c72d29ed6db3ee68032f64aa2c53c7",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrlcomposio",
+  "active_mainline": "next",
+  "active_mainline_head_sha": "22a9171981d96e573d937ac4360a1185d5682256",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrlcristalina-v4",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "f59e2e242126d258e637ee2daf7c5d12cbf89be8",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrldismech",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "d8a052e720b2f2ccd297769fefaa82652cd0f1fb",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrlelectron",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "58ab8488f7562693fe6b8a3a22764b87cf10df17",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrlgajae-code",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "e0cc01894e63818e3039bbec17f5eb8b0b97943c",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MrliouAI-blender-mcp",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "6e99eb5a442b83766a5796975ec7bb5bfc791341",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MrliouAI-box",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "ffb31627d895dcb3f64844b2be3988208789fe24",
+  "sub_mainlines": [],
+  "total_branches": 6,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 4,
+   "MIRROR_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/MrliouAI-kodiai",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "b76b456de02dfca8aa14139dcf898c2530ccad23",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrliou_AIworld",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "19fbffbc20e7b5abdc71381d959b9c6900c9625f",
+  "sub_mainlines": [],
+  "total_branches": 11,
+  "role_counts": {
+   "MIRROR_BRANCH": 8,
+   "UNKNOWN_BRANCH": 2,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrliouai-cloud-go",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "baca5e1723540b78dd93bc66a59c68be73792c8c",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrliouhan",
+  "active_mainline": "MrliouAI",
+  "active_mainline_head_sha": "bb6a6b93f9d7db52be05d9a4a595a3ffa8a0ba82",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1,
+   "UNKNOWN_BRANCH": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrliouword-",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "216733ec8caba0fa6d8e10d2ee337bacbfb81873",
+  "sub_mainlines": [],
+  "total_branches": 34,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 12,
+   "MIRROR_BRANCH": 21,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrllane",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "b3f731c8c31e86d578a115ddde39f772984c412f",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrllift",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "4ff031b8c83b44bb123d7eda42907b22ec1e1e56",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrlmcp",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "437cd2233b355c42c7f40d4b73354075117bd456",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrlnix.dev",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "e23fc1ab72738c9910d93ae6358530608c3088db",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrlodysseus",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "67b63e984400b8c5377557bc4c25682dc44b188d",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrlpi_agent_rust",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "895269a3f5ec8ff3d8482e9339ccecaa57b618ec",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrlpodman",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "10dfe121070b45793b99f73cca3112843e3ea209",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrlpodman-desktop",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "d27f50b9129b76cfd9c821b0b3ca4dd1ef4f4d4f",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrlpress",
+  "active_mainline": "develop",
+  "active_mainline_head_sha": "798a0e313082e5459938fd62b4246d3aeb7e5e30",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrlreact-doctor",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "4560b6dd39a6826f3d65476df12032cae7abfc63",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrlredis-analytics",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "a7e0afc8a694dad44777c4172e14d955d5e8f640",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrlrox-ui",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "a951950f156a90a77cbe815e9eb0843601beec56",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrlsecond",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "e3c2eef18c0d524557956bcf6cbc096eb0d334c1",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrlsupermemory",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "14b33401e1b84b3263240550d31ef004894584c3",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Mrlworkflow_templates",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "d7d8394520c80554f2c74acbe5d4d8d6e3e49943",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/NTVE",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "a59ecdd5bb6d1ad933346640213f34bcc0cfe723",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/OmniAntigravityRemoteChat",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "cc4e1ca0e04dee471a869d46cf5228690ddd7f06",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/OpenCLI",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "0c488bbf51e9473a51fa6364465c9303662794ae",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/OpenHarness",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "69c85e411c4fc2692bbee8c1b4f36e3f9f9c8a3c",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/OpenSandbox",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "3ce6cd567a5af9dbda384c0ed21768a7471b889c",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/OpenShell",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "b4e20c19f5276df14b00ff7165fc215a2515e110",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/PowerApps-Tooling",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "630e6973e5c81ddc196283cde26dd696d619d6c7",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/PowerToys",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "3e1b07f52c955ec733db76249dce2ee5d766f1e2",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/QuickPeek",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "0a9b7a792b38fdcffe999e9d3c12a2d2d8a6a222",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/SegviGen",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "81ec99ede1fbe566c73322dd968cd64bb508f5f7",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/SharePoint-Embedded-Samples",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "07e6b58997c33a71a23400949d3fb628b5fe1b03",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/SparkVSR",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "d7dac710e619a6c26da8f2d3169dbf7f76fab3b8",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/TencentDB-Agent-Memory",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "5736acc8711b843756a2c0f8d86e939b28c5e02d",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/TradingAgents",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "7c37249f808f9c169ad2198dc384166e7ca7adf9",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/TuxPulse",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "37d8f2561dff16c9db8d44f37315f04a49ef4595",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/UpSnap",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "0834d0089b122f64c7e30873fb1e25d377dea633",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/VibeVoice",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "303b2833e01cff4578ec278bbfe536da54bd19fe",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "MIRROR_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/Wan2.1",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "9737cba9c1c3c4d04b33fcad41c111989865d315",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/_mnt_data",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "a0d925d5d3857ffa8d757de8319d23c1dedd0246",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/a-evolve",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "96c9e9796db61ddd42edccbab9bc9eb29ed5467c",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/ableton-mcp",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "5e9ffbd246bae60994699900f4fef34ad7b40407",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/accent",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "628d9f209c7216600a298390be227209e49c0daa",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/ace",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "a1b3388f4b33c72930cae80c482525efd6137c41",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/agent-browser",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "82eadcee41240b1c8477870f846bc8528e77a8a6",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/agent-canvas",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "4be552314a64794a9a9b15b39445ea9a83c9ee80",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/agent-cli-weekly-cloud-agent",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "b69fc42df322358ba11b8c9da9d02cdf1ea2b9c3",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "MIRROR_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/agent-scan",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "7e42ee883cc4f8fc1c6c8c1a5c9200bc11fdde4d",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/agent-starter-react",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "dfce38dce5db46a37529127773aab550104b2474",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/agents-js",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "b157d241ffaf402c0a2b8dc05dbf7e9ed96d21ee",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/agnix",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "05e1870480175d5356d7c9df805962c5f66dbb8f",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/ai-router-openai-compatible-examples",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "9a25cb5f9b85112b9b4bb7d64bc7b49fdabeef97",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/ai-sales-team-claude",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "efef8b8a4ce8c93d8d6b4af9d1423db38f0de2ce",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/ai-toolkit",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "6a1fc5477962735102a3b80e8d7dd4d38dcda2c6",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/alphabet",
+  "active_mainline": "core",
+  "active_mainline_head_sha": "b4c3fb67d34693b179620c2cf4431ae2cbc26870",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/android_device_motorola_sm7325-common",
+  "active_mainline": "lineage-23.2",
+  "active_mainline_head_sha": "d632028570daf5907b20b34378edabbfccd66c33",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/android_device_motorola_sm8250-common",
+  "active_mainline": "lineage-23.2",
+  "active_mainline_head_sha": "70dce563a3233a03e4a26c9a1078b76529a0636a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/android_device_oneplus_sm8250-common",
+  "active_mainline": "16.0",
+  "active_mainline_head_sha": "2b752d4431b359b0f67241ebcac23cef39435ed4",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/android_device_oneplus_sm8350-common",
+  "active_mainline": "16.0",
+  "active_mainline_head_sha": "4176bdaea5f246cdf9a11ab77f019425ab5d7291",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/android_device_oneplus_sm8550-common",
+  "active_mainline": "16.0",
+  "active_mainline_head_sha": "ac944439fef431376804c525719e3cf1c33b4bf5",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1,
+   "MIRROR_BRANCH": 1
+  }
+ },
+ {
+  "repository": "dofaromg/android_device_realme_r5x",
+  "active_mainline": "android-16",
+  "active_mainline_head_sha": "45708ebd5491e8a9cff27765a790327ec0b63297",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/android_device_xiaomi_garnet",
+  "active_mainline": "16.0",
+  "active_mainline_head_sha": "43b991b9d9c56a15a4fc9e887024cea08839337d",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/android_device_xiaomi_raphael",
+  "active_mainline": "16.0",
+  "active_mainline_head_sha": "0b34e5e1c833ff960fa826dcb1aa1d89c3cba25e",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/android_device_xiaomi_surya",
+  "active_mainline": "16.0",
+  "active_mainline_head_sha": "50f2a5e22875c2267e7a51866c326ca203117e16",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/android_frameworks_native",
+  "active_mainline": "16.0",
+  "active_mainline_head_sha": "1b9df1f48dbe4200e2b2e9c7c8c6966d228b16eb",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/android_hardware_qcom_thermal",
+  "active_mainline": "lineage-23.2",
+  "active_mainline_head_sha": "05ea2d4b71544b92e9c9206af51be6ef6e176ba9",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/android_hardware_xiaomi",
+  "active_mainline": "16.0",
+  "active_mainline_head_sha": "9dcdd52f4c4d94fa7addb61fb98243c2af6caabe",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/android_kernel_motorola_sm7325",
+  "active_mainline": "lineage-23.2",
+  "active_mainline_head_sha": "59c76f0db6a19e9111b61867f12b0ee0ddaf2950",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/apphosting-adapters",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "9e7688130f1d5d8149f5594802a1ebeebc84610e",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "MIRROR_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/argo-cd",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "21ea32e6d9502f63e7827fd2dee812f2e883a8f6",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/assertj",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "3616199fbc0c5939b2ebf0615ca1ccbad3e00f90",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/astro-click-to-ai",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "361e24a804b5db9000097a8e57a2c840f6166218",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/aube",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "15fc05c586e2a41ff135daaa714e61dbcf22f3d3",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/awesome-ai-hardware",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "baf79148b3fbc96fc72d6b5da43890122fea56e5",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/awesome-ckeditor",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "f887539ffece9cf0dc0fc89ce1e7294479232241",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/awesome-copilot",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "26fe2d126bf79aafb38f43344d450b69632200f8",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/awesome-design-md",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "80bbbc23ea94939ceda7ad74dd844224f07dcb9e",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/awesome-hands-on-neuroscience",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "ce4bf45b4bbb9a504d660d61c6bd81c4157539d0",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/awesome-ios",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "d4ad08e68e890737f14269e8718cb189098de8cf",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/awesome-openclaw-skills",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "6854248d3b6c9e615e51937a2cae774bcf7e5836",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/awesome-selfhosted",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "e38243f9ac23d297e9d43896c2f8abfc112a418a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/awesome-space-robotics",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "1b4611a55a127a196781c200fa7122cedae579a4",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/awesome-webmcp",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "32323bf13368c8e600c73f88711d2a7f93567b90",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/aws-sdk-go-v2",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "ef1f0feba0ff99de62b7dd7916dcd4bd459c766c",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/ax",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "df5123fe839eb0bc01325340befaf8fd320e9b7d",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/axi",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "8afe5e7f5d92eeb0e9277873b2e6989fb5e8d1fa",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/azure-dev-docs",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "fcfe63bd5856481a22be2250e90231dcd8a077c8",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/azure-docs-sdk-java",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "3b123453c527b5b18900a0f5c2cda597783364f5",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/azure-docs-sdk-node",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "13139ac662876d9cd389e787ecb8b9e4de4a5386",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/base-ui",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "1a2ca3c9f8a39bd8c0dda939a7a23b72da226124",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/bazel",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "15dc7e952913e494e0a8a46f4d5f19ead52081f8",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/bboxpy",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "3ee239ab74aa39cac0a053c77859b6a3887c2b42",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/bitcoin",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "de925455c8025fc1f75d65d981c28b9dfa20e9f7",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/bookish-waddle",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "7bec46986b4c26b2ee83c60bbfe90bdd0076d838",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/botpress",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "2d5acd4d2a73997260df94a7f581032106ebba15",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/botwikiawk",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "a6144288b0f74c16b54046707f4cdf28e8c8e22e",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/box",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "6adc2b4f3ca9030540e8643fa7b93f0736464b45",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/browser-compat-data",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "1ad812afa9999b5e35a3399d2fa8e1791e631bd1",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/browser-harness",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "013097aaa71856ab6920a5ad174108f31dad3f33",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/buildah",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "738c0e22acef7fce9df3ca5c57b17b979875648b",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/building-ai-agents-from-zero-to-production",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "016a4762fa5bd318a12d0f44ae3dd0f12dc4260a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/bundle",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "d1bd3d81751978bd71e4933680177b286c54343f",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/byoky",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "5066afb1e8423310a64ab46720c330a85ed8ea30",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/cahidarda.github.io",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "02e4c366e5fa182cc519f6d3f4e5909666604100",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/caira",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "a545012308d9fe407c4e21f25997d2bf1422c233",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/cargo-xwin",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "e2020c7caaa6d074df7291817eeafc31f96def7a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/catalog",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "3b1f0645f90cdb5c6c3deec85f08b88a5cc3849d",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/cc-design",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "0e13b32afd6c86b7106d1b9932d5ed36d18785ef",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/ccxt",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "1777267298794606f3a09b7944af30c7df93d5ba",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/cfe",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "432c9302bddfd7ebcbbede3fbd797c91ee2a13e8",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/cfs",
+  "active_mainline": "dev",
+  "active_mainline_head_sha": "d87537dffa42b0827b9f206b7e72d5bab2a813e0",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/chroma.js",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "87058d62a50c1de02043bd2c15aa6a30e4256b0a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/ci",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "00115d9fb3fc4a15dc9b460cce0af467b77dbe21",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/clash-verge-cli",
+  "active_mainline": "cli-dev",
+  "active_mainline_head_sha": "bef14cdf19183ac1d8aab5fd4e4179d00c071261",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/clash-verge-rev",
+  "active_mainline": "dev",
+  "active_mainline_head_sha": "a8275b20b73bd95a9d38b96c73770a897cf40b8f",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/claude-agents-skill",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "8b499aca8c3c5834baa88f3e8bb35f4c1412d467",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/claude-code",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "624c04e7268b604d1d26c72c737b3f4709cbde69",
+  "sub_mainlines": [],
+  "total_branches": 4,
+  "role_counts": {
+   "MIRROR_BRANCH": 3,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/claude-code-ultimate-guide",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "eb794106eb7b246efaaf74cafd4822528ebba238",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/claude-cookbooks",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "5df30a3cc276dfbecf56456054c70509a20d24ba",
+  "sub_mainlines": [],
+  "total_branches": 85,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 58,
+   "MIRROR_BRANCH": 22,
+   "FEATURE_BRANCH": 4,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/claude-honcho",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "7f78a2d031e194cb4875b2e70c0f173899fafe76",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/claude-plugin",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "3b9bfbf0c60aa4f0d6dbc0c64940c132194dbc2f",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/claw-code",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "8f4651a096db1a632349f473787701d0ea341dc9",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/clawsweeper",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "b4d669aa4a9fe251d0651a182e38b914d63c9c8b",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/closure-compiler",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "0903daeca7a52279015171a6df0479007621b0fa",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/cloud",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "ffcb4214e513dee6dedfe8b1760f9ca5331cf72f",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/cloud-sql-python-connector",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "d1282d88fc884be954e1f38cfaa62be2c03b2ee0",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/cloudflared",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "7585e389487a232d7361a0a6d31c7352c0a300de",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/cmssw",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "f388a74e9731615d6886cdf284e2abd07f5a97d3",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/cmux",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "a12fb563ff196e155186c1b34bab40fbf62d37fc",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/codecov-cli",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "2be4e29aa0eb613a504881758dc199540556f59d",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/codeedit",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "cec6287a49a0a460cd7cab17f254eebc3ada828e",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/coder",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "aa0e288b88052afc656a2d3cf8457fb38c8955e2",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/coinos-server",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "2ea66724f331d4f24a0ca83a91ef90c27ed07353",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/coinos-ui",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "b91da059f69847822c3da9f461f5749580ac466e",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/comdev-site",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "26a3f2190a240ea59597812fe3e9c83528f27f05",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/commons",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "9a06f3256cd66dc1f1f1253a335aaf63f24701d3",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/compact_str",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "0969dcc71c2e06bb2200844d14c5ab7759211744",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/content",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "f915c21a5cd94ba26bc2d2c4d8bfb492a8196c73",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/content-data-api",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "9719d39c3d75d75fafdf03c61707c92abbef1996",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/coreutils",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "7ea12112adae6884e11c76fef65b738b62de119b",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/cosmology",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "ab7b55a7184b8c897d4b04395b267aa0f4b973e3",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/coven",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "e458106d0a47c639115fe67bd55c6b7eb25e6844",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/cow-bcs",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "0f63aee5c4c4daaf6dd54c7fa975707d835c84ae",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/cpp-studio",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "c735233b66473e7c6115998c81fe081cdf10fada",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/craft-agents-oss",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "c310624fda0530722f5d4c6d1f8f2b7ba172090e",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/crush",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "bae92990dd0cdd4c0bdc312efac91f89e8a17288",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/curl",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "6ac42e569112bfb8fb6bfec02db6d83612b184e3",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/daemon",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "9f6589eb8113dc860eba0aaf356a6db24e4b82ab",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/darktable",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "9f3e75722870360570e4b4751f348ce3f2df4fa9",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/data-migration-desktop-tool",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "d61cecd8deb25d709d8b81073b0d3373c16a6f9c",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/datagovuk_find",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "5de8aa3897a376c4cfcbeda18a111a35008c6430",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/dawarich",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "a4975ed7a281d5480e820c468d26aacf6d29de87",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/detect-package-manager",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "de2318f4b57ff1db8d8fba90948a834dd88de0bb",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/developers.italia.it",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "a9739d1757ff840e8c9df82ddf64ac2003014ddf",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/device_lenovo_sm8150-common",
+  "active_mainline": "16.2",
+  "active_mainline_head_sha": "8ef75e65fc339e7d73f439c4a2636fe47ccdc373",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/device_xiaomi_marble",
+  "active_mainline": "bka",
+  "active_mainline_head_sha": "9d1c7d0d61a5e44fc6dd40728959e32f776286b4",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/device_xiaomi_sm8450-common",
+  "active_mainline": "bka",
+  "active_mainline_head_sha": "d88ca312f0305911c1b79bb8cebca6b76d5d48e4",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/device_xiaomi_violet",
+  "active_mainline": "16.2",
+  "active_mainline_head_sha": "adbfa5294e0f1f891cd3448af3d2a8bddde1f9c8",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/devwinui",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "795d14d09d791b040356e09d8298f72f25a3e807",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/dnsjava",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "06a0599933114f36efe59667cd80ee0246a1a882",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/docker-images",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "ebde0442644fb39c447e39f85de23c94ca79df5b",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/dotnet-docs-samples",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "8aadab8f4ee7fa16c6bac78a49d95fecc329951b",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/dufs",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "a118c1348e07bf8312e2ea5b7edabd3b2dca0e11",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/eigent",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "88d837f75ad95a21eebaa638072adad2019644be",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/element-desktop",
+  "active_mainline": "develop",
+  "active_mainline_head_sha": "264c591b9cbec73782fc6c95aa94b4dc9ac32754",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/element-web",
+  "active_mainline": "develop",
+  "active_mainline_head_sha": "32b66747f4a0856d10ddfea3dc5cf8a75f5b0834",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/element-x-ios",
+  "active_mainline": "develop",
+  "active_mainline_head_sha": "6b584ccf650a1f16c6963a5816530849f5c9dbe8",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/elephc",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "93f5761684710028b7911627344c15d62854eb94",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/engine",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "2e1fe0272eb346ccce10e0b317a9b364f9c39216",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/eslint",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "8a104242e8e1c5614940fab7324346974cff7d26",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/esphome",
+  "active_mainline": "dev",
+  "active_mainline_head_sha": "de7f081799d1788d6403cbc01579c4651bb2be14",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/evcc",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "411916982d4a164cd317d56c1d9a91317da3cfaf",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/everything-copilot-cli",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "923dc6190e487ddd32f7c43cd21aba50a268b0cb",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/ext-apps",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "2b0d11e64c4d2ed318bb4d65d339db8bed9fc437",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/farmtable",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "778423e570644a8029651fdccb2085e815c328b7",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/fastapi",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "4f644c577e3c62f7bcedc1a0191fb066540a7537",
+  "sub_mainlines": [],
+  "total_branches": 19,
+  "role_counts": {
+   "MIRROR_BRANCH": 17,
+   "FEATURE_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/features",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "4798558d586fcbbc8501189a6e50d0dcb1dd30d9",
+  "sub_mainlines": [],
+  "total_branches": 42,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 37,
+   "MIRROR_BRANCH": 4,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/feedback",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "5e54db1d42be741906f973f96bf55dccdf72212e",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/flatbush",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "8a96c3c86b2c4403ffcf31c671843c7e5223369e",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/flipoff",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "ebd8f2633d97cfde6c48ea0d386c1bfff3093347",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/flow-tasks",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "0b3dc10176417a49714d70e8e6cc748b6f381471",
+  "sub_mainlines": [],
+  "total_branches": 158,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 54,
+   "MIRROR_BRANCH": 95,
+   "FEATURE_BRANCH": 8,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/flow-tasks-01",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "33422c2e666632b198e51c762b9fb2b2e4ef04bc",
+  "sub_mainlines": [],
+  "total_branches": 65,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 5,
+   "MIRROR_BRANCH": 59,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/flowhub",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "d4be839b440876fda4d0e70ef4cb7e98efd522eb",
+  "sub_mainlines": [],
+  "total_branches": 16,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 1,
+   "MIRROR_BRANCH": 14,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/free-code",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "e5b13b347c0f06b3e0e561ed83d9e15caf8d023a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/freeCodeCamp",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "f3e3d9de5d96d391bee0b1de14bdc3e7ba3fb9ae",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/freebox-api",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "7474a976df27104b0803b5e4ed4fb1751a39e977",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/fzf",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "1acf980e95f59a755750a3e25b8973d9e732a9b0",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/gallery",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "4e94d4b84f19f0dc492f1d6993060b17e283568c",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/geofire-js",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "9c2d7af19e1e967e99203c62e21251d23d84e196",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/geojson.io",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "3d0bf82eda4b9d2b6c6707aa5400503d310563c0",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/googleapis",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "08fe47aa6f694301a07f2099229ba7123dba5946",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/googletest",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "d72f9c8aea6817cdf1ca0ac10887f328de7f3da2",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/govuk_publishing_components",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "69fc9441c5835fa20162eaae2cddd9a93f03604d",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/gptme",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "92584a49e9491ba7d89de6a8f81bb4e02d31fd4c",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/gptqmodel",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "66ce204e81b28b8a526024ee4ac0dfda1d698be5",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/gradle",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "5396aecc145a91201e64f6e0f1885f34fcdbd1c6",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/growthbook-flags-sdk-example",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "2d56b08a9acdbe78331d7f5face9b429bae48910",
+  "sub_mainlines": [],
+  "total_branches": 11,
+  "role_counts": {
+   "MIRROR_BRANCH": 8,
+   "ROOT_MAINLINE": 1,
+   "UNKNOWN_BRANCH": 2
+  }
+ },
+ {
+  "repository": "dofaromg/guide",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "5ad3cc52d16a2dcc382163f4bbf9bb2586150551",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/hermes-agent",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "65e0c49b775a7d50780fe8cae616705fa139fbe3",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/homebrew-cask",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "516018702882dab40819690742e91186c0454793",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/honcho",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "0533c6dd26d2fb4928eae0c837efae608e6351d3",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/humanish",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "84ece3e1c4290e000d4685492182ccab1387c84a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/humanizer",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "8b3a17889fbf12bedae20974a3c9f9de746ed754",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/iaito",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "1f762503aac51a6801a838f1d4fc466610e0b630",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/ios",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "77b1ea3ca2c3cfb1f5e88d759f5ded1479bb7da8",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/joplin",
+  "active_mainline": "dev",
+  "active_mainline_head_sha": "bed73cd7c1edcc169cd9c4fc1782c7828f31e4c3",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/julia",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "a0083b4c1abd13a6ebbd7a5f65295c18ca182c31",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/jwst",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "a4df1a42004dbe5a276e832e5e100cac1a541918",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/keras-io",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "c966a634a55ec972ea00488431a99e3521180858",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/kit",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "159aece0654db020f95bc414f6a21f25fbc5f22f",
+  "sub_mainlines": [],
+  "total_branches": 166,
+  "role_counts": {
+   "FEATURE_BRANCH": 12,
+   "UNKNOWN_BRANCH": 152,
+   "MIRROR_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/kody",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "232fbbd6d04f61df4852e7dca0f8a3e4a78f0598",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/kubernetes",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "093c91d2264ad9c4b965ad6dd27b3089681b0d73",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/langchain-google-cloud-sql-mysql-python",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "7e2dce47d44921c66eddbae34843f7c85b24da23",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/language-server-protocol",
+  "active_mainline": "gh-pages",
+  "active_mainline_head_sha": "b7f5132c95261c0898ae5124e7a91707abc48fcd",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/lat.md",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "8d345ed24e4ebff8c348e3bf9ef9e06a17677af6",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/library",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "19ef1f16ef0a200441525aa7872ace524c6445ad",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/lightbug_http",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "51b88e9fb8f531e87ceb4a88f1c1fa6ecd93dc28",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/llama_index",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "64782258f4ebdba8bebe53ca66de276ab1139758",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/llm-wiki-skill",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "1b01ef08b7ce57293245ce9ad5caf2e60b7261f1",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/llvm-jenkins.debian.net",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "60439e39f49e277417a9c5d93e21b7afe22863d0",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/llvm-project",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "24546d96445a6d4d7f6209795975faa7e3310356",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/loong",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "35852f0dc78f0b30e265415f4db6bfa71a7843b4",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/low_latency_layer",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "4633ada4cba4facafeeb91f473bce0c59401d91a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/lunel",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "90b6d4c782a1725e7a9021a5cf8458b58915e027",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/m-r-li-ou-ai-cli",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "b2cf478468731d06f13a4b02effbf40a4248aa7a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/manifest",
+  "active_mainline": "16.2",
+  "active_mainline_head_sha": "1dfcd0a35d76ee9ae52f5959c92af6e92aefb79d",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/maplibre-tile-spec",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "836649d689df9be37e2dfaa9b5559c462abc1943",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mastg",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "6668169f091cb2df77c2912a484641715cdda4eb",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/material-web",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "067f9cdacb0ab4b57706ce8a9611e6e265085e90",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/matrix-js-sdk",
+  "active_mainline": "develop",
+  "active_mainline_head_sha": "c0c08409550855d530c0f7033f525596e660bb98",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/matrix-rust-sdk",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "c0fde339b92a801aae082d1515fcc8f6d7d5e259",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/me",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "52982116d52555da5a97b86eac53ca5fa460ad97",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/megatron-bridge",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "44561351a6d04a0d6d5b288787b609cd8b4dcba8",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mempalace",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "71736a3f4f1afe01982d5b0d4c36eb5405eaab91",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mermaid",
+  "active_mainline": "develop",
+  "active_mainline_head_sha": "2b938d0e55eb947fc81766a3b0476cee270c7ad2",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/metasploit-framework",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "3c97796735fd7c30bb609eb5087fe290276f4947",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/miniforge",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "88f0d0a253df0286d0fef53cb4865546f29dd1e9",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mission-control-public",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "f1480ed55895302c1243e87c8b8fb2145a9117bf",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mkdocs-material",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "4447cdadcbe8bc82570e9f1ae2b970f461b03b68",
+  "sub_mainlines": [],
+  "total_branches": 5,
+  "role_counts": {
+   "ROOT_MAINLINE": 1,
+   "UNKNOWN_BRANCH": 4
+  }
+ },
+ {
+  "repository": "dofaromg/ml-ssd",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "a820b291f07e7699dd562c1e9100382a9fe02350",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/model-context-protocol-mcp-with-next-js",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "56ce7598c378a140f97006243f260790d8dc03db",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "MIRROR_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/modelcontextprotocol",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "73720340e7c42ddaf4b303b86e81663e9a2796d0",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/models.dev",
+  "active_mainline": "dev",
+  "active_mainline_head_sha": "e283875ce72e6786874280550a91c453012120cb",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/monochrome",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "15e6e992698867e2e43763798131007742c60359",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mori",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "6ad812c4000ae96a4617265ad417d4be235981de",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mrl-ai-chatbot",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "28d0b43ce03209f1c65ab035d48e8da79926486f",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mrl-family-ai-platform",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "350e5c3c645d47b8b18ba1370581ffc1acb1a247",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mrl-lean4",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "49ff95727f98d43984726b26742d17a1ceea9dd5",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mrl-remote-ssh",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "425a7b5530bf05461c208d259537dc8fb25b8e62",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mrlAthena",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "23d4a2e7a6a8963abca08c3060377ccff18a3ed0",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mrl_3d-draw",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "51c77c758c8c937db0a1254a04d4aeca410794be",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mrl_agentsys",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "8dc2caef04034751532255be2f958871b2d4a0e1",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mrl_ai_os--",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "a33ed37152932d51b82fb685a5cfdd70228c618b",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mrl_open-source-mac-os-apps",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "1d132b09a5863a7258ee91765a4945d5ae333bc8",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "MIRROR_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mrlcore",
+  "active_mainline": "dev",
+  "active_mainline_head_sha": "b9effc67bd623f7d9fcd38c1cbbc63ae136ee6ef",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mrlioudb",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "246018fa66eecce387a766b74e7e039c25db9982",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mrliouhan_rl",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "c66d493022bc4c58e875ba73e8f6a07dd5d499a2",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mrliouword-root",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "df74139528189e71b458861c98b5953d8a49e68f",
+  "sub_mainlines": [],
+  "total_branches": 9,
+  "role_counts": {
+   "MIRROR_BRANCH": 5,
+   "UNKNOWN_BRANCH": 3,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mrliouword-system",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "0f43326282d8df20ae6825fc7f6e918bb19ba9f1",
+  "sub_mainlines": [],
+  "total_branches": 93,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 11,
+   "MIRROR_BRANCH": 78,
+   "FEATURE_BRANCH": 3,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/mrs",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "0166c8a4b50684baebf0baf94199f362ad800c56",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/multigres",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "f7c88d13a9eaebd53f31d22245648dcc2381c0bf",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/nats-server",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "bae1d6c752e0550901d0a79a76fb2fabe79c1eff",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/nebula-docs",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "aaba350f23c9f15fe21e48525783f0366974b703",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/neko",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "2c124c506e6c3ae4ecc26331a79382b14e974e4a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/nemori",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "853e7252dc362b87ce0cf98627cf6b7923926b49",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/next-auth",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "7b35fc393da5120cc3552f19d636b14980557444",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/nixpkgs",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "1f3661533a9ec5bf2e363c8980ca4864879dbacf",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/notion-sdk-js",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "9af686458180747ae7f259d7117d24bca9b1bafc",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/nvidia-resiliency-ext",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "af9f53d9883569e079ce6a7dea48493ba8ab9583",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/obscura",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "53a04fa90565507058f02dbe07f80d24be50ffe1",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/odoo",
+  "active_mainline": "19.0",
+  "active_mainline_head_sha": "dff0835346f30fd1ef77260d94bcceeeab4d9051",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/oh-my-openagent",
+  "active_mainline": "dev",
+  "active_mainline_head_sha": "9a9b5be5189b744c5412832bcb684cc6b9f82a40",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/oh-my-pi",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "24fa1fa115800f5ef3c86bfb35b813863b99e8c0",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/ol-mapbox-style",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "300b65c5ddc78ddc11a55fac8e1d764b048252df",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/omniroute-deploy",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "5bffbb12d838762e3308753727eb6d2c0f6324fb",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/open-code-review",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "6e5cd8cf2578768b6c6d1fafa1d14f66801d5f2b",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/open-design",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "10192dcc52669a05faab964850105e4be54dc1c2",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/open-dynamic-workflows-fork",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "6d043804da9766a6ff748fa99e2a4d4311ea7f46",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/openclaw-termux",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "1cbb6c1fd56b089adf15406af905ecb2b73786f2",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/opencloud",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "4414bd0d08424fa6ab6b08e95b3d60a867a84502",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/opencode-kimi-rotator",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "1b8d906dac961fe4af20e5ed8844b91613c75016",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "MIRROR_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/opensource.microsoft.com",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "c3b5ed8da8c9e80ec7cfbc832ced08fa17f3e14c",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/openstreetmap-website",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "d7381323667d3fadeb7a612b765e5ca6064418c8",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/opentelemetry-java",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "d688fa6eca1989faea21ded7b48ec548e30865ad",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/opentelemetry-java-instrumentation",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "628f458ff2653b7aaf0b21e4107c602bd9219bf9",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/opentelemetry-js-contrib",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "2927088f3c49aa6a4662d3af706b3d401d2e90b9",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/opentrace",
+  "active_mainline": "dev",
+  "active_mainline_head_sha": "8c15c266325c0fd508ed211dd572fe5652cc42c9",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/opil-cli",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "2392889bf7d2d3f3f9a7ad354c6017a21e4f9928",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/packages_apps_settings",
+  "active_mainline": "bq2",
+  "active_mainline_head_sha": "1ed82f330d9fc41d9d00dccc385cded52d44b97b",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/papers-we-love",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "e5b7616213c507ad083064743862d0f606d827fb",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/particle-file-system",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "349bad2a98d3c635193ec58167aed6db7249059d",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/pascaleditor",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "e2cde339aeba08fbfccaa63f495e06fe6ea1adfb",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/paso-chat-app",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "bd773da0243eaf88c02b1e340ef6cee17e21c48a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/pepe-agent",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "401fa9ffea45d9d787f60b0b9b970c00e9775931",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/pi-autoresearch",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "22bd30b19482f2be5936031b2c6b149115779f16",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/plasmic",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "7244ee98390fc94b97ccd53665e37e377e9302b9",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/postgres",
+  "active_mainline": "develop",
+  "active_mainline_head_sha": "df5556412f26d0c95eeaa24ea80385e087bb6d01",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/pr-reviewer",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "3b1dc99f3ca2059d7bf47a7772f832973f5a2fde",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/pretext",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "53a065b8a345fc29831eee3aedd5bfb18e383670",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/prism-oracle",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "8dac9e9f69491735ea4929c58fe78db743b8a66a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/pwetf",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "1a190ceca92583b869c4a67bdee781a17ffc0cab",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/quiche",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "6cd1254b1f67f314f3ef81d0eb48fdb27c14c7d5",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/quickstart-android",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "5432ba2d819f4915ef1ea1136271e7868ace85eb",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/react-map-components-maplibre",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "f0126950dae8dd78aad1ac257aa9839d58959373",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/react-native",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "8636cadb8e7d0f62c213e98d264f11dfc5ea913e",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/refined-github",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "a6d74ca8f194a03e1287aefe20044bf5cae2f48f",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/remarks-report-builder",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "fb97d65c19ebc79ffdf3ec1b253315bfd8e0d53f",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/requests",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "f361ead047be5cb873174218582f7d8b9fcd9f49",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/research-projects",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "8876ec11c47c071d75e2cefe8ed435e1666d2b28",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/rfcs",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "ecb9d2fb33cba776add2411cf1a91b3a9a96d30f",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/rolldown",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "11e008bd27a4774b7b47bde5dc767844e44d44da",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/rox-one-terminal",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "c1b87b865c2f1b0552bc3ff15ed77b965dfcc2d5",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/rox-one-website",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "f20d4378079e866b96658e9226834a39617d2c19",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/rtl_433",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "d9986c7c6cbdd14a531c9cae847529c340a5118e",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/ruffle",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "9f9a3da4a00a4b1e9b3ad1bd9a0f3188b0f870af",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/runtipi",
+  "active_mainline": "develop",
+  "active_mainline_head_sha": "90badffcb5d14338c558fa02f2af371e4d8fdaec",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/runtipi-appstore",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "da3b179cf1f2c5cb658503649be3c650549f95ec",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/sam2-tensorrt",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "d1ac09adfd8120545d4ba0d9a7a381ca4fa8f9f3",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/scylladb",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "25fd1001c2a11278d30a16c3651c75c845145f21",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/seaweedfs",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "c1a1e3c1e31e8b81766f9e14019b39a9a71e267b",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/segment-anything-2",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "2b90b9f5ceec907a1c18123530e92e794ad901a4",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/semantic-conventions-java",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "b60b3bdb1f8e5ba3e4868924b2e236b73b8126a6",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/server",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "022c8591d7ab675db1e5978a1df8a041d408584d",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/sewing-tools-list",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "77a43f4e62464dc97f2d62b19b7f7a087ecd5b08",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/specialist-publisher",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "2b747f324082cae9ed4b17a0b5d1b4669fcad8d5",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/sqlmap",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "1a6a5b12268a8f123f77446969872a78589a6e59",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/sse4_crc32",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "e89fe93edeaab505e967574d03a80a0ccce73ebe",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/storage-api",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "817f1c8b9acbd04f46fa0ff9bb6299170779cfb3",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/stqdm",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "0eec9dac1f69fc30b3736d107e19124906c2d177",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/streamlit-keyup",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "54a6e7989c2cfd29f536c37e58db6f4edbeefb83",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/superpowers",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "d884ae04edebef577e82ff7c4e143debd0bbec99",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/superpowers-evals",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "58aaf6d118e4249eb0c9803e9f9d7df133b7639a",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/superset",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "55af7a5e0215d4bdb4d1eafc88e1a4925550ed18",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/supersplat",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "5b6b8eecec8c7ebf9bbf1c820cba8041a6c50c69",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/swift",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "a25e5b72642242157968d1e7bda1e2e96487b05d",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/syncthing",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "44abd15162c92bbf52abd2c594abdaad52f239bd",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/tdesktop",
+  "active_mainline": "dev",
+  "active_mainline_head_sha": "ca3eb7dca4fbbe0ec12df8145c13157f245535e1",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/tieredsort",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "b316d3770891f61f7493f96bd0dff56f5367109a",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "MIRROR_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/tiktoken",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "08a5f3b2c987ada4fc5aa1f16c643c203fa8acaa",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/toc",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "ad2f206fd7101899a8ff20e1b0f983ae4328a6a9",
+  "sub_mainlines": [],
+  "total_branches": 2,
+  "role_counts": {
+   "MIRROR_BRANCH": 1,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/tool-silk-",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "a62b2de7deb9c101368afbb974f8cf7c895e6dcf",
+  "sub_mainlines": [],
+  "total_branches": 12,
+  "role_counts": {
+   "UNKNOWN_BRANCH": 2,
+   "MIRROR_BRANCH": 9,
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/toolsdk-mcp-registry",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "e427f7d71542267700d696187f05bf560e6e6561",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/top-reactjs-interview-questions",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "6720b2ed56d0ce374302e8e5bfc596d2c8809252",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/tracebase",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "5a057f9541b1143f685585723320457b26cef6f4",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/trustme",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "7ef5c1c7416367c3301df9145b6a161c220080d2",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/ts_xml",
+  "active_mainline": "develop",
+  "active_mainline_head_sha": "39dfd6c5d1705415b65226fb5719fd37c4eb1753",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/typst",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "364ece3cb37975f509a779fc3ddc929285971d73",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/ubuntu-vps-hardener",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "008838c2e562e6066929a6a8a3ded731613f418b",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/ui",
+  "active_mainline": "develop",
+  "active_mainline_head_sha": "b31bc9e968e6b78f33d2d5e84e08a7d0b4b1fdee",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/unicornstudio-react",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "09fc501e042413dc23c40751543ba5d04111e52d",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/university-domains-list",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "a7a87d231ad00d5a4acf3c1eb096d3ca6359a4dd",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/unmute",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "c49982eb3aeaf76633dfe4155fa3b8dcb5b3d962",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/v2rayN",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "8090799ccc7c175cb04efe7e4960f38b74c19dad",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/vLLM-Qwen3-3.5-3.6-chat-template-fix",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "13556c07f4f48750d1d10ab1bd2dfc1c575d45b4",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/velobase-harness",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "439546a01af51348abbef2356602f1567efdeabd",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/vibe",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "fb4c1c29f934273582c777e5645448b73db657c7",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/vllm",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "da543d1abe2468a1b79f230e91e8bbdc2bf6ee71",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/volesti",
+  "active_mainline": "develop",
+  "active_mainline_head_sha": "23d9de3d384ff78170cae4d8d1dbe313d8404bbb",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ACTIVE_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/voltagent",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "74b76aae24b2e0c38f9787b717f9d89c0efc49c5",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/vscode-azurestorage",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "b041351b702d1c5219ade9c7f8b621b7a46d7f2e",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/vscode-codeql",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "718a510def11b982e1e79c8e803c4bb2ffcd6f15",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/web-features",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "8606657a71535d688f5473579712717fe9442c0f",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/webmin",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "5b583300718afc31ace353e773a072b2d6ea0d8f",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/welcome-to-working-copy",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "76e0e291c88a6e2718439db6515b4a173219ef42",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/whitehall",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "d726a33c778ad7db91be7a34ebd292948c167d4c",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/winget-pkgs",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "4261891479463f1763444a12c17603c3f83f4fef",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/workers-rs",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "417576c4efe8e24e7201ae5a9c04455f4c5d6921",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/worldmonitor",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "2bf2f403714316171ba66beef4ea9c63e65d9be3",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/xbmc",
+  "active_mainline": "master",
+  "active_mainline_head_sha": "35ab0bad74f2f68cdb01cc5f35ea1a3b571232b0",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/z814241",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "b4638626c6888240d6b4c9621d2286280498cfdc",
+  "sub_mainlines": [],
+  "total_branches": 1,
+  "role_counts": {
+   "ROOT_MAINLINE": 1
+  }
+ },
+ {
+  "repository": "dofaromg/zed",
+  "active_mainline": "main",
+  "active_mainline_head_sha": "9c9337a8021f74511625517c3f4fa021106609eb",
   "sub_mainlines": [],
   "total_branches": 1,
   "role_counts": {
