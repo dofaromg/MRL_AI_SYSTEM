@@ -81,13 +81,16 @@ foreach ($s in $svcs) {
   $script = Join-Path $ROOT $s.script
   $out = Join-Path $logDir "$($s.name)_stdout.log"
   $err = Join-Path $logDir "$($s.name)_stderr.log"
+  # 注意：PowerShell Start-Process 的 -RedirectStandardOutput 必須配 -NoNewWindow
+  # 不能跟 -WindowStyle 一起用；一次性 smoke test 可接受共享 console。
   Start-Process -FilePath "python" -ArgumentList $script `
-                -WindowStyle Hidden `
+                -NoNewWindow `
                 -RedirectStandardOutput $out `
-                -RedirectStandardError  $err
+                -RedirectStandardError  $err `
+                -PassThru | Out-Null
   Write-Host "  起 $($s.name) → log $out"
 }
-Start-Sleep -Seconds 3
+Start-Sleep -Seconds 4
 
 # 5) 全部 health 確認
 Write-Host "`n[5/5] 新服務 health 回測..." -ForegroundColor Yellow
