@@ -1,3 +1,11 @@
+﻿# ---- Force UTF-8 console (R13-C: PowerShell 5.1 ANSI/Big5 fix) ----
+try {
+    [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+    $OutputEncoding = [System.Text.Encoding]::UTF8
+    chcp 65001 > $null 2>&1
+} catch { }
+# ------------------------------------------------------------------
+
 # wake.ps1 — DL580 一鍵喚醒 MRL_WorldModel_Supplement_R01
 # origin_signature: MrLiouWord ｜ 2026-10-08 ｜ Additive-Only (LAW-2)
 #

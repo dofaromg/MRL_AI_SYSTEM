@@ -1,3 +1,11 @@
+﻿# ---- Force UTF-8 console (R13-C: PowerShell 5.1 ANSI/Big5 fix) ----
+try {
+    [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+    $OutputEncoding = [System.Text.Encoding]::UTF8
+    chcp 65001 > $null 2>&1
+} catch { }
+# ------------------------------------------------------------------
+
 # install_services.ps1 — 把 Jump/Collapse/Guardian 註冊為 Windows 排程任務
 # origin_signature: MrLiouWord ｜ 2026-10-08
 #
