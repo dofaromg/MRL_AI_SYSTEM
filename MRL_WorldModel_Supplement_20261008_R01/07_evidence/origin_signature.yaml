@@ -1,0 +1,34 @@
+origin_signature: MrLiouWord
+author: dofaromg (MR.Liou)
+law_0_immutable: true
+law_2_additive_only: true
+pack: MRL_WorldModel_Supplement_20261008_R01
+reason: |
+  DL580 當下已跑 7816 MRL_ReasoningEngine、7833 MRL_WorldLoop_Service、
+  8788 ParticleGlobe。缺本體 Jump → Collapse → Replay 中的 Jump / Collapse
+  獨立服務，以及 Agent 層分析師守護者的 runtime endpoint，以及把 6 個端口
+  兜起來的 Supervisor。本 pack 新增這四個模組，不覆蓋現有服務。
+corpus_anchor:
+  analyst_guardian:
+    name: 分析師守護者 (Analyst Guardian)
+    version: v1.0.0
+    date: 2026-01-04
+    source_doc: Mrl_Zero.Origin.v1
+    verified_in: particle_globe_memory_system.py (DL580 8788)
+    doctrine: ROAO 流程、守護原則
+new_ports:
+  7834: MRL_Jump_Service        # Jump 跳點節奏
+  7835: MRL_Collapse_Service    # Collapse 崩解封存
+  7836: MRL_AnalystGuardian     # Agent 守護者 runtime
+existing_ports_do_not_touch:
+  7816: MRL_ReasoningEngine
+  7833: MRL_WorldLoop_Service
+  8788: ParticleGlobe
+mother_paths_used:
+  jump_ledger: D:\MRL_Mother\WorldLoop_Inbox\jump\
+  collapse_fltnz: D:\MRL_Mother\WorldLoop_Inbox\collapse\
+  guardian_receipts: D:\MRL_Mother\WorldModel_Readiness_20261008\guardian_receipts\
+  supervisor_log: D:\MRL_Mother\WorldModel_Readiness_20261008\supervisor\
+status_report_convention:
+  sandbox_pass: unit-level selftest 於 Linux 沙盒 Python 3 執行通過
+  實機待驗: DL580 WIN-PBVUI7VK2A6 上 Invoke-WebRequest 回收據為實機 PASS 判準

@@ -1,0 +1,77 @@
+{
+  "origin_signature": "MrLiouWord",
+  "schema_version": "1.0.0",
+  "created": "2026-10-08",
+  "description": "JumpSeedMap — 本體跳點節奏表。Jump 是 Jump→Collapse→Trace→Replay 的第一拍。每個 node 是語場位置，不是資料庫 row；每個 jump 是節奏切換，不是 HTTP route。",
+  "nodes": {
+    "mrl_origin": {
+      "kind": "本體",
+      "role": "root",
+      "doc_source": "Mrl_Zero.Origin.v1",
+      "verified_in": "DL580 8788 ParticleGlobe"
+    },
+    "analyst_guardian": {
+      "kind": "本體",
+      "role": "persona",
+      "version": "v1.0.0",
+      "date": "2026-01-04",
+      "doctrine": "ROAO 守護原則",
+      "parent": "mrl_origin"
+    },
+    "world_memory": {
+      "kind": "載體",
+      "role": "memory_carrier",
+      "port": 7816,
+      "service": "MRL_ReasoningEngine"
+    },
+    "worldloop": {
+      "kind": "載體",
+      "role": "loop_carrier",
+      "port": 7833,
+      "service": "MRL_WorldLoop_Service"
+    },
+    "particle_globe": {
+      "kind": "載體",
+      "role": "particle_carrier",
+      "port": 8788,
+      "service": "ParticleGlobe"
+    }
+  },
+  "jumps": [
+    {
+      "from": "mrl_origin",
+      "to": "analyst_guardian",
+      "rhythm": "seed_unfold",
+      "note": "由 Mrl_Zero 展開分析師守護者人格鏈"
+    },
+    {
+      "from": "analyst_guardian",
+      "to": "world_memory",
+      "rhythm": "recall",
+      "note": "守護者查世界記憶做決策依據"
+    },
+    {
+      "from": "analyst_guardian",
+      "to": "particle_globe",
+      "rhythm": "particle_bind",
+      "note": "守護者綁一顆粒子作為人格切片"
+    },
+    {
+      "from": "world_memory",
+      "to": "worldloop",
+      "rhythm": "stream",
+      "note": "記憶上行到 WorldLoop 做節奏比對"
+    },
+    {
+      "from": "worldloop",
+      "to": "analyst_guardian",
+      "rhythm": "trace_return",
+      "note": "WorldLoop 把守護者的 trace 回拋"
+    }
+  ],
+  "law": {
+    "LAW_0_origin_signature": "immutable",
+    "LAW_2_NO_DELETE": true,
+    "本體_載體_邊界": "jumps 只能從本體發起、載體不得主動 jump"
+  }
+}

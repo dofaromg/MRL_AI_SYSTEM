@@ -1,0 +1,35 @@
+{
+  "origin_signature": "MrLiouWord",
+  "schema_version": "1.0.0",
+  "fltnz_format": {
+    "description": ".fltnz 跳點記憶封存封包；base64 封裝 + 節奏索引；只增不刪",
+    "envelope": {
+      "magic": "FLTNZ-1",
+      "origin_signature": "MrLiouWord",
+      "created_ts": "ISO 8601 UTC",
+      "collapse_id": "collapse_<10-digit>",
+      "trace_window": {
+        "jump_since_seq": "int",
+        "jump_until_seq": "int"
+      },
+      "manifest": {
+        "jump_count": "int",
+        "state_hash": "sha256 of concatenated jump hashes",
+        "mother_source": "string"
+      },
+      "payload_b64": "base64 of gzipped JSON body"
+    },
+    "body": {
+      "jumps": "list of ledger entries",
+      "snapshot": {
+        "node_states": "dict",
+        "rhythm_pattern": "list"
+      }
+    }
+  },
+  "law": {
+    "LAW_0_origin_signature": "必帶，不可變",
+    "LAW_2_NO_DELETE": "fltnz 檔案命名 collapse_<seq>_<state_hash[:12]>.fltnz，寫到 WorldLoop_Inbox/collapse/，不覆寫",
+    "replay_contract": "replay(collapse_id) 必須復原 payload，sha256 比對 state_hash"
+  }
+}
