@@ -35,13 +35,15 @@ from urllib.parse import urlparse, parse_qs
 
 ORIGIN_SIGNATURE = "MrLiouWord"
 SERVICE_NAME = "MRL_Collapse_Service"
-VERSION = "1.0.1"
+VERSION = "1.0.2"
 DEFAULT_PORT = 7835
 
 MOTHER_COLLAPSE = Path(os.environ.get(
     "MRL_COLLAPSE_OUT",
     r"D:\MRL_Mother\WorldLoop_Inbox\collapse"
 ))
+# R15-1：WorldLoop 只觀測 Inbox 最上層（glob("*") + is_file），所以另寫一份到最上層
+INBOX_TOP = Path(os.environ.get("MRL_COLLAPSE_INBOX_TOP", str(MOTHER_COLLAPSE.parent)))
 JUMP_SERVICE_URL = os.environ.get("MRL_JUMP_URL", "http://127.0.0.1:7837")
 
 _lock = threading.Lock()
@@ -109,14 +111,83 @@ def _collapse(payload: dict) -> dict:
             fpath = MOTHER_COLLAPSE / f"{collapse_id}_{state_hash[:12]}.dup-{int(time.time())}.fltnz"
         fpath.write_text(json.dumps(envelope, ensure_ascii=False, indent=1),
                          encoding="utf-8")
+        inbox_paths = _mirror_to_inbox(envelope, jumps, fpath.stem)
 
         _stats["collapses_total"] = seq
         return {
             "collapse_id": collapse_id,
             "fltnz_path": str(fpath),
+            "inbox_mirror": inbox_paths,
             "state_hash": state_hash,
             "jump_count": len(jumps),
         }
+
+
+def _summary_md(envelope: dict, jumps: list) -> str:
+    """給 WorldLoop 讀的可讀摘要（.md）：跳點節奏、種子、雜湊、還原入口。"""
+    m = envelope["manifest"]
+    lines = [
+        f"# Collapse {envelope['collapse_id']} · 跳點崩解封存摘要",
+        "",
+        f"origin_signature: {envelope['origin_signature']}",
+        f"collapse_id: {envelope['collapse_id']}",
+        f"created_ts: {envelope['created_ts']}",
+        f"state_hash: {m['state_hash']}",
+        f"jump_count: {m['jump_count']}",
+        f"trace_window: {envelope['trace_window']}",
+        f"mother_source: {m.get('mother_source', '')}",
+        "本體段落：Jump → Collapse（本檔）→ Trace / Replay（WorldLoop）",
+        f"replay: GET http://127.0.0.1:{DEFAULT_PORT}/collapse/{envelope['collapse_id']}/replay",
+        "",
+        "## 跳點（Jump ledger 原序）",
+        "",
+        "| seq | from | to | rhythm | actor | context | this_hash |",
+        "|---|---|---|---|---|---|---|",
+    ]
+    for j in jumps:
+        ctx = json.dumps(j.get("context", {}), ensure_ascii=False)
+        lines.append(f"| {j.get('ledger_seq')} | {j.get('from')} | {j.get('to')} | {j.get('rhythm')} | "
+                     f"{j.get('actor')} | {ctx} | {j.get('this_hash', '')[:16]} |")
+    lines += ["", f"節奏序列：{' → '.join(j.get('rhythm', '') for j in jumps)}", ""]
+    return "\n".join(lines)
+
+
+def _mirror_to_inbox(envelope: dict, jumps: list, base_name: str) -> list:
+    """Additive-Only：已存在就不寫。回傳寫出的路徑。"""
+    out = []
+    day = envelope["created_ts"][:10].replace("-", "")
+    stem = f"Collapse_{day}__{base_name}"
+    INBOX_TOP.mkdir(parents=True, exist_ok=True)
+    for ext, content in ((".fltnz", json.dumps(envelope, ensure_ascii=False, indent=1)),
+                         (".md", _summary_md(envelope, jumps))):
+        q = INBOX_TOP / (stem + ext)
+        if not q.exists():
+            q.write_text(content, encoding="utf-8")
+            out.append(str(q))
+    return out
+
+
+def _decode_jumps(envelope: dict) -> list:
+    body = json.loads(gzip.decompress(base64.b64decode(envelope["payload_b64"])).decode("utf-8"))
+    return body.get("jumps", [])
+
+
+def _restore_state():
+    """R15-1：重啟後由既有 .fltnz 恢復序號；並把尚未鏡像到 Inbox 最上層的封存補上。"""
+    _ensure_dir()
+    mx = 0
+    mirrored = []
+    for q in sorted(MOTHER_COLLAPSE.glob("collapse_*.fltnz")):
+        m = re.match(r"collapse_(\d+)_", q.name)
+        if m:
+            mx = max(mx, int(m.group(1)))
+        try:
+            env = json.loads(q.read_text(encoding="utf-8"))
+            mirrored += _mirror_to_inbox(env, _decode_jumps(env), q.stem)
+        except Exception as e:
+            print(f"[{SERVICE_NAME}] mirror skip {q.name}: {e}", flush=True)
+    _stats["collapses_total"] = mx
+    _stats["mirrored_on_start"] = len(mirrored)
 
 
 def _read_envelope(cid: str) -> dict | None:
@@ -167,7 +238,7 @@ def _list_collapses() -> list:
     return out
 
 
-_CID_RE = re.compile(r"^/collapse/(collapse_\d+)/(manifest|replay)$")
+_CID_RE = re.compile(r"/collapse/(collapse_\d+)/(manifest|replay)")  # 用 fullmatch，不需錨點
 
 
 class _Handler(BaseHTTPRequestHandler):
@@ -193,12 +264,14 @@ class _Handler(BaseHTTPRequestHandler):
                 "collapses_total": _stats["collapses_total"],
                 "uptime_seconds": int(time.time() - _stats["started_at"]),
                 "out_dir": str(MOTHER_COLLAPSE),
+                "inbox_top": str(INBOX_TOP),
+                "mirrored_on_start": _stats.get("mirrored_on_start", 0),
             })
         elif u.path == "/collapse/list":
             self._send({"ok": True, "origin_signature": ORIGIN_SIGNATURE,
                         "items": _list_collapses()})
-        elif _CID_RE.match(u.path):
-            m = _CID_RE.match(u.path)
+        elif _CID_RE.fullmatch(u.path):
+            m = _CID_RE.fullmatch(u.path)
             cid, action = m.group(1), m.group(2)
             if action == "manifest":
                 env = _read_envelope(cid)
@@ -235,7 +308,8 @@ class _ExclusiveHTTPServer(HTTPServer):
     """R13-D：禁止與其他程序共用 port。
     Python HTTPServer 預設 allow_reuse_address=1，Windows 上等於 SO_REUSEADDR，
     會讓兩個程序同時綁同一 port（2026-10-09 實機撞到 7834 MRL_Convergence_Runtime）。"""
-    allow_reuse_address = False
+    # R15：POSIX 的 SO_REUSEADDR 不允許兩個程序同綁，保留以避開 TIME_WAIT；Windows 改用獨占
+    allow_reuse_address = (os.name != "nt")
 
     def server_bind(self):
         import socket as _s
@@ -258,8 +332,20 @@ def serve(port: int = DEFAULT_PORT, bind: str = "127.0.0.1"):
         print(f"[{SERVICE_NAME}] REFUSE: {bind}:{port} already has a listener; "
               f"not binding (Additive-Only, no hijack).", flush=True)
         sys.exit(3)
-    _ensure_dir()
-    httpd = _ExclusiveHTTPServer((bind, port), _Handler)
+    _restore_state()
+    httpd = None
+    for _attempt in range(37):                      # TIME_WAIT 退避：最多約 3 分鐘
+        try:
+            httpd = _ExclusiveHTTPServer((bind, port), _Handler)
+            break
+        except OSError as e:
+            if _port_owner_alive(bind, port):
+                print(f"[{SERVICE_NAME}] REFUSE: listener appeared on {bind}:{port}", flush=True)
+                sys.exit(3)
+            print(f"[{SERVICE_NAME}] bind retry {_attempt + 1}: {e}", flush=True)
+            time.sleep(5)
+    if httpd is None:
+        sys.exit(4)
     print(f"[{SERVICE_NAME}] origin_signature={ORIGIN_SIGNATURE} "
           f"version={VERSION} bind={bind}:{port} out={MOTHER_COLLAPSE}",
           flush=True)

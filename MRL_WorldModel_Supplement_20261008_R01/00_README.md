@@ -150,3 +150,9 @@ origin_signature: MrLiouWord ｜ 2026-10-08 ｜ 怎麼過去，就怎麼回來
   三個服務改用 `_ExclusiveHTTPServer`（關閉 reuse + `SO_EXCLUSIVEADDRUSE`），且綁之前先探，有人在聽就 exit 3。
 - Supervisor 以 `/health` 的 service 名稱驗身；7834 只列 `observe_only`。
 - 部署單一路徑：`wake.ps1` → `install_services.ps1`（停本 pack 舊程序 → port 預檢 → 排程 → 驗身 → Supervisor）。
+
+## R16 補記（2026-10-09，Additive-Only）
+- `05_kernel/`：常駐 ASI Kernel 宿主 7838（原 kernel 原位元組＋SHA 驗身；timeline／Seal／重啟重放）。開機自啟 `install_kernel_task.ps1` 待建構者核准後執行。
+- `08_restore/`：ParticleIR 空白字元逐位元組還原圖（不改核心、不改 WorldLoop）。
+- `06_deploy/BOOTSTRAP_INLINE_R16.ps1`＋`99_pack/…_R16.zip`：暫存改 D:。R13-E 版保留。
+- 驗收：`MRL_Docs/Evidence/20261009/R16_Gap_Closure_Build_20261009.md`

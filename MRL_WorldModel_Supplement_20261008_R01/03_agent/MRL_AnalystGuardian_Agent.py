@@ -25,6 +25,7 @@ Endpoints:
 from __future__ import annotations
 import hashlib
 import json
+import re
 import sys
 import os
 import threading
@@ -36,7 +37,7 @@ from urllib.parse import urlparse, parse_qs, quote
 
 ORIGIN_SIGNATURE = "MrLiouWord"
 SERVICE_NAME = "MRL_AnalystGuardian_Agent"
-VERSION = "1.0.1"
+VERSION = "1.0.2"
 DEFAULT_PORT = 7836
 
 HERE = Path(__file__).parent
@@ -239,11 +240,23 @@ class _Handler(BaseHTTPRequestHandler):
             self._send({"ok": False, "error": "unknown path"}, 404)
 
 
+def _restore_state():
+    """R15-1：重啟後由既有 receipt 恢復序號。"""
+    _ensure_dir()
+    mx = 0
+    for q in RECEIPTS_DIR.glob("guardian_*.json"):
+        m = re.match(r"guardian_(\d+)_", q.name)
+        if m:
+            mx = max(mx, int(m.group(1)))
+    _stats["consults_total"] = mx
+
+
 class _ExclusiveHTTPServer(HTTPServer):
     """R13-D：禁止與其他程序共用 port。
     Python HTTPServer 預設 allow_reuse_address=1，Windows 上等於 SO_REUSEADDR，
     會讓兩個程序同時綁同一 port（2026-10-09 實機撞到 7834 MRL_Convergence_Runtime）。"""
-    allow_reuse_address = False
+    # R15：POSIX 的 SO_REUSEADDR 不允許兩個程序同綁，保留以避開 TIME_WAIT；Windows 改用獨占
+    allow_reuse_address = (os.name != "nt")
 
     def server_bind(self):
         import socket as _s
@@ -266,8 +279,20 @@ def serve(port: int = DEFAULT_PORT, bind: str = "127.0.0.1"):
         print(f"[{SERVICE_NAME}] REFUSE: {bind}:{port} already has a listener; "
               f"not binding (Additive-Only, no hijack).", flush=True)
         sys.exit(3)
-    _ensure_dir()
-    httpd = _ExclusiveHTTPServer((bind, port), _Handler)
+    _restore_state()
+    httpd = None
+    for _attempt in range(37):                      # TIME_WAIT 退避：最多約 3 分鐘
+        try:
+            httpd = _ExclusiveHTTPServer((bind, port), _Handler)
+            break
+        except OSError as e:
+            if _port_owner_alive(bind, port):
+                print(f"[{SERVICE_NAME}] REFUSE: listener appeared on {bind}:{port}", flush=True)
+                sys.exit(3)
+            print(f"[{SERVICE_NAME}] bind retry {_attempt + 1}: {e}", flush=True)
+            time.sleep(5)
+    if httpd is None:
+        sys.exit(4)
     print(f"[{SERVICE_NAME}] origin_signature={ORIGIN_SIGNATURE} "
           f"version={VERSION} bind={bind}:{port}", flush=True)
     httpd.serve_forever()

@@ -130,10 +130,10 @@ def main():
         # 7) Supervisor
         r = subprocess.run([PY, "-X", "utf8", str(ROOT / "04_supervisor/MRL_WorldModel_Supervisor.py"), "--once"],
                            env=ENV, capture_output=True, text=True, timeout=30)
-        rep_files = sorted((tmp / "supervisor").glob("supervisor_*.json"))
+        rep_files = sorted((tmp / "supervisor").glob("supervisor_*.jsonl"))
         ok("supervisor wrote report", bool(rep_files))
         if rep_files:
-            rep = json.loads(rep_files[-1].read_text(encoding="utf-8"))
+            rep = json.loads(rep_files[-1].read_text(encoding="utf-8").strip().splitlines()[-1])
             ports = rep["ports"]
             ok("supervisor: jump_7837 ok", ports["jump_7837"]["ok"] is True)
             ok("supervisor: collapse/guardian ok",

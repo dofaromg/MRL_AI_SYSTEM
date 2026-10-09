@@ -33,7 +33,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 ORIGIN_SIGNATURE = "MrLiouWord"
-VERSION = "1.0.1"
+VERSION = "1.0.2"
 
 OUT_DIR = Path(os.environ.get(
     "MRL_SUPERVISOR_OUT",
@@ -147,9 +147,10 @@ def run_once() -> dict:
         "anomalies": len(report["boundary_anomalies"]),
     }
 
-    out = OUT_DIR / f"supervisor_{ts}.json"
-    out.write_text(json.dumps(report, ensure_ascii=False, indent=1),
-                   encoding="utf-8")
+    # R15-2：每日一個 append-only jsonl（每輪一行）；舊的逐分鐘 .json 保留不動
+    out = OUT_DIR / f"supervisor_{ts[:4]}{ts[5:7]}{ts[8:10]}.jsonl"
+    with out.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(report, ensure_ascii=False, separators=(",", ":")) + "\n")
     report["written_to"] = str(out)
     return report
 
