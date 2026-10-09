@@ -3,7 +3,8 @@ MRL_WorldModel_Supervisor.py
 origin_signature: MrLiouWord ｜ 2026-10-08 ｜ Additive-Only (LAW-2)
 
 本體角色：母體治理者。不綁 port，是一個每 N 秒跑一輪的 supervisor。
-把 7816 / 7833 / 7834 / 7835 / 7836 / 8788 六個端口的健康狀態
+把 7816 / 7833 / 7837 / 7835 / 7836 / 8788 六個端口的健康狀態
+（R13-D：Jump 由 7834 移至 7837；7834 屬建構者 MRL_Convergence_Runtime，只讀不計入）
 寫到 WorldModel_Readiness_20261008/supervisor/<ISO>.json。
 
 一輪做：
@@ -32,7 +33,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 ORIGIN_SIGNATURE = "MrLiouWord"
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 
 OUT_DIR = Path(os.environ.get(
     "MRL_SUPERVISOR_OUT",
@@ -40,17 +41,22 @@ OUT_DIR = Path(os.environ.get(
 ))
 
 ENDPOINTS = {
-    "reasoning_7816": ("http://127.0.0.1:7816/health", "載體"),
-    "worldloop_7833": ("http://127.0.0.1:7833/health", "載體"),
-    "jump_7834": ("http://127.0.0.1:7834/health", "本體"),
-    "collapse_7835": ("http://127.0.0.1:7835/health", "本體"),
-    "guardian_7836": ("http://127.0.0.1:7836/health", "本體"),
+    # name: (url, kind, expected_service or None)
+    "reasoning_7816": ("http://127.0.0.1:7816/health", "載體", None),
+    "worldloop_7833": ("http://127.0.0.1:7833/health", "載體", None),
+    "jump_7837": ("http://127.0.0.1:7837/health", "本體", "MRL_Jump_Service"),
+    "collapse_7835": ("http://127.0.0.1:7835/health", "本體", "MRL_Collapse_Service"),
+    "guardian_7836": ("http://127.0.0.1:7836/health", "本體", "MRL_AnalystGuardian_Agent"),
     "particle_8788": ("http://127.0.0.1:8788/particle/stats?user_id=mrl_world",
-                      "載體"),
+                      "載體", None),
+}
+# 建構者既有、本 pack 不擁有的服務：只讀觀測，不計入 ports_alive
+OBSERVE_ONLY = {
+    "convergence_7834": "http://127.0.0.1:7834/health",
 }
 EXTRAS = {
-    "jump_verify": "http://127.0.0.1:7834/jump/verify",
-    "jump_ledger_tail": "http://127.0.0.1:7834/jump/ledger?since=0&limit=10",
+    "jump_verify": "http://127.0.0.1:7837/jump/verify",
+    "jump_ledger_tail": "http://127.0.0.1:7837/jump/ledger?since=0&limit=10",
     "collapse_list": "http://127.0.0.1:7835/collapse/list",
     "guardian_receipts": "http://127.0.0.1:7836/guardian/receipts?limit=5",
 }
@@ -74,7 +80,7 @@ def _get(url: str, timeout: float = 1.5) -> dict:
 def _check_boundary(ledger_body) -> list:
     """載體不得主動 jump。actor 欄位若 ∈ 載體清單，記 anomaly。"""
     anomalies = []
-    carriers = {name for name, (_, kind) in ENDPOINTS.items() if kind == "載體"}
+    carriers = {name for name, (_, kind, _w) in ENDPOINTS.items() if kind == "載體"}
     carrier_names = {"MRL_ReasoningEngine", "MRL_WorldLoop_Service",
                      "ParticleGlobe", "reasoning_7816", "worldloop_7833",
                      "particle_8788"}
@@ -105,11 +111,24 @@ def run_once() -> dict:
     }
 
     with ThreadPoolExecutor(max_workers=10) as ex:
-        futs = {ex.submit(_get, url): (name, kind)
-                for name, (url, kind) in ENDPOINTS.items()}
+        futs = {ex.submit(_get, url): (name, kind, want)
+                for name, (url, kind, want) in ENDPOINTS.items()}
         for fut in as_completed(futs):
-            name, kind = futs[fut]
-            report["ports"][name] = {"kind": kind, **fut.result()}
+            name, kind, want = futs[fut]
+            res = fut.result()
+            # R13-D：回應的 service 名稱要對得上，否則視為「別人占了這個 port」
+            if res.get("ok") and want:
+                body = res.get("body")
+                got = body.get("service") if isinstance(body, dict) else None
+                if got != want:
+                    res = {**res, "ok": False,
+                           "error": f"port answered by '{got}', expected '{want}'"}
+            report["ports"][name] = {"kind": kind, "expected_service": want, **res}
+
+        futs3 = {ex.submit(_get, url): name for name, url in OBSERVE_ONLY.items()}
+        report["observe_only"] = {}
+        for fut in as_completed(futs3):
+            report["observe_only"][futs3[fut]] = fut.result()
 
         futs2 = {ex.submit(_get, url): name for name, url in EXTRAS.items()}
         for fut in as_completed(futs2):

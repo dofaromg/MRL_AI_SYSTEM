@@ -27,7 +27,7 @@
      "hint": "WorldLoop 的 recall 回最相近的 world event 片段"},
     {"port": 8788, "service": "ParticleGlobe", "endpoint": "/particle/stats?user_id=mrl_world",
      "hint": "粒子化記憶，52 particles"},
-    {"port": 7834, "service": "MRL_Jump_Service", "endpoint": "/jump/map",
+    {"port": 7837, "service": "MRL_Jump_Service", "endpoint": "/jump/map",
      "hint": "本體跳點節奏表"}
   ],
   "boundaries": {

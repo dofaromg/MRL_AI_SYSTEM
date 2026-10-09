@@ -17,10 +17,11 @@ corpus_anchor:
     verified_in: particle_globe_memory_system.py (DL580 8788)
     doctrine: ROAO 流程、守護原則
 new_ports:
-  7834: MRL_Jump_Service        # Jump 跳點節奏
+  7837: MRL_Jump_Service        # Jump 跳點節奏（R13-D 由 7834 移出）
   7835: MRL_Collapse_Service    # Collapse 崩解封存
   7836: MRL_AnalystGuardian     # Agent 守護者 runtime
 existing_ports_do_not_touch:
+  7834: MRL_Convergence_Runtime  # 建構者既有，2026-10-09 實機確認
   7816: MRL_ReasoningEngine
   7833: MRL_WorldLoop_Service
   8788: ParticleGlobe

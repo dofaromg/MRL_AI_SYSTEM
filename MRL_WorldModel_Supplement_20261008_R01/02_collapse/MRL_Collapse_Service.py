@@ -22,6 +22,7 @@ import base64
 import gzip
 import hashlib
 import json
+import sys
 import os
 import re
 import threading
@@ -34,14 +35,14 @@ from urllib.parse import urlparse, parse_qs
 
 ORIGIN_SIGNATURE = "MrLiouWord"
 SERVICE_NAME = "MRL_Collapse_Service"
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 DEFAULT_PORT = 7835
 
 MOTHER_COLLAPSE = Path(os.environ.get(
     "MRL_COLLAPSE_OUT",
     r"D:\MRL_Mother\WorldLoop_Inbox\collapse"
 ))
-JUMP_SERVICE_URL = os.environ.get("MRL_JUMP_URL", "http://127.0.0.1:7834")
+JUMP_SERVICE_URL = os.environ.get("MRL_JUMP_URL", "http://127.0.0.1:7837")
 
 _lock = threading.Lock()
 _stats = {"collapses_total": 0, "started_at": time.time()}
@@ -230,9 +231,35 @@ class _Handler(BaseHTTPRequestHandler):
             self._send({"ok": False, "error": "unknown path"}, 404)
 
 
+class _ExclusiveHTTPServer(HTTPServer):
+    """R13-D：禁止與其他程序共用 port。
+    Python HTTPServer 預設 allow_reuse_address=1，Windows 上等於 SO_REUSEADDR，
+    會讓兩個程序同時綁同一 port（2026-10-09 實機撞到 7834 MRL_Convergence_Runtime）。"""
+    allow_reuse_address = False
+
+    def server_bind(self):
+        import socket as _s
+        if hasattr(_s, "SO_EXCLUSIVEADDRUSE"):  # Windows only
+            self.socket.setsockopt(_s.SOL_SOCKET, _s.SO_EXCLUSIVEADDRUSE, 1)
+        super().server_bind()
+
+
+def _port_owner_alive(bind: str, port: int) -> bool:
+    """綁之前先探：有人在聽就回 True（不綁、不搶）。"""
+    import socket as _s
+    host = "127.0.0.1" if bind in ("0.0.0.0", "") else bind
+    with _s.socket(_s.AF_INET, _s.SOCK_STREAM) as c:
+        c.settimeout(0.5)
+        return c.connect_ex((host, port)) == 0
+
+
 def serve(port: int = DEFAULT_PORT, bind: str = "127.0.0.1"):
+    if _port_owner_alive(bind, port):
+        print(f"[{SERVICE_NAME}] REFUSE: {bind}:{port} already has a listener; "
+              f"not binding (Additive-Only, no hijack).", flush=True)
+        sys.exit(3)
     _ensure_dir()
-    httpd = HTTPServer((bind, port), _Handler)
+    httpd = _ExclusiveHTTPServer((bind, port), _Handler)
     print(f"[{SERVICE_NAME}] origin_signature={ORIGIN_SIGNATURE} "
           f"version={VERSION} bind={bind}:{port} out={MOTHER_COLLAPSE}",
           flush=True)

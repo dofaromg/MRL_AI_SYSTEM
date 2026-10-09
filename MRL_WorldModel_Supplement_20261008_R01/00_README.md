@@ -15,6 +15,7 @@ origin_signature: **MrLiouWord** ｜ Additive-Only (LAW-2) ｜ 當下狀態 2026
 | 7833 | MRL_WorldLoop_Service 1.2.1 | Replay + Trace | daemon_iter=491, cycles=164, recall docs=4848 / source=59812 |
 | 8788 | ParticleGlobe 2.0.0 | Memory（particle） | total_particles=52, user_id=mrl_world |
 | — | 排程 MRL_RuntimeCivilization_WorldLoop_20261007 | Reflex loop | Running |
+| 7834 | MRL_Convergence_Runtime 1.0.1 | （建構者既有，未分類） | ALIVE（2026-10-09 實機確認，本 pack 不碰） |
 
 `token: MRL_WORLDLOOP_V12_ACCEPTANCE_PASS` / `MRL_RUNTIME_ACCEPTANCE_PASS`
 已於 2026-10-07 實機記錄。
@@ -23,9 +24,9 @@ origin_signature: **MrLiouWord** ｜ Additive-Only (LAW-2) ｜ 當下狀態 2026
 
 | Port | Service | 本體對應段 | 檔案 |
 |---|---|---|---|
-| 7834 | **MRL_Jump_Service** 1.0.0 | **Jump 跳點節奏** | `01_jump/MRL_Jump_Service.py` |
-| 7835 | **MRL_Collapse_Service** 1.0.0 | **Collapse 崩解封存** | `02_collapse/MRL_Collapse_Service.py` |
-| 7836 | **MRL_AnalystGuardian_Agent** 1.0.0 | **Agent 守護者 runtime** | `03_agent/MRL_AnalystGuardian_Agent.py` |
+| 7837 | **MRL_Jump_Service** 1.0.1 | **Jump 跳點節奏**（R13-D 由 7834 移出） | `01_jump/MRL_Jump_Service.py` |
+| 7835 | **MRL_Collapse_Service** 1.0.1 | **Collapse 崩解封存** | `02_collapse/MRL_Collapse_Service.py` |
+| 7836 | **MRL_AnalystGuardian_Agent** 1.0.1 | **Agent 守護者 runtime** | `03_agent/MRL_AnalystGuardian_Agent.py` |
 | — | **MRL_WorldModel_Supervisor** 1.0.0 | 六端口治理 | `04_supervisor/MRL_WorldModel_Supervisor.py` |
 
 ### 本體/載體邊界（LAW）
@@ -53,7 +54,7 @@ origin_signature: **MrLiouWord** ｜ Additive-Only (LAW-2) ｜ 當下狀態 2026
 | selftest_guardian | **PASS 15/15** | 沙盒 | 含 online + offline + receipt + origin_signature |
 | selftest_e2e_unit | **PASS 16/16** | 沙盒 | Jump→Collapse→Replay 5 跳端到端 |
 | wake.ps1 / install_services.ps1 | **source 完成**，**待實機跑** | — | 需 DL580 WIN-PBVUI7VK2A6 執行 |
-| 7834/7835/7836 ALIVE | **待實機驗** | — | 判準：`Invoke-WebRequest http://127.0.0.1:783X/health` 200 |
+| 7837/7835/7836 ALIVE | **待實機驗** | — | 判準：`Invoke-WebRequest http://127.0.0.1:783X/health` 200 |
 | Supervisor readiness.json | **待實機產出** | — | 判準：`D:\MRL_Mother\WorldModel_Readiness_20261008\supervisor\*.json` 存在 |
 
 **沒有一項被標成「已上線」，因為實機尚未驗收。**
@@ -97,7 +98,7 @@ D:\MRL_Mother\WorldModel_Readiness_20261008\
 MRL_WorldModel_Supplement_20261008_R01/
 ├── 00_README.md                            本文件
 ├── 01_jump/
-│   ├── MRL_Jump_Service.py                 port 7834
+│   ├── MRL_Jump_Service.py                 port 7837
 │   └── jump_seedmap.json                   JumpSeedMap（本體/載體標籤）
 ├── 02_collapse/
 │   ├── MRL_Collapse_Service.py             port 7835
@@ -140,3 +141,12 @@ MRL_WorldModel_Supplement_20261008_R01/
 ---
 
 origin_signature: MrLiouWord ｜ 2026-10-08 ｜ 怎麼過去，就怎麼回來
+
+
+## R13-D（2026-10-09）
+
+- 7834 實機屬建構者的 `MRL_Convergence_Runtime`（PID 23316）→ Jump 改 7837。
+- Python `HTTPServer` 預設 `allow_reuse_address=1`，Windows 上會讓兩個程序同綁一 port；
+  三個服務改用 `_ExclusiveHTTPServer`（關閉 reuse + `SO_EXCLUSIVEADDRUSE`），且綁之前先探，有人在聽就 exit 3。
+- Supervisor 以 `/health` 的 service 名稱驗身；7834 只列 `observe_only`。
+- 部署單一路徑：`wake.ps1` → `install_services.ps1`（停本 pack 舊程序 → port 預檢 → 排程 → 驗身 → Supervisor）。
