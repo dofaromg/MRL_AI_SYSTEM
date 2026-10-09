@@ -6,7 +6,7 @@ try {
 } catch { }
 # ------------------------------------------------------------------
 
-# BOOTSTRAP_INLINE.ps1 — R13-D（ZIP 已內嵌）
+# BOOTSTRAP_INLINE.ps1 — R13-E（ZIP 已內嵌；R13-E：改名前先離開目錄，仍占用則解到新版本目錄）
 # origin_signature: MrLiouWord ｜ 2026-10-09 ｜ Additive-Only
 #
 # R13-D：Jump 改 7837（7834 屬 MRL_Convergence_Runtime）；服務獨占綁定、綁前先探；
@@ -24,7 +24,7 @@ $EXPECTED_SHA = "4f4feac63773ad2ecd7de7fde1aa5942491ae0d7c6d8d0451076becd5dfd77c
 $DEST = "D:\mrl\workspace\MRL_WorldModel_Supplement_20261008_R01"
 $PACK_RE = 'MRL_WorldModel_Supplement_20261008_R01\\0[1-4]_[a-z]+\\MRL_[A-Za-z_]+\.py'
 
-Write-Host "===== MRL WorldModel Supplement R01 BOOTSTRAP (INLINE R13-D) =====" -ForegroundColor Cyan
+Write-Host "===== MRL WorldModel Supplement R01 BOOTSTRAP (INLINE R13-E) =====" -ForegroundColor Cyan
 Write-Host "origin_signature: $ORIG"
 Write-Host "host: $env:COMPUTERNAME  user: $env:USERNAME"
 Write-Host ""
@@ -839,15 +839,26 @@ Get-CimInstance Win32_Process -Filter "Name='python.exe' OR Name='pythonw.exe'" 
   Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue
 }
 Start-Sleep -Seconds 2
+# R13-E：先離開目標目錄（子程序會繼承呼叫端的工作目錄，Windows 不准改名使用中的目錄）
+Set-Location $env:TEMP
+[Environment]::CurrentDirectory = $env:TEMP
+$extractRoot = "D:\mrl\workspace"
 if (Test-Path $DEST) {
   $bakName = (Split-Path -Leaf $DEST) + ".bak-$ts"
-  Rename-Item -Path $DEST -NewName $bakName
-  Write-Host "       舊目錄 → $bakName（LAW-2，不刪）" -ForegroundColor DarkYellow
+  try {
+    Rename-Item -Path $DEST -NewName $bakName -ErrorAction Stop
+    Write-Host "       舊目錄 → $bakName（LAW-2，不刪）" -ForegroundColor DarkYellow
+  } catch {
+    # 仍被占用（例如另一個視窗停在裡面）：不改名、不動舊目錄，解到新的版本目錄
+    $extractRoot = "D:\mrl\workspace\_r13e_$ts"
+    $DEST = Join-Path $extractRoot "MRL_WorldModel_Supplement_20261008_R01"
+    Write-Host "       舊目錄使用中，保留不動；新版解到 $DEST" -ForegroundColor DarkYellow
+  }
 }
 
-Write-Host "[4/5] 解壓到 D:\mrl\workspace\ ..." -ForegroundColor Yellow
-if (-not (Test-Path "D:\mrl\workspace")) { New-Item -ItemType Directory -Path "D:\mrl\workspace" -Force | Out-Null }
-Expand-Archive -Path $zipPath -DestinationPath "D:\mrl\workspace" -Force
+Write-Host "[4/5] 解壓到 $extractRoot ..." -ForegroundColor Yellow
+if (-not (Test-Path $extractRoot)) { New-Item -ItemType Directory -Path $extractRoot -Force | Out-Null }
+Expand-Archive -Path $zipPath -DestinationPath $extractRoot -Force
 if (-not (Test-Path $DEST)) { Write-Host "       [FAIL] 找不到 $DEST" -ForegroundColor Red; exit 2 }
 Write-Host ("       完成，共 {0} 檔" -f (Get-ChildItem -Path $DEST -Recurse -File).Count) -ForegroundColor Green
 Remove-Item -Path $tmpDir -Recurse -Force -ErrorAction SilentlyContinue
