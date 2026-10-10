@@ -1,0 +1,227 @@
+# origin_signature: MrLiouWord
+# Cloud engineering gate only. DL580 host/runtime acceptance remains independent.
+name: MRL LocalAI recovery SDK gate
+
+"on":
+  pull_request:
+    paths:
+      - ".github/workflows/MRL_localai_recovery_sdk.yml"
+      - "metacode_core.js"
+      - "metacode_usage.js"
+      - "09_workflow/MRL_MCPServerHarness_Streamable_v1.py"
+      - "09_workflow/MRL_MCPClient_Streamable_v1.py"
+      - "09_workflow/MRL_utils.py"
+      - "09_workflow/MRL_AgentHarness_ToolLoop_v1.py"
+      - "09_workflow/MRL_AgentHarness_Types_v1.py"
+      - "09_workflow/MRL_AgentHarness_HookLattice_v1.py"
+      - "09_workflow/MRL_AgentHarness_PolicyGate_v1.py"
+      - "09_workflow/MRL_MCPServerHarness_Streamable_v2.py"
+      - "scripts/MRL_localai_mcp_server_v1.py"
+      - "scripts/MRL_mcp_sdk_acceptance_v1.py"
+      - "scripts/MRL_localai_recovery_acceptance_v1.py"
+      - "scripts/MRL_metacode_recovery_smoke_v1.mjs"
+      - "tests/test_MRL_mcp_streamable_v1.py"
+      - "tests/test_MRL_mcp_streamable_v2.py"
+      - "tests/test_MRL_localai_mcp_server_v1.py"
+      - "tests/test_MRL_localai_recovery_acceptance_v1.py"
+      - "deploy/dl580/MRL_LocalAI_Recovery_Validate.ps1"
+      - "deploy/dl580/recovery/**"
+      - "docs/recovery/MRL_LocalAI_Recovery_20261010_Evidence.json"
+      - "MRL_Adapters/MetaEnv/**"
+      - "data/.gitignore"
+
+permissions:
+  contents: read
+
+jobs:
+  cloud-source-and-sdk:
+    name: Cloud source checks and real MCP SDK transports
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PIP_DISABLE_PIP_VERSION_CHECK: "1"
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Check out the PR revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.12
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Set up Node 22
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+          package-manager-cache: false
+      - name: Verify every manifest payload file
+        run: |
+          python -B - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+          
+          root = Path.cwd().resolve()
+          manifest_path = "deploy/dl580/recovery/MRL_LocalAI_Recovery_Manifest_v1.json"
+          manifest = json.loads((root / manifest_path).read_text(encoding="utf-8"))
+          records = manifest["files"]
+          if not isinstance(records, list) or not records:
+              raise RuntimeError("manifest_files_missing")
+          seen = set()
+          for entry in records:
+              relative = entry["path"]
+              if not isinstance(relative, str) or relative in seen or relative == manifest_path:
+                  raise RuntimeError("manifest_path_invalid_or_duplicate")
+              target = (root / relative).resolve(strict=True)
+              if Path(relative).is_absolute() or not target.is_relative_to(root) or not target.is_file():
+                  raise RuntimeError("manifest_path_outside_checkout")
+              data = target.read_bytes()
+              actual_blob = hashlib.sha1(b"blob " + str(len(data)).encode("ascii") + b"\0" + data).hexdigest()
+              if (len(data) != entry["bytes"]
+                      or hashlib.sha256(data).hexdigest() != entry["sha256"]
+                      or actual_blob != entry["git_blob_sha"]):
+                  raise RuntimeError("manifest_file_hash_mismatch: " + relative)
+              seen.add(relative)
+          expected = manifest["expected_file_list"]
+          if not isinstance(expected, list) or len(expected) != len(set(expected)):
+              raise RuntimeError("manifest_expected_files_invalid")
+          if set(expected) != seen | {manifest_path}:
+              raise RuntimeError("manifest_expected_files_mismatch")
+          print(json.dumps({"gate": "MANIFEST_FILE_HASH_PASS", "checked_files": len(seen),
+                            "origin_signature": "MrLiouWord", "dl580_recovery_claim": "NOT_ASSERTED"}))
+          PY
+      - name: Parse the two PowerShell scripts without executing them
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $files = @(
+            'deploy/dl580/MRL_LocalAI_Recovery_Validate.ps1',
+            'deploy/dl580/recovery/MRL_Qdrant_Stage_v1.ps1'
+          )
+          foreach ($file in $files) {
+            $tokens = $null
+            $parseErrors = $null
+            $null = [System.Management.Automation.Language.Parser]::ParseFile(
+              [System.IO.Path]::GetFullPath($file), [ref]$tokens, [ref]$parseErrors)
+            if ($parseErrors.Count -gt 0) {
+              throw ("POWERSHELL_PARSE_FAIL: " + $file + " errors=" + $parseErrors.Count)
+            }
+          }
+          [ordered]@{
+            gate = 'POWERSHELL_SYNTAX_PASS'
+            origin_signature = 'MrLiouWord'
+            powershell_version = $PSVersionTable.PSVersion.ToString()
+            parsed_files = $files.Count
+            script_execution = 'NOT_PERFORMED'
+            windows_powershell_5_1_claim = 'NOT_ASSERTED'
+            dl580_recovery_claim = 'NOT_ASSERTED'
+          } | ConvertTo-Json -Compress
+      - name: Install the official pinned MCP SDK
+        run: python -m pip install --no-cache-dir -r deploy/dl580/recovery/requirements-mcp-sdk.txt
+      - name: Run transport and fixed-source regression tests
+        run: |
+          python -B tests/test_MRL_mcp_streamable_v1.py
+          python -B -m unittest discover -s tests -p test_MRL_mcp_streamable_v2.py
+          python -B -m unittest discover -s tests -p test_MRL_localai_mcp_server_v1.py
+          python -B -m unittest discover -s tests -p test_MRL_localai_recovery_acceptance_v1.py
+      - name: Verify original MetaCode usage in memory
+        run: node --experimental-vm-modules scripts/MRL_metacode_recovery_smoke_v1.mjs
+      - name: Verify launcher source identity without starting the DL580 runtime
+        run: |
+          python -B - <<'PY'
+          import json
+          import platform
+          import socket
+          import subprocess
+          import sys
+          
+          completed = subprocess.run(
+              [sys.executable, "-B", "scripts/MRL_localai_mcp_server_v1.py", "--verify-only"],
+              capture_output=True, text=True, timeout=30,
+          )
+          print(completed.stdout, end="", flush=True)
+          if completed.returncode != 0:
+              raise RuntimeError("launcher_source_verification_failed")
+          receipt = json.loads(completed.stdout)
+          identity = receipt.get("identity", {})
+          host = identity.get("host", {})
+          if (receipt.get("status") != "SOURCE_HASH_PASS"
+                  or identity.get("origin_signature") != "MrLiouWord"
+                  or identity.get("hash_match") is not True
+                  or identity.get("runtime_mode") is not False
+                  or identity.get("ready") is not False
+                  or identity.get("runtime_operational") != "NOT_ASSERTED"
+                  or host.get("hostname") != socket.gethostname()
+                  or platform.system() != "Linux"
+                  or host.get("windows") is not False
+                  or host.get("repo_on_fixed_d") is not False):
+              raise RuntimeError("verify_only_receipt_scope_mismatch")
+          PY
+      - name: Exercise official SDK Streamable HTTP and legacy SSE on loopback
+        run: |
+          python -B - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import platform
+          import secrets
+          import socket
+          import subprocess
+          import sys
+          
+          root = Path.cwd().resolve()
+          if platform.system() != "Linux":
+              raise RuntimeError("this_job_requires_an_observed_linux_runner")
+          sys.path.insert(0, str(root / "09_workflow"))
+          from MRL_MCPServerHarness_Streamable_v2 import (
+              MCPStreamableServerV2, ThreadedServer, make_content,
+          )
+          
+          # This fixed echo fixture contains no DL580 data and starts no LocalAI runtime.
+          mcp = MCPStreamableServerV2()
+          mcp.register_tool(
+              "echo", "Cloud SDK transport acceptance echo",
+              {"type": "object", "properties": {"message": {"type": "string"}},
+               "required": ["message"]},
+              lambda message: make_content("Tool echo: " + message),
+          )
+          fixture_key = secrets.token_urlsafe(32)
+          required_checks = {
+              "configuration", "dependencies", "expected_client_hostname",
+              "initialize", "service_identity", "tools_list", "echo_tool",
+              "transport_context_closed",
+          }
+          with ThreadedServer(mcp, host="127.0.0.1", port=0, api_key=fixture_key) as server:
+              for transport, endpoint in (("streamable-http", server.url), ("sse", server.sse_url)):
+                  environment = os.environ.copy()
+                  environment.update(MRL_MCP_ENDPOINT=endpoint, MRL_MCP_API_KEY=fixture_key)
+                  completed = subprocess.run(
+                      [sys.executable, "-B", "scripts/MRL_mcp_sdk_acceptance_v1.py",
+                       "--transport", transport, "--tool", "echo",
+                       "--expected-client-host", socket.gethostname(), "--stdout"],
+                      cwd=root, env=environment, capture_output=True, text=True, timeout=60,
+                  )
+                  # The verifier emits only metadata, counts and hashes, including on failure.
+                  print(completed.stdout, end="", flush=True)
+                  if completed.returncode != 0:
+                      raise RuntimeError("official_sdk_" + transport + "_failed")
+                  receipt = json.loads(completed.stdout)
+                  observed = receipt.get("observed_execution", {})
+                  checks = {item["name"]: item["status"] for item in receipt.get("checks", [])}
+                  if (receipt.get("status") != "PASS"
+                          or receipt.get("transport") != transport
+                          or receipt.get("origin_signature") != "MrLiouWord"
+                          or receipt.get("dl580_recovery_claim") != "NOT_ASSERTED"
+                          or observed.get("os") != "Linux"
+                          or observed.get("hostname") != socket.gethostname()
+                          or not all(checks.get(name) == "PASS" for name in required_checks)):
+                      raise RuntimeError("official_sdk_receipt_scope_or_checks_mismatch")
+          print(json.dumps({"gate": "CLOUD_OFFICIAL_SDK_HTTP_AND_SSE_PASS",
+                            "origin_signature": "MrLiouWord", "observed_os": platform.system(),
+                            "observed_hostname": socket.gethostname(),
+                            "dl580_recovery_claim": "NOT_ASSERTED"}))
+          PY
