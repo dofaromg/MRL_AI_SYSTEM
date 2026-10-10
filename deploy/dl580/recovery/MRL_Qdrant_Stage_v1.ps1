@@ -8,11 +8,17 @@ Download/extract only. Never starts a process, installs a service, opens a port,
 changes a running Qdrant configuration, or claims storage/runtime acceptance.
 The fixed source was verified against GitHub release asset 612861224.
 Every run creates a unique child directory and refuses overwrites.
+.PARAMETER DownloadTimeoutSeconds
+Bounded download cancellation window, 30 through 1800 seconds. Default: 180.
+Select 900 for a bounded retry of an observed slow download; this does not
+assert that any earlier failure was caused by the cancellation deadline.
 #>
 [CmdletBinding()]
 param(
     [string]$StageRoot = 'D:\MRL_Mother\Dependencies\Qdrant',
-    [string]$ExpectedClientHost
+    [string]$ExpectedClientHost,
+    [ValidateRange(30, 1800)]
+    [int]$DownloadTimeoutSeconds = 180
 )
 
 Set-StrictMode -Version Latest
@@ -122,7 +128,7 @@ try {
     $Client = New-Object System.Net.Http.HttpClient($Handler)
     $Client.DefaultRequestHeaders.UserAgent.ParseAdd('MRL-Recovery-Validator/1.0')
     $Cancellation = New-Object System.Threading.CancellationTokenSource
-    $Cancellation.CancelAfter([TimeSpan]::FromSeconds(180))
+    $Cancellation.CancelAfter([TimeSpan]::FromSeconds($DownloadTimeoutSeconds))
     $Response = $null
     $NetworkStream = $null
     $FileStream = $null

@@ -222,3 +222,39 @@ The follow-up changes `scripts/MRL_localai_recovery_acceptance_v1.py` and its ex
 The updated acceptance suite has 29 tests, reported PASS by the recovery session; the scoped regression total is now 81. Those updated sources require a new CI run on the follow-up commit. The first 80-test CI result above remains attached to its exact earlier revision.
 
 This continuation was frozen at 2026-10-10T17:34:53Z while actual DL580 checks were in progress. Their results are not included or predicted here. The package remains 33 expected paths and 32 hashed payloads; the manifest excludes its own hash. After committing the follow-up, record its immutable commit and fresh CI result, then use that exact revision for D: deployment and append the actual local receipts.
+
+## 10. Actual DL580 execution and bounded Qdrant retry — 2026-10-10
+
+This section appends actual-host results after section 9. The earlier source-freeze observations and their pending statuses remain the historical record. The following metadata was reported from the authenticated recovery session on `WIN-PBVUI7VK2A6`; no DL580 file contents or credentials are included.
+
+### Exact D: source and native acceptance
+
+The isolated local D: source was pinned to `3355126839ffe92149d5944865f7f1c39daa2e36`. All 33 expected files matched, with zero missing, extra or mismatched files. Its source receipt is 9,843 bytes with SHA-256 `354a3feda21791a58626e04b5baaf0bf6746f43f8d7779c072655dec2c0a8183`.
+
+The separate D: Python environment installed official `mcp==1.30.0` and `httpx==0.28.1` successfully and recorded 30 installed distributions. Actual Node 20.11.1 completed the original MetaCode smoke with five local outputs, PASS. Actual Windows PowerShell 5.1 parsed both recovery PowerShell files successfully.
+
+Between 2026-10-10T17:51:59Z and 17:52:17Z, the actual Windows host and Python 3.12.2 completed four official SDK runs: Streamable HTTP echo, Streamable HTTP `mrl_recovery_identity`, legacy SSE echo and legacy SSE `mrl_recovery_identity`. Each run passed all eight checks. These are actual D: receipts, separately scoped from the earlier Linux CI fixtures.
+
+The aggregate receipt is 12,962 bytes with SHA-256 `04457edf60c9cecc73dcfb5078b020cfbfa726625f945c39631c5ac56010fb11`. It records `runtime_acceptance: PASS` and `overall: INCOMPLETE`. The PASS covers the recorded source/native/SDK acceptance; it does not close storage operations, watchdog fault recovery, reboot continuity or website OAuth by implication.
+
+### Existing watchdog action and local audit
+
+At 2026-10-10T17:49:30Z, the existing watchdog task action executable was corrected from bare `python` to `D:\MrlToolchain\python\python.exe`. All other XML was unchanged. The correction did not start the task; the owning PIDs for ports 7700 and 7500 remained unchanged. The correction receipt is 1,815 bytes with SHA-256 `1c7c5d9897a1da917138b9b9ff3167e2440acc40abb1aafbf05dba4116660107`.
+
+The initial local audit recorded eight PASS, zero FAIL and six UNVERIFIED. Its missing authentication environment observation applied to that local controller process. It does not negate the previously observed authenticated external Bridge PASS or establish that the existing credential was absent. Changing a task action is not a watchdog fault-recovery test.
+
+### Observed dependency results
+
+The Qdrant staging attempt began at 2026-10-10T17:49:39Z. At 17:52:40.105Z, the partial ZIP was 12,040,916 bytes; the process then reported `STAGING_FAILED` at stage `download`, with exception class `System.Management.Automation.MethodInvocationException`, and PID 58536 exited. The inner exception was not confirmed. The elapsed time relative to the source's fixed 180-second cancellation window supports trying a larger bounded window; it does not prove that the deadline was the cause.
+
+The existing Node process PID 58604, running from D: on port 7870, returned HTTP 200 with matching origin signature at `/health`, but HTTP 404 at the required MetaEnv contract `/api/v1/env/health`. General health therefore does not establish MetaEnv API acceptance. The Docker CLI was not available in the observed session.
+
+### Scoped Qdrant source correction
+
+`MRL_Qdrant_Stage_v1.ps1` now accepts `DownloadTimeoutSeconds`, an integer validated from 30 through 1800 seconds. Its default remains 180, preserving existing behavior. A caller may select 900 for the observed slow 30,243,552-byte download:
+
+```powershell
+.\deploy\dl580\recovery\MRL_Qdrant_Stage_v1.ps1 -ExpectedClientHost WIN-PBVUI7VK2A6 -DownloadTimeoutSeconds 900
+```
+
+The fixed official URL, exact archive size and SHA-256, new unique D: directory, exclusive writes, safe extraction and no-start behavior remain unchanged. Execution using the larger window is **PENDING** in this record. The next run must use the newly committed immutable 33-file source package in a new isolated D: location, and append its actual result. Neither a successful download nor staging alone proves Qdrant storage read/write acceptance.
