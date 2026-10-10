@@ -410,6 +410,172 @@
       "preserved_initial_record": "Existing fields describe the first source-freeze observation and remain unchanged; continuation entries record subsequent facts.",
       "dl580_actual_host_tests": "IN_PROGRESS_RESULTS_NOT_FROZEN",
       "overall_runtime_status": "INCOMPLETE_DO_NOT_PROMOTE_SOURCE_OR_CI_PASS_TO_DL580_PASS"
+    },
+    {
+      "id": "ACTUAL_DL580_SOURCE_NATIVE_AND_SDK_ACCEPTANCE",
+      "recorded_at_utc": "2026-10-10T17:59:46Z",
+      "evidence_source": "Authenticated recovery session actual-host receipts; metadata reported by root controller.",
+      "executed_where": {
+        "hostname": "WIN-PBVUI7VK2A6",
+        "os": "Windows",
+        "source_storage": "isolated local D:",
+        "python": "3.12.2",
+        "node": "20.11.1",
+        "powershell": "5.1"
+      },
+      "source": {
+        "commit": "3355126839ffe92149d5944865f7f1c39daa2e36",
+        "expected_files": 33,
+        "matched_files": 33,
+        "missing": 0,
+        "extra": 0,
+        "mismatched": 0,
+        "receipt": {
+          "bytes": 9843,
+          "sha256": "354a3feda21791a58626e04b5baaf0bf6746f43f8d7779c072655dec2c0a8183"
+        }
+      },
+      "isolated_sdk_install": {
+        "status": "PASS",
+        "storage": "separate D: Python environment",
+        "mcp": "1.30.0",
+        "httpx": "0.28.1",
+        "installed_distributions": 30
+      },
+      "native_metacode": {
+        "status": "PASS",
+        "node": "20.11.1",
+        "local_outputs": 5,
+        "file_contents_exported": false
+      },
+      "powershell_parser": {
+        "status": "PASS",
+        "version": "5.1",
+        "parsed_files": 2,
+        "executed_where": "Actual DL580 Windows"
+      },
+      "official_sdk": {
+        "status": "PASS",
+        "started_at_utc": "2026-10-10T17:51:59Z",
+        "finished_at_utc": "2026-10-10T17:52:17Z",
+        "runs": [
+          {
+            "transport": "streamable-http",
+            "tool": "echo",
+            "checks": 8,
+            "status": "PASS"
+          },
+          {
+            "transport": "streamable-http",
+            "tool": "mrl_recovery_identity",
+            "checks": 8,
+            "status": "PASS"
+          },
+          {
+            "transport": "sse",
+            "tool": "echo",
+            "checks": 8,
+            "status": "PASS"
+          },
+          {
+            "transport": "sse",
+            "tool": "mrl_recovery_identity",
+            "checks": 8,
+            "status": "PASS"
+          }
+        ],
+        "execution_scope": "Actual host and isolated D: source; distinct from prior Linux CI fixtures."
+      },
+      "aggregate_receipt": {
+        "bytes": 12962,
+        "sha256": "04457edf60c9cecc73dcfb5078b020cfbfa726625f945c39631c5ac56010fb11",
+        "runtime_acceptance": "PASS",
+        "overall": "INCOMPLETE"
+      },
+      "initial_local_audit": {
+        "pass": 8,
+        "fail": 0,
+        "unverified": 6,
+        "authentication_environment": "Missing only in the initial local controller process; does not mean the existing credential was absent.",
+        "previous_external_authenticated_bridge_pass": "REMAINS_VALID"
+      },
+      "claim_scope": "Recorded D: source/native/SDK acceptance. Storage operations, watchdog fault recovery, reboot continuity and OAuth are not promoted to PASS."
+    },
+    {
+      "id": "ACTUAL_WATCHDOG_EXECUTABLE_CORRECTION",
+      "observed_at_utc": "2026-10-10T17:49:30Z",
+      "executed_where": "WIN-PBVUI7VK2A6 / Windows / D:",
+      "previous_executable": "python",
+      "corrected_executable": "D:\\MrlToolchain\\python\\python.exe",
+      "all_other_xml_unchanged": true,
+      "task_started_by_correction": false,
+      "port_7700_owning_pid_unchanged": true,
+      "port_7500_owning_pid_unchanged": true,
+      "receipt": {
+        "bytes": 1815,
+        "sha256": "1c7c5d9897a1da917138b9b9ff3167e2440acc40abb1aafbf05dba4116660107"
+      },
+      "watchdog_fault_recovery": "NOT_ESTABLISHED_BY_EXECUTABLE_CORRECTION"
+    },
+    {
+      "id": "ACTUAL_DEPENDENCY_OBSERVATIONS_AND_BOUNDED_QDRANT_WINDOW",
+      "recorded_at_utc": "2026-10-10T17:59:46Z",
+      "executed_where": "WIN-PBVUI7VK2A6 / Windows / local D:",
+      "observed_source_commit": "3355126839ffe92149d5944865f7f1c39daa2e36",
+      "qdrant_attempt": {
+        "started_at_utc": "2026-10-10T17:49:39Z",
+        "partial_observed_at_utc": "2026-10-10T17:52:40.105Z",
+        "partial_bytes": 12040916,
+        "expected_archive_bytes": 30243552,
+        "status": "STAGING_FAILED",
+        "failed_stage": "download",
+        "exception_class": "System.Management.Automation.MethodInvocationException",
+        "pid": 58536,
+        "process_exited": true,
+        "inner_exception": "NOT_CONFIRMED",
+        "cause": "NOT_CONFIRMED",
+        "interpretation": "Elapsed time relative to the fixed 180-second cancellation window supports testing a larger bounded window; timeout is not a confirmed cause."
+      },
+      "metaenv_candidate": {
+        "existing_pid": 58604,
+        "runtime": "Node",
+        "executable_on_d": true,
+        "port": 7870,
+        "health": {
+          "path": "/health",
+          "http_status": 200,
+          "origin_signature_match": true
+        },
+        "contract_health": {
+          "path": "/api/v1/env/health",
+          "http_status": 404
+        },
+        "metaenv_api_acceptance": "NOT_PASSED",
+        "canonical_identity": "NOT_ESTABLISHED_BY_GENERAL_HEALTH"
+      },
+      "docker_cli_available_in_observed_session": false,
+      "scoped_source_change": {
+        "path": "deploy/dl580/recovery/MRL_Qdrant_Stage_v1.ps1",
+        "parameter": "DownloadTimeoutSeconds",
+        "type": "integer",
+        "minimum": 30,
+        "maximum": 1800,
+        "default": 180,
+        "selected_next_run_seconds": 900,
+        "previous_default_behavior_preserved": true,
+        "new_window_execution": "PENDING",
+        "unchanged_guards": [
+          "fixed official archive URL",
+          "fixed archive size and SHA-256",
+          "new unique local D: directory",
+          "exclusive writes",
+          "safe extraction",
+          "no server or service start"
+        ]
+      },
+      "next_source_gate": "Commit and verify the unchanged 33-path package in a new isolated D: location using the exact immutable follow-up commit.",
+      "storage_read_write_acceptance": "NOT_ASSERTED",
+      "overall_runtime_status": "INCOMPLETE"
     }
   ]
 }

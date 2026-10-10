@@ -257,9 +257,9 @@
     },
     {
       "path": "deploy/dl580/recovery/MRL_LocalAI_Recovery_Runbook_v1.md",
-      "bytes": 20896,
-      "sha256": "316f62c6df2b5208d3b8aca638c53c8cb743b454989f528a17207f13541ce270",
-      "git_blob_sha": "2e3be6291da651df900c9b40e7c1f429ee884081",
+      "bytes": 25134,
+      "sha256": "a89713ab274f65eb6f2ab5513bd574c7695feea2ea77241b497b18c5f0de5c35",
+      "git_blob_sha": "ed58309a620dfab2d452946fd1cbbb5a8accde93",
       "mode": "100644",
       "source": {
         "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
@@ -269,9 +269,9 @@
     },
     {
       "path": "deploy/dl580/recovery/MRL_Qdrant_Stage_v1.ps1",
-      "git_blob_sha": "605a0ac3e24ba26ab4817eb627b09ac083877917",
-      "bytes": 13811,
-      "sha256": "13c73ac05b29ea264ff4310b011b1466faf384143866b274e608a2d253a9d21a",
+      "git_blob_sha": "4c8665809f8325b20cc94e4fbef5ea0963ef7d0b",
+      "bytes": 14160,
+      "sha256": "4bc2ef52912ec2453f226b5a0eb7fd3f6b64c76c7b2c00f876d8559378969848",
       "mode": "100644",
       "source": {
         "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
@@ -293,9 +293,9 @@
     },
     {
       "path": "docs/recovery/MRL_LocalAI_Recovery_20261010_Evidence.json",
-      "bytes": 16039,
-      "sha256": "6d5b0061609b87356b97910b244ad1d84b29de535ac7eff830bd9074b58ed05e",
-      "git_blob_sha": "3249fafe1b418ca88d2aa62adce7845acbe3af96",
+      "bytes": 22104,
+      "sha256": "251a4e261a166c8bfe7950fb20244bf1ffe56962cca50ad38982684527c485d8",
+      "git_blob_sha": "b5078474b89d6a289dcf16f2e235f0b845f47d8a",
       "mode": "100644",
       "source": {
         "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
