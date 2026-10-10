@@ -81,10 +81,30 @@ class HealthAndAuthTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             MRL.health_check("UNKNOWN", {"http_status": 200}, good)
 
-    def test_auth_identity_flat_or_nested(self):
-        identity = {"hostname": MRL.EXPECTED_HOST.lower(), "origin_signature": MRL.ORIGIN}
-        for body in (dict(identity, ok=True), {"ok": True, "data": identity}):
-            self.assertEqual(MRL.auth_identity_check({"http_status": 200}, body)["status"], "PASS")
+    def test_auth_identity_accepts_canonical_flat_v31_sysinfo(self):
+        # flow-tasks cb73e661a02eeb540db02398cb61eaa51c5e77e3:
+        # MRL_Bridge/server.js ok(res, info) -> {ok:true, ...info, _v, _t}.
+        info = {"hostname": MRL.EXPECTED_HOST.lower(), "origin_signature": MRL.ORIGIN,
+                "platform": "win32", "arch": "x64", "bridge": "MRL_Bridge_API",
+                "uptime_host": 120, "uptime_bridge": 30,
+                "boot_time": "2026-10-10T10:00:00Z"}
+        body = {"ok": True, **info, "_v": "3.1.0", "_t": "2026-10-10T10:00:30Z"}
+        result = MRL.auth_identity_check({"http_status": 200}, body)
+        self.assertEqual(result["status"], "PASS")
+        self.assertNotIn("hostname", result)
+        self.assertNotIn("boot_time", result)
+
+    def test_auth_identity_rejects_unverified_nested_and_conflicting_identity(self):
+        identity = {"hostname": MRL.EXPECTED_HOST, "origin_signature": MRL.ORIGIN}
+        for body in (
+            {"ok": True, "data": identity},
+            {"ok": True, **identity, "data": {"hostname": "OTHER", "origin_signature": "other"}},
+            {"ok": True, "hostname": "OTHER", "origin_signature": "other", "data": identity},
+            {"ok": True, **identity, "data": identity},
+            {"ok": True, **identity, "data": None},
+        ):
+            with self.subTest(body=body):
+                self.assertEqual(MRL.auth_identity_check({"http_status": 200}, body)["status"], "FAIL")
 
     def test_auth_identity_malformed_fails_without_exception(self):
         for body in (None, [], "", {}, {"ok": True, "data": None},

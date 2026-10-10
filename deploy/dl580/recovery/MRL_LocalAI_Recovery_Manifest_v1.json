@@ -257,9 +257,9 @@
     },
     {
       "path": "deploy/dl580/recovery/MRL_LocalAI_Recovery_Runbook_v1.md",
-      "bytes": 17384,
-      "sha256": "990f21ba37129203fa0135b1ace0df513d9d85a206c76b0e4e85a7bb164dfc63",
-      "git_blob_sha": "0195a69418bfd7efb67951c8fa3ce10b543e85b9",
+      "bytes": 20896,
+      "sha256": "316f62c6df2b5208d3b8aca638c53c8cb743b454989f528a17207f13541ce270",
+      "git_blob_sha": "2e3be6291da651df900c9b40e7c1f429ee884081",
       "mode": "100644",
       "source": {
         "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
@@ -293,9 +293,9 @@
     },
     {
       "path": "docs/recovery/MRL_LocalAI_Recovery_20261010_Evidence.json",
-      "bytes": 10628,
-      "sha256": "632854e4cad08535646992c6ac8250bb4a7c4a7ef41a033f8db555fd9248d36c",
-      "git_blob_sha": "f2a39ad9761f326e50e0d9402b39167036ab5de3",
+      "bytes": 16039,
+      "sha256": "6d5b0061609b87356b97910b244ad1d84b29de535ac7eff830bd9074b58ed05e",
+      "git_blob_sha": "3249fafe1b418ca88d2aa62adce7845acbe3af96",
       "mode": "100644",
       "source": {
         "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
@@ -362,9 +362,9 @@
     },
     {
       "path": "scripts/MRL_localai_recovery_acceptance_v1.py",
-      "git_blob_sha": "8fee5fdad210224e5755374f02c0a21c1c810ac1",
-      "bytes": 20893,
-      "sha256": "f08ecc98102a0b1ef6f3626b42e8da6442fb75d3e36b178c61dbd66725e49ef9",
+      "git_blob_sha": "4fa6b50762748bf42553237df1de27d164b42c9b",
+      "bytes": 20944,
+      "sha256": "504be441a28994b12a82e717d04a424cf158a48cbbd8a47e6c7eb0fa50fda09b",
       "mode": "100755",
       "source": {
         "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
@@ -422,9 +422,9 @@
     },
     {
       "path": "tests/test_MRL_localai_recovery_acceptance_v1.py",
-      "git_blob_sha": "6acaed5e36e38b19608c95a102f17271a64bd411",
-      "bytes": 22707,
-      "sha256": "d75412661708bfa766913b3ebe08a3f1f97bba5d4e87de4b89b5ad178acfe969",
+      "git_blob_sha": "f3f7b96a987657a3e272f578e2b45f385469c31f",
+      "bytes": 23857,
+      "sha256": "f6b789c57dde726b7245a76877574f477a8ad5455f0e2753b075ba2220a2f4ce",
       "mode": "100644",
       "source": {
         "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
