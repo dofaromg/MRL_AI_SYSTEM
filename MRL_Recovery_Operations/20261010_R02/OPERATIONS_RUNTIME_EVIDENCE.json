@@ -1,0 +1,903 @@
+{
+  "schema": "MRL_LocalAI_Operations_Evidence_R02",
+  "origin_signature": "MrLiouWord",
+  "record_mode": "APPEND_ONLY",
+  "overall_status": "INCOMPLETE",
+  "evidence_policy": {
+    "D_source_bodies_exported": false,
+    "D_log_bodies_exported": false,
+    "credential_values_exported": false,
+    "source_authorship": "Cloud-authored operations supplement; original D sources retained",
+    "metadata_representation": "Metadata projection only; 64-bit process FILETIME values are decimal strings to preserve precision."
+  },
+  "frozen_recovery_package": {
+    "commit": "be2f1d63ed355bb972241cc0db4eeecceeb0f04d",
+    "tree": "25431d3a327e9c3805a2adae429e5b56e2a85feb",
+    "files": 33,
+    "payload_hashes": 32,
+    "default_base": "d7c848189ac97f5a5de9613c796d3bcf037338b6",
+    "path": "D:\\MRL_Mother\\Recovery\\LocalAI_20261010_v2",
+    "stage_receipt": {
+      "bytes": 9843,
+      "sha256": "6ead3fb8b0eceb4f5bc49ba745179ee705e629e061ad04ee3be4e99a0c4355d4"
+    }
+  },
+  "actual_mcp_metacode_acceptance": {
+    "source_commit": "3355126839ffe92149d5944865f7f1c39daa2e36",
+    "sdk": "mcp 1.30.0",
+    "httpx": "0.28.1",
+    "python": "3.12.2",
+    "node": "20.11.1",
+    "powershell": "5.1.17763.9245",
+    "executed_at_utc": "2026-10-10T17:51:59Z/2026-10-10T17:52:17Z",
+    "official_transport_runs": [
+      "HTTP_echo",
+      "HTTP_mrl_recovery_identity",
+      "SSE_echo",
+      "SSE_mrl_recovery_identity"
+    ],
+    "checks_per_run": 8,
+    "metacode_status": "PASS",
+    "receipt": {
+      "bytes": 12962,
+      "sha256": "04457edf60c9cecc73dcfb5078b020cfbfa726625f945c39631c5ac56010fb11"
+    },
+    "later_frozen_package_scope": "MCP and MetaCode blobs unchanged; later source staging separately verified"
+  },
+  "watchdog_activation": {
+    "status": "ACTIVE_MONITORING_PASS_RECOVERY_HELD",
+    "error_code": null,
+    "verified_at_utc": "2026-10-10T19:09:35.587743+00:00",
+    "observations": {
+      "all_health_and_hash_gates_true": true,
+      "all_records_qualified": true,
+      "attempts_reserved": 0,
+      "bridge_7800_actions": 0,
+      "complete_prefix_bytes": 19264,
+      "complete_prefix_sha256": "455679f6bad2b7efd73b4f8d1148460b1289f0a94b7e07d3b4538794c559ba8f",
+      "complete_record_count": 28,
+      "first_record_at_utc": "2026-10-10T18:50:54.425301+00:00",
+      "inference_7500_actions": 0,
+      "last_record_at_utc": "2026-10-10T19:08:47.522761+00:00",
+      "maximum_unresolved_relative_process_count": 1,
+      "mode": "ACTIVE",
+      "process_starts": 0,
+      "span_seconds": 1073.09746,
+      "state": "ASI_HEALTH_OBSERVED_RECOVERY_HELD",
+      "writer_binding": "CORRELATED_WITH_VERIFIED_SINGLE_TASK_PROCESS",
+      "writer_pid_embedded_in_records": false
+    },
+    "task_and_process": {
+      "bridge": "Running",
+      "task_arguments_sha256": "badf0d31001a293c0a3a06fdf563444d24b1d3864c03468e7e26d6bafd9d4f06",
+      "task_enabled": true,
+      "task_last_result": 267009,
+      "task_last_run_at_utc": "2026-10-10T18:50:50.0000000Z",
+      "task_state": "Running",
+      "tunnel": "Running",
+      "watchdog_created_at_utc": "2026-10-10T18:50:52.334662+00:00",
+      "watchdog_pid": 41972,
+      "watchdog_process_count": 1
+    },
+    "current_services": {
+      "asi_7700_pid": 13968,
+      "asi_health_observed": true,
+      "inference_7500_pid": 20580,
+      "recovery_held": true
+    },
+    "runtime_recovery": "HELD_UNRESOLVED_RELATIVE_PROCESS",
+    "fault_recovery": "UNVERIFIED",
+    "reboot_continuity": "UNVERIFIED",
+    "source_hashes_verified": {
+      "asi_entry": {
+        "bytes": 355,
+        "sha256": "4dfd3194b7519efb6eef7236024a3953d2dd8842c9dc38c52ec71c6c0c807f5e"
+      },
+      "node": {
+        "bytes": 70027928,
+        "sha256": "bc585910690318aaebe3c57669cb83ca9d1e5791efd63195e238f54686e6c2ec"
+      },
+      "original_watchdog": {
+        "bytes": 1787,
+        "sha256": "2c327ed594594425a7a58d2082abc624a22531f7011d446dd2bd999172eff846"
+      },
+      "python": {
+        "bytes": 103192,
+        "sha256": "624bbc0586d8855633b875e911883bbef8a0e8b8711e11126df480dd86f54181"
+      },
+      "watchdog_helper": {
+        "bytes": 32301,
+        "sha256": "c9d671083bba6d0f8300a1b2e78d983a04e411971f274cf435088f555f1efb0a"
+      }
+    },
+    "attempt_record_count": 0,
+    "service_start_stop_calls": 0,
+    "receipt": {
+      "bytes": 3243,
+      "path": "D:\\MRL_Mother\\Recovery\\_operations\\LocalAI_20261010_R02_be2f1d63\\active_watchdog_activation_receipt_20261010T190935608091Z_0fe2afc1a55644198665ba9873be858a.json",
+      "sha256": "1b6bb1fa8e7665eabd15ecdb4c852def33874b03ed05b33b53e41bd4306a5e58"
+    }
+  },
+  "authenticated_existing_inference": {
+    "status": "INFERENCE_RESPONSE_OBSERVED",
+    "http_status": 200,
+    "api_ok": true,
+    "elapsed_seconds": 0.64,
+    "completion_chars": 1,
+    "expected_answer_exact": true,
+    "source_preserved": true,
+    "owner_after": [
+      20580
+    ],
+    "process_starts": 0,
+    "process_stops": 0,
+    "credential_value_exported": false,
+    "persist_requested": false,
+    "finished_at_utc": "2026-10-10T19:00:42.436933+00:00",
+    "receipt": {
+      "path": "D:\\MRL_Mother\\Recovery\\_operations\\LocalAI_20261010_R02_be2f1d63\\inference_7500_synthetic_completion_20261010_R02.json",
+      "bytes": 1125,
+      "sha256": "b027bf865e872d1e6297daa383ec080def5fe7272c76d9917c00af6d0358225d"
+    }
+  },
+  "qdrant_native_crud": {
+    "status": "SCOPED_CRUD_PASS",
+    "version": "1.19.2",
+    "checks_passed": 12,
+    "process_pid": 52228,
+    "owned_test_process_stopped": true,
+    "executed_at_utc": "2026-10-10T18:36:15Z/2026-10-10T18:36:24Z",
+    "receipt": {
+      "bytes": 7860,
+      "sha256": "affc8a298f54746c269be66f61933106d51bd181531afa107ac129ff4f78b278"
+    }
+  },
+  "qdrant_first_private_instance": {
+    "path": "D:\\MRL_Mother\\QdrantLocal\\fca6388e453e4c4a8319561470a42d84",
+    "stage": {
+      "phase": "stage",
+      "stdout_bytes": 732,
+      "stderr_bytes": 0,
+      "result": {
+        "status": "STAGED_PRIVATE_DISABLED",
+        "error_code": null,
+        "instance_directory": "D:\\MRL_Mother\\QdrantLocal\\fca6388e453e4c4a8319561470a42d84",
+        "task": null,
+        "runtime": null,
+        "checks": {
+          "copied_package_hashes_match": true,
+          "official_package_reverified": true,
+          "private_key_acl": true,
+          "private_root_acl": true,
+          "short_storage_path": true,
+          "source_copied_into_private_instance": true
+        },
+        "receipt_path": "D:\\MRL_Mother\\QdrantLocal\\fca6388e453e4c4a8319561470a42d84\\state\\operation_20261010T191226Z_ebd311675b7e4b26aaaef0a54464be9c.json",
+        "receipt_bytes": 1476,
+        "receipt_sha256": "4d764b3184566c194c2b914f7ce88e536c2c6da2ff29f850602f573923634512"
+      },
+      "receipt_metadata": {
+        "origin_signature": "MrLiouWord",
+        "status": "STAGED_PRIVATE_DISABLED",
+        "operation": "stage",
+        "timestamp_utc": "2026-10-10T19:12:26.032723+00:00",
+        "task_registered": false,
+        "server_started": false,
+        "task_name": "MRL_Qdrant_Local_fca6388e453e4c4a8319561470a42d84",
+        "existing_services_modified": false,
+        "secret_exported": false,
+        "provenance": {
+          "archive_bytes": 30243552,
+          "archive_sha256": "7d86596f16c6e85d45a50312f5e16ccb51e059b62e3d7308110cb65b4c799a4d",
+          "executable_sha256": "b25bcc612583333289b00754907639ee97cd28b8741d50f1b4ce0e2bd1ad12eb",
+          "extracted_file_count": 1,
+          "official_package_reverified": true,
+          "source_commit": "be2f1d63ed355bb972241cc0db4eeecceeb0f04d",
+          "stage_receipt_sha256": "c189ddf999bc975ab39c26073244519981b463eb246394411b70dc9ed9a54860",
+          "stage_script_sha256": "4bc2ef52912ec2453f226b5a0eb7fd3f6b64c76c7b2c00f876d8559378969848",
+          "status": "STAGED_VERIFIED"
+        },
+        "checks": {
+          "copied_package_hashes_match": true,
+          "official_package_reverified": true,
+          "private_key_acl": true,
+          "private_root_acl": true,
+          "short_storage_path": true,
+          "source_copied_into_private_instance": true
+        },
+        "task": null
+      }
+    },
+    "install_failure": {
+      "path": "D:\\MRL_Mother\\Recovery\\_operations\\LocalAI_20261010_R02_be2f1d63\\qdrant_local_service_20261010_R01\\install_20261010_R01.stdout.json",
+      "bytes": 150,
+      "sha256": "e68a9d38ab7d29dd9beced4eba8074735977feaabd11cd29331e06232b82e66e"
+    },
+    "diagnosis": {
+      "origin_signature": "MrLiouWord",
+      "operation": "MEMORY_ONLY_XML_VARIANT_VALIDATE",
+      "variants": [
+        {
+          "variant": "original",
+          "newtask_xml_valid": false,
+          "validate_only_pass": false,
+          "error_type": "COMException",
+          "hresult_hex": "8004131A",
+          "xml_line": 1,
+          "xml_column": 40
+        },
+        {
+          "variant": "declaration_without_encoding",
+          "newtask_xml_valid": true,
+          "validate_only_pass": true
+        },
+        {
+          "variant": "declaration_utf16",
+          "newtask_xml_valid": true,
+          "validate_only_pass": true
+        }
+      ],
+      "task_exists_after": false
+    },
+    "disposition": "PRESERVED_INERT_NO_TASK_NO_SERVICE",
+    "source_sha256": "f6f5f0833ddda246a053d79ebd9d8880857dd4e51db535e5019adc5d14bdf63c"
+  },
+  "qdrant_successor": {
+    "source_sha256": "5964dbe32fcb3cad9672648aff5e6e6b40a8bfa5a7472c68da0834eeb155be4f",
+    "source_bytes": 36865,
+    "instance": "D:\\MRL_Mother\\QdrantLocal\\2d38cbbc0b4d4988a19f100c7b9f2d7d",
+    "stage": {
+      "status": "STAGED_PRIVATE_DISABLED",
+      "error_code": null,
+      "instance_directory": "D:\\MRL_Mother\\QdrantLocal\\2d38cbbc0b4d4988a19f100c7b9f2d7d",
+      "checks": {
+        "copied_package_hashes_match": true,
+        "official_package_reverified": true,
+        "private_key_acl": true,
+        "private_root_acl": true,
+        "short_storage_path": true,
+        "source_copied_into_private_instance": true
+      },
+      "receipt_path": "D:\\MRL_Mother\\QdrantLocal\\2d38cbbc0b4d4988a19f100c7b9f2d7d\\state\\operation_20261010T192115Z_362fab79961f43c09121d0b87abaa26d.json",
+      "receipt_bytes": 1476,
+      "receipt_sha256": "46db577754d6879031a1e4e3f08f776d86c9e2f121d6279fd3dcf2dd275722e4"
+    },
+    "install": {
+      "status": "INSTALLED_DISABLED",
+      "error_code": null,
+      "instance_directory": "D:\\MRL_Mother\\QdrantLocal\\2d38cbbc0b4d4988a19f100c7b9f2d7d",
+      "task": {
+        "boot_delay_seconds": 30,
+        "definition_verified": true,
+        "enabled": false,
+        "execution_time_limit": "PT0S",
+        "last_result": 267011,
+        "multiple_instances": "IgnoreNew",
+        "principal_system": true,
+        "restart_count": 3,
+        "restart_interval_seconds": 60,
+        "run_level": "HighestAvailable",
+        "source_action_verified": true,
+        "state": 1,
+        "task_name": "MRL_Qdrant_Local_2d38cbbc0b4d4988a19f100c7b9f2d7d"
+      },
+      "checks": {},
+      "receipt_path": "D:\\MRL_Mother\\QdrantLocal\\2d38cbbc0b4d4988a19f100c7b9f2d7d\\state\\operation_20261010T192207Z_52066f71035e420ca42563d4992d521f.json",
+      "receipt_bytes": 1041,
+      "receipt_sha256": "24d8bd745776e7e2ab7c0c4044b2a6c84f3ade83daace193f78364f3f63ab780"
+    },
+    "actual_fixture_preflight": {
+      "origin_signature": "MrLiouWord",
+      "schema": "MRL_Qdrant_Service_Fixture_Preflight_R02",
+      "status": "PASS",
+      "scope": "MEMORY_MOCK_TESTS_ON_ACTUAL_DL580",
+      "host": "WIN-PBVUI7VK2A6",
+      "python": "3.12.2",
+      "observed_at_utc": "2026-10-10T19:19:27.765686+00:00",
+      "loaded": 28,
+      "testsRun": 28,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "runtime_service_claim": false,
+      "source_sha256": {
+        "MRL_qdrant_local_service_v1.py": "5964dbe32fcb3cad9672648aff5e6e6b40a8bfa5a7472c68da0834eeb155be4f",
+        "test_MRL_qdrant_local_service_v1.py": "054ce2380f17cd8a39a6c76f6a071923fa4acdcd7651475a17ff0738a042a8dd",
+        "MRL_qdrant_local_service_task_v1.ps1": "403cfac505a8ce59e39ee016901a23adbbb7e086f858b41034ef08067d0c3297"
+      },
+      "receipt": {
+        "path": "D:\\MRL_Mother\\Recovery\\_operations\\LocalAI_20261010_R02_be2f1d63\\qdrant_local_service_20261010_R02\\qdrant_service_preflight_tests_20261010_R02.json",
+        "bytes": 741,
+        "sha256": "9b322e503afa913fad3361df17d055c6bd00283d6f3fa0575f340cc7ce1780ea"
+      }
+    },
+    "start_verify": {
+      "origin_signature": "MrLiouWord",
+      "stdout_bytes": 1367,
+      "stderr_bytes": 0,
+      "result": {
+        "status": "DURABLE_LOCAL_SERVICE_VERIFIED",
+        "error_code": null,
+        "instance_directory": "D:\\MRL_Mother\\QdrantLocal\\2d38cbbc0b4d4988a19f100c7b9f2d7d",
+        "task": {
+          "boot_delay_seconds": 30,
+          "definition_verified": true,
+          "enabled": true,
+          "execution_time_limit": "PT0S",
+          "last_result": 267009,
+          "multiple_instances": "IgnoreNew",
+          "principal_system": true,
+          "restart_count": 3,
+          "restart_interval_seconds": 60,
+          "run_level": "HighestAvailable",
+          "source_action_verified": true,
+          "state": 4,
+          "task_name": "MRL_Qdrant_Local_2d38cbbc0b4d4988a19f100c7b9f2d7d"
+        },
+        "runtime": {
+          "collection_count": 0,
+          "collection_names_exported": false,
+          "listener_loopback_only": true,
+          "missing_key_status": 401,
+          "protected_api_status": 200,
+          "ready": true,
+          "version": "1.19.2"
+        },
+        "checks": {
+          "api_key_auth": true,
+          "exact_task_running": true,
+          "loopback_only": true,
+          "missing_key_denied": true,
+          "official_image": true,
+          "private_instance_acl": true,
+          "private_key_acl": true,
+          "process_creation_identity": true,
+          "source_hashes": true,
+          "task_restart_policy": true
+        },
+        "receipt_path": "D:\\MRL_Mother\\QdrantLocal\\2d38cbbc0b4d4988a19f100c7b9f2d7d\\state\\operation_20261010T192350Z_3b03d26ccc47453ab59ca2355c8c119d.json",
+        "receipt_bytes": 2147,
+        "receipt_sha256": "af8f7e961b7776e6791a52b69edad7457424feb2ffd48dce6513026d6facb98a"
+      },
+      "receipt_metadata": {
+        "status": "DURABLE_LOCAL_SERVICE_VERIFIED",
+        "timestamp_utc": "2026-10-10T19:23:50.011476+00:00",
+        "child": {
+          "created_filetime": "134361338213041841",
+          "image": "D:\\MRL_Mother\\QdrantLocal\\2d38cbbc0b4d4988a19f100c7b9f2d7d\\bin\\qdrant.exe",
+          "image_sha256": "b25bcc612583333289b00754907639ee97cd28b8741d50f1b4ce0e2bd1ad12eb",
+          "job_kill_on_close_assigned": true,
+          "pid": 18712
+        },
+        "supervisor": {
+          "created_filetime": "134361338164507244",
+          "image": "D:\\MrlToolchain\\python\\python.exe",
+          "pid": 5636
+        },
+        "durability_scope": "Boot-triggered SYSTEM task; actual reboot recovery not yet exercised.",
+        "application_integration": "NOT_ASSERTED",
+        "restart_execution_test": "NOT_RUN",
+        "existing_services_modified": false,
+        "secret_exported": false
+      },
+      "task_state": "Running",
+      "task_enabled": true,
+      "listeners": [
+        {
+          "address": "127.0.0.1",
+          "port": 6333,
+          "pid": 18712
+        }
+      ]
+    },
+    "durable_crud_fixture": {
+      "origin_signature": "MrLiouWord",
+      "schema": "MRL_Qdrant_Durable_CRUD_Fixture_Preflight_v1",
+      "status": "PASS",
+      "scope": "MEMORY_MOCK_TESTS_ON_ACTUAL_DL580",
+      "host": "WIN-PBVUI7VK2A6",
+      "python": "3.12.2",
+      "observed_at_utc": "2026-10-10T19:30:43.742393+00:00",
+      "loaded": 9,
+      "testsRun": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "runtime_service_claim": false,
+      "source_sha256": {
+        "MRL_qdrant_durable_crud_v1.py": "62005510abddcac8c2d745d4291bf0f0231b37a2ae5e0e8e789f5201ecda17bc",
+        "test_MRL_qdrant_durable_crud_v1.py": "938fce79dc81659cc1f2eafed9d6c366432bc52b26883f4a889baa2983d6d908"
+      },
+      "receipt": {
+        "path": "D:\\MRL_Mother\\Recovery\\_operations\\LocalAI_20261010_R02_be2f1d63\\qdrant_local_service_20261010_R02\\qdrant_durable_crud_fixture_preflight_v1.json",
+        "bytes": 629,
+        "sha256": "0095cc7a7b33ab6dee849d182c067e413d23634d27a1a6ff7923b33618e12475"
+      }
+    },
+    "durable_crud_first_hold": {
+      "origin_signature": "MrLiouWord",
+      "stdout_bytes": 957,
+      "stderr_bytes": 0,
+      "result": {
+        "status": "HOLD",
+        "error_code": null,
+        "errors": [
+          "exception_TimeoutError"
+        ],
+        "instance_directory": "D:\\MRL_Mother\\QdrantLocal\\2d38cbbc0b4d4988a19f100c7b9f2d7d",
+        "checks": {
+          "auth_stable_after": true,
+          "authenticated_api": true,
+          "child_and_supervisor_identity": true,
+          "exact_task_running": true,
+          "held_processes_stable_after": true,
+          "missing_key_denied": true,
+          "only_owned_loopback": true,
+          "private_acl_and_source": true,
+          "source_stable_after": true,
+          "task_stable_after": true
+        },
+        "crud_checks": {
+          "initial_404": true
+        },
+        "http": [
+          {
+            "method": "GET",
+            "operation": "confirm_fresh_name_absent",
+            "status": 404
+          }
+        ],
+        "receipt_path": "D:\\MRL_Mother\\QdrantLocal\\2d38cbbc0b4d4988a19f100c7b9f2d7d\\state\\durable_crud_7491f8adb9074b52bae0a0e5e243ccd6.json",
+        "receipt_bytes": 2270,
+        "receipt_sha256": "b175d1640faae0142dcbadd9c97666c3e6151b322c1bb00b00f0316ccc8a6b6d",
+        "secret_exported": false,
+        "key_hash_exported": false,
+        "service_control_performed": false
+      },
+      "receipt_metadata": {
+        "status": "HOLD",
+        "started_at_utc": "2026-10-10T19:32:13.668797+00:00",
+        "ended_at_utc": "2026-10-10T19:32:30.310024+00:00",
+        "child_pid": 18712,
+        "child_created_filetime": "134361338213041841",
+        "supervisor_pid": 5636,
+        "supervisor_created_filetime": "134361338164507244",
+        "executable_sha256": "b25bcc612583333289b00754907639ee97cd28b8741d50f1b4ce0e2bd1ad12eb",
+        "ownership_guard_failed": false,
+        "creation_acknowledged": false,
+        "cleanup_confirmed": false,
+        "http_auth": {
+          "after": 200,
+          "before": 200,
+          "missing_key_after": 401,
+          "missing_key_before": 401
+        },
+        "restart_test": "NOT_RUN",
+        "reboot_test": "NOT_RUN",
+        "application_integration": "NOT_ASSERTED",
+        "client_source_sha256": "62005510abddcac8c2d745d4291bf0f0231b37a2ae5e0e8e789f5201ecda17bc"
+      }
+    },
+    "durable_crud_timeout_readonly_diagnosis": {
+      "origin_signature": "MrLiouWord",
+      "operation": "READ_ONLY_DURABLE_TIMEOUT_DIAGNOSIS",
+      "http_status": 200,
+      "collection_count": 1,
+      "uncertain_collection_hash_matches": 1,
+      "storage_files": 107,
+      "storage_bytes": 352590185,
+      "maximum_storage_path_chars": 206,
+      "logs": [
+        {
+          "path": "D:\\MRL_Mother\\QdrantLocal\\2d38cbbc0b4d4988a19f100c7b9f2d7d\\logs\\qdrant_20261010T192340Z_513aa43d731c47a9aece7811dda95ab8.log",
+          "bytes": 0,
+          "prefix_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "category_counts": {
+            "error": 0,
+            "panic": 0,
+            "timeout": 0,
+            "denied": 0,
+            "path_error": 0,
+            "lock": 0,
+            "wal": 0,
+            "no_space": 0
+          }
+        }
+      ],
+      "listener_contract": true,
+      "data_and_log_bodies_exported": false
+    },
+    "durable_crud_uncertain_collection_detail": {
+      "origin_signature": "MrLiouWord",
+      "operation": "READ_ONLY_UNCERTAIN_SYNTHETIC_COLLECTION_DETAIL",
+      "matching_names_count": 1,
+      "detail": {
+        "http_status": 200,
+        "status": "green",
+        "optimizer_status_ok": true,
+        "points_count": 0,
+        "segments_count": 8,
+        "indexed_vectors_count": 0,
+        "matches_vector4_dot": true
+      },
+      "native_after_readback_metadata": {
+        "compressed_directories": 60,
+        "entries_inspected": 167,
+        "longest_existing_path_chars": 208,
+        "root_compressed": true,
+        "root_path_chars": 58,
+        "truncated": false
+      },
+      "native_times": {
+        "started_at_utc": "2026-10-10T18:36:15.310609+00:00",
+        "finished_at_utc": "2026-10-10T18:36:24.116602+00:00"
+      },
+      "service_control_performed": false
+    },
+    "create_timeout_interpretation": {
+      "primary_source": "https://github.com/qdrant/qdrant/blob/016542aa5deb6c66380bb137badf73d54f742bde/lib/storage/src/dispatcher.rs",
+      "verified_commit": "016542aa5deb6c66380bb137badf73d54f742bde",
+      "conclusion": "In cluster=false/no-consensus mode the create operation may continue after client timeout; later green collection does not retroactively acknowledge the first client request.",
+      "first_collection_disposition": "PRESERVED_NO_DELETE_NO_REUSE"
+    },
+    "durable_crud_v2_fixture": {
+      "origin_signature": "MrLiouWord",
+      "schema": "MRL_Qdrant_Durable_CRUD_Fixture_Preflight_v2",
+      "status": "PASS",
+      "scope": "MEMORY_MOCK_TESTS_ON_ACTUAL_DL580",
+      "host": "WIN-PBVUI7VK2A6",
+      "python": "3.12.2",
+      "observed_at_utc": "2026-10-10T19:46:34.292897+00:00",
+      "loaded": 10,
+      "testsRun": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "runtime_service_claim": false,
+      "source_sha256": {
+        "MRL_qdrant_durable_crud_v2.py": "6ba4236c031a8f2199a0501eccbd709f93c1522af7513c1a675bffd0f594b352",
+        "test_MRL_qdrant_durable_crud_v2.py": "466b5b42224048ad41847850373b878e8c4ed51638123e9d86b2de1fa7e39c98"
+      },
+      "receipt": {
+        "path": "D:\\MRL_Mother\\Recovery\\_operations\\LocalAI_20261010_R02_be2f1d63\\qdrant_local_service_20261010_R02\\qdrant_durable_crud_fixture_preflight_v2.json",
+        "bytes": 631,
+        "sha256": "65472aaf4c820e2c7578c2f018db48f998eb4f493c8248e82252ffa7152be379"
+      }
+    },
+    "durable_crud_v2_source": {
+      "path": "MRL_qdrant_durable_crud_v2.py",
+      "git_blob": "5a917db19da1d4365b87ba92952a474f47cdbdb6",
+      "bytes": 15154,
+      "sha256": "6ba4236c031a8f2199a0501eccbd709f93c1522af7513c1a675bffd0f594b352",
+      "change_scope": "Only http_client create socket timeout 60 seconds (other requests 12); request budget 180. Ownership/cleanup functions byte-identical to v1."
+    },
+    "durable_crud_v2_actual": {
+      "origin_signature": "MrLiouWord",
+      "stdout_bytes": 1269,
+      "stderr_bytes": 0,
+      "result": {
+        "status": "HOLD",
+        "error_code": null,
+        "errors": [
+          "exception_TimeoutError"
+        ],
+        "instance_directory": "D:\\MRL_Mother\\QdrantLocal\\2d38cbbc0b4d4988a19f100c7b9f2d7d",
+        "checks": {
+          "auth_stable_after": true,
+          "authenticated_api": true,
+          "child_and_supervisor_identity": true,
+          "exact_task_running": true,
+          "held_processes_stable_after": true,
+          "missing_key_denied": true,
+          "only_owned_loopback": true,
+          "private_acl_and_source": true,
+          "source_stable_after": true,
+          "task_stable_after": true
+        },
+        "crud_checks": {
+          "create_acknowledged": true,
+          "initial_404": true,
+          "point_exact_readback": true,
+          "point_write_completed": true
+        },
+        "http": [
+          {
+            "method": "GET",
+            "operation": "confirm_fresh_name_absent",
+            "status": 404
+          },
+          {
+            "method": "PUT",
+            "operation": "create_synthetic_collection",
+            "status": 200
+          },
+          {
+            "method": "PUT",
+            "operation": "write_synthetic_point",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "operation": "read_synthetic_point",
+            "status": 200
+          }
+        ],
+        "receipt_path": "D:\\MRL_Mother\\QdrantLocal\\2d38cbbc0b4d4988a19f100c7b9f2d7d\\state\\durable_crud_d39e4c3f858440a6a84aa948f0adca6e.json",
+        "receipt_bytes": 2713,
+        "receipt_sha256": "4900e6d6df28330bf41e48fae9af4bd88ca370d370ca4ce9d49e95b34ed70c51",
+        "secret_exported": false,
+        "key_hash_exported": false,
+        "service_control_performed": false
+      },
+      "receipt_metadata": {
+        "status": "HOLD",
+        "started_at_utc": "2026-10-10T19:47:59.593295+00:00",
+        "ended_at_utc": "2026-10-10T19:48:45.875895+00:00",
+        "child_pid": 18712,
+        "child_created_filetime": "134361338213041841",
+        "supervisor_pid": 5636,
+        "supervisor_created_filetime": "134361338164507244",
+        "executable_sha256": "b25bcc612583333289b00754907639ee97cd28b8741d50f1b4ce0e2bd1ad12eb",
+        "ownership_guard_failed": false,
+        "creation_acknowledged": true,
+        "cleanup_confirmed": false,
+        "http_auth": {
+          "after": 200,
+          "before": 200,
+          "missing_key_after": 401,
+          "missing_key_before": 401
+        },
+        "restart_test": "NOT_RUN",
+        "reboot_test": "NOT_RUN",
+        "application_integration": "NOT_ASSERTED",
+        "client_source_sha256": "6ba4236c031a8f2199a0501eccbd709f93c1522af7513c1a675bffd0f594b352"
+      }
+    },
+    "api_absence_after_delete_timeout": {
+      "origin_signature": "MrLiouWord",
+      "schema": "MRL_Qdrant_API_Absence_Observation_R02",
+      "status": "OBSERVED_API_ABSENT_AFTER_DELETE_TIMEOUT",
+      "prior_client_status": "HOLD",
+      "prior_receipts": [
+        {
+          "name": "durable_crud_7491f8adb9074b52bae0a0e5e243ccd6.json",
+          "sha256": "b175d1640faae0142dcbadd9c97666c3e6151b322c1bb00b00f0316ccc8a6b6d"
+        },
+        {
+          "name": "durable_crud_d39e4c3f858440a6a84aa948f0adca6e.json",
+          "sha256": "4900e6d6df28330bf41e48fae9af4bd88ca370d370ca4ce9d49e95b34ed70c51"
+        }
+      ],
+      "delete_acknowledged": false,
+      "physical_cleanup": "NOT_VERIFIED",
+      "database_mutation_performed": false,
+      "service_control_performed": false,
+      "names_keys_data_logs_exported": false,
+      "http_status": 200,
+      "collection_count": 1,
+      "v1_retained_hash_matches": 1,
+      "v2_hash_matches": 0,
+      "source_task_owner_auth_guards_before_after": true,
+      "before": {
+        "status": "DURABLE_LOCAL_SERVICE_VERIFIED",
+        "origin_signature": "MrLiouWord",
+        "operation": "verify",
+        "instance_directory": "D:\\MRL_Mother\\QdrantLocal\\2d38cbbc0b4d4988a19f100c7b9f2d7d",
+        "receipt_path": "D:\\MRL_Mother\\QdrantLocal\\2d38cbbc0b4d4988a19f100c7b9f2d7d\\state\\operation_20261010T195226Z_c0c754731ea9428dae56fbe0bd44b686.json",
+        "receipt_sha256": "1564be7dd1a32d4a42846b6c625579117cedb1b3a70c3f212d10776e3d4cbd9b",
+        "receipt_bytes": 2147,
+        "secret_exported": false,
+        "checks": {
+          "private_instance_acl": true,
+          "private_key_acl": true,
+          "source_hashes": true,
+          "official_image": true,
+          "exact_task_running": true,
+          "task_restart_policy": true,
+          "process_creation_identity": true,
+          "loopback_only": true,
+          "api_key_auth": true,
+          "missing_key_denied": true
+        },
+        "task": {
+          "task_name": "MRL_Qdrant_Local_2d38cbbc0b4d4988a19f100c7b9f2d7d",
+          "definition_verified": true,
+          "enabled": true,
+          "state": 4,
+          "last_result": 267009,
+          "principal_system": true,
+          "run_level": "HighestAvailable",
+          "boot_delay_seconds": 30,
+          "multiple_instances": "IgnoreNew",
+          "restart_count": 3,
+          "restart_interval_seconds": 60,
+          "execution_time_limit": "PT0S",
+          "source_action_verified": true
+        },
+        "runtime": {
+          "ready": true,
+          "version": "1.19.2",
+          "listener_loopback_only": true,
+          "protected_api_status": 200,
+          "missing_key_status": 401,
+          "collection_count": 1,
+          "collection_names_exported": false
+        },
+        "error_code": null
+      },
+      "after": {
+        "status": "DURABLE_LOCAL_SERVICE_VERIFIED",
+        "origin_signature": "MrLiouWord",
+        "operation": "verify",
+        "instance_directory": "D:\\MRL_Mother\\QdrantLocal\\2d38cbbc0b4d4988a19f100c7b9f2d7d",
+        "receipt_path": "D:\\MRL_Mother\\QdrantLocal\\2d38cbbc0b4d4988a19f100c7b9f2d7d\\state\\operation_20261010T195230Z_5e8ffd68e7a143629486c3d2b6a53b42.json",
+        "receipt_sha256": "f1e274b12e449ad344c8ad6846edb3ee31bb378edb7f44540bc59a153e460ff5",
+        "receipt_bytes": 2147,
+        "secret_exported": false,
+        "checks": {
+          "private_instance_acl": true,
+          "private_key_acl": true,
+          "source_hashes": true,
+          "official_image": true,
+          "exact_task_running": true,
+          "task_restart_policy": true,
+          "process_creation_identity": true,
+          "loopback_only": true,
+          "api_key_auth": true,
+          "missing_key_denied": true
+        },
+        "task": {
+          "task_name": "MRL_Qdrant_Local_2d38cbbc0b4d4988a19f100c7b9f2d7d",
+          "definition_verified": true,
+          "enabled": true,
+          "state": 4,
+          "last_result": 267009,
+          "principal_system": true,
+          "run_level": "HighestAvailable",
+          "boot_delay_seconds": 30,
+          "multiple_instances": "IgnoreNew",
+          "restart_count": 3,
+          "restart_interval_seconds": 60,
+          "execution_time_limit": "PT0S",
+          "source_action_verified": true
+        },
+        "runtime": {
+          "ready": true,
+          "version": "1.19.2",
+          "listener_loopback_only": true,
+          "protected_api_status": 200,
+          "missing_key_status": 401,
+          "collection_count": 1,
+          "collection_names_exported": false
+        },
+        "error_code": null
+      },
+      "processes": {
+        "child_pid": 18712,
+        "child_created_filetime": "134361338213041841",
+        "supervisor_pid": 5636,
+        "supervisor_created_filetime": "134361338164507244"
+      },
+      "observed_at_utc": "2026-10-10T19:52:32.895339+00:00",
+      "receipt": {
+        "path": "D:\\MRL_Mother\\QdrantLocal\\2d38cbbc0b4d4988a19f100c7b9f2d7d\\state\\api_absence_observation_20261010_R02.json",
+        "bytes": 4380,
+        "sha256": "70b70cd12587f38a131a02ffc3fa06b75b63305aab15c6f2cb052fd6aa037516"
+      }
+    },
+    "durable_storage_result": {
+      "create_write_exact_readback": "PASS",
+      "automatic_crud_client_status": "HOLD",
+      "delete_response": "TIMEOUT_NO_ACK",
+      "subsequent_api_state": "TARGET_ABSENT_OBSERVED",
+      "physical_cleanup": "NOT_VERIFIED",
+      "first_unacknowledged_empty_collection": "PRESERVED",
+      "fresh_uuid_retry_count": 1,
+      "additional_delete_requests_after_timeout": 0,
+      "service_restart_count_during_client_checks": 0
+    }
+  },
+  "unverified": [
+    "Watchdog fault recovery",
+    "Host reboot continuity",
+    "Qdrant restart execution test",
+    "Application-to-Qdrant integration",
+    "MinIO S3 storage R/W",
+    "MetaEnv controller /api/v1/env/* contract",
+    "Production OAuth callback/session/logout",
+    "Existing credential retirement",
+    "Durable CRUD single-client all-checks PASS",
+    "Physical cleanup after durable DELETE timeout"
+  ],
+  "evidence_cutoff_utc": "2026-10-10T19:53:07.982984+00:00",
+  "final_preservation": {
+    "tasks": [
+      {
+        "enabled": true,
+        "name": "MRL_Watchdog",
+        "state": "Running"
+      },
+      {
+        "enabled": true,
+        "name": "MRL_Qdrant_Local_2d38cbbc0b4d4988a19f100c7b9f2d7d",
+        "state": "Running"
+      }
+    ],
+    "listeners": [
+      {
+        "port": 7700,
+        "pid": 13968,
+        "address": "::"
+      },
+      {
+        "port": 3050,
+        "pid": 57452,
+        "address": "::"
+      },
+      {
+        "port": 7800,
+        "pid": 33132,
+        "address": "0.0.0.0"
+      },
+      {
+        "port": 7500,
+        "pid": 20580,
+        "address": "0.0.0.0"
+      },
+      {
+        "port": 6333,
+        "pid": 18712,
+        "address": "127.0.0.1"
+      }
+    ],
+    "bridge": "Running",
+    "tunnel": "Running",
+    "source_checks": {
+      "D:\\mrl\\MRL_Watchdog.py": {
+        "bytes": 1787,
+        "sha256": "2c327ed594594425a7a58d2082abc624a22531f7011d446dd2bd999172eff846",
+        "matched": true
+      },
+      "D:\\mrl\\asi-engine\\server.js": {
+        "bytes": 355,
+        "sha256": "4dfd3194b7519efb6eef7236024a3953d2dd8842c9dc38c52ec71c6c0c807f5e",
+        "matched": true
+      },
+      "D:\\mrl\\inference\\MRL_Inference_API.worldrecall_v4.py": {
+        "bytes": 21383,
+        "sha256": "36a4a79997663cd0998e065afc8504d7c655627ee6dab3b1a7aab8f7fa8b6d24",
+        "matched": true
+      }
+    },
+    "origin_signature": "MrLiouWord",
+    "schema": "MRL_LocalAI_Final_Preservation_Snapshot_R02",
+    "observed_at_utc": "2026-10-10T19:53:07.982984+00:00",
+    "service_control_performed": false,
+    "source_or_log_bodies_exported": false,
+    "original_source_hashes_match": true,
+    "original_listener_pids_match": true,
+    "receipt": {
+      "path": "D:\\MRL_Mother\\Recovery\\_operations\\LocalAI_20261010_R02_be2f1d63\\runtime_final_preservation_snapshot_20261010_R02.json",
+      "bytes": 1576,
+      "sha256": "dc979fe4ec39761ea0029c8c92594e80085ff42f4229021c2fee6ac22712e940"
+    }
+  },
+  "delivery_status": "LOCAL_EXECUTION_RECORDED_WITH_EXPLICIT_HOLDS",
+  "ci": {
+    "baseline": {
+      "commit": "be2f1d63ed355bb972241cc0db4eeecceeb0f04d",
+      "run_url": "https://github.com/dofaromg/MRL_AI_SYSTEM/actions/runs/38074221472",
+      "status": "success",
+      "regression_tests": 81
+    },
+    "operations_expected": {
+      "workflow_path": ".github/workflows/MRL_recovery_operations.yml",
+      "watchdog_cases": 29,
+      "qdrant_service_cases": 28,
+      "crud_v1_cases": 9,
+      "crud_v2_cases": 10,
+      "execution_scope": "CLOUD_SOURCE_FIXTURES_ONLY"
+    },
+    "new_commit_result_location": "PR #155 checks and append-only mother-page backfill after CI completes"
+  }
+}
