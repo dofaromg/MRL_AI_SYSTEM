@@ -1,0 +1,49 @@
+{
+  "schema": "MRL_Recovery_R03_Manifest",
+  "origin_signature": "MrLiouWord",
+  "parent_commit": "5fe2f1f64e32ba329830c9a3eb9fd762de6c0119",
+  "expected_file_list": [
+    "MRL_Recovery_Operations/20261011_R03/MRL_qdrant_durable_crud_v3.py",
+    "MRL_Recovery_Operations/20261011_R03/test_MRL_qdrant_durable_crud_v3.py",
+    "MRL_Recovery_Operations/20261011_R03/DEPLOYMENT_PREPARATION.md",
+    "MRL_Recovery_Operations/20261011_R03/verify_manifest.py",
+    ".github/workflows/MRL_recovery_r03.yml",
+    "MRL_Recovery_Operations/20261011_R03/MANIFEST.json"
+  ],
+  "files": [
+    {
+      "path": "MRL_Recovery_Operations/20261011_R03/MRL_qdrant_durable_crud_v3.py",
+      "bytes": 15321,
+      "sha256": "e0320a2ff64a8406c8a35db72a8a0c6b850f7bbef6ee68590d1b65aee894e5da"
+    },
+    {
+      "path": "MRL_Recovery_Operations/20261011_R03/test_MRL_qdrant_durable_crud_v3.py",
+      "bytes": 10062,
+      "sha256": "a479c2ad71db4806fbefc54f31dd30c2366da236dac94dc54a5a0b896c0a29d3"
+    },
+    {
+      "path": "MRL_Recovery_Operations/20261011_R03/DEPLOYMENT_PREPARATION.md",
+      "bytes": 6438,
+      "sha256": "235bda9f3a5097cfe142118afe2bf0a57c88d7933d5f36c869b4ac048ba214a9"
+    },
+    {
+      "path": "MRL_Recovery_Operations/20261011_R03/verify_manifest.py",
+      "bytes": 634,
+      "sha256": "bceeef3c00e2fbc5e8e2b71365c62f9305aff5114dc533b9a4bf279fcbcc81f9"
+    },
+    {
+      "path": ".github/workflows/MRL_recovery_r03.yml",
+      "bytes": 660,
+      "sha256": "ac1649f8b49731f4191a7118e884693bc364cbdfc65e462eb4ad21ae0170f46b"
+    }
+  ],
+  "dependencies": {
+    "runtime_service": {
+      "path": "runtime/MRL_qdrant_local_service_v1.py",
+      "sha256": "5964dbe32fcb3cad9672648aff5e6e6b40a8bfa5a7472c68da0834eeb155be4f",
+      "git_blob": "b6a2c13b45345a58caeaa55afe048fcf36fd734f"
+    },
+    "preserved_R02_manifest": "MRL_Recovery_Operations/20261010_R02/OPERATIONS_MANIFEST.json"
+  },
+  "self_hash_policy": "Manifest excluded from payload hashes; verify exact Git blob after commit."
+}

@@ -1,0 +1,21 @@
+name: MRL recovery R03 preparation
+on:
+  pull_request:
+    paths:
+      - 'MRL_Recovery_Operations/20261011_R03/**'
+      - '.github/workflows/MRL_recovery_r03.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify R03 source manifest
+        run: python -B MRL_Recovery_Operations/20261011_R03/verify_manifest.py
+      - name: CRUD ownership and timeout regressions
+        run: python -B MRL_Recovery_Operations/20261011_R03/test_MRL_qdrant_durable_crud_v3.py -v
