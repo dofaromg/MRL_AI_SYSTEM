@@ -37,6 +37,45 @@ def _fold(events: List[Dict[str, Any]]) -> Dict[str, Any]:
     return state
 
 
+class _LazyCheckpoint(dict):
+    """與原版 {"step", "state", "hash"} 同形；state／hash 在讀取時才由共享的 applied 前綴物化。"""
+
+    def __init__(self, step, applied_ref, n, node_count, tally):
+        super().__init__(step=step)
+        self._ref, self._n, self._nc, self._tally = applied_ref, n, node_count, tally
+
+    def _materialize(self):
+        if "state" not in self.keys():
+            st = {"applied": list(self._ref[: self._n]), "node_count": self._nc, "intent_tally": dict(self._tally)}
+            dict.__setitem__(self, "state", st)
+            dict.__setitem__(self, "hash", _state_hash(st))
+
+    def __getitem__(self, k):
+        if k in ("state", "hash"):
+            self._materialize()
+        return dict.__getitem__(self, k)
+
+    def get(self, k, default=None):
+        if k in ("state", "hash"):
+            self._materialize()
+        return dict.get(self, k, default)
+
+    def __iter__(self):
+        self._materialize(); return dict.__iter__(self)
+
+    def keys(self):
+        return dict.keys(self)
+
+    def items(self):
+        self._materialize(); return dict.items(self)
+
+    def values(self):
+        self._materialize(); return dict.values(self)
+
+    def __repr__(self):
+        self._materialize(); return dict.__repr__(self)
+
+
 class MRL_ReplayRestore_Core:
     def __init__(self, replay_structurefield: List[Dict[str, Any]]) -> None:
         # event = replay_structurefield step
@@ -45,6 +84,9 @@ class MRL_ReplayRestore_Core:
 
     # ── 原始執行：折疊得 state，並沿途留 checkpoint ──
     def execute(self, checkpoint_every: int = 8) -> Dict[str, Any]:
+        # v1.1（2026-10-10，建構者核准修核心）：checkpoint 改為延遲物化。
+        # 原本每 8 步 deepcopy＋序列化整個 state（applied 隨步數增長）→ 總成本 O(n²)。
+        # 現在只記 (step, applied 長度, intent_tally 小字典)；取用時才物化，內容與 hash 與原版逐位元組相同。
         state: Dict[str, Any] = {"applied": [], "node_count": 0, "intent_tally": {}}
         for i, ev in enumerate(self.events):
             state["applied"].append(ev["node_id"])
@@ -52,7 +94,8 @@ class MRL_ReplayRestore_Core:
             intent = ev["intent"]
             state["intent_tally"][intent] = state["intent_tally"].get(intent, 0) + 1
             if i % checkpoint_every == 0:
-                self.checkpoints[i] = {"step": i, "state": copy.deepcopy(state), "hash": _state_hash(state)}
+                self.checkpoints[i] = _LazyCheckpoint(i, state["applied"], len(state["applied"]),
+                                                      state["node_count"], dict(state["intent_tally"]))
         self.final_state = state
         self.final_hash = _state_hash(state)
         return state
