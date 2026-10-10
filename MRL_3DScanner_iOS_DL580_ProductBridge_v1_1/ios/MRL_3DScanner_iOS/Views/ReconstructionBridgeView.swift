@@ -44,6 +44,7 @@ struct ReconstructionBridgeView: View {
     }
 
     private func uploadOnly() async {
+        errorText = nil
         do {
             status = "uploading"
             _ = try await client.upload(scan: scan)
@@ -55,6 +56,7 @@ struct ReconstructionBridgeView: View {
     }
 
     private func uploadAndRun() async {
+        errorText = nil
         do {
             status = "uploading"
             _ = try await client.upload(scan: scan)
@@ -69,6 +71,7 @@ struct ReconstructionBridgeView: View {
     }
 
     private func refresh(jobId: String) async {
+        errorText = nil
         do {
             let job = try await client.getJob(jobId: jobId)
             status = job.status

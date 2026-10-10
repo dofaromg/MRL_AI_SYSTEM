@@ -16,6 +16,23 @@ struct Scan: Identifiable, Codable, Equatable {
     var manifestURL: URL { folder.appendingPathComponent("manifest.json") }
     var metaURL: URL { folder.appendingPathComponent("scan.json") }
 
+    // The enumerated directory is authoritative after an iOS container move.
+    // Preserve external URLs; only descendants of the old scan folder move.
+    func rebased(to currentFolder: URL) -> Scan {
+        var scan = self
+        if let model = modelURL, model.isFileURL, folder.isFileURL {
+            let oldComponents = folder.standardizedFileURL.pathComponents
+            let modelComponents = model.standardizedFileURL.pathComponents
+            if modelComponents.count > oldComponents.count,
+               modelComponents.starts(with: oldComponents) {
+                scan.modelURL = modelComponents.dropFirst(oldComponents.count)
+                    .reduce(currentFolder) { $0.appendingPathComponent($1) }
+            }
+        }
+        scan.folder = currentFolder
+        return scan
+    }
+
     static func makeNew(base: URL, name: String) throws -> Scan {
         let id = UUID()
         let folder = base.appendingPathComponent("Scans", isDirectory: true).appendingPathComponent(id.uuidString, isDirectory: true)
@@ -29,8 +46,8 @@ struct Scan: Identifiable, Codable, Equatable {
 final class ScanStore: ObservableObject {
     @Published var scans: [Scan] = []
     let base: URL
-    init() {
-        self.base = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    init(base: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]) {
+        self.base = base
         load()
     }
     func load() {
@@ -39,7 +56,7 @@ final class ScanStore: ObservableObject {
         scans = children.compactMap { dir in
             let meta = dir.appendingPathComponent("scan.json")
             guard let data = try? Data(contentsOf: meta), let scan = try? JSONDecoder.scanDecoder.decode(Scan.self, from: data) else { return nil }
-            return scan
+            return scan.rebased(to: dir)
         }.sorted { $0.createdAt > $1.createdAt }
     }
     func save(_ scan: Scan) {
