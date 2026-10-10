@@ -1,0 +1,703 @@
+{
+  "schema": "MRL.LocalAI.Recovery.Manifest.v1",
+  "origin_signature": "MrLiouWord",
+  "record_id": "MRL_LocalAI_Recovery_20261010_R01",
+  "source_repository": "dofaromg/MRL_AI_SYSTEM",
+  "base_commit": "d7c848189ac97f5a5de9613c796d3bcf037338b6",
+  "base_branch": "MRL_AI_SYSTEM/memory-system-rules-prep",
+  "preserved_recovery_commit": "3c51612c2ddee1b3c561882c20474694dc497792",
+  "disposition": "SUPPLEMENT_EXISTING / ADDITIONS_ONLY",
+  "expected_file_count": 33,
+  "hashed_payload_count": 32,
+  "expected_file_list": [
+    ".github/workflows/MRL_localai_recovery_sdk.yml",
+    "09_workflow/MRL_AgentHarness_HookLattice_v1.py",
+    "09_workflow/MRL_AgentHarness_PolicyGate_v1.py",
+    "09_workflow/MRL_AgentHarness_ToolLoop_v1.py",
+    "09_workflow/MRL_AgentHarness_Types_v1.py",
+    "09_workflow/MRL_MCPClient_Streamable_v1.py",
+    "09_workflow/MRL_MCPServerHarness_Streamable_v1.py",
+    "09_workflow/MRL_MCPServerHarness_Streamable_v2.py",
+    "09_workflow/MRL_utils.py",
+    "MRL_Adapters/MetaEnv/MRL_MetaEnv_Control_API_v1.yaml",
+    "MRL_Adapters/MetaEnv/MRL_MetaEnv_Control_API_v1_原件.yaml",
+    "MRL_Adapters/MetaEnv/README.md",
+    "data/.gitignore",
+    "data/MetaCode.export.2026-07-08.json",
+    "deploy/dl580/MRL_LocalAI_Recovery_Validate.ps1",
+    "deploy/dl580/asi-engine/MRL_ASI_health_server.cjs",
+    "deploy/dl580/recovery/MRL_LocalAI_Recovery_Manifest_v1.json",
+    "deploy/dl580/recovery/MRL_LocalAI_Recovery_Runbook_v1.md",
+    "deploy/dl580/recovery/MRL_Qdrant_Stage_v1.ps1",
+    "deploy/dl580/recovery/requirements-mcp-sdk.txt",
+    "docs/recovery/MRL_LocalAI_Recovery_20261010_Evidence.json",
+    "metacode_core.js",
+    "metacode_usage.js",
+    "scripts/MRL_bridge_recovery_safe_v1.sh",
+    "scripts/MRL_localai_mcp_server_v1.py",
+    "scripts/MRL_localai_recovery_acceptance_v1.py",
+    "scripts/MRL_mcp_sdk_acceptance_v1.py",
+    "scripts/MRL_metacode_recovery_smoke_v1.mjs",
+    "scripts/MRL_recovery_dependency_probe_v1.py",
+    "tests/test_MRL_localai_mcp_server_v1.py",
+    "tests/test_MRL_localai_recovery_acceptance_v1.py",
+    "tests/test_MRL_mcp_streamable_v1.py",
+    "tests/test_MRL_mcp_streamable_v2.py"
+  ],
+  "self_hash_policy": {
+    "path": "deploy/dl580/recovery/MRL_LocalAI_Recovery_Manifest_v1.json",
+    "in_expected_file_list": true,
+    "in_files_array": false,
+    "reason": "No circular self-hash; verify this manifest's Git blob through the final exact commit/tree readback audit."
+  },
+  "files": [
+    {
+      "path": ".github/workflows/MRL_localai_recovery_sdk.yml",
+      "git_blob_sha": "e1ceb5108be81181b8920b8eb9a9b3af3e41860c",
+      "bytes": 11103,
+      "sha256": "0b02cf30838352649779a86bcf91fb4547af0705b721eb7ecf2c9af4e864a9e1",
+      "mode": "100644",
+      "source": {
+        "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
+        "record_id": "MRL_LocalAI_Recovery_20261010_R01",
+        "created_date_utc": "2026-10-10"
+      }
+    },
+    {
+      "path": "09_workflow/MRL_AgentHarness_HookLattice_v1.py",
+      "git_blob_sha": "e19c470db6724f0f59193fea3e07339a67418b05",
+      "bytes": 11064,
+      "sha256": "083066e89b6b22ff16cf15ea693c7a4244dbb72301e160dba60c0a0faf595f9a",
+      "mode": "100644",
+      "source": {
+        "kind": "BYTE_IDENTICAL_RECOVERY",
+        "repository": "dofaromg/MRL_AI_SYSTEM",
+        "commit": "3c51612c2ddee1b3c561882c20474694dc497792",
+        "path": "09_workflow/MRL_AgentHarness_HookLattice_v1.py"
+      }
+    },
+    {
+      "path": "09_workflow/MRL_AgentHarness_PolicyGate_v1.py",
+      "git_blob_sha": "1400af2848841d9bba544555be011f3b0d92cdf7",
+      "bytes": 12115,
+      "sha256": "2dc790c63b9571afaf6a306baed8bab76dbf8a37c0d47f33f9c22e08d8469791",
+      "mode": "100644",
+      "source": {
+        "kind": "BYTE_IDENTICAL_RECOVERY",
+        "repository": "dofaromg/MRL_AI_SYSTEM",
+        "commit": "3c51612c2ddee1b3c561882c20474694dc497792",
+        "path": "09_workflow/MRL_AgentHarness_PolicyGate_v1.py"
+      }
+    },
+    {
+      "path": "09_workflow/MRL_AgentHarness_ToolLoop_v1.py",
+      "git_blob_sha": "6b1b58487c40ac4e3636a23d08802a228b2e9309",
+      "bytes": 9060,
+      "sha256": "07329ff13ad6d0c6668ff4951059092e31bc737cf991441c1c933f408bac094a",
+      "mode": "100644",
+      "source": {
+        "kind": "BYTE_IDENTICAL_RECOVERY",
+        "repository": "dofaromg/MRL_AI_SYSTEM",
+        "commit": "3c51612c2ddee1b3c561882c20474694dc497792",
+        "path": "09_workflow/MRL_AgentHarness_ToolLoop_v1.py"
+      }
+    },
+    {
+      "path": "09_workflow/MRL_AgentHarness_Types_v1.py",
+      "git_blob_sha": "0055a5c22bb54aec7b80ff6bbde05a81bd1bd4c1",
+      "bytes": 4253,
+      "sha256": "d01ba00e7f7fd4d9b4464df12ef427b46e871ced3c68bfaafa5761f57ede8386",
+      "mode": "100644",
+      "source": {
+        "kind": "BYTE_IDENTICAL_RECOVERY",
+        "repository": "dofaromg/MRL_AI_SYSTEM",
+        "commit": "3c51612c2ddee1b3c561882c20474694dc497792",
+        "path": "09_workflow/MRL_AgentHarness_Types_v1.py"
+      }
+    },
+    {
+      "path": "09_workflow/MRL_MCPClient_Streamable_v1.py",
+      "git_blob_sha": "684bff57b37324273f05c336e8fdbf1929f8a84f",
+      "bytes": 8283,
+      "sha256": "eb11105cb28f535c2bdd397e65c09c744bb518dbb6e49843e9adf3825483cb03",
+      "mode": "100644",
+      "source": {
+        "kind": "BYTE_IDENTICAL_RECOVERY",
+        "repository": "dofaromg/MRL_AI_SYSTEM",
+        "commit": "3c51612c2ddee1b3c561882c20474694dc497792",
+        "path": "09_workflow/MRL_MCPClient_Streamable_v1.py"
+      }
+    },
+    {
+      "path": "09_workflow/MRL_MCPServerHarness_Streamable_v1.py",
+      "git_blob_sha": "f118dbc4b4dc43f3731e788da45f1551ca4edd8b",
+      "bytes": 21777,
+      "sha256": "e651c095228493eb76dbd6951467d3d1a623a64167057844525aeaf1dd756ab1",
+      "mode": "100644",
+      "source": {
+        "kind": "BYTE_IDENTICAL_RECOVERY",
+        "repository": "dofaromg/MRL_AI_SYSTEM",
+        "commit": "3c51612c2ddee1b3c561882c20474694dc497792",
+        "path": "09_workflow/MRL_MCPServerHarness_Streamable_v1.py"
+      }
+    },
+    {
+      "path": "09_workflow/MRL_MCPServerHarness_Streamable_v2.py",
+      "git_blob_sha": "78543d7845fae9c25e5a14b81f74cbd77f7aba5b",
+      "bytes": 24603,
+      "sha256": "97d20b6a35f14b1011e6eb43856cb9eaef5680a3f3d6dd5714c7f2c2e9670bd8",
+      "mode": "100644",
+      "source": {
+        "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
+        "record_id": "MRL_LocalAI_Recovery_20261010_R01",
+        "created_date_utc": "2026-10-10"
+      }
+    },
+    {
+      "path": "09_workflow/MRL_utils.py",
+      "git_blob_sha": "c6e1b783ec80a373ca8bb83048694a6cc5636cc8",
+      "bytes": 3801,
+      "sha256": "e9b9aa41ab50db209087c19e1f8a51185954ba39896eb9308c4c286a8ed89462",
+      "mode": "100644",
+      "source": {
+        "kind": "BYTE_IDENTICAL_RECOVERY",
+        "repository": "dofaromg/MRL_AI_SYSTEM",
+        "commit": "3c51612c2ddee1b3c561882c20474694dc497792",
+        "path": "09_workflow/MRL_utils.py"
+      }
+    },
+    {
+      "path": "MRL_Adapters/MetaEnv/MRL_MetaEnv_Control_API_v1.yaml",
+      "git_blob_sha": "9eeb0c80f20ad1e3af5cf556bf07270651f83d1e",
+      "bytes": 9899,
+      "sha256": "befdd070ce706f764905661002ff082a6eb776f35ff83aaf2c37f8165e27accc",
+      "mode": "100644",
+      "source": {
+        "kind": "BYTE_IDENTICAL_RECOVERY",
+        "repository": "dofaromg/MRL_AI_SYSTEM",
+        "commit": "3c51612c2ddee1b3c561882c20474694dc497792",
+        "path": "MRL_Adapters/MetaEnv/MRL_MetaEnv_Control_API_v1.yaml"
+      }
+    },
+    {
+      "path": "MRL_Adapters/MetaEnv/MRL_MetaEnv_Control_API_v1_原件.yaml",
+      "git_blob_sha": "cb5efe03f23f3240ca614de59523164e7a0e02aa",
+      "bytes": 10252,
+      "sha256": "a8a1340007aa376f8d8e3cc0f67dd0acf15c44f7087a3089092377a5fe0cbfd8",
+      "mode": "100644",
+      "source": {
+        "kind": "BYTE_IDENTICAL_RECOVERY",
+        "repository": "dofaromg/MRL_AI_SYSTEM",
+        "commit": "3c51612c2ddee1b3c561882c20474694dc497792",
+        "path": "MRL_Adapters/MetaEnv/MRL_MetaEnv_Control_API_v1_原件.yaml"
+      }
+    },
+    {
+      "path": "MRL_Adapters/MetaEnv/README.md",
+      "git_blob_sha": "7604605393f31e11e008506507ed8c1c2f5f0739",
+      "bytes": 1583,
+      "sha256": "84c424738022fbb6eb2e44c88dc6c73fb242323922b0f03cdb2ad4217dadcb2b",
+      "mode": "100644",
+      "source": {
+        "kind": "BYTE_IDENTICAL_RECOVERY",
+        "repository": "dofaromg/MRL_AI_SYSTEM",
+        "commit": "3c51612c2ddee1b3c561882c20474694dc497792",
+        "path": "MRL_Adapters/MetaEnv/README.md"
+      }
+    },
+    {
+      "path": "data/.gitignore",
+      "git_blob_sha": "f48eb0908ced3bd70dc3899f2fc4869a68708dff",
+      "bytes": 163,
+      "sha256": "5ec88d717628c37c54894b4a7b2fa11134bf1a98cdf08c46d2eba15f5830eee5",
+      "mode": "100644",
+      "source": {
+        "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
+        "record_id": "MRL_LocalAI_Recovery_20261010_R01",
+        "created_date_utc": "2026-10-10"
+      }
+    },
+    {
+      "path": "data/MetaCode.export.2026-07-08.json",
+      "git_blob_sha": "1e962c918d2706248fa24f3e7cfa5194a6cc7bed",
+      "bytes": 10846,
+      "sha256": "68ed436faff00aee1458c73ba71b08ca18d6ab20ede9951a4f4dbf9829ff8bea",
+      "mode": "100644",
+      "source": {
+        "kind": "BYTE_IDENTICAL_RECOVERY",
+        "repository": "dofaromg/MRL_AI_SYSTEM",
+        "commit": "3c51612c2ddee1b3c561882c20474694dc497792",
+        "path": "data/MetaCode.export.2026-07-08.json"
+      }
+    },
+    {
+      "path": "deploy/dl580/MRL_LocalAI_Recovery_Validate.ps1",
+      "git_blob_sha": "c9e63d28f2dbeab346c515edaee9ee628c54459c",
+      "bytes": 964,
+      "sha256": "e7c25f5495539b56329c2d314d56602cbcc04811a1bcdcbe7f3adfcd548d3a7f",
+      "mode": "100644",
+      "source": {
+        "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
+        "record_id": "MRL_LocalAI_Recovery_20261010_R01",
+        "created_date_utc": "2026-10-10"
+      }
+    },
+    {
+      "path": "deploy/dl580/asi-engine/MRL_ASI_health_server.cjs",
+      "git_blob_sha": "3b660db2433923a2e0eef24ab60ac497f57cd285",
+      "bytes": 934,
+      "sha256": "61d4f3221b9081988fbee49eb78eadc27132a20cc7b6ae20da02ef9b5d3e8e18",
+      "mode": "100644",
+      "source": {
+        "kind": "BYTE_IDENTICAL_RECOVERY",
+        "repository": "dofaromg/MRL_AI_SYSTEM",
+        "commit": "3c51612c2ddee1b3c561882c20474694dc497792",
+        "path": "deploy/dl580/asi-engine/MRL_ASI_health_server.cjs"
+      }
+    },
+    {
+      "path": "deploy/dl580/recovery/MRL_LocalAI_Recovery_Runbook_v1.md",
+      "bytes": 20896,
+      "sha256": "316f62c6df2b5208d3b8aca638c53c8cb743b454989f528a17207f13541ce270",
+      "git_blob_sha": "2e3be6291da651df900c9b40e7c1f429ee884081",
+      "mode": "100644",
+      "source": {
+        "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
+        "record_id": "MRL_LocalAI_Recovery_20261010_R01",
+        "created_date_utc": "2026-10-10"
+      }
+    },
+    {
+      "path": "deploy/dl580/recovery/MRL_Qdrant_Stage_v1.ps1",
+      "git_blob_sha": "605a0ac3e24ba26ab4817eb627b09ac083877917",
+      "bytes": 13811,
+      "sha256": "13c73ac05b29ea264ff4310b011b1466faf384143866b274e608a2d253a9d21a",
+      "mode": "100644",
+      "source": {
+        "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
+        "record_id": "MRL_LocalAI_Recovery_20261010_R01",
+        "created_date_utc": "2026-10-10"
+      }
+    },
+    {
+      "path": "deploy/dl580/recovery/requirements-mcp-sdk.txt",
+      "git_blob_sha": "f9faddc56b51e38197063de70cefbcb47b8da473",
+      "bytes": 473,
+      "sha256": "5835443e969b7dfbf2ac745b893f4a4444a1ab02de837e6617aa6fb64cd860e7",
+      "mode": "100644",
+      "source": {
+        "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
+        "record_id": "MRL_LocalAI_Recovery_20261010_R01",
+        "created_date_utc": "2026-10-10"
+      }
+    },
+    {
+      "path": "docs/recovery/MRL_LocalAI_Recovery_20261010_Evidence.json",
+      "bytes": 16039,
+      "sha256": "6d5b0061609b87356b97910b244ad1d84b29de535ac7eff830bd9074b58ed05e",
+      "git_blob_sha": "3249fafe1b418ca88d2aa62adce7845acbe3af96",
+      "mode": "100644",
+      "source": {
+        "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
+        "record_id": "MRL_LocalAI_Recovery_20261010_R01",
+        "created_date_utc": "2026-10-10"
+      }
+    },
+    {
+      "path": "metacode_core.js",
+      "git_blob_sha": "39b1bb6e8ef4dfce3ea0d8cc01fe38ab8721f7bd",
+      "bytes": 15198,
+      "sha256": "ae5da0117f32f9795a99d5e5774fa38e5f5314cacbd7e289eaa9b440bd6fa158",
+      "mode": "100644",
+      "source": {
+        "kind": "RESTORED_ORIGINAL",
+        "repository": "dofaromg/flow-tasks",
+        "commit": "cb73e661a02eeb540db02398cb61eaa51c5e77e3",
+        "path": "metacode_core.js",
+        "first_path_commit": "f4d7637a6a66fa0256508dd6759dc23efdae689d",
+        "first_commit_utc": "2026-01-27T05:30:23Z"
+      }
+    },
+    {
+      "path": "metacode_usage.js",
+      "git_blob_sha": "8ea6a6f6f51f1923990e0d0b147ffc4b91d6d5b6",
+      "bytes": 14901,
+      "sha256": "ee51df5d38dc914a947b6e3809e0e97969f90eedc844c23d05c36ae8409d6da8",
+      "mode": "100644",
+      "source": {
+        "kind": "RESTORED_ORIGINAL",
+        "repository": "dofaromg/flow-tasks",
+        "commit": "cb73e661a02eeb540db02398cb61eaa51c5e77e3",
+        "path": "MRL_Mother/root_sources/metacode_usage.js",
+        "identical_recovery_source": {
+          "repository": "dofaromg/MRL_AI_SYSTEM",
+          "commit": "3c51612c2ddee1b3c561882c20474694dc497792",
+          "path": "metacode_usage.js"
+        }
+      }
+    },
+    {
+      "path": "scripts/MRL_bridge_recovery_safe_v1.sh",
+      "git_blob_sha": "d726828599696461cd0bec648fab898d940ec106",
+      "bytes": 3450,
+      "sha256": "d7adac4100ca198bddee421be9892a76b7a539447802f2e7ac07f16f13ade352",
+      "mode": "100755",
+      "source": {
+        "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
+        "record_id": "MRL_LocalAI_Recovery_20261010_R01",
+        "created_date_utc": "2026-10-10"
+      }
+    },
+    {
+      "path": "scripts/MRL_localai_mcp_server_v1.py",
+      "git_blob_sha": "edfc71283f3e73b1f0599c20dd8f12103e231619",
+      "bytes": 11606,
+      "sha256": "25a33775a8b562643664eb2a95d64331611fe6215a7cc5c5639c98750b7f4d85",
+      "mode": "100644",
+      "source": {
+        "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
+        "record_id": "MRL_LocalAI_Recovery_20261010_R01",
+        "created_date_utc": "2026-10-10"
+      }
+    },
+    {
+      "path": "scripts/MRL_localai_recovery_acceptance_v1.py",
+      "git_blob_sha": "4fa6b50762748bf42553237df1de27d164b42c9b",
+      "bytes": 20944,
+      "sha256": "504be441a28994b12a82e717d04a424cf158a48cbbd8a47e6c7eb0fa50fda09b",
+      "mode": "100755",
+      "source": {
+        "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
+        "record_id": "MRL_LocalAI_Recovery_20261010_R01",
+        "created_date_utc": "2026-10-10"
+      }
+    },
+    {
+      "path": "scripts/MRL_mcp_sdk_acceptance_v1.py",
+      "git_blob_sha": "9a1942bf956af6ccdfa5835bb5f61dfdbdb93814",
+      "bytes": 24595,
+      "sha256": "a0c2314f2227993b600225b9993337696a76967ebec1602d65bda884113a88a3",
+      "mode": "100644",
+      "source": {
+        "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
+        "record_id": "MRL_LocalAI_Recovery_20261010_R01",
+        "created_date_utc": "2026-10-10"
+      }
+    },
+    {
+      "path": "scripts/MRL_metacode_recovery_smoke_v1.mjs",
+      "git_blob_sha": "adaf35c449c0365c28f8bc3849fe8223e46f432f",
+      "bytes": 8857,
+      "sha256": "a8dfe7797dff3b9f401e66fc95ae6bd844248c8c587d8cd6313d11e8ec0b7f6f",
+      "mode": "100755",
+      "source": {
+        "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
+        "record_id": "MRL_LocalAI_Recovery_20261010_R01",
+        "created_date_utc": "2026-10-10"
+      }
+    },
+    {
+      "path": "scripts/MRL_recovery_dependency_probe_v1.py",
+      "git_blob_sha": "66ccfe18a91eda76ce3ed89bc1cf78dab8fc5d51",
+      "bytes": 14932,
+      "sha256": "9b67ba38946beeaba902361cd88666dab66333fc9a48b485865cf6a4ae2f3f7e",
+      "mode": "100644",
+      "source": {
+        "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
+        "record_id": "MRL_LocalAI_Recovery_20261010_R01",
+        "created_date_utc": "2026-10-10"
+      }
+    },
+    {
+      "path": "tests/test_MRL_localai_mcp_server_v1.py",
+      "git_blob_sha": "cf5d7402680863c76f4cacb55b1f6911580e3f4b",
+      "bytes": 9050,
+      "sha256": "9f4453a5a438cf7642750762fd566e2a3a071429f497bc401f11c5bee5f72c86",
+      "mode": "100644",
+      "source": {
+        "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
+        "record_id": "MRL_LocalAI_Recovery_20261010_R01",
+        "created_date_utc": "2026-10-10"
+      }
+    },
+    {
+      "path": "tests/test_MRL_localai_recovery_acceptance_v1.py",
+      "git_blob_sha": "f3f7b96a987657a3e272f578e2b45f385469c31f",
+      "bytes": 23857,
+      "sha256": "f6b789c57dde726b7245a76877574f477a8ad5455f0e2753b075ba2220a2f4ce",
+      "mode": "100644",
+      "source": {
+        "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
+        "record_id": "MRL_LocalAI_Recovery_20261010_R01",
+        "created_date_utc": "2026-10-10"
+      }
+    },
+    {
+      "path": "tests/test_MRL_mcp_streamable_v1.py",
+      "git_blob_sha": "590ad5bfb8feb902be405703d50131bab26a184b",
+      "bytes": 15450,
+      "sha256": "b5c92396891a289f6550221e31ed08de123cfeb7226b891a73876b8b1798bbec",
+      "mode": "100644",
+      "source": {
+        "kind": "BYTE_IDENTICAL_RECOVERY",
+        "repository": "dofaromg/MRL_AI_SYSTEM",
+        "commit": "3c51612c2ddee1b3c561882c20474694dc497792",
+        "path": "tests/test_MRL_mcp_streamable_v1.py"
+      }
+    },
+    {
+      "path": "tests/test_MRL_mcp_streamable_v2.py",
+      "git_blob_sha": "74cc13b28b8db9a398d33bb6026aee98c1a8d3d2",
+      "bytes": 18559,
+      "sha256": "7b138e042a17d36da8b9fa2d62252ddb03865a8080cf5e3184e048d9eb62896d",
+      "mode": "100644",
+      "source": {
+        "kind": "ADDITIVE_RECOVERY_SUPPLEMENT",
+        "record_id": "MRL_LocalAI_Recovery_20261010_R01",
+        "created_date_utc": "2026-10-10"
+      }
+    }
+  ],
+  "dependency_tree": [
+    {
+      "path": "09_workflow/MRL_MCPServerHarness_Streamable_v2.py",
+      "requires": [
+        "09_workflow/MRL_MCPServerHarness_Streamable_v1.py",
+        "09_workflow/MRL_utils.py"
+      ],
+      "external": [
+        "python-standard-library"
+      ]
+    },
+    {
+      "path": "09_workflow/MRL_MCPServerHarness_Streamable_v1.py",
+      "requires": [
+        "09_workflow/MRL_utils.py",
+        "09_workflow/MRL_AgentHarness_ToolLoop_v1.py",
+        "09_workflow/MRL_AgentHarness_PolicyGate_v1.py",
+        "09_workflow/MRL_AgentHarness_Types_v1.py",
+        "09_workflow/MRL_AgentHarness_HookLattice_v1.py"
+      ],
+      "external": [
+        "python-standard-library"
+      ]
+    },
+    {
+      "path": "09_workflow/MRL_AgentHarness_ToolLoop_v1.py",
+      "requires": [
+        "09_workflow/MRL_AgentHarness_Types_v1.py",
+        "09_workflow/MRL_AgentHarness_HookLattice_v1.py",
+        "09_workflow/MRL_AgentHarness_PolicyGate_v1.py",
+        "09_workflow/MRL_utils.py"
+      ],
+      "external": [
+        "python-standard-library"
+      ]
+    },
+    {
+      "path": "09_workflow/MRL_AgentHarness_PolicyGate_v1.py",
+      "requires": [
+        "09_workflow/MRL_AgentHarness_Types_v1.py",
+        "09_workflow/MRL_AgentHarness_HookLattice_v1.py"
+      ],
+      "external": [
+        "python-standard-library"
+      ]
+    },
+    {
+      "path": "09_workflow/MRL_AgentHarness_HookLattice_v1.py",
+      "requires": [
+        "09_workflow/MRL_AgentHarness_Types_v1.py"
+      ],
+      "external": [
+        "python-standard-library"
+      ]
+    },
+    {
+      "path": "09_workflow/MRL_MCPClient_Streamable_v1.py",
+      "requires": [
+        "09_workflow/MRL_utils.py"
+      ],
+      "external": [
+        "python-standard-library"
+      ]
+    },
+    {
+      "path": "scripts/MRL_localai_mcp_server_v1.py",
+      "requires": [
+        "09_workflow/MRL_MCPServerHarness_Streamable_v2.py",
+        "metacode_core.js",
+        "metacode_usage.js"
+      ],
+      "external": [
+        "python-standard-library",
+        "actual-Windows-DL580-D-drive-for-runtime"
+      ]
+    },
+    {
+      "path": "scripts/MRL_metacode_recovery_smoke_v1.mjs",
+      "requires": [
+        "metacode_core.js",
+        "metacode_usage.js"
+      ],
+      "external": [
+        "node-builtins-vm-with-experimental-vm-modules"
+      ]
+    },
+    {
+      "path": "metacode_usage.js",
+      "requires": [
+        "metacode_core.js"
+      ],
+      "external": [
+        "node-builtins"
+      ]
+    },
+    {
+      "path": "scripts/MRL_mcp_sdk_acceptance_v1.py",
+      "requires": [
+        "deploy/dl580/recovery/requirements-mcp-sdk.txt"
+      ],
+      "external": [
+        "mcp==1.30.0",
+        "httpx==0.28.1",
+        "actual-selected-MCP-endpoint"
+      ]
+    },
+    {
+      "path": "scripts/MRL_localai_recovery_acceptance_v1.py",
+      "requires": [
+        "deploy/dl580/recovery/MRL_LocalAI_Recovery_Manifest_v1.json"
+      ],
+      "external": [
+        "python-standard-library",
+        "Windows-PowerShell-CIM-ScheduledTasks",
+        "actual-existing-ASI-7700-Bridge-7800",
+        "existing-Bridge-credential-for-protected-checks"
+      ]
+    },
+    {
+      "path": "deploy/dl580/MRL_LocalAI_Recovery_Validate.ps1",
+      "requires": [
+        "scripts/MRL_localai_recovery_acceptance_v1.py"
+      ],
+      "external": [
+        "actual-existing-Python-on-D-drive"
+      ]
+    },
+    {
+      "path": "scripts/MRL_recovery_dependency_probe_v1.py",
+      "requires": [
+        "MRL_Adapters/MetaEnv/MRL_MetaEnv_Control_API_v1.yaml"
+      ],
+      "external": [
+        "python-standard-library",
+        "actual-Qdrant-MinIO-MetaEnv-endpoints"
+      ]
+    },
+    {
+      "path": "deploy/dl580/recovery/MRL_Qdrant_Stage_v1.ps1",
+      "requires": [],
+      "external": [
+        "verified-Qdrant-v1.19.2-Windows-asset",
+        "Windows-PowerShell-5.1-or-compatible-runtime-on-D-drive"
+      ]
+    },
+    {
+      "path": "scripts/MRL_bridge_recovery_safe_v1.sh",
+      "requires": [],
+      "external": [
+        "bash",
+        "curl",
+        "existing-public-Bridge-route"
+      ]
+    },
+    {
+      "path": "tests/test_MRL_mcp_streamable_v1.py",
+      "requires": [
+        "09_workflow/MRL_MCPServerHarness_Streamable_v1.py",
+        "09_workflow/MRL_MCPClient_Streamable_v1.py"
+      ],
+      "external": [
+        "python-standard-library"
+      ]
+    },
+    {
+      "path": "tests/test_MRL_mcp_streamable_v2.py",
+      "requires": [
+        "09_workflow/MRL_MCPServerHarness_Streamable_v2.py"
+      ],
+      "external": [
+        "python-standard-library"
+      ]
+    },
+    {
+      "path": "tests/test_MRL_localai_mcp_server_v1.py",
+      "requires": [
+        "scripts/MRL_localai_mcp_server_v1.py",
+        "metacode_core.js",
+        "metacode_usage.js"
+      ],
+      "external": [
+        "python-standard-library"
+      ]
+    },
+    {
+      "path": "tests/test_MRL_localai_recovery_acceptance_v1.py",
+      "requires": [
+        "scripts/MRL_localai_recovery_acceptance_v1.py"
+      ],
+      "external": [
+        "python-standard-library"
+      ]
+    },
+    {
+      "path": ".github/workflows/MRL_localai_recovery_sdk.yml",
+      "requires": [
+        "scripts/MRL_localai_mcp_server_v1.py",
+        "scripts/MRL_mcp_sdk_acceptance_v1.py",
+        "scripts/MRL_metacode_recovery_smoke_v1.mjs",
+        "tests/test_MRL_localai_mcp_server_v1.py",
+        "tests/test_MRL_localai_recovery_acceptance_v1.py",
+        "tests/test_MRL_mcp_streamable_v1.py",
+        "tests/test_MRL_mcp_streamable_v2.py",
+        "deploy/dl580/recovery/MRL_LocalAI_Recovery_Manifest_v1.json"
+      ],
+      "external": [
+        "GitHub-hosted-Ubuntu-24.04",
+        "Python-3.12",
+        "Node-22",
+        "PowerShell-7-parser-only",
+        "pinned-official-actions",
+        "PyPI-direct-pins-and-resolved-transitive-dependencies"
+      ]
+    },
+    {
+      "path": "09_workflow/MRL_AgentHarness_Types_v1.py",
+      "requires": [
+        "09_workflow/MRL_utils.py"
+      ],
+      "external": [
+        "python-standard-library"
+      ]
+    }
+  ],
+  "dependency_closure": {
+    "internal_file_edges": "CLOSED_ALL_REFERENCES_IN_EXPECTED_FILE_LIST",
+    "runtime_external_dependencies": "OPEN_UNTIL_ACTUAL_TARGET_ACCEPTANCE",
+    "historical_document_references": "Original README text is preserved; references outside this scoped package resolve against its recorded original repository commit.",
+    "direct_python_pins": "Exact mcp/httpx only; transitive environment must be recorded at installation.",
+    "optional_existing_registry": {
+      "module": "tool_registry.ToolRegistry",
+      "path_lookup": "optional dynamic import in preserved v1 ToolLoop",
+      "requirement": "Not required for fallback operation or tested transport; existing registry is used only if importable."
+    }
+  },
+  "execution_contract": {
+    "dl580_host": "WIN-PBVUI7VK2A6",
+    "dl580_filesystem": "local fixed D:\\ only",
+    "cloud_runner": "Source/transport engineering tests only, no DL580 data",
+    "originals": "Preserve bytes and original filenames; do not overwrite prior reconstruction or July evidence",
+    "no_operational_claim_from_source_or_ci": true
+  }
+}

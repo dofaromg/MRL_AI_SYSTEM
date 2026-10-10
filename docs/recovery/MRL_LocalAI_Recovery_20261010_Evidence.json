@@ -1,0 +1,415 @@
+{
+  "schema": "MRL.LocalAI.Recovery.Evidence.v1",
+  "origin_signature": "MrLiouWord",
+  "record_id": "MRL_LocalAI_Recovery_20261010_R01",
+  "record_mode": "APPEND_ONLY / SUPPLEMENT_EXISTING / Verify-Backfill",
+  "recorded_at_utc": "2026-10-10 17:25:09 UTC",
+  "source": {
+    "repository": "dofaromg/MRL_AI_SYSTEM",
+    "base_branch": "MRL_AI_SYSTEM/memory-system-rules-prep",
+    "base_commit": "d7c848189ac97f5a5de9613c796d3bcf037338b6",
+    "preserved_recovery_branch": "MrliouAI",
+    "preserved_recovery_commit": "3c51612c2ddee1b3c561882c20474694dc497792",
+    "base_tree": "16ecb3a948d7c7dbd6c415762a5bff69d7326264",
+    "source_disposition": "All submitted paths absent from the baseline; original blobs retained. No whole-branch merge.",
+    "repository_visibility_observed": "public"
+  },
+  "execution_boundary": {
+    "environment": "Cloud Linux container; Python 3.12.14 / Node v24.19.0 for reported in-memory checks",
+    "dl580_authenticated_commands": 0,
+    "dl580_files_written": 0,
+    "dl580_file_contents_exported": 0,
+    "cloud_scratch_files_written": 0,
+    "dl580_runtime_status": "NOT_RUN_AUTHENTICATED_CHANNEL_UNAVAILABLE",
+    "production_deployment_changes": 0,
+    "credential_rotations": 0
+  },
+  "original_metacode": {
+    "repository": "dofaromg/flow-tasks",
+    "inspected_commit": "cb73e661a02eeb540db02398cb61eaa51c5e77e3",
+    "path": "metacode_core.js",
+    "first_path_commit": "f4d7637a6a66fa0256508dd6759dc23efdae689d",
+    "first_commit_at_utc": "2026-01-27T05:30:23Z",
+    "version": "2.0.0-alpha",
+    "bytes": 15198,
+    "newline_characters": 592,
+    "split_lines": 593,
+    "sha256": "ae5da0117f32f9795a99d5e5774fa38e5f5314cacbd7e289eaa9b440bd6fa158",
+    "git_blob_sha": "39b1bb6e8ef4dfce3ea0d8cc01fe38ab8721f7bd",
+    "first_and_current_bytes": "IDENTICAL",
+    "reconstructed_core_preserved_on_MrliouAI": "220fe4f319eed9a5703c1d63f112f4551d5d560c",
+    "historical_export_relabelled": false
+  },
+  "tests": [
+    {
+      "id": "MCP_V1_V2",
+      "status": "PASS",
+      "checks": 42,
+      "breakdown": {
+        "v1": 22,
+        "v2": 20
+      },
+      "recorded_at_utc": "2026-10-10T17:08:57.362535Z",
+      "environment": "Cloud Linux, Python 3.12.14, memory-only loader with real loopback sockets",
+      "includes": [
+        "HTTP JSON-RPC",
+        "legacy SSE endpoint/message events",
+        "bounded sessions/queues",
+        "backpressure before side effects",
+        "Host/Origin/key checks",
+        "session cleanup"
+      ],
+      "official_sdk_used": false,
+      "dl580_executed": false
+    },
+    {
+      "id": "MRL_LAUNCHER",
+      "status": "PASS",
+      "checks": 10,
+      "recorded_at_utc": "2026-10-10T17:15:27.817443Z",
+      "environment": "Cloud Linux, memory-only source; real loopback HTTP identity roundtrip",
+      "includes": [
+        "fixed original hashes",
+        "tamper/missing/path redirection rejection",
+        "Windows host/D: runtime gate",
+        "verify-only does not start runtime"
+      ],
+      "dl580_executed": false
+    },
+    {
+      "id": "METACODE_ORIGINAL",
+      "status": "PASS",
+      "original_scenarios": 7,
+      "assertions": 8,
+      "negative_cases": 5,
+      "in_memory_exports": 5,
+      "particles": 7,
+      "links": 3,
+      "cycles": 2,
+      "environment": "Cloud Node v24.19.0, original core/usage in VM, in-memory filesystem",
+      "dl580_executed": false
+    },
+    {
+      "id": "BRIDGE_SAFE_WRAPPER",
+      "status": "PASS",
+      "checks": 14,
+      "environment": "Cloud shell mock curl, no real network or file writes",
+      "credential_leakage": "not in argv/query/output",
+      "live_service_proof": false
+    },
+    {
+      "id": "SDK_CLIENT_LOGIC",
+      "status": "PASS",
+      "check_groups": 10,
+      "includes": [
+        "configuration guards",
+        "actual SDK API source review",
+        "MRL identity tamper rejection",
+        "asset status/hash consistency"
+      ],
+      "environment": "Cloud Linux, memory-only; no fake SDK transport",
+      "official_sdk_transport_status": "NOT_RUN_AT_RECORD_CREATION_MISSING_LOCAL_DEPENDENCIES",
+      "dl580_executed": false
+    },
+    {
+      "id": "DEPENDENCY_PROBE_LOGIC",
+      "status": "PASS",
+      "check_groups": 10,
+      "environment": "Cloud Linux, real loopback HTTP fixtures",
+      "includes": [
+        "header-only credential",
+        "redirect refused",
+        "body limit",
+        "missing env stays unverified",
+        "no health-to-storage-RW promotion",
+        "MetaEnv identity stays unverified"
+      ],
+      "actual_dependencies_probed": false
+    },
+    {
+      "id": "METAENV_SPECIFICATION",
+      "status": "PASS_FOR_REPAIRED_SPEC",
+      "repaired_paths": 9,
+      "original_yaml": "PRESERVED_WITH_KNOWN_ParserError",
+      "environment": "Cloud Python yaml.safe_load",
+      "actual_metaenv_service_probed": false
+    },
+    {
+      "id": "WORKFLOW_STATIC",
+      "status": "PASS",
+      "recorded_at_utc": "2026-10-10T17:22:55Z",
+      "includes": [
+        "workflow YAML parse",
+        "Bash block syntax",
+        "three inline Python blocks compiled",
+        "scoped permissions and full Action SHA pins"
+      ],
+      "github_actions_run": "NOT_RUN_AT_RECORD_CREATION"
+    },
+    {
+      "id": "DL580_ACCEPTANCE_LOGIC",
+      "status": "PASS",
+      "tests": 28,
+      "environment": "Cloud Linux Python 3.12.14, offline standard-library unittest in memory; no disk writes or network",
+      "includes": [
+        "sysinfo type/None fails closed",
+        "same-action absolute task paths",
+        "Windows scheduled task state enums",
+        "Windows boot chronology/current health/previous receipt proof",
+        "manifest type/hash/traversal/ADS checks",
+        "resolved D: path and exclusive receipt readback",
+        "loopback ignores system proxy"
+      ],
+      "dl580_executed": false
+    }
+  ],
+  "live_observations": [
+    {
+      "id": "BRIDGE_PUBLIC_HEALTH",
+      "endpoint": "https://bridge.mrliouword.com/health",
+      "status": "HTTP_200_VERIFIED",
+      "response_timestamp_utc": "2026-10-10T17:03:36.123Z",
+      "service": "MRL_Bridge_API",
+      "version": "3.1.0",
+      "origin_signature": "MrLiouWord",
+      "api": true,
+      "pg": true,
+      "redis": true,
+      "authenticated": false,
+      "user_agent": "MRL-Recovery-Validator/1.0 (+https://github.com/dofaromg/MRL_AI_SYSTEM)",
+      "accept": "application/json"
+    },
+    {
+      "id": "BRIDGE_ANONYMOUS_SYSINFO",
+      "endpoint": "https://bridge.mrliouword.com/MRL_sysinfo",
+      "observed_at_utc": "2026-10-10T17:18:00.948297+00:00",
+      "http_status": 401,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 71,
+      "sha256": "de060c6e6ff9e3b08ec8d135fb9e12803f515085cbe14d69c4b1f6c0527412fa",
+      "key_supplied": false,
+      "authenticated_management_proof": false
+    },
+    {
+      "id": "CLOUDFLARE_CLIENT_DIFFERENCE",
+      "initial_default_urllib_status": 403,
+      "initial_error_code": 1010,
+      "truthful_mrl_client_health_status": 200,
+      "waf_dns_security_changes": 0,
+      "claim": "A rejected client request did not establish DL580 downtime."
+    },
+    {
+      "id": "WEBSITE_ROUTE_COMPARISON",
+      "origin": "https://mrliouword.com",
+      "observed_date_utc": "2026-10-10",
+      "routes": [
+        "/",
+        "/login",
+        "/auth/login",
+        "/api/auth/session"
+      ],
+      "each_http_status": 200,
+      "each_content_type": "text/html; charset=UTF-8",
+      "each_bytes": 12430,
+      "each_sha256": "0696ec6899ac98a15b0fd5c38adf3dd0d415d31d1f615285eda29ad85a1d8332",
+      "browser_observation": "Public MrLiouWord v1.3.0 chat surface at / and /login; no sign-in form",
+      "inference": "Observed auth-related paths resolved to the same HTML, so these responses do not prove OAuth/session functionality.",
+      "actual_oauth_login_performed": false,
+      "oauth_session_verified": false
+    },
+    {
+      "id": "VERCEL_REPOSITORY_SCOPE",
+      "query_repo_url": "https://github.com/dofaromg/MRL_AI_SYSTEM",
+      "connected_scope_project_count": 0,
+      "claim_scope": "Current connector account/query only; does not rule out other projects or accounts."
+    }
+  ],
+  "external_dependency_sources": {
+    "python_sdk": {
+      "version": "1.30.0",
+      "httpx": "0.28.1",
+      "pins_scope": "direct only; record actual transitive installed environment on D:",
+      "urls": [
+        "https://pypi.org/project/mcp/1.30.0/",
+        "https://github.com/modelcontextprotocol/python-sdk/tree/v1.30.0"
+      ]
+    },
+    "qdrant": {
+      "version": "v1.19.2",
+      "published_at_utc": "2026-10-05T14:16:50Z",
+      "asset_id": 612861224,
+      "url": "https://github.com/qdrant/qdrant/releases/download/v1.19.2/qdrant-x86_64-pc-windows-msvc.zip",
+      "bytes": 30243552,
+      "sha256": "7d86596f16c6e85d45a50312f5e16ccb51e059b62e3d7308110cb65b4c799a4d",
+      "download_performed": false,
+      "dl580_compatibility": "UNVERIFIED"
+    },
+    "minio": {
+      "repository": "https://github.com/minio/minio",
+      "official_notice_observed": "no longer maintained; community distribution source-only",
+      "latest_release_observed": "RELEASE.2025-10-15T17-29-55Z",
+      "published_at_utc": "2025-10-16",
+      "release_assets": 0,
+      "new_deployment_performed": false
+    }
+  },
+  "open_runtime_gates": [
+    "Authenticated DL580 channel and current local AGENTS/write-guard inspection",
+    "Actual D: source package and native MetaCode output receipts",
+    "Actual DL580 official SDK HTTP/SSE echo plus MRL identity receipts",
+    "7700 current owning process/startup task and bounded watchdog recovery",
+    "Actual reboot continuity evidence",
+    "Bridge authenticated current identity, retired-key rejection and scoped residue review",
+    "Qdrant/MinIO actual scoped storage operations and cleanup",
+    "Actual MetaEnv identity/endpoint mapping and control operations",
+    "Production source/deployment mapping and real OAuth browser session"
+  ],
+  "source_delivery_status": "Frozen 33-path package; tree and branch readback to follow this immutable pre-CI record.",
+  "overall_runtime_status": "INCOMPLETE_DO_NOT_PROMOTE_SOURCE_OR_CI_PASS_TO_DL580_PASS",
+  "delivery_expected_count": 33,
+  "ci_next_gate": {
+    "workflow": ".github/workflows/MRL_localai_recovery_sdk.yml",
+    "status": "PENDING_AT_RECORD_CREATION",
+    "source_regression_tests": 80,
+    "transports": [
+      "streamable-http",
+      "sse"
+    ],
+    "fixture_tool": "echo",
+    "dl580_recovery_claim": "NOT_ASSERTED",
+    "final_status_location": "The exact PR head/check-run result and append-only MRL mother backfill."
+  },
+  "continuation": [
+    {
+      "id": "FIRST_OFFICIAL_SDK_CI",
+      "recorded_at_utc": "2026-10-10T17:34:53Z",
+      "event_window_utc": {
+        "started_at": "2026-10-10T17:28:01Z",
+        "completed_at": "2026-10-10T17:28:32Z"
+      },
+      "repository": "dofaromg/MRL_AI_SYSTEM",
+      "pull_request": 155,
+      "head_commit": "54cf29fc5550d6774fc7026480c46791748d8b65",
+      "actions_merge_commit": "ee278c171e1df1b0d54e27d46ebb84afaab94cc2",
+      "head_and_actions_merge_tree": "327b55e9bd91ae8fba1d866f15c0f6469aef9f37",
+      "actions_merge_is_not_base_branch_merge_proof": true,
+      "workflow": ".github/workflows/MRL_localai_recovery_sdk.yml",
+      "run_id": 38071847662,
+      "job_id": 114270682232,
+      "job_url": "https://github.com/dofaromg/MRL_AI_SYSTEM/actions/runs/38071847662/job/114270682232",
+      "conclusion": "success",
+      "executed_where": "GitHub-hosted Ubuntu 24.04 cloud runner; real loopback network",
+      "versions": {
+        "python": "3.12.15",
+        "node": "22.23.3",
+        "powershell": "7.6.6",
+        "mcp": "1.30.0",
+        "httpx": "0.28.1"
+      },
+      "source_regression_tests": {
+        "total": 80,
+        "status": "PASS",
+        "breakdown": {
+          "mcp_v1": 22,
+          "mcp_v2": 20,
+          "mrl_launcher": 10,
+          "dl580_acceptance_logic": 28
+        }
+      },
+      "official_sdk_receipts": [
+        {
+          "transport": "streamable-http",
+          "tool": "echo",
+          "status": "PASS",
+          "checks": 8,
+          "all_checks_pass": true,
+          "started_at_utc": "2026-10-10T17:28:28.092+00:00",
+          "finished_at_utc": "2026-10-10T17:28:28.678+00:00"
+        },
+        {
+          "transport": "sse",
+          "tool": "echo",
+          "status": "PASS",
+          "checks": 8,
+          "all_checks_pass": true,
+          "started_at_utc": "2026-10-10T17:28:28.925+00:00",
+          "finished_at_utc": "2026-10-10T17:28:29.405+00:00"
+        }
+      ],
+      "powershell": {
+        "parsed_scripts": 2,
+        "syntax_status": "PASS",
+        "script_execution": "NOT_PERFORMED",
+        "windows_powershell_5_1_claim": "NOT_ASSERTED"
+      },
+      "dl580_executed": false,
+      "dl580_recovery_claim": "NOT_ASSERTED",
+      "evidence_source": "GitHub Actions job summary/log and exact Git commit/tree readback"
+    },
+    {
+      "id": "EXISTING_AUTHENTICATED_BRIDGE_ACCESS",
+      "observed_at_utc": "2026-10-10T17:30:53.783957Z",
+      "reported_by": "Recovery session live authenticated response",
+      "request": {
+        "method": "GET",
+        "path": "/MRL_sysinfo",
+        "authenticated": true
+      },
+      "http_status": 200,
+      "ok": true,
+      "response_contract": "BRIDGE_3_1_FLAT_TOP_LEVEL",
+      "observed_identity": {
+        "hostname": "WIN-PBVUI7VK2A6",
+        "platform": "win32",
+        "arch": "x64",
+        "node": "20.11.1",
+        "bridge_version": "3.1.0",
+        "origin_signature": "MrLiouWord"
+      },
+      "authorization_provenance": "Existing authorized credential obtained by following the existing AuthHandoff and ChannelAudit records.",
+      "initial_freeze_clarification": "The current connection had not obtained the existing management credential at the first source freeze; the earlier observation does not mean no credential existed.",
+      "credential_value_recorded": false,
+      "private_source_identifiers_recorded": false,
+      "source_document_contents_recorded": false,
+      "claim_scope": "Authenticated Bridge access and the observed sysinfo identity only.",
+      "dl580_source_runtime_acceptance": "IN_PROGRESS_RESULTS_NOT_FROZEN"
+    },
+    {
+      "id": "FLAT_CONTRACT_SOURCE_FREEZE_SUPPLEMENT",
+      "recorded_at_utc": "2026-10-10T17:34:53Z",
+      "based_on_pr_head": "54cf29fc5550d6774fc7026480c46791748d8b65",
+      "change": "Retain the already-supported observed Bridge 3.1 flat contract; remove the unverified nested-wrapper alternative and nested identity override risk.",
+      "changed_sources": [
+        {
+          "path": "scripts/MRL_localai_recovery_acceptance_v1.py",
+          "git_blob_sha": "4fa6b50762748bf42553237df1de27d164b42c9b",
+          "bytes": 20944,
+          "sha256": "504be441a28994b12a82e717d04a424cf158a48cbbd8a47e6c7eb0fa50fda09b",
+          "mode": "100755"
+        },
+        {
+          "path": "tests/test_MRL_localai_recovery_acceptance_v1.py",
+          "git_blob_sha": "f3f7b96a987657a3e272f578e2b45f385469c31f",
+          "bytes": 23857,
+          "sha256": "f6b789c57dde726b7245a76877574f477a8ad5455f0e2753b075ba2220a2f4ce",
+          "mode": "100644"
+        }
+      ],
+      "source_regression": {
+        "updated_acceptance_tests": 29,
+        "updated_acceptance_status": "PASS_REPORTED_BY_RECOVERY_SESSION",
+        "executed_where": "Cloud source regression; DL580 execution not asserted",
+        "current_scoped_test_count": 81,
+        "fresh_commit_ci": "PENDING"
+      },
+      "package_scope": {
+        "expected_files": 33,
+        "hashed_payloads": 32,
+        "manifest_self_hash_excluded": true
+      },
+      "preserved_initial_record": "Existing fields describe the first source-freeze observation and remain unchanged; continuation entries record subsequent facts.",
+      "dl580_actual_host_tests": "IN_PROGRESS_RESULTS_NOT_FROZEN",
+      "overall_runtime_status": "INCOMPLETE_DO_NOT_PROMOTE_SOURCE_OR_CI_PASS_TO_DL580_PASS"
+    }
+  ]
+}

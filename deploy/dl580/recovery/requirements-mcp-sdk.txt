@@ -1,0 +1,9 @@
+# MRL official MCP client acceptance: direct dependencies, exact versions.
+# origin_signature: MrLiouWord
+# Python 3.12; create the virtual environment and install on DL580 D:.
+# This pins direct dependencies only, not the complete transitive environment.
+# Record the installed environment locally alongside the acceptance receipt.
+# Official source: https://pypi.org/project/mcp/1.30.0/
+# Official source: https://pypi.org/project/httpx/0.28.1/
+mcp==1.30.0
+httpx==0.28.1
