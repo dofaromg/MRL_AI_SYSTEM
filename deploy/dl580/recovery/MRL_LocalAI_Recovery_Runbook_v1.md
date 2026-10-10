@@ -198,3 +198,27 @@ Deployment completion therefore requires the actual production source commit, Wo
 | OAuth/deployment | Actual production-source mapping, provider/callback and real signed-in session |
 
 Append actual results to the existing MRL mother record with UTC time, environment, source commit, receipt path/hash and status. Preserve earlier observations. A source or CI PASS never changes a pending DL580/runtime gate by implication. Do not mark the whole recovery complete while these actual-host gates remain open.
+
+## 9. Source-freeze continuation — 2026-10-10
+
+This section appends observations after the initial source freeze at 17:25:09 UTC. Sections 1–8 remain the historical record. Their access and pending-CI statements describe what this connection had obtained at that time; they do not state that an existing management credential did not exist.
+
+### First real CI result
+
+[PR 155](https://github.com/dofaromg/MRL_AI_SYSTEM/pull/155), head `54cf29fc5550d6774fc7026480c46791748d8b65`, completed [Actions run 38071847662, job 114270682232](https://github.com/dofaromg/MRL_AI_SYSTEM/actions/runs/38071847662/job/114270682232) successfully during the reported run window 2026-10-10T17:28:01Z–17:28:32Z. The tested merge revision `ee278c171e1df1b0d54e27d46ebb84afaab94cc2` and that PR head both resolve to tree `327b55e9bd91ae8fba1d866f15c0f6469aef9f37`. This is the Actions merge revision, not a claim that the PR was merged into the base branch.
+
+The Ubuntu 24.04 cloud runner used Python 3.12.15, Node 22.23.3, PowerShell 7.6.6, official `mcp==1.30.0` and `httpx==0.28.1`. All 80 scoped source regression tests passed. The official SDK then completed real loopback Streamable HTTP and legacy SSE echo calls: each receipt has eight PASS checks, including initialize, service identity, tools/list, echo response verification and transport closure. Both receipts retain `dl580_recovery_claim: NOT_ASSERTED`. PowerShell parsed the two scripts; the job did not execute them or assert Windows PowerShell 5.1 compatibility on DL580.
+
+### Existing authenticated Bridge access obtained
+
+At 2026-10-10T17:30:53.783957Z, the recovery session followed the existing AuthHandoff and ChannelAudit records and obtained the existing authorized credential. Authenticated `GET /MRL_sysinfo` returned HTTP 200 with `ok: true`, in the actual Bridge 3.1 flat response shape. Observed identity metadata was `WIN-PBVUI7VK2A6`, `win32`, `x64`, Node `20.11.1`, Bridge `3.1.0` and `MrLiouWord`.
+
+The earlier missing-key observation means this connection had not obtained the existing credential at the first source freeze. It does not establish that no key existed. This continuation contains neither the credential value nor private source identifiers or document contents. Authenticated sysinfo proves the observed management access and identity; actual D: deployment, source/runtime checks and dependency acceptance require their own receipts.
+
+### Freeze the observed flat contract
+
+The follow-up changes `scripts/MRL_localai_recovery_acceptance_v1.py` and its existing test file to accept only the observed Bridge 3.1 flat contract. The earlier validator already accepted that flat response. The change removes an unverified nested-wrapper alternative and the associated risk of substituting nested identity values for the actual top-level identity.
+
+The updated acceptance suite has 29 tests, reported PASS by the recovery session; the scoped regression total is now 81. Those updated sources require a new CI run on the follow-up commit. The first 80-test CI result above remains attached to its exact earlier revision.
+
+This continuation was frozen at 2026-10-10T17:34:53Z while actual DL580 checks were in progress. Their results are not included or predicted here. The package remains 33 expected paths and 32 hashed payloads; the manifest excludes its own hash. After committing the follow-up, record its immutable commit and fresh CI result, then use that exact revision for D: deployment and append the actual local receipts.

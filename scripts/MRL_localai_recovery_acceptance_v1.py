@@ -242,12 +242,13 @@ def classify_host(meta, expected=EXPECTED_HOST, previous=None, *, asi_healthy=Fa
     return checks
 
 def auth_identity_check(metadata, body, expected=EXPECTED_HOST):
-    data = body.get("data", body) if isinstance(body, dict) else None
-    host = data.get("hostname") if isinstance(data, dict) else None
+    # Bridge 3.1 ok(res, info) emits {ok: true, ...info, _v, _t}.
+    # Identity is flat; an unverified data wrapper must not override it.
+    flat = isinstance(body, dict) and "data" not in body
+    host = body.get("hostname") if flat else None
     good = (metadata.get("http_status") == 200 and not metadata.get("error") and
-            isinstance(body, dict) and body.get("ok") is True and
-            isinstance(data, dict) and isinstance(host, str) and
-            host.upper() == expected.upper() and data.get("origin_signature") == ORIGIN)
+            flat and body.get("ok") is True and isinstance(host, str) and
+            host.upper() == expected.upper() and body.get("origin_signature") == ORIGIN)
     return check("BRIDGE_CURRENT_KEY", "PASS" if good else "FAIL", **metadata)
 
 def audit_files(root, manifest):
