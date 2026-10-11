@@ -26,6 +26,6 @@ origin_signature: MrLiouWord ｜ Additive-Only ｜ 只讀；未改任何路由�
 
 1. DL580 跑 `deploy\dl580\MRL_Router_Receipt.ps1` → 看 `verdict`。
 2. 依 runbook 步驟 2→5 改路由器，每步重跑收據。
-3. 外部 `curl https://origin.mrliouword.com/health` 回 403 才算路由器段 PASS。
+3. 外部驗收必須帶 token：經 Worker `mrliousilly` 帶 `x-mrl-edge-token` 打 `/api/mother/status`，回 200 且 `x-mrl-dl580-entry: origin.mrliouword.com` 才算路由器段 PASS。不帶 token 的 403 是 Access 在邊緣擋下，沒碰到 DL580，不能當證據。
 
 當下狀態：路由器段 **待實機**。`MRL_Router_Receipt.ps1` 的 PowerShell 語法解析亦**待實機**（沙盒無 pwsh，只做了括號／引號平衡檢查：PASS，沙盒 2026-10-11）。

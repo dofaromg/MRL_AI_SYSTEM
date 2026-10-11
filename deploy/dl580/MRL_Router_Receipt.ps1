@@ -100,10 +100,25 @@ $pre.listening = ($listen.Count -gt 0)
 $pre.listeners = @($listen | ForEach-Object { $proc = Get-Process -Id $_.OwningProcess -ErrorAction SilentlyContinue; [ordered]@{ address = $_.LocalAddress; pid = $_.OwningProcess; process = if ($proc) { $proc.ProcessName } else { $null } } })
 $rule = Get-NetFirewallRule -DisplayName "MRL_Edge_Cloudflare_$EdgePort" -ErrorAction SilentlyContinue
 $pre.firewall_rule = if ($rule) { [ordered]@{ name = $rule.DisplayName; enabled = "$($rule.Enabled)"; action = "$($rule.Action)"; remote = @((Get-NetFirewallAddressFilter -AssociatedNetFirewallRule $rule -ErrorAction SilentlyContinue).RemoteAddress | Select-Object -First 5) } } else { "missing" }
-$pre.other_allow_rules_on_port = @(Get-NetFirewallPortFilter -Protocol TCP -ErrorAction SilentlyContinue | Where-Object { $_.LocalPort -eq "$EdgePort" } | Get-NetFirewallRule -ErrorAction SilentlyContinue | Where-Object { $_.Enabled -eq "True" -and $_.Direction -eq "Inbound" -and $_.Action -eq "Allow" -and $_.DisplayName -ne "MRL_Edge_Cloudflare_$EdgePort" } | ForEach-Object { $_.DisplayName })
+# same contract as MRL_Singularity_Origin_Setup.ps1 (Codex P1): any other enabled inbound allow rule that covers
+# the port (TCP or Any protocol, explicit port or Any) and is not bound to a specific program counts as broad.
+$pre.other_allow_rules_on_port = @(Get-NetFirewallRule -Direction Inbound -Action Allow -Enabled True -ErrorAction SilentlyContinue |
+  Where-Object { $_.DisplayName -ne "MRL_Edge_Cloudflare_$EdgePort" } | Where-Object {
+    $pf = $_ | Get-NetFirewallPortFilter -ErrorAction SilentlyContinue
+    $pf -and ($pf.Protocol -in @("TCP", "Any")) -and ($pf.LocalPort -contains "$EdgePort" -or $pf.LocalPort -contains "Any")
+  } | Where-Object { ($_ | Get-NetFirewallApplicationFilter -ErrorAction SilentlyContinue).Program -in @($null, "Any") } |
+  ForEach-Object { $_.DisplayName })
 $pre.profiles = @(Get-NetFirewallProfile -ErrorAction SilentlyContinue | ForEach-Object { [ordered]@{ name = $_.Name; enabled = "$($_.Enabled)"; default_inbound = "$($_.DefaultInboundAction)" } })
-$pre.ready_for_forward = ($pre.listening -and ($rule -ne $null) -and ($pre.other_allow_rules_on_port.Count -eq 0))
-$pre.note = "Do NOT add the router port forward until ready_for_forward=true (run MRL_Singularity_Origin_Setup.ps1 first). Forwarding to an unprotected listener exposes the fixed IP."
+$loose = @(Get-NetFirewallProfile -ErrorAction SilentlyContinue | Where-Object { $_.Enabled -ne $true -or $_.DefaultInboundAction -notin @("Block") })
+$pre.loose_profiles = @($loose | ForEach-Object { "$($_.Name):enabled=$($_.Enabled),inbound=$($_.DefaultInboundAction)" })
+$pre.ready_for_forward = (
+  $pre.listening -and
+  ($null -ne $rule) -and
+  ("$($rule.Enabled)" -eq "True") -and
+  ($pre.other_allow_rules_on_port.Count -eq 0) -and
+  ($loose.Count -eq 0)
+)
+$pre.note = "Do NOT add the router port forward until ready_for_forward=true (run MRL_Singularity_Origin_Setup.ps1 first). It requires: listener on the port, MRL_Edge_Cloudflare_<port> present and enabled, no other broad allow rule on the port, every profile enabled with default inbound Block. Forwarding to an unprotected listener exposes the fixed IP."
 $R.prerequisites = $pre
 
 # 5. DNS of the origin host (must be Cloudflare proxy addresses)
@@ -138,7 +153,7 @@ if (-not $NoPrompt) {
 $v = [ordered]@{}
 $v.wan_fixed_ip      = if ($wan.match) { "PASS" } else { "FAIL: egress $($wan.egress_ip) != $ExpectedWanIp" }
 $v.lan_expected      = if ($R.lan.has_expected) { "PASS" } else { "FAIL: $ExpectedLanIp not on any up interface" }
-$v.forward_prereq    = if ($pre.ready_for_forward) { "PASS" } else { "PENDING: listener/firewall not ready; do not forward yet" }
+$v.forward_prereq    = if ($pre.ready_for_forward) { "PASS" } else { "PENDING: listener/firewall not ready (rule=" + $(if ($null -ne $rule) { "$($rule.Enabled)" } else { "missing" }) + ", other_allow=" + $pre.other_allow_rules_on_port.Count + ", loose_profiles=" + $loose.Count + "); do not forward yet" }
 $v.dns_proxied       = if ($dns.a -and -not $dns.resolves_to_bare_fixed_ip) { "PASS" } else { "CHECK: $($dns.a -join ',')" }
 $v.hairpin           = if ($hp.tcp_ok) { "PASS" } else { "INCONCLUSIVE (verify from outside)" }
 $R.verdict = $v
