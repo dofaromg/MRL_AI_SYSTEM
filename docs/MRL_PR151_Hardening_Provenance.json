@@ -1,0 +1,56 @@
+{
+  "origin_signature": "MrLiouWord",
+  "source_import_commit": "5272acc107af4553e9f27b0a5dd2cbac7b26c827",
+  "workflow_fix_commit": "a8355c7b6f0cbaefc9aaf4897a5cfd0c9843f240",
+  "source_manifest": "docs/MRL_PR149_SwiftUI_Provenance.json",
+  "scope": "Explicit runtime derivatives in a separate hardening follow-up; original source blobs retained in immutable import history. No NavigationStack activation.",
+  "files": [
+    {
+      "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Models/Scan.swift",
+      "original": {
+        "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Models/Scan.swift",
+        "size": 2635,
+        "sha256": "4e398f88053143da8861bc9d01c0212769ecf5ce25e1c67ac5b0448a3ebd50d9",
+        "source_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+        "last_change_commit": "0579c8d9e1f95b5499736c8fdc00497f6ae82b24",
+        "source_blob": "e4b12bddbfbd67dcc40699d8557a8c45ae820a1e"
+      },
+      "derived": {
+        "size": 3479,
+        "sha256": "30358404d5a83e3ba6f48c388dcc36b26fa11315afb602b78837b00a670b4932"
+      }
+    },
+    {
+      "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Reconstruction/MRLReconstructionClient.swift",
+      "original": {
+        "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Reconstruction/MRLReconstructionClient.swift",
+        "size": 4298,
+        "sha256": "ec8b815dd3e45561f2546320e79d789afcef6d74876d735d9790d21e931eb5b5",
+        "source_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+        "last_change_commit": "0579c8d9e1f95b5499736c8fdc00497f6ae82b24",
+        "source_blob": "e32a38f528d81e2aec3a8e0e015a2355c79c0d1d"
+      },
+      "derived": {
+        "size": 7055,
+        "sha256": "93384a40e392707b15846d3a668685a6e95c84ee6893d3e7e3aa5326eff157a4"
+      }
+    },
+    {
+      "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Views/ReconstructionBridgeView.swift",
+      "original": {
+        "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Views/ReconstructionBridgeView.swift",
+        "size": 2444,
+        "sha256": "6fe6d55ac1ff0dcccf093025cacc9ee408f36eb69257e95fcf00702b77820382",
+        "source_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+        "last_change_commit": "0579c8d9e1f95b5499736c8fdc00497f6ae82b24",
+        "source_blob": "324ce9182000977b4fd94858820ea53eef13243a"
+      },
+      "derived": {
+        "size": 2516,
+        "sha256": "eeabb796b50933704f47dd42d7fcc953c039799edfd10d021e2ded035d9bdbf7"
+      }
+    }
+  ],
+  "review_followup_base": "54a698cabbb9769ac04ee04e96dd92dbc2ba445c",
+  "previous_hardening_commit": "fec1a17948c67339693e185914ae89f314565443"
+}
