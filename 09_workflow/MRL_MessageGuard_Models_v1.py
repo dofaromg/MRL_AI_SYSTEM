@@ -25,10 +25,18 @@ CLI:python3 09_workflow/MRL_MessageGuard_Models_v1.py
 from __future__ import annotations
 
 import math
+import os
 import re
+import sys
 from typing import Any, Dict, List, Tuple
 
-from MRL_utils import ORIGIN_SIGNATURE
+try:
+    from MRL_utils import ORIGIN_SIGNATURE
+except ModuleNotFoundError:  # pragma: no cover - fallback when modules are loaded by file path
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    if repo_root not in sys.path:
+        sys.path.insert(0, repo_root)
+    from MRL_utils import ORIGIN_SIGNATURE
 # 小型英文停用詞(對齊原規格 stop_words='english' 的精神,純 stdlib 內建)
 _STOP = {
     "a", "an", "the", "is", "are", "was", "were", "be", "been", "being",
@@ -138,10 +146,14 @@ class MRL_MultinomialNB:
         return jll
 
     def predict_proba(self, x: Dict[int, float]) -> Dict[int, float]:
+        if not x:
+            return {c: 1.0 / len(self.classes) for c in self.classes}
         jll = self._joint(x)
         m = max(jll.values())
         exp = {c: math.exp(v - m) for c, v in jll.items()}
         z = sum(exp.values())
+        if z == 0.0:
+            return {c: 1.0 / len(self.classes) for c in self.classes}
         return {c: e / z for c, e in exp.items()}
 
 
@@ -230,7 +242,10 @@ class MRL_SpamGuard:
         if not self._trained:
             self.train()
         x = self.vec.transform([text])[0]
-        prob = self.model.predict_proba(x).get(1, 0.0)
+        probs = self.model.predict_proba(x)
+        prob = probs.get(1, 0.0)
+        if not probs:
+            prob = 0.0
         return {"text": text, "spam_probability": round(prob, 4),
                 "label": "spam" if prob >= 0.5 else "ham"}
 
@@ -259,6 +274,8 @@ class MRL_ToxicGuard:
             self.train()
         x = self.vec.transform([text])[0]
         prob = self.model.predict_proba(x)
+        if prob is None:
+            prob = 0.0
         return {"text": text, "toxicity_probability": round(prob, 4),
                 "label": "toxic" if prob >= 0.5 else "clean"}
 
