@@ -29,10 +29,10 @@ powershell -ExecutionPolicy Bypass -File deploy\dl580\MRL_Router_Receipt.ps1
 
 收據寫到 `D:\MRL_runtime\receipts\MRL_Router_Receipt_*.json`。看 `verdict`：
 
-- `wan_fixed_ip`：DL580 出口 IP 是否等於 `220.132.58.129`。
+- `wan_fixed_ip`：DL580 出口 IP 是否等於 `220.132.58.129`。`UNKNOWN` 代表探測本身失敗（看 `wan.probe_errors`），不是不符，不要因此改 PPPoE。
 - `lan_expected`：DL580 是否拿到 `192.168.0.162`。
 - `forward_prereq`：本機 `:443` 是否已有 Caddy 監聽 **且** 防火牆規則 `MRL_Edge_Cloudflare_443` 存在、沒有其他放行規則。**這項不是 PASS 以前，路由器不得開任何轉發。**
-- `dns_proxied`：`origin.mrliouword.com` 必須解析到 Cloudflare 代理位址，不得是裸固定 IP。
+- `dns_proxied`：`origin.mrliouword.com` 的每個 A 紀錄都要落在 Cloudflare IPv4 範圍內（正向證據），不得是裸固定 IP；範圍清單抓不到時是 `CHECK`，不是 PASS。
 
 ## 修復步驟（依序；每步只改一件事，改完重跑收據）
 
@@ -73,7 +73,7 @@ powershell -ExecutionPolicy Bypass -File deploy\dl580\MRL_Router_Receipt.ps1
 
 ### 步驟 6：驗收（內外各一次）
 
-內（DL580）：重跑 `MRL_Router_Receipt.ps1`。`hairpin.tcp_ok = true` 即端到端通；為 `false` 不算失敗（多數家用路由器不做 NAT hairpin）。
+內（DL580）：重跑 `MRL_Router_Receipt.ps1`。`hairpin.verified = true`（TCP 通、帶 SNI 的 HTTPS 回 200、回應含 `MrLiouWord`、且出口 IP 符合固定 IP）才算端到端通；只有 `tcp_ok = true` 不算，可能是路由器管理頁或別台主機在接。`tcp_ok = false` 不算失敗（多數家用路由器不做 NAT hairpin）。
 
 外（任何不在同一 LAN 的機器，例如手機關 Wi-Fi 用行動網路）：
 
