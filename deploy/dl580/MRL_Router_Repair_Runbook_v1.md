@@ -77,17 +77,38 @@ powershell -ExecutionPolicy Bypass -File deploy\dl580\MRL_Router_Receipt.ps1
 
 外（任何不在同一 LAN 的機器，例如手機關 Wi-Fi 用行動網路）：
 
+**不帶 token 直接打 `origin.mrliouword.com` 回 403 不能當證據**。Cloudflare Access 在邊緣就擋下 403，根本沒有連到 DL580；R03 同一時刻就是「無 token 403、帶 token 522」。要證明路由器段通，請求必須帶 token 真正到達 origin。
+
+走 Worker `mrliousilly`（它會自動帶 Access service token，先試 origin 再退 Tunnel）：
+
 ```bash
-# 應回 403（Access 擋下，代表 Cloudflare 已經連到 DL580 的 Caddy）
-curl -s -o /dev/null -w "%{http_code}\n" https://origin.mrliouword.com/health
+# MRL_WORKER = mrliousilly 正式網址（例如 https://mrliousilly.z814241.workers.dev）
+# MRL_EDGE_TOKEN = Cloudflare secret MRL_EDGE_TOKEN 的值（R03 修補）
+curl -s -D /tmp/headers -o /tmp/body.json \
+  -H "x-mrl-edge-token: $MRL_EDGE_TOKEN" \
+  "$MRL_WORKER/api/mother/status"
+head -1 /tmp/headers; grep -i "^x-mrl-dl580-entry" /tmp/headers; cat /tmp/body.json
 ```
 
 | 外部結果 | 判讀 | 下一步 |
 |---|---|---|
-| 403 | **PASS**：Cloudflare → 固定 IP → 路由器 → Caddy 全通，Access 正常擋匿名 | 用 Worker `mrliousilly` 帶 edge token 打 `/api/mother/status` 做最終驗收 |
-| 522 | Cloudflare 連不到 `220.132.58.129:443` | 回步驟 2／3／5；確認 WAN IP、轉發規則、路由器本身沒吃 443 |
-| 526 | 連到了但憑證不被接受 | 路由器已通；回 DL580 放 Origin CA 憑證（見 R03 修補） |
-| 530 | 這是 Tunnel 主機名的錯，不是 origin | 確認打的是 `origin.`，不是 `dl580.`／`bridge.` |
+| 200 且回應標頭 `x-mrl-dl580-entry: origin.mrliouword.com` | **PASS**：Cloudflare → 固定 IP → 路由器 → Caddy → MRL_Platform 全通 | 路由器段完成；收據歸檔 |
+| 200 但 `x-mrl-dl580-entry: dl580.mrliouword.com` | origin 失敗、Worker 退到 Tunnel 備援 | **未通過**：看 Worker 日誌或改用下方直打法取得 origin 的實際狀態碼 |
+| 502 JSON，`tried` 內 `origin` 為 **522** | Cloudflare 連不到 `220.132.58.129:443` | 回步驟 2／3／5；確認 WAN IP、轉發規則、路由器本身沒吃 443 |
+| 502 JSON，`tried` 內 `origin` 為 **526** | 連到了但憑證不被接受 | 路由器已通；回 DL580 放 Origin CA 憑證（見 R03 修補） |
+| 502 JSON，`tried` 內 `origin` 為 **403** | Access service token 無效或 Access 應用設定不符 | 雲端層問題，非路由器；核對 R03 的 Access 設定 |
+| 401 `MRL_EDGE_UNAUTHORIZED` | `x-mrl-edge-token` 不對 | 核對 secret 值 |
+
+有 Access service token（`MRL_DL580_ACCESS_ID／SECRET`）時也可直打 origin，判讀同上（200 = PASS，522 = 路由器，526 = 憑證）：
+
+```bash
+curl -s -o /dev/null -w "%{http_code}\n" \
+  -H "CF-Access-Client-Id: $MRL_DL580_ACCESS_ID" \
+  -H "CF-Access-Client-Secret: $MRL_DL580_ACCESS_SECRET" \
+  https://origin.mrliouword.com/health
+```
+
+530 表示打到的是 Tunnel 主機名（`dl580.`／`bridge.`），不是 origin，與路由器無關。
 
 ## 不做清單
 
