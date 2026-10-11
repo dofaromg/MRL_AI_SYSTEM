@@ -46,6 +46,7 @@ APFS / Batch072 為部署與備份鏈，掛在「DL580 本地 Runtime」這一�
 | 長駐服務 (systemd) | `deploy/dl580/MRL_systemd_service.template` |
 | self-hosted runner | `deploy/dl580/MRL_selfhosted_runner_notes.md` |
 | 對外橋接 (Cloudflare Tunnel) | `deploy/dl580/cloudflared/MRL_cloudflared_deploy.ps1` → `bridge.mrliouhan.ai` |
+| 路由器修復（人工，固定 IP / DHCP 保留 / TCP 443） | `deploy/dl580/MRL_Router_Repair_Runbook_v1.md`，收據 `deploy/dl580/MRL_Router_Receipt.ps1` |
 
 啟動流程（與根 README 一致）：
 
