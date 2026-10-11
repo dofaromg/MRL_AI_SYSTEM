@@ -58,14 +58,14 @@ jobs:
               raise SystemExit("WATCHDOG_SELF_TEST_RECEIPT_INVALID")
           print(json.dumps(receipt, sort_keys=True))
           PY
-      - name: Verify Qdrant service with 28 memory-only cases
+      - name: Verify Qdrant service with 29 memory-only cases
         shell: bash
         run: |
           python -B - <<'PY'
           import json
           import unittest
 
-          expected = 28
+          expected = 29
           loader = unittest.TestLoader()
           suite = loader.discover(
               start_dir="MRL_Recovery_Operations/20261010_R02",

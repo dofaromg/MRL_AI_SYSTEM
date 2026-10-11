@@ -117,3 +117,5 @@ try{
  $result=$terminal
 }
 $result|ConvertTo-Json -Depth 8 -Compress
+if($result.status -eq 'INSTALL_FAILED'){exit 1}
+exit 0

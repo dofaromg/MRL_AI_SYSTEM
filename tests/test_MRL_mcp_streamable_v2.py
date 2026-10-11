@@ -13,13 +13,16 @@ import socket
 import sys
 import time
 import unittest
+from unittest import mock
 from urllib.parse import urlsplit
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "09_workflow"))
 from MRL_MCPServerHarness_Streamable_v2 import (  # noqa: E402
     MCPStreamableServerV2, ThreadedServer, TransportLimits, make_content,
 )
-from MRL_AgentHarness_PolicyGate_v1 import enforce, deny_all, allow  # noqa: E402
+from MRL_AgentHarness_PolicyGate_v1 import (  # noqa: E402
+    _is_path_in_workspace, allow, deny_all, enforce,
+)
 from MRL_AgentHarness_ToolLoop_v1 import ToolLoopRunner  # noqa: E402
 
 
@@ -184,6 +187,17 @@ class TestStreamableHTTP(unittest.TestCase):
                                       headers={**headers, "Host": "attacker.invalid"})[0], 403)
             self.assertEqual(_request(server, path="/not-an-endpoint",
                                       payload=_rpc("ping"), headers=headers)[0], 404)
+
+    def test_configured_host_is_accepted_for_authenticated_listener(self):
+        with _server(api_key="fixture-key", allowed_hosts=("example.test",)) as server:
+            self.assertEqual(_request(
+                server, payload=_rpc("ping"),
+                headers={"x-api-key": "fixture-key", "Host": "example.test"})[0], 200)
+
+    def test_darwin_paths_keep_case_distinct(self):
+        with mock.patch.object(sys, "platform", "darwin"):
+            self.assertFalse(_is_path_in_workspace("/Volumes/Data/work/file",
+                                                   "/Volumes/Data/Work"))
 
     def test_connection_capacity_rejects_without_unbounded_worker_growth(self):
         limits = TransportLimits(max_sse_sessions=1, max_http_connections=2,

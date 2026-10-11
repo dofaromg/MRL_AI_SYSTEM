@@ -509,6 +509,14 @@ class BoundedLog:
 def run_id():
     return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "_" + uuid.uuid4().hex
 
+def prune_ready_records(instance):
+    paths = sorted((instance / "state").glob("run_*_ready.json"), reverse=True)
+    for path in paths[MAX_RUNS - 1:]:
+        path.unlink()
+        end = path.with_name(path.name.replace("_ready.json", "_end.json"))
+        if end.exists():
+            end.unlink()
+
 def supervise(support, win, instance):
     instance, m, key = validate_instance(support, win, instance)
     require(path_equal(Path(__file__).resolve(), instance / "runtime" / SELF_NAME),
@@ -526,8 +534,7 @@ def supervise(support, win, instance):
                               "image": PYTHON})
     exit_code = 2
     try:
-        require(len(list((instance / "state").glob("run_*_ready.json"))) < MAX_RUNS,
-                "retained_run_record_capacity_reached")
+        prune_ready_records(instance)
         require(not any(port in (6333, 6334, 6335) for _, port, _ in win.listeners()),
                 "qdrant_ports_already_in_use")
         env = child_environment(os.environ, instance, key)

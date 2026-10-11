@@ -29,6 +29,10 @@ name: MRL LocalAI recovery SDK gate
       - "docs/recovery/MRL_LocalAI_Recovery_20261010_Evidence.json"
       - "MRL_Adapters/MetaEnv/**"
       - "data/.gitignore"
+      - "data/MetaCode.export.2026-07-08.json"
+      - "deploy/dl580/asi-engine/MRL_ASI_health_server.cjs"
+      - "scripts/MRL_bridge_recovery_safe_v1.sh"
+      - "scripts/MRL_recovery_dependency_probe_v1.py"
 
 permissions:
   contents: read

@@ -118,7 +118,7 @@ def _secure_normalize_path(path: PathOrStr) -> pathlib.Path:
 
 
 def _is_case_insensitive_fs() -> bool:
-    return sys.platform in ("win32", "darwin")
+    return sys.platform == "win32"
 
 
 def _is_path_in_workspace(target_path: PathOrStr, workspace_path: PathOrStr) -> bool:

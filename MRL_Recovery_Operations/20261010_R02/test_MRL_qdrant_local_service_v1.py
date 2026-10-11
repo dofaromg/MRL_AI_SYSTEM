@@ -4,6 +4,7 @@ import importlib.machinery
 import io
 import json
 from pathlib import Path
+import tempfile
 import types
 import unittest
 from unittest import mock
@@ -229,6 +230,18 @@ class ProbeTests(unittest.TestCase):
             svc.request_json(self.support, "/collections/private/points", KEY)
 
 class SeparationTests(unittest.TestCase):
+    def test_prune_ready_records_keeps_capacity_for_next_start(self):
+        with tempfile.TemporaryDirectory() as directory:
+            state = Path(directory) / "state"
+            state.mkdir()
+            for index in range(svc.MAX_RUNS):
+                stem = f"run_{index:04d}"
+                (state / f"{stem}_ready.json").write_text("{}")
+                (state / f"{stem}_end.json").write_text("{}")
+            svc.prune_ready_records(Path(directory))
+            self.assertEqual(len(list(state.glob("run_*_ready.json"))), svc.MAX_RUNS - 1)
+            self.assertEqual(len(list(state.glob("run_*_end.json"))), svc.MAX_RUNS - 1)
+
     def test_install_only_calls_disabled_install(self):
         fake_manifest = manifest()
         win = object()

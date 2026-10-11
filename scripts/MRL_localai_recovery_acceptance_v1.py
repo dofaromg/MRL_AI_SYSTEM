@@ -179,10 +179,10 @@ def _startup_task(task):
     entry = _bools(task.get("action_entry_matches"))
     return (task.get("enabled") is True and task.get("boot_trigger") is True and
             _task_state(task.get("state")) in {"QUEUED", "READY", "RUNNING"} and
-            type(count) is int and count > 0 and
+            type(count) is int and count == 1 and
             len(absolute) == len(node) == len(entry) == count and
             all(flag is True for flag in absolute) and
-            any(n is True and e is True for n, e in zip(node, entry)))
+            all(n is True and e is True for n, e in zip(node, entry)))
 
 def _task_ran_after_boot(task, boot, observed):
     last = _utc(task.get("last_run_utc"))

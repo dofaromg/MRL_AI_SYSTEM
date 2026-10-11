@@ -586,6 +586,8 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8765)
+    parser.add_argument("--allowed-host", action="append", default=[],
+                        help="additional Host header allowed for non-loopback listeners")
     args = parser.parse_args()
     mcp = MCPStreamableServerV2()
     mcp.register_tool("echo", "Echo an acceptance probe without accessing user data",
@@ -593,7 +595,8 @@ def main() -> int:
                        "required": ["message"]},
                       lambda message: make_content(f"Tool echo: {message}"))
     with ThreadedServer(mcp, host=args.host, port=args.port,
-                        api_key=os.environ.get("MRL_MCP_API_KEY")) as server:
+                        api_key=os.environ.get("MRL_MCP_API_KEY"),
+                        allowed_hosts=tuple(args.allowed_host)) as server:
         print(json.dumps({"origin_signature": ORIGIN_SIGNATURE,
                           "server_name": SERVER_NAME, "server_version": SERVER_VERSION,
                           "streamable_http": server.url, "legacy_sse": server.sse_url}),

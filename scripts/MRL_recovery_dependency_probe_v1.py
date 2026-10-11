@@ -34,7 +34,7 @@ import time
 from datetime import datetime, timezone
 from urllib.error import HTTPError
 from urllib.parse import urlsplit, urlunsplit
-from urllib.request import HTTPRedirectHandler, Request, build_opener
+from urllib.request import HTTPRedirectHandler, ProxyHandler, Request, build_opener
 
 sys.dont_write_bytecode = True
 ORIGIN_SIGNATURE = "MrLiouWord"
@@ -129,7 +129,8 @@ def request_metadata(url, headers=None):
     request_headers.update(headers or {})
     request = Request(url, headers=request_headers, method="GET")
     try:
-        response = build_opener(NoRedirect()).open(request, timeout=NETWORK_TIMEOUT)
+        response = build_opener(ProxyHandler({}), NoRedirect()).open(
+            request, timeout=NETWORK_TIMEOUT)
     except HTTPError as exc:
         status = exc.code
         exc.close()

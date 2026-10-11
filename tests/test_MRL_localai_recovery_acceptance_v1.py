@@ -232,6 +232,11 @@ class HostGateTests(unittest.TestCase):
             action_count=2, action_absolute=[True, True],
             action_node_matches=[True, False], action_entry_matches=[False, True])
         self.assertEqual(self.run_gate(meta)["ASI_STARTUP_CONFIGURATION"], "FAIL")
+        meta = metadata()
+        meta["tasks"][0].update(
+            action_count=2, action_absolute=[True, True],
+            action_node_matches=[True, True], action_entry_matches=[True, True])
+        self.assertEqual(self.run_gate(meta)["ASI_STARTUP_CONFIGURATION"], "FAIL")
         for field, value in (("action_absolute", [False]), ("action_count", True),
                              ("action_entry_matches", []), ("enabled", False),
                              ("boot_trigger", False)):
