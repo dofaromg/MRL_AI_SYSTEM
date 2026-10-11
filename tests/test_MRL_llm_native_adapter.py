@@ -102,3 +102,17 @@ class TestRegistration:
         gw = LLMGateway()
         names = register_native_adapters(gw)
         assert names == []
+
+    def test_local_adapter_routes_unknown_local_models(self, monkeypatch):
+        def fake_post(url, payload, headers, timeout=60):
+            assert url.startswith("http://localhost:11434/v1")
+            return {"model": "llama3", "choices": [{"message": {"content": "ok"}, "finish_reason": "stop"}], "usage": {}}
+
+        monkeypatch.setattr(native, "_http_post_json", fake_post)
+        gw = LLMGateway()
+        gw.register("local", MRLNativeOpenAIAdapter(api_key="local",
+                                                    base_url="http://localhost:11434/v1"))
+        adapter = gw.adapter_for("llama3")
+        assert adapter.name() == "MRLNativeOpenAIAdapter"
+        resp = gw.complete(_req("llama3"))
+        assert resp.ok is True and resp.text == "ok"

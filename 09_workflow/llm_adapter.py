@@ -418,6 +418,8 @@ class LLMGateway:
             return self._adapters["anthropic"]
         if model.startswith("mock"):
             return self._adapters["mock"]
+        if "local" in self._adapters:
+            return self._adapters["local"]
         raise KeyError(
             f"No adapter registered for model '{model}'. "
             f"Registered: {list(self._adapters.keys())}"
