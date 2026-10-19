@@ -11,6 +11,7 @@
 #   - 每個旗標都只是「觀測」，不是「結論」。看不到 ≠ 不存在（局部視角規則）。
 #   - 觀測位置由 --observer 標記；沙盒、DL580、外部網路得到的結果不可混為一談。
 # 用法：
+# 結束碼：0 成功｜2 全數探測失敗（錯誤快照仍保存）｜3 輸出路徑在雲端同步資料夾
 #   python3 scripts/MRL_domain_evidence_collect_v1.py --domain mrliouhan.ai \
 #       --observer DL580 --out D:\mrl\evidence\mrliouhan_before
 from __future__ import annotations
@@ -19,7 +20,9 @@ import argparse
 import hashlib
 import ipaddress
 import json
+import os
 import pathlib
+import socket
 import sys
 import time
 import urllib.error
@@ -38,6 +41,10 @@ PROBE_LABELS = ("www", "bridge", "manus", "_acme-challenge", "_cf-custom-hostnam
 HTTP_PATHS = ("/", "/robots.txt", "/manus-oauth/callback")
 HTTP_HOSTS_PREFIX = ("", "www.")
 PLATFORM_HOST_SUFFIXES = ("manus.im", "manus.space", "manus.computer")
+SYNCED_MARKERS = ("dropbox", "onedrive", "google drive", "googledrive", "icloud")
+RETRY_ATTEMPTS = 3          # 暫時性錯誤（逾時、連線中斷、429／5xx）最多嘗試次數
+RETRY_BASE_DELAY = 0.5      # 指數退避基準秒數：0.5 → 1.0
+TRANSIENT_HTTP = (429, 500, 502, 503, 504)
 
 # Cloudflare 公布的 IPv4 範圍（以官方清單為準；此處僅供旗標標示，需另行核對）
 CLOUDFLARE_V4 = tuple(ipaddress.ip_network(n) for n in (
@@ -65,22 +72,54 @@ def sha256_bytes(data: bytes) -> str:
 
 
 # ── 網路探測（皆唯讀）──────────────────────────────────────────────────────
+def _is_transient(exc: BaseException) -> bool:
+    """暫時性錯誤才重試；3xx／4xx（429 除外）是伺服器的明確回答，重試只會污染證據。"""
+    if isinstance(exc, urllib.error.HTTPError):
+        return exc.code in TRANSIENT_HTTP
+    return isinstance(exc, (urllib.error.URLError, socket.timeout, TimeoutError, ConnectionError))
+
+
+def _with_retry(call, attempts=None, base_delay=None, sleep=None):
+    """執行 call()；暫時性錯誤指數退避重試。回傳 (結果, 實際嘗試次數)，最後一次失敗則原樣丟出。
+    預設值在呼叫時才解析（不綁定於定義時），測試與設定覆寫才會生效。"""
+    attempts = RETRY_ATTEMPTS if attempts is None else attempts
+    base_delay = RETRY_BASE_DELAY if base_delay is None else base_delay
+    sleep = time.sleep if sleep is None else sleep
+    for n in range(1, attempts + 1):
+        try:
+            return call(), n
+        except Exception as e:  # noqa: BLE001
+            if n >= attempts or not _is_transient(e):
+                e.attempts = n  # type: ignore[attr-defined]
+                raise
+            sleep(base_delay * (2 ** (n - 1)))
+    raise AssertionError("unreachable")
+
+
+def _err(e: BaseException) -> str:
+    n = getattr(e, "attempts", 1)
+    return f"{type(e).__name__}: {e}" + (f" (attempts={n})" if n > 1 else "")
+
+
 def doh_query(name: str, rtype: str, timeout: float = 10.0) -> dict:
     url = f"{DOH_ENDPOINT}?name={urllib.parse.quote(name)}&type={rtype}"
     req = urllib.request.Request(url, headers={"accept": "application/dns-json", "user-agent": USER_AGENT})
-    try:  # DoH 端點不應轉址；3xx 以 HTTPError 回報，避免把別處內容當成該解析器的答案
+    def call() -> bytes:
         with urllib.request.build_opener(_NoRedirect).open(req, timeout=timeout) as r:
-            raw = r.read()
+            return r.read()
+
+    try:  # DoH 端點不應轉址；3xx 以 HTTPError 回報，避免把別處內容當成該解析器的答案
+        raw, tries = _with_retry(call)
         d = json.loads(raw)
         return {
             "name": name, "type": rtype, "rcode": d.get("Status"),
             "answers": [a.get("data") for a in d.get("Answer", [])],
             "authority": [a.get("data") for a in d.get("Authority", [])],
             "ttl": [a.get("TTL") for a in d.get("Answer", [])],
-            "ad": d.get("AD"), "raw_sha256": sha256_bytes(raw),
+            "ad": d.get("AD"), "raw_sha256": sha256_bytes(raw), "attempts": tries,
         }
     except Exception as e:  # noqa: BLE001 — 蒐證腳本：失敗也要記錄，不可中斷
-        return {"name": name, "type": rtype, "error": f"{type(e).__name__}: {e}"}
+        return {"name": name, "type": rtype, "error": _err(e)}
 
 
 def rdap_lookup(domain: str, timeout: float = 20.0) -> dict:
@@ -89,14 +128,16 @@ def rdap_lookup(domain: str, timeout: float = 20.0) -> dict:
     for base in RDAP_ENDPOINTS:  # 單一端點被限流／拒絕時換下一個；全部失敗才回報錯誤
         req = urllib.request.Request(base + domain, headers={
             "accept": "application/rdap+json", "user-agent": USER_AGENT})
-        try:
+        def call(req=req):
             with urllib.request.urlopen(req, timeout=timeout) as r:  # rdap.org 本身是轉址器，需跟隨
-                raw = r.read()
-                final_url = r.geturl()
+                return r.read(), r.geturl()
+
+        try:
+            (raw, final_url), tries = _with_retry(call)
             return {**reduce_rdap(json.loads(raw), sha256_bytes(raw)),
-                    "endpoint": base, "effective_url": final_url}
+                    "endpoint": base, "effective_url": final_url, "attempts": tries}
         except Exception as e:  # noqa: BLE001
-            errors.append(f"{base}: {type(e).__name__}: {e}")
+            errors.append(f"{base}: {_err(e)}")
     return {"error": "; ".join(errors)}
 
 
@@ -192,17 +233,25 @@ class _NoRedirect(urllib.request.HTTPRedirectHandler):
 def http_probe(url: str, timeout: float = 10.0) -> dict:
     opener = urllib.request.build_opener(_NoRedirect)
     req = urllib.request.Request(url, headers={"user-agent": USER_AGENT})
+    def call():
+        try:
+            r = opener.open(req, timeout=timeout)
+            return r, r.status, r.headers
+        except urllib.error.HTTPError as e:
+            if e.code in TRANSIENT_HTTP:  # 429／5xx：交給重試；其餘 3xx／4xx 是明確回答，直接當證據
+                raise
+            return e, e.code, e.headers
+
     try:
-        resp = opener.open(req, timeout=timeout)
-        status, headers = resp.status, resp.headers
-    except urllib.error.HTTPError as e:
-        resp, status, headers = e, e.code, e.headers
+        (resp, status, headers), tries = _with_retry(call)
+    except urllib.error.HTTPError as e:  # 重試用盡仍是 5xx：狀態碼本身就是證據
+        resp, status, headers, tries = e, e.code, e.headers, getattr(e, "attempts", 1)
     except Exception as e:  # noqa: BLE001
-        return {"url": url, "error": f"{type(e).__name__}: {e}"}
+        return {"url": url, "error": _err(e)}
     hdr = {k.lower(): v for k, v in headers.items()}
     cookie_names = [c.split("=", 1)[0] for c in headers.get_all("set-cookie") or []]
     hdr.pop("set-cookie", None)  # 值不保存，只留名稱
-    out = {"url": url, "status": status, "headers": hdr, "set_cookie_names": cookie_names}
+    out = {"url": url, "status": status, "headers": hdr, "set_cookie_names": cookie_names, "attempts": tries}
     try:
         raw = resp.read(BODY_LIMIT + 1) if resp is not None else b""
     except Exception as e:  # noqa: BLE001
@@ -294,7 +343,10 @@ def collect(domain: str, observer: str, delay: float = 0.3) -> dict:
             snap["http"].append(http_probe(f"https://{prefix}{domain}{path}"))
             time.sleep(delay)
     snap["rdap"] = rdap_lookup(domain)
-    snap["flags"] = classify(snap)
+    try:
+        snap["flags"] = classify(snap)
+    except Exception as e:  # noqa: BLE001 — 分類壞了也要保住原始證據
+        snap["flags"] = [{"flag": "CLASSIFY_FAILED", "detail": f"{type(e).__name__}: {e}"}]
     snap["not_inferable"] = NOT_INFERABLE
     return snap
 
@@ -309,13 +361,22 @@ def write_bundle(snapshot: dict, out_dir: pathlib.Path) -> pathlib.Path:
         try:
             with (out_dir / name).open("xb") as fh:
                 fh.write(body)
+                fh.flush()
+                os.fsync(fh.fileno())  # 先確保快照落盤，才寫入雜湊清單
             break
         except FileExistsError:
             n += 1
     sums = out_dir / "SHA256SUMS"
     with sums.open("a", encoding="utf-8") as f:  # Additive-Only：只追加
         f.write(f"{sha256_bytes(body)}  {name}\n")
+        f.flush()
+        os.fsync(f.fileno())
     return out_dir / name
+
+
+def is_synced_path(path: pathlib.Path) -> bool:
+    low = str(path.resolve()).lower()
+    return any(m in low for m in SYNCED_MARKERS)
 
 
 def has_usable_evidence(snap: dict) -> bool:
@@ -334,7 +395,11 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--domain", default="mrliouhan.ai")
     ap.add_argument("--observer", required=True, help="觀測位置標記，例如 DL580 / sandbox / mobile")
     ap.add_argument("--out", required=True, help="本地輸出目錄（不要指向雲端同步資料夾）")
+    ap.add_argument("--allow-synced", action="store_true", help="允許輸出到雲端同步資料夾（不建議）")
     args = ap.parse_args(argv)
+    if is_synced_path(pathlib.Path(args.out)) and not args.allow_synced:
+        print(f"拒絕：{args.out} 位於雲端同步資料夾；資料不放平台。請改用本機路徑。", file=sys.stderr)
+        return 3
     snap = collect(args.domain, args.observer)
     path = write_bundle(snap, pathlib.Path(args.out))
     print(f"snapshot: {path}")

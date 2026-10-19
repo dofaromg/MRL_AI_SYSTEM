@@ -15,6 +15,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `scripts/MRL_domain_evidence_collect_v1.py` + `tests/test_MRL_domain_evidence_collect_v1.py` — 零依賴唯讀蒐證，輸出僅落本地並寫 SHA-256
 - 4 個 repo 可控頁面（`MRL_Mother_Launch.js`、`MRL_Platform_Server.py`、`src/mrl_app.html`、WebConsole `index.html`）新增 author／canonical-authority／origin-signature／og:site_name metadata 與頁尾署名（純新增）
 
+### Changed（Issue #146 — 模組穩定性；沙盒測試通過，DL580 實機待驗證）
+- `scripts/MRL_domain_evidence_collect_v1.py`：暫時性網路錯誤（逾時、連線中斷、429／5xx）最多重試 3 次並記錄 `attempts`；3xx／4xx 不重試；快照與 `SHA256SUMS` 寫入後 fsync；`classify` 失敗不再丟失原始證據；輸出路徑在雲端同步資料夾時拒絕（exit 3）
+- `scripts/MRL_dl580_recovery_pull_v1.py`：git 先在 `.partial-<sha>` 完成 clone＋checkout 才改名（中途失敗不留下「看似完整」的殘骸）、`GIT_TERMINAL_PROMPT=0`、rclone 預設重試、鎖檔防並行 pull（exit 5）、磁碟空間檢查（exit 6）、清單先寫暫存檔再追加雜湊再排他連結（斷電不留半成品）、`verify` 對畸形清單回報而非拋例外並列出 `unlisted`／`orphan_sums`
+- 測試：兩個模組合計 52 項，含真實 git 本機倉庫整合測試與真實本機 HTTP 伺服器的「不跟隨轉址」測試
+
 ---
 
 ## [2.0.0] — 2026-05-04（PR #12 merged to main）

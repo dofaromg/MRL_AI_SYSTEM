@@ -13,8 +13,12 @@ origin_signature: MrLiouWord ｜ Additive-Only ｜ 當下狀態 2026-10-19 ｜ �
 3. **拉取**：`python scripts/MRL_dl580_recovery_pull_v1.py pull --plan D:\mrl\recovery\plan.json --out D:\mrl\recovery\store`
    - 只用 `rclone copy --immutable` 與 `git clone`；不用 sync/move/delete。git 來源每個遠端 HEAD 修訂存成獨立目錄 `<來源名>/<sha前12碼>/`，重複拉取只會新增新修訂、不覆蓋舊的。
    - 每個來源有逾時（預設 6 小時，`--timeout` 可調），單一來源卡住不影響其他來源。
+   - rclone 預設重試 3 次（`--retries 3 --low-level-retries 10`），`extra_args` 放在最後可覆寫；git 以 `GIT_TERMINAL_PROMPT=0` 執行，需要憑證時直接失敗而不是卡在提示。
+   - git 先在 `<來源名>/.partial-<sha>` 完成 clone＋checkout，成功才改名為 `<sha前12碼>/`；中斷後重跑會清掉自己的 `.partial-*` 暫存目錄再來，已完成的修訂目錄不會被動到。
+   - 同一個輸出目錄同時只允許一個 pull（`.pull.lock`，exit 5）。若程序被強制終止留下鎖檔，確認沒有 pull 在跑後手動刪除。
+   - 開始前檢查輸出磁碟剩餘空間（預設至少 1 GB，`--min-free-gb` 可調，exit 6）。
    - 結束時輸出 `MANIFEST_<UTC>.jsonl` 與追加的 `SHA256SUMS`；0 位元組檔案會列為警告，需確認後加 `--accept-zero-byte` 才回 0；來源沒有任何檔案則回 3（確實為空時加 `--allow-empty`）。
-4. **驗證**：`python scripts/MRL_dl580_recovery_pull_v1.py verify --out D:\mrl\recovery\store`；會先核對每份 `MANIFEST` 本身的雜湊（對照 `SHA256SUMS`）才信任其內容；清單被改動、缺記錄，或有 missing／changed 檔案時 exit code 為 1。
+4. **驗證**：`python scripts/MRL_dl580_recovery_pull_v1.py verify --out D:\mrl\recovery\store`；會先核對每份 `MANIFEST` 本身的雜湊（對照 `SHA256SUMS`）才信任其內容；清單被改動、缺記錄，或有 missing／changed 檔案時 exit code 為 1。清單內容畸形時回報錯誤（不會拋例外）。輸出另列 `unlisted`（磁碟上有、但沒有任何清單記錄的檔案）與 `orphan_sums`（有雜湊記錄但清單檔不存在，多半是寫清單途中中斷）；兩者只是提示，不影響 ok，但 `unlisted` 代表那些檔案尚未被雜湊涵蓋，重跑 `pull` 即可補進清單。
 5. **離線備份**：把整個 `store` 目錄與 `SHA256SUMS` 複製到離線媒體，再以 `sha256sum -c`（或 `verify`）核對。
 
 ## 來源優先序與已知狀態（當下，依雲端檔案清單；內容真偽以拉回後的雜湊為準）
