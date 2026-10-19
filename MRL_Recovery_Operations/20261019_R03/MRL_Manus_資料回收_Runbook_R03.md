@@ -10,15 +10,15 @@ origin_signature: MrLiouWord ｜ Additive-Only ｜ 當下狀態 2026-10-19 ｜ �
 ## 步驟
 0. **在 Windows 上取得腳本：用 `git archive`，不要檢出（checkout）。** `MRL_AI_SYSTEM` 內 `MRL_MotherSource_ZhiZhang_FlowAgent_Lineage_v1/母體/` 底下有 15 個檔名結尾帶空白的檔案，Windows 無法建立，Git for Windows 連把它們放進索引（index）都拒絕，所以一般 `git clone`／`git checkout` 會整個失敗（2026-10-20 DL580 實機實測：`error: invalid path ...`，`scripts\`、`tests\` 都沒被檢出）。這些檔案不是資料遺失，只是 Windows 檔案系統放不下；不要用 `core.protectNTFS=false` 之類的設定繞過。
    - **實機更正（2026-10-20）：`git sparse-checkout` 在這台 DL580 上無效**——先前 Runbook 寫的 sparse checkout 步驟，在 DL580 實測仍出現同樣的 `invalid path`、仍沒有檔案被檢出（原因：sparse checkout 只決定哪些檔案寫進工作樹，但索引仍須含整棵樹的條目，無效路徑照樣被拒絕）。沙盒（Linux）上它能成功，是因為 Linux 不認為那些檔名無效，所以沙盒結果不能代表 Windows。
-   - 改用 `git archive`：它直接讀取 Git 的樹物件、不經過索引與工作樹，只取指定的目錄，其他目錄的無效檔名不會被碰到。
+   - **實機更正（2026-10-20，第二次）：`git archive <分支> scripts tests ...`（一次指定多個路徑）也失敗。** DL580 實測 `error: invalid path 'MRL_MotherSource_ZhiZhang_FlowAgent_Lineage_v1/母體/...'`，輸出檔留下 0 位元組。我對原因的判讀（以 Git 原始碼的行為推測，非 Windows 實機驗證）：`git archive` 會把**整棵樹**載入記憶體中的索引來處理屬性，路徑限定只影響輸出內容、不影響這一步，所以只要樹裡有無效路徑就會失敗。沙盒以「索引一定拒絕的路徑」重現了同樣症狀（`invalid path`、結束碼 255、0 位元組 zip）。
+   - **有效做法：每個目錄各自當成一棵樹來取**（`<分支>:<目錄>`），這樣載入的只有該目錄的內容，不會碰到其他目錄的無效檔名。沙盒以真實倉庫驗證：4 個目錄、88 個檔案、69 項測試全過；Windows 實機待驗證。
    ```powershell
-   cd D:\mrl\mrl146                       # 已經 git clone --no-checkout 好的目錄
-   git fetch origin claude/github-issue-146-ks94ny
-   git archive --format=zip -o D:\mrl\tooling.zip FETCH_HEAD scripts tests MRL_Recovery_Operations MRL_Docs
-   Expand-Archive D:\mrl\tooling.zip D:\mrl\tooling
-   cd D:\mrl\tooling
+   git config --global --add safe.directory D:/mrl/mrl146     # 只在 Git 報 dubious ownership 時才需要，路徑只能是你自己 clone 的這個資料夾
+   git -C D:\mrl\mrl146 fetch origin
+   foreach ($d in "scripts","tests","MRL_Recovery_Operations","MRL_Docs") { git -C D:\mrl\mrl146 archive --format=zip "--prefix=$d/" -o "D:\mrl\tooling_$d.zip" "origin/claude/github-issue-146-ks94ny:$d"; Expand-Archive -Force "D:\mrl\tooling_$d.zip" D:\mrl\tooling }
+   dir D:\mrl\tooling
    ```
-   之後的指令都在 `D:\mrl\tooling` 執行。沙盒驗證：以此方式取出的 4 個目錄，69 項測試全過（沙盒；Windows 實機待驗證）。
+   之後的指令都在 `D:\mrl\tooling` 執行。**每次貼指令前先按 `Esc` 清掉目前這一行、且只貼指令本身**：實機上有過貼入殘留文字，導致 `cd` 沒有執行、後續 git 指令在錯誤的資料夾（`C:\Users`，上面有一個擁有者為系統帳號的倉庫）執行而被 `dubious ownership` 擋下。`git -C <路徑>` 可避免依賴目前所在資料夾。**不要**為 `C:/Users` 設 `safe.directory`。
    - 同理：**計畫檔裡的 git 來源要加 `"mode": "mirror"`**（範例計畫檔已設好）。mirror 用 `git clone --mirror`，沒有工作樹也沒有索引，所有分支、歷史與任何檔名都完整保留，存成 `<來源名>\<sha前12碼>.mirror\`（和一般模式的 `<sha前12碼>\` 分開，換模式不會互相覆蓋；目標目錄已存在但不完整時腳本會回報而不是覆蓋）；工作樹模式遇到這類倉庫會失敗，並提示改用 mirror。要從鏡像讀檔：`git --git-dir=<鏡像目錄> show HEAD:<路徑>`，或在 Linux／WSL 上 checkout。
    - **rclone 安裝**：這台 DL580 沒有 `winget`（實測 `winget` 不是可辨識的指令）。改從官方下載 `https://downloads.rclone.org/rclone-current-windows-amd64.zip`，解壓後把 `rclone.exe` 放進 `D:\MrlToolchain\rclone` 並加入 PATH。
 1. **DL580 前置**：安裝並設定 `rclone`（Dropbox、Google Drive 各一個 remote）與 `git`；輸出目錄用本機磁碟（例如 `D:\mrl\recovery\store`），不要放在 Dropbox／OneDrive／Google Drive 同步資料夾內（腳本會拒絕）。
