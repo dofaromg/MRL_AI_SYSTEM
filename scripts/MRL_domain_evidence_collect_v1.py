@@ -68,8 +68,8 @@ def sha256_bytes(data: bytes) -> str:
 def doh_query(name: str, rtype: str, timeout: float = 10.0) -> dict:
     url = f"{DOH_ENDPOINT}?name={urllib.parse.quote(name)}&type={rtype}"
     req = urllib.request.Request(url, headers={"accept": "application/dns-json", "user-agent": USER_AGENT})
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as r:
+    try:  # DoH 端點不應轉址；3xx 以 HTTPError 回報，避免把別處內容當成該解析器的答案
+        with urllib.request.build_opener(_NoRedirect).open(req, timeout=timeout) as r:
             raw = r.read()
         d = json.loads(raw)
         return {
@@ -90,9 +90,11 @@ def rdap_lookup(domain: str, timeout: float = 20.0) -> dict:
         req = urllib.request.Request(base + domain, headers={
             "accept": "application/rdap+json", "user-agent": USER_AGENT})
         try:
-            with urllib.request.urlopen(req, timeout=timeout) as r:
+            with urllib.request.urlopen(req, timeout=timeout) as r:  # rdap.org 本身是轉址器，需跟隨
                 raw = r.read()
-            return reduce_rdap(json.loads(raw), sha256_bytes(raw)) | {"endpoint": base}
+                final_url = r.geturl()
+            return {**reduce_rdap(json.loads(raw), sha256_bytes(raw)),
+                    "endpoint": base, "effective_url": final_url}
         except Exception as e:  # noqa: BLE001
             errors.append(f"{base}: {type(e).__name__}: {e}")
     return {"error": "; ".join(errors)}
@@ -112,8 +114,10 @@ def reduce_rdap(d: dict, raw_sha256: str = "") -> dict:
         if "registrar" in ent.get("roles", []):
             ids = ent.get("publicIds", [])
             name = ""
-            for item in ent.get("vcardArray", [None, []])[1]:
-                if item and item[0] == "fn":
+            vcard = ent.get("vcardArray")
+            props = vcard[1] if isinstance(vcard, list) and len(vcard) > 1 and isinstance(vcard[1], list) else []
+            for item in props:  # 畸形 vCard 視為沒有名稱，不丟棄整份註冊資料
+                if isinstance(item, list) and len(item) > 3 and item[0] == "fn":
                     name = item[3]
             registrar = {"name": name, "iana_id": ids[0]["identifier"] if ids else None}
     return {
