@@ -1,0 +1,41 @@
+{
+  "schema": "MRL_attribution_roles_v1",
+  "origin_signature": "MrLiouWord",
+  "issue": "dofaromg/MRL_AI_SYSTEM#146",
+  "recorded_at": "2026-10-19",
+  "note": "Additive-Only。只新增、不覆蓋。值取自 Issue #146 的『不可變權位』與建構者指示；標 unverified 者為待證據欄位，不得當成已確認。",
+  "immutable_authority": {
+    "canonical_authority": "Mr.liou",
+    "github_identity": "dofaromg",
+    "origin_signature": "MrLiouWord",
+    "source_of_truth": "dofaromg/mrliouword-system",
+    "requested_public_attribution": "Mrlious"
+  },
+  "affected_domain": "Mrliouhan.ai",
+  "unaffected_domain_note": "Issue #146 明示受影響網域是 Mrliouhan.ai，不是 Mrliouword.com。",
+  "role_separation": {
+    "canonical_authority": { "holder": "Mr.liou", "status": "declared_by_builder" },
+    "artifact_owner": { "holder": "Mr.liou", "status": "declared_by_builder", "note": "Manus 公開政策不主張使用者內容所有權（Issue #146 留言 2026-08-03，政策≠實際帳號行為，另行驗證）" },
+    "implementation_tool": { "holder": ["Manus（使用者在其上執行 MRL 任務）", "其他 AI 工具"], "status": "evidenced_by_screenshots_issue_comment_5960841297" },
+    "execution_platform": { "holder": "Manus（候選）", "status": "candidate_not_confirmed" },
+    "hosting_or_projection_candidate": { "holder": "Manus（候選）", "status": "candidate_not_confirmed", "see": "MRL_Docs/Evidence/20261019/MRL_Issue146_Mrliouhan_網域權位觀測_R01.md" },
+    "domain_owner": { "holder": null, "status": "unverified", "registrar_observed": "Global Domain Group LLC (IANA 3956)", "registrant_visible": "隱私服務遮罩；需以註冊商帳號證明" },
+    "billing_party": { "holder": null, "status": "unverified" }
+  },
+  "page_metadata_rule": {
+    "applies_to": "本 repo 可控的所有對外頁面",
+    "required": [
+      "<meta name=\"author\" content=\"Mr.liou (Mrlious)\">",
+      "<meta name=\"canonical-authority\" content=\"Mr.liou\">",
+      "<meta name=\"origin-signature\" content=\"MrLiouWord\">",
+      "<meta property=\"og:site_name\" content=\"Mrlious\">",
+      "頁尾：canonical_authority / origin_signature / 對外署名 / 平台僅為承載載體"
+    ],
+    "platform_wording": "平台／託管者只能標為 execution_platform / hosting / tool，不得位於來源權位之前。",
+    "pending_builder_decision": [
+      "canonical URL（rel=canonical）：待建構者確認對外正式網域後再加，不自行假設。",
+      "favicon / Open Graph image：待建構者提供署名用圖。",
+      "第三方平台端（Manus 商戶／產品名稱）無法由本 repo 修改：需另行提出正式更正與 attribution request。"
+    ]
+  }
+}

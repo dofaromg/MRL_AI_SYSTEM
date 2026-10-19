@@ -151,7 +151,12 @@ def page_html():
     rows = "".join(f'<tr><td><span class=m>{m}</span></td><td>{p}</td><td>{d}</td></tr>'
                    for m, p, d in API_DOCS)
     return """<!doctype html><html lang=zh-Hant><head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1"><title>MRL 母體平台 · """ + PLATFORM_DOMAIN + """</title>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=author content='Mr.liou (Mrlious)'>
+<meta name=canonical-authority content=Mr.liou>
+<meta name=origin-signature content=MrLiouWord>
+<meta property=og:site_name content=Mrlious>
+<title>MRL 母體平台 · """ + PLATFORM_DOMAIN + """</title>
 <style>:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;font-family:system-ui,"Noto Sans TC",sans-serif;background:#0b0d10;color:#e8eef2}
 header{padding:22px 20px;border-bottom:1px solid #1d2a22;background:linear-gradient(180deg,#0f1a12,#0b0d10)}
 h1{margin:0;font-size:20px;color:#8de08a}.sig{color:#5a7d5a;font-size:12px;margin-top:5px}
@@ -187,6 +192,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}td{padding:6px 8px;bord
 <textarea id=msg rows=3 placeholder=對母體說點什麼…></textarea>
 <button class=act onclick=chat()>送出</button><pre id=chatOut></pre></div></section>
 </main>
+<footer style="max-width:900px;margin:0 auto;padding:10px 18px 26px;color:#5a7d5a;font-size:12px">canonical_authority: Mr.liou ｜ origin_signature: MrLiouWord ｜ 對外署名: Mrlious ｜ 執行／託管平台僅為承載載體，非來源權位</footer>
 <script>
 const $=s=>document.querySelector(s);
 document.querySelectorAll('.nv').forEach(b=>b.onclick=()=>{

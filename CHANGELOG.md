@@ -8,6 +8,13 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added（Issue #146 — Mrliouhan.ai × Manus 網域權位 SEV-1，事件仍 OPEN）
+- `MRL_Docs/Evidence/20261019/MRL_Issue146_Mrliouhan_網域權位觀測_R01.md` — 沙盒唯讀觀測（RDAP／DNS／HTTP）、與舊紀錄的追加對照、假設 H1–H3、必查項進度（多項待查）
+- `MRL_Docs/Evidence/20261019/snapshots/` — 「修正前」快照與 `SHA256SUMS`
+- `MRL_Docs/Governance/MRL_attribution_roles_v1.json` — 權位／角色分離與頁面署名規則（`domain_owner`、`billing_party` 標 unverified）
+- `scripts/MRL_domain_evidence_collect_v1.py` + `tests/test_MRL_domain_evidence_collect_v1.py` — 零依賴唯讀蒐證，輸出僅落本地並寫 SHA-256
+- 4 個 repo 可控頁面（`MRL_Mother_Launch.js`、`MRL_Platform_Server.py`、`src/mrl_app.html`、WebConsole `index.html`）新增 author／canonical-authority／origin-signature／og:site_name metadata 與頁尾署名（純新增）
+
 ---
 
 ## [2.0.0] — 2026-05-04（PR #12 merged to main）

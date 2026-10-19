@@ -86,6 +86,10 @@ function sendHTML(res, status, html) {
 function dashboardHTML() {
   return `<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="author" content="Mr.liou (Mrlious)">
+<meta name="canonical-authority" content="Mr.liou">
+<meta name="origin-signature" content="MrLiouWord">
+<meta property="og:site_name" content="Mrlious">
 <title>MRL 完整態母體運轉系統</title>
 <style>
 :root{color-scheme:dark}body{margin:0;font-family:system-ui,"Noto Sans TC",sans-serif;
@@ -108,6 +112,7 @@ pre{background:#0a0c0e;border:1px solid #1d2a22;border-radius:8px;padding:12px;o
 <div class="card"><h2>感知力核心</h2>
 <button onclick="perceive()">送出感知測試</button><pre id="perc">點上方按鈕</pre></div>
 </main>
+<footer style="max-width:880px;margin:0 auto;padding:10px 20px 28px;color:#5a7d5a;font-size:12px">canonical_authority: Mr.liou ｜ origin_signature: MrLiouWord ｜ 對外署名: Mrlious ｜ 執行／託管平台僅為承載載體，非來源權位</footer>
 <script>
 async function j(u,o){return (await fetch(u,o)).json()}
 (async()=>{
