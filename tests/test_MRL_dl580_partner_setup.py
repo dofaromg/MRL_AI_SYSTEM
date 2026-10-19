@@ -158,12 +158,17 @@ exit 0
         harness.write_text(
             """
 $env:OS = 'Windows_NT'
+$PSNativeCommandUseErrorActionPreference = $true
 function git {
     Add-Content $env:CALL_LOG "git $args"
     $global:LASTEXITCODE = 0
     if ($args -contains '--show-toplevel') { return $env:TEST_ROOT }
     if ($args -contains '--porcelain' -and $env:DIRTY -eq '1') { return ' M local.txt' }
     if ($args -contains '--verify' -and $env:NO_UPSTREAM -eq '1') { $global:LASTEXITCODE = 1 }
+    if ($args -contains '--verify' -and $env:NO_UPSTREAM_NATIVE -eq '1') {
+        & $env:TEST_GIT -C $env:TEST_ROOT rev-parse --verify refs/heads/mrl-test-nonexistent 2>$null
+        $global:LASTEXITCODE = $LASTEXITCODE
+    }
     if ($args -contains 'pull' -and $env:PULL_FAIL -eq '1') { $global:LASTEXITCODE = 1 }
 }
 function Get-Service {
@@ -207,6 +212,7 @@ exit $LASTEXITCODE
         for condition in (
             "", "DIRTY", "NO_UPSTREAM", "PULL_FAIL", "NO_SSH", "NO_TS",
             "SMOKE_FAIL", "START_SSH", "DENY_SSH", "INSTALL_CLAUDE", "DOWNLOAD_FAIL",
+            "NO_UPSTREAM_NATIVE",
         ):
             with self.subTest(condition=condition):
                 self.log.unlink(missing_ok=True)
@@ -217,14 +223,17 @@ exit $LASTEXITCODE
                     extra["INSTALL_CLAUDE"] = "1"
                 result = subprocess.run(
                     ["pwsh", "-NoProfile", "-File", str(harness)],
-                    env=dict(self.env, TEST_ENTRY=str(ENTRY.with_suffix(".ps1")), **extra),
+                    env=dict(
+                        self.env, TEST_ENTRY=str(ENTRY.with_suffix(".ps1")),
+                        TEST_GIT=shutil.which("git") or "/usr/bin/git", **extra,
+                    ),
                     capture_output=True, text=True, check=False,
                 )
                 partial = condition not in ("", "START_SSH", "INSTALL_CLAUDE")
                 self.assertEqual(result.returncode, int(partial), result.stdout + result.stderr)
                 self.assertIn("MRL_mother_assembly.py", self.log.read_text())
                 self.assertIn("PARTIAL" if partial else "Host: 100.64.0.10", result.stdout)
-                if condition in ("DIRTY", "NO_UPSTREAM"):
+                if condition in ("DIRTY", "NO_UPSTREAM", "NO_UPSTREAM_NATIVE"):
                     self.assertNotIn("pull ", self.log.read_text())
                 if condition == "INSTALL_CLAUDE":
                     self.assertIn("installed-cli", result.stdout)
