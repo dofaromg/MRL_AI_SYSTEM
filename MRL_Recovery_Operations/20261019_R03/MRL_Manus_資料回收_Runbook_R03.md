@@ -15,9 +15,10 @@ origin_signature: MrLiouWord ｜ Additive-Only ｜ 當下狀態 2026-10-19 ｜ �
    ```powershell
    git config --global --add safe.directory D:/mrl/mrl146     # 只在 Git 報 dubious ownership 時才需要，路徑只能是你自己 clone 的這個資料夾
    git -C D:\mrl\mrl146 fetch origin
-   foreach ($d in "scripts","tests","MRL_Recovery_Operations","MRL_Docs") { git -C D:\mrl\mrl146 archive --format=zip "--prefix=$d/" -o "D:\mrl\tooling_$d.zip" "origin/claude/github-issue-146-ks94ny:$d"; Expand-Archive -Force "D:\mrl\tooling_$d.zip" D:\mrl\tooling }
+   foreach ($d in "scripts","tests","MRL_Recovery_Operations","MRL_Docs") { git -C D:\mrl\mrl146 archive --format=zip "--prefix=$d/" -o "D:\mrl\tooling_$d.zip" "origin/claude/github-issue-146-ks94ny:$d"; if ($LASTEXITCODE -ne 0) { Write-Error "git archive 失敗，已停止：$d"; break }; Expand-Archive -Force "D:\mrl\tooling_$d.zip" D:\mrl\tooling -ErrorAction Stop }
    dir D:\mrl\tooling
    ```
+   這一行會在任何一個 `git archive` 失敗時立刻停止（檢查 `$LASTEXITCODE`），`Expand-Archive` 失敗也會停止，不會繼續處理後面的目錄；`D:\mrl\tooling` 若缺少四個目錄中的任何一個，表示這個流程沒有完整成功。這段 PowerShell 語法未在 PowerShell 實機或沙盒執行驗證（沙盒沒有 PowerShell）。
    之後的指令都在 `D:\mrl\tooling` 執行。**每次貼指令前先按 `Esc` 清掉目前這一行、且只貼指令本身**：實機上有過貼入殘留文字，導致 `cd` 沒有執行、後續 git 指令在錯誤的資料夾（`C:\Users`，上面有一個擁有者為系統帳號的倉庫）執行而被 `dubious ownership` 擋下。`git -C <路徑>` 可避免依賴目前所在資料夾。**不要**為 `C:/Users` 設 `safe.directory`。
    - 同理：**計畫檔裡的 git 來源要加 `"mode": "mirror"`**（範例計畫檔已設好）。mirror 用 `git clone --mirror`，沒有工作樹也沒有索引，所有分支、歷史與任何檔名都完整保留，存成 `<來源名>\<sha前12碼>.mirror\`（和一般模式的 `<sha前12碼>\` 分開，換模式不會互相覆蓋；目標目錄已存在但不完整時腳本會回報而不是覆蓋）；工作樹模式遇到這類倉庫會失敗，並提示改用 mirror。要從鏡像讀檔：`git --git-dir=<鏡像目錄> show HEAD:<路徑>`，或在 Linux／WSL 上 checkout。
    - **rclone 安裝**：這台 DL580 沒有 `winget`（實測 `winget` 不是可辨識的指令）。改從官方下載 `https://downloads.rclone.org/rclone-current-windows-amd64.zip`，解壓後把 `rclone.exe` 放進 `D:\MrlToolchain\rclone` 並加入 PATH。
