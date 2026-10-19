@@ -38,6 +38,9 @@ DEFAULT_MIN_FREE_GB = 1.0
 LOCK_NAME = ".pull.lock"
 PARTIAL_PREFIX = ".partial-"   # git 暫存目錄（clone 完成並 checkout 成功後才改名為正式修訂目錄）
 RCLONE_RETRY_ARGS = ["--retries", "3", "--low-level-retries", "10"]
+GIT_MODES = ("worktree", "mirror")  # worktree＝一般 clone（有工作樹）；mirror＝git clone --mirror（無工作樹，含全部 refs）
+WIN_PATH_HINT = ('此倉庫含 Windows 無法建立的檔名（例如結尾有空白）。請在計畫檔把這個來源加上 "mode": "mirror"，'
+                 "改用鏡像備份：沒有工作樹，所有檔名與歷史都完整保留。")
 GIT_ENV = {"GIT_TERMINAL_PROMPT": "0"}  # 需要憑證時直接失敗，不在無人值守時卡在提示上
 # 繼承自父程序的 git 倉庫定位變數（例如從 git hook 內執行時會被設定）會讓 `git -C <dir>` 指到別的倉庫
 GIT_LOCATION_VARS = ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_OBJECT_DIRECTORY",
@@ -83,6 +86,8 @@ def load_plan(path: pathlib.Path) -> list[dict]:
         elif kind == "git":
             if not s.get("url", "").startswith("https://"):
                 raise ValueError(f"{name}: git url 必須是 https://")
+            if s.get("mode", "worktree") not in GIT_MODES:
+                raise ValueError(f"{name}: git mode 只能是 {' 或 '.join(GIT_MODES)}")
         else:
             raise ValueError(f"{name}: kind 只能是 rclone 或 git")
     return sources
@@ -97,6 +102,22 @@ def rclone_command(source: dict, dst: pathlib.Path) -> list[str]:
 
 def _fail(r) -> str:
     return (r.stderr or r.stdout or "")[-500:] or f"exit {r.returncode}"
+
+
+def _fail_git_clone(r, mode: str) -> str:
+    """clone 失敗訊息；worktree 模式遇到 Windows 無效路徑時附上改用 mirror 的指引（判斷用完整輸出，不受截斷影響）。"""
+    full = f"{r.stderr or ''}\n{r.stdout or ''}".lower()
+    msg = _fail(r)
+    if mode == "worktree" and ("invalid path" in full or "checkout failed" in full):
+        return f"{WIN_PATH_HINT} （git 輸出尾段：{msg[-200:].strip()}）"
+    return msg
+
+
+def _repo_complete(target: pathlib.Path, mode: str) -> bool:
+    """該修訂目錄是否為已完成的備份（只有 clone 完整成功並改名後才會存在）。"""
+    if mode == "mirror":
+        return (target / "HEAD").is_file() and (target / "objects").is_dir()
+    return (target / ".git").exists()
 
 
 def _git_env() -> dict:
@@ -130,8 +151,10 @@ def _force_rmtree(path: pathlib.Path) -> bool:
 
 def pull_git(source: dict, dst: pathlib.Path, runner, timeout) -> tuple[bool, str]:
     """每個遠端 HEAD 修訂存成獨立目錄 <dst>/<sha前12碼>；已有的修訂不動，新修訂不會覆蓋舊的。
-    先在 .partial-<sha前12碼> 完成 clone＋checkout，成功後才改名：中途失敗不會留下
-    『看起來完整、其實缺檔』的修訂目錄（下次執行會把它當作已完成而跳過）。"""
+    先在 .partial-<sha前12碼> 完成 clone（worktree 模式再加 checkout），成功後才改名：中途失敗不會留下
+    『看起來完整、其實缺檔』的修訂目錄（下次執行會把它當作已完成而跳過）。
+    mode="mirror" 用 git clone --mirror：沒有工作樹，所有分支／標籤／歷史與任何檔名（含 Windows 無法建立者）都完整保留。"""
+    mode = source.get("mode", "worktree")
     kw = dict(capture_output=True, text=True, timeout=timeout, env=_git_env())
     r = runner(["git", "ls-remote", source["url"], "HEAD"], **kw)
     if r.returncode != 0:
@@ -141,20 +164,24 @@ def pull_git(source: dict, dst: pathlib.Path, runner, timeout) -> tuple[bool, st
     if not _SHA_RE.match(sha):
         return False, "無法取得遠端 HEAD 修訂"
     target = dst / sha[:12]
-    if (target / ".git").exists():
+    if _repo_complete(target, mode):
         return True, ""
     dst.mkdir(parents=True, exist_ok=True)
     partial = dst / f"{PARTIAL_PREFIX}{sha[:12]}"
     # 前次中斷留下的本程式暫存目錄（不是已回收資料）；清掉重來。清不掉要明講，不能讓 clone 吐出無關的錯誤
     if not _force_rmtree(partial):
         return False, f"無法移除暫存目錄 {partial}；請確認沒有程序在使用後手動刪除再重試"
+    if mode == "mirror":
+        cmds = [["git", "clone", "--mirror", source["url"], str(partial)]]
+    else:
+        cmds = [["git", "clone", source["url"], str(partial)],
+                ["git", "-C", str(partial), "checkout", "--detach", sha]]
     try:
-        for cmd in (["git", "clone", source["url"], str(partial)],
-                    ["git", "-C", str(partial), "checkout", "--detach", sha]):
+        for cmd in cmds:
             r = runner(cmd, **kw)
             if r.returncode != 0:
                 _force_rmtree(partial)
-                return False, _fail(r)
+                return False, _fail_git_clone(r, mode)
     except subprocess.TimeoutExpired:  # 逾時也要清掉半成品，再交給 pull() 記為該來源失敗
         _force_rmtree(partial)
         raise
@@ -206,6 +233,12 @@ def build_manifest(out: pathlib.Path, git_sources=frozenset(), runner=None) -> l
             for repo in sorted(g.parent for g in src_dir.glob("*/.git")
                                if not g.parent.name.startswith(PARTIAL_PREFIX)):
                 rows.append({"source": src_dir.name, "path": f"{repo.name}/.git(HEAD)",
+                             "git_head": git_head(repo, runner)})
+            # mirror 備份是裸倉庫（沒有 .git）：HEAD／refs／objects 都是資料，下面會逐檔雜湊；這裡另記 HEAD 修訂
+            for repo in sorted(d for d in src_dir.iterdir()
+                               if d.is_dir() and not d.name.startswith(PARTIAL_PREFIX)
+                               and _repo_complete(d, "mirror") and not (d / ".git").exists()):
+                rows.append({"source": src_dir.name, "path": f"{repo.name}/(mirror HEAD)",
                              "git_head": git_head(repo, runner)})
         for f in sorted(src_dir.rglob("*")):
             rel = f.relative_to(src_dir)
