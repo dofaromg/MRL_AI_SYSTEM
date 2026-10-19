@@ -30,6 +30,13 @@ MAX_RESPONSE_BYTES = 2 * 1024 * 1024
 _REPO_NAME = re.compile(r"^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$")
 
 
+def _valid_repo_name(value: Any) -> bool:
+    if not isinstance(value, str) or not _REPO_NAME.fullmatch(value):
+        return False
+    owner, repository = value.split("/", 1)
+    return owner not in {".", ".."} and repository not in {".", ".."}
+
+
 def _request_json(url: str, *, token: str = "", timeout_s: int = 20) -> dict[str, Any]:
     parsed = urlsplit(url)
     if parsed.scheme != "https" or parsed.netloc != "api.github.com":
@@ -111,7 +118,7 @@ def _distill_repository(
     readme_error: str = "",
 ) -> dict[str, Any]:
     full_name = repository.get("full_name")
-    if not isinstance(full_name, str) or not _REPO_NAME.fullmatch(full_name):
+    if not _valid_repo_name(full_name):
         raise ValueError("GitHub returned an invalid repository name")
 
     readme_text, readme_sha256 = _readme_text(readme or {})
@@ -191,7 +198,7 @@ def daily_distillation(
         if not isinstance(repository, dict):
             continue
         full_name = repository.get("full_name")
-        if not isinstance(full_name, str) or not _REPO_NAME.fullmatch(full_name):
+        if not _valid_repo_name(full_name):
             continue
         readme: dict[str, Any] | None = None
         readme_error = ""
