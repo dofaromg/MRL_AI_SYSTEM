@@ -8,6 +8,16 @@ origin_signature: MrLiouWord ｜ Additive-Only ｜ 當下狀態 2026-10-19 ｜ �
 - 看不到 ≠ 不存在：未驗證的一律標「待驗證」。
 
 ## 步驟
+0. **在 Windows 上取得腳本：用 sparse checkout，不要整個檢出。** `MRL_AI_SYSTEM` 內 `MRL_MotherSource_ZhiZhang_FlowAgent_Lineage_v1/母體/` 底下有 15 個檔名結尾帶空白的檔案，Windows 無法建立，一般 `git clone`／`git checkout` 會整個失敗（2026-10-20 DL580 實機實測：`error: invalid path ...`，`scripts\`、`tests\` 都沒被檢出）。這些檔案不是資料遺失，只是 Windows 檔案系統放不下；不要用 `core.protectNTFS=false` 之類的設定繞過。改為只檢出需要的目錄：
+   ```powershell
+   cd D:\mrl
+   git clone --no-checkout --branch claude/github-issue-146-ks94ny https://github.com/dofaromg/MRL_AI_SYSTEM.git mrl146
+   cd mrl146
+   git sparse-checkout init --cone
+   git sparse-checkout set scripts tests MRL_Recovery_Operations MRL_Docs
+   git checkout claude/github-issue-146-ks94ny
+   ```
+   同理：**計畫檔裡的 git 來源要加 `"mode": "mirror"`**（範例計畫檔已設好）。mirror 用 `git clone --mirror`，沒有工作樹，所有分支、歷史與任何檔名都完整保留；工作樹模式遇到這類倉庫會失敗，並提示改用 mirror。要從鏡像讀檔：`git --git-dir=<鏡像目錄> show HEAD:<路徑>`，或在 Linux／WSL 上 checkout。
 1. **DL580 前置**：安裝並設定 `rclone`（Dropbox、Google Drive 各一個 remote）與 `git`；輸出目錄用本機磁碟（例如 `D:\mrl\recovery\store`），不要放在 Dropbox／OneDrive／Google Drive 同步資料夾內（腳本會拒絕）。
 2. **準備計畫檔**：複製 `scripts/MRL_dl580_recovery_plan.example.json` 到 DL580 本機（例如 `D:\mrl\recovery\plan.json`），填入自己的 remote 名稱與路徑。含私人 ID 的版本不要提交。
 3. **拉取**：`python scripts/MRL_dl580_recovery_pull_v1.py pull --plan D:\mrl\recovery\plan.json --out D:\mrl\recovery\store`

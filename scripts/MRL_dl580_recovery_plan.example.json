@@ -1,5 +1,5 @@
 {
-  "_note": "範例。複製到 DL580 本機後填入你自己的 rclone remote 名稱與路徑；不要把含私人 ID 的版本提交到 repo。",
+  "_note": "範例。複製到 DL580 本機後填入你自己的 rclone remote 名稱與路徑；不要把含私人 ID 的版本提交到 repo。git 來源建議用 \"mode\": \"mirror\"（git clone --mirror，保留全部分支與歷史；Windows 上不會被無法建立的檔名擋住，MRL_AI_SYSTEM 就有這類檔名）。",
   "sources": [
     {
       "name": "dropbox_MRL_ALL_FILES_20260606",
@@ -24,12 +24,14 @@
     {
       "name": "github_MRL_AI_SYSTEM",
       "kind": "git",
-      "url": "https://github.com/dofaromg/MRL_AI_SYSTEM.git"
+      "url": "https://github.com/dofaromg/MRL_AI_SYSTEM.git",
+      "mode": "mirror"
     },
     {
       "name": "github_mrliouword_system",
       "kind": "git",
-      "url": "https://github.com/dofaromg/mrliouword-system.git"
+      "url": "https://github.com/dofaromg/mrliouword-system.git",
+      "mode": "mirror"
     }
   ]
 }

@@ -39,10 +39,15 @@ class FakeRunner:
         if self.fail_on and self.fail_on in cmd:
             rc = 1
         if rc == 0 and cmd[:2] == ["git", "clone"]:
-            (pathlib.Path(cmd[-1]) / ".git").mkdir(parents=True)
-            (pathlib.Path(cmd[-1]) / "file.txt").write_text("x", encoding="utf-8")
+            if "--mirror" in cmd:  # 裸倉庫：HEAD、objects，沒有 .git 也沒有工作樹
+                (pathlib.Path(cmd[-1]) / "objects").mkdir(parents=True)
+                (pathlib.Path(cmd[-1]) / "HEAD").write_text("ref: refs/heads/main\n", encoding="utf-8")
+            else:
+                (pathlib.Path(cmd[-1]) / ".git").mkdir(parents=True)
+                (pathlib.Path(cmd[-1]) / "file.txt").write_text("x", encoding="utf-8")
         out = f"{SHA}\tHEAD\n" if "ls-remote" in cmd else ""
-        return subprocess.CompletedProcess(cmd, rc, stdout=out, stderr="boom" if rc else "")
+        err = getattr(self, "stderr", None) or ("boom" if rc else "")
+        return subprocess.CompletedProcess(cmd, rc, stdout=out, stderr=err if rc else "")
 
 
 class PlanTests(unittest.TestCase):
@@ -422,6 +427,99 @@ class WindowsCleanupAndEnvTests(unittest.TestCase):
         self.assertTrue(r.kws)
         for kw in r.kws:
             self.assertNotIn("GIT_DIR", kw["env"])
+
+
+class MirrorModeTests(unittest.TestCase):
+    def test_plan_accepts_mirror_and_rejects_unknown_mode(self):
+        with tempfile.TemporaryDirectory() as td:
+            def load(mode):
+                p = pathlib.Path(td) / "p.json"
+                p.write_text(json.dumps({"sources": [{"name": "a", "kind": "git", "url": "https://x/y.git", "mode": mode}]}),
+                             encoding="utf-8")
+                return mod.load_plan(p)
+            self.assertEqual(load("mirror")[0]["mode"], "mirror")
+            self.assertEqual(load("worktree")[0]["mode"], "worktree")
+            with self.assertRaises(ValueError):
+                load("sparse")
+
+    def test_example_plan_uses_mirror_for_github_sources(self):
+        modes = {s["name"]: s.get("mode") for s in mod.load_plan(_EXAMPLE) if s["kind"] == "git"}
+        self.assertTrue(modes)
+        self.assertTrue(all(m == "mirror" for m in modes.values()), modes)
+
+    def test_mirror_uses_clone_mirror_without_checkout_and_is_idempotent(self):
+        with tempfile.TemporaryDirectory() as td:
+            dst = pathlib.Path(td) / "repo"
+            r = FakeRunner()
+            self.assertTrue(mod.pull_git({"url": "https://x/y.git", "mode": "mirror"}, dst, r, 10)[0])
+            clones = [c for c in r.calls if c[:2] == ["git", "clone"]]
+            self.assertEqual(len(clones), 1)
+            self.assertIn("--mirror", clones[0])
+            self.assertFalse([c for c in r.calls if "checkout" in c])  # 沒有工作樹，沒有 checkout
+            self.assertTrue((dst / SHA[:12] / "HEAD").is_file())
+            self.assertFalse((dst / (mod.PARTIAL_PREFIX + SHA[:12])).exists())
+            r2 = FakeRunner()
+            self.assertTrue(mod.pull_git({"url": "https://x/y.git", "mode": "mirror"}, dst, r2, 10)[0])
+            self.assertFalse([c for c in r2.calls if c[:2] == ["git", "clone"]])
+
+    def test_worktree_failure_on_invalid_windows_path_suggests_mirror(self):
+        with tempfile.TemporaryDirectory() as td:
+            r = FakeRunner(fail_on="checkout")
+            r.stderr = ("error: invalid path 'MRL/母體/echo.analyst '\n" * 30) + "fatal: unable to checkout working tree"
+            ok, err = mod.pull_git({"url": "https://x/y.git"}, pathlib.Path(td) / "repo", r, 10)
+            self.assertFalse(ok)
+            self.assertIn('"mode": "mirror"', err)
+            self.assertFalse(list((pathlib.Path(td) / "repo").iterdir()))  # 沒留下半成品
+
+    def test_other_worktree_failures_do_not_get_the_windows_hint(self):
+        with tempfile.TemporaryDirectory() as td:
+            ok, err = mod.pull_git({"url": "https://x/y.git"}, pathlib.Path(td) / "repo",
+                                   FakeRunner(fail_on="checkout"), 10)
+            self.assertFalse(ok)
+            self.assertNotIn("mirror", err)
+
+    def test_mirror_manifest_records_head_and_hashes_repo_files(self):
+        with tempfile.TemporaryDirectory() as td:
+            out = pathlib.Path(td)
+            mod.pull_git({"url": "https://x/y.git", "mode": "mirror"}, out / "repo", FakeRunner(), 10)
+            (out / "repo" / SHA[:12] / "objects" / "obj1").write_bytes(b"data")
+            (out / "repo" / (mod.PARTIAL_PREFIX + "zzz")).mkdir()  # 殘留暫存目錄不得進清單
+            rows = mod.build_manifest(out, git_sources={"repo"}, runner=FakeRunner())
+            paths = [r["path"] for r in rows]
+            self.assertIn(f"{SHA[:12]}/(mirror HEAD)", paths)
+            self.assertIn(f"{SHA[:12]}/objects/obj1", paths)   # 鏡像內容是資料，逐檔雜湊
+            self.assertIn(f"{SHA[:12]}/HEAD", paths)
+            self.assertFalse([p for p in paths if "zzz" in p])
+
+
+@unittest.skipUnless(__import__("shutil").which("git"), "需要真的 git")
+class RealMirrorIntegrationTests(unittest.TestCase):
+    def test_mirror_preserves_windows_invalid_filename_and_verifies(self):
+        with tempfile.TemporaryDirectory() as td:
+            remote = pathlib.Path(td) / "remote"
+            remote.mkdir()
+            g = lambda *a: subprocess.run(["git", "-C", str(remote), "-c", "user.email=t@t", "-c", "user.name=t", *a],
+                                          check=True, capture_output=True, env=mod._git_env())
+            g("init", "-q")
+            bad = remote / "母體"
+            bad.mkdir()
+            (bad / "echo.analyst ").write_text("結尾有空白的檔名（Windows 無法建立）", encoding="utf-8")
+            (remote / "ok.txt").write_text("ok", encoding="utf-8")
+            g("add", ".")
+            g("commit", "-qm", "c1")
+            store = pathlib.Path(td) / "store"
+            res = mod.pull([{"name": "repo", "kind": "git", "url": remote.as_uri(), "mode": "mirror"}], store, timeout=120)
+            self.assertTrue(res["repo"]["ok"], res)
+            (rev,) = [p for p in (store / "repo").iterdir()]
+            self.assertTrue((rev / "HEAD").is_file())
+            raw = subprocess.run(["git", "--git-dir", str(rev), "ls-tree", "-r", "--name-only", "-z", "HEAD"],
+                                 capture_output=True, env=mod._git_env()).stdout
+            names = raw.decode("utf-8").split("\0")
+            self.assertIn("母體/echo.analyst ", names)  # 結尾空白的檔名完整保留
+            rows = mod.build_manifest(store, git_sources={"repo"})
+            self.assertTrue([r for r in rows if r["path"].endswith("(mirror HEAD)") and r["git_head"]])
+            mod.write_manifest(store, rows)
+            self.assertTrue(mod.verify(store)["ok"])
 
 
 @unittest.skipUnless(__import__("shutil").which("git"), "需要真的 git")
