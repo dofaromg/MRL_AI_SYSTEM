@@ -74,7 +74,7 @@ main{display:flex;flex-direction:column;min-width:0;min-height:0}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 3px rgba(39,208,122,.18)}
 .dot.off{background:var(--warn);box-shadow:0 0 0 3px rgba(255,204,102,.16)}
 .spacer{flex:1}
-.content{flex:1;overflow:auto;min-height:0}
+.content{flex:1;overflow:auto;min-height:0;padding-bottom:5rem}
 .view{display:none;height:100%}
 .view.on{display:block}
 
@@ -452,6 +452,6 @@ $('#newSess').onclick=()=>newSession();
 // 若已有會話，allow Enter on email to guest-enter for speed
 $('#email').addEventListener('keydown',e=>{ if(e.key==='Enter')enter() });
 </script>
-<footer style="position:fixed;right:8px;bottom:2px;z-index:5;pointer-events:none;font-size:10px;opacity:.6;color:#9fb0a8">canonical_authority: Mr.liou ｜ origin_signature: MrLiouWord ｜ 對外署名: Mrlious ｜ 執行／託管平台僅為承載載體，非來源權位</footer>
+<footer style="position:fixed;right:8px;bottom:2px;max-width:calc(100% - 16px);text-align:right;z-index:5;pointer-events:none;font-size:10px;opacity:.6;color:#9fb0a8">canonical_authority: Mr.liou ｜ origin_signature: MrLiouWord ｜ 對外署名: Mrlious ｜ 執行／託管平台僅為承載載體，非來源權位</footer>
 </body>
 </html>

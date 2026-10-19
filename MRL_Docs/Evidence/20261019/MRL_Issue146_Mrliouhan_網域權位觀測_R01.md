@@ -82,11 +82,11 @@ Create Preflight：`CREATE_NEW`（Evidence 目錄既有 20260928／20261003，�
 
 | 假設 | 內容 | 能支持／否證的證據 |
 |---|---|---|
-| H1 | `mrliouhan.ai` 是 Manus 網站的 Custom Domain（Manus 代為託管；`_acme-challenge` 的 `*.dcv.cloudflare.com` 指向 Cloudflare for SaaS 自訂主機名，其租戶可能是 Manus） | Manus 專案的 Custom Domain 面板與加入時間；Cloudflare for SaaS 自訂主機名所屬帳號（只有該帳號的 Audit Log 看得到） |
+| H1 | `mrliouhan.ai` 是 Manus 網站的 Custom Domain（Manus 代為託管；`_acme-challenge` 的 `*.dcv.cloudflare.com` 與 Cloudflare for SaaS 委派式驗證形態一致，若自訂主機名仍存在，其租戶可能是 Manus；存在與否待查） | Manus 專案的 Custom Domain 面板與加入時間；Cloudflare for SaaS 自訂主機名所屬帳號（只有該帳號的 Audit Log 看得到） |
 | H2 | 自建／匯出的 Express 應用放在 Cloudflare 後，**只把 Manus 當登入（OAuth）供應商**——回呼路由 `/manus-oauth/callback` 與 `redirectUri` 在 `mrliouhan.ai` 自己的網域上，未登入即 302 到 `manus.im/app-auth`；這個形態本身並不要求網站由 Manus 託管（是否如此需看源站程式）。Issue 截圖中的「Mrliouhan.ai 網站登入問題」任務與此不矛盾，但也不證明 | 匯出程式碼的 OAuth 設定、origin 回應標頭、移除 OAuth 依賴後的行為 |
 | H3 | 混合：網域曾綁 Manus、之後改指自有源站，但殘留 OAuth 登入或 DCV 委派 | 時間線：Custom Domain 加入／移除、`last changed 2026-08-12` 的實際內容（註冊商後台活動紀錄） |
 
-`_acme-challenge` 的 DCV 委派是**中性訊號**：任何使用 Cloudflare for SaaS 的服務都會要求；它說明「有人在某個 Cloudflare 帳號建了 `mrliouhan.ai` 自訂主機名」，不說明是誰。
+`_acme-challenge` 的 DCV 委派是**中性觀測**：它與 Cloudflare for SaaS 的委派式憑證驗證（delegated DCV）形態一致，但**不證明**自訂主機名曾被建立、或現在仍存在（刪除後記錄可能殘留；Cloudflare for SaaS 也支援不需此 CNAME 的驗證方式）。自訂主機名的建立／刪除歷史與所屬帳號，留待帳號 Audit Log 查證。
 
 ---
 

@@ -5,6 +5,7 @@ origin_signature: MrLiouWord
 from __future__ import annotations
 
 import importlib.util
+import urllib.request
 import pathlib
 import tempfile
 import unittest
@@ -83,6 +84,22 @@ class RdapReduceTests(unittest.TestCase):
 
 
 class RobustnessTests(unittest.TestCase):
+    def test_malformed_registrar_vcard_keeps_registration_data(self):
+        for bad in (None, [], ["vcard"], ["vcard", None], ["vcard", [["fn"]]], ["vcard", ["x"]]):
+            raw = {"ldhName": "example.test", "status": ["ok"],
+                   "entities": [{"roles": ["registrar"], "vcardArray": bad}]}
+            out = mod.reduce_rdap(raw, "abc")
+            self.assertEqual(out["status"], ["ok"])
+            self.assertEqual(out["registrar"]["name"], "")
+
+    def test_doh_does_not_follow_redirects(self):
+        import urllib.error
+        from unittest import mock
+        err = urllib.error.HTTPError("u", 302, "Found", {}, None)
+        with mock.patch.object(urllib.request.OpenerDirector, "open", side_effect=err):
+            out = mod.doh_query("example.test", "A")
+        self.assertIn("HTTPError", out["error"])
+
     def test_malformed_location_is_recorded_not_raised(self):
         snap = _snapshot()
         snap["http"] = [{"url": "https://example.test/", "status": 302, "headers": {"location": "http://["}}]
