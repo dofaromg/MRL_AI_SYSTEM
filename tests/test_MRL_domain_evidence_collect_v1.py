@@ -4,11 +4,15 @@ origin_signature: MrLiouWord
 """
 from __future__ import annotations
 
+import http.server
 import importlib.util
-import urllib.request
+import json
 import pathlib
 import tempfile
+import threading
 import unittest
+import urllib.error
+import urllib.request
 
 _SCRIPT = pathlib.Path(__file__).resolve().parent.parent / "scripts" / "MRL_domain_evidence_collect_v1.py"
 _spec = importlib.util.spec_from_file_location("MRL_domain_evidence_collect_v1", _SCRIPT)
@@ -127,6 +131,131 @@ class RobustnessTests(unittest.TestCase):
         self.assertFalse(mod.has_usable_evidence(snap))
         snap["http"] = [{"url": "u", "status": 302}]
         self.assertTrue(mod.has_usable_evidence(snap))
+
+
+class _Server:
+    """本機測試伺服器：handler(path) -> (status, headers, body)；記錄每次收到的路徑。"""
+
+    def __init__(self, handler):
+        hits = self.hits = []
+
+        class H(http.server.BaseHTTPRequestHandler):
+            def do_GET(self):  # noqa: N802
+                hits.append(self.path)
+                status, headers, body = handler(self.path)
+                self.send_response(status)
+                for k, v in headers.items():
+                    self.send_header(k, v)
+                self.send_header("content-length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+
+            def log_message(self, *a):
+                pass
+
+        self.srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), H)
+        self.url = f"http://127.0.0.1:{self.srv.server_address[1]}"
+        threading.Thread(target=self.srv.serve_forever, kwargs={"poll_interval": 0.01}, daemon=True).start()
+
+    def close(self):
+        self.srv.shutdown()
+        self.srv.server_close()
+
+
+class RetryTests(unittest.TestCase):
+    def test_transient_error_is_retried_then_succeeds(self):
+        calls = []
+
+        def flaky():
+            calls.append(1)
+            if len(calls) < 3:
+                raise urllib.error.URLError("boom")
+            return "ok"
+
+        slept = []
+        self.assertEqual(mod._with_retry(flaky, attempts=3, base_delay=0.5, sleep=slept.append), ("ok", 3))
+        self.assertEqual(slept, [0.5, 1.0])
+
+    def test_non_transient_error_is_not_retried(self):
+        calls = []
+
+        def hard():
+            calls.append(1)
+            raise urllib.error.HTTPError("u", 404, "nf", {}, None)
+
+        with self.assertRaises(urllib.error.HTTPError) as cm:
+            mod._with_retry(hard, attempts=3, sleep=lambda s: None)
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(cm.exception.attempts, 1)
+
+    def test_exhausted_retries_report_attempt_count(self):
+        def always():
+            raise TimeoutError("slow")
+
+        with self.assertRaises(TimeoutError) as cm:
+            mod._with_retry(always, attempts=3, sleep=lambda s: None)
+        self.assertEqual(cm.exception.attempts, 3)
+        self.assertIn("attempts=3", mod._err(cm.exception))
+
+    def test_http_probe_records_5xx_after_retries_as_evidence(self):
+        srv = _Server(lambda p: (503, {}, b"down"))
+        from unittest import mock
+        try:
+            with mock.patch.object(mod.time, "sleep") as fake_sleep:  # 測試不真的等待
+                out = mod.http_probe(srv.url + "/")
+        finally:
+            srv.close()
+        self.assertEqual([c.args[0] for c in fake_sleep.call_args_list], [0.5, 1.0])
+        self.assertEqual(out["status"], 503)
+        self.assertEqual(out["attempts"], 3)
+        self.assertEqual(len(srv.hits), 3)
+
+    def test_http_probe_302_is_evidence_and_not_followed(self):
+        target = _Server(lambda p: (200, {}, b"target"))
+        src = _Server(lambda p: (302, {"location": target.url + "/landed"}, b""))
+        try:
+            out = mod.http_probe(src.url + "/")
+        finally:
+            src.close()
+            hits = list(target.hits)
+            target.close()
+        self.assertEqual(out["status"], 302)
+        self.assertEqual(out["attempts"], 1)
+        self.assertEqual(hits, [])  # 轉址目標完全沒收到請求
+
+    def test_doh_query_does_not_follow_real_redirect(self):
+        target = _Server(lambda p: (200, {}, json.dumps({"Status": 0, "Answer": []}).encode()))
+        src = _Server(lambda p: (302, {"location": target.url + "/dns"}, b""))
+        orig = mod.DOH_ENDPOINT
+        try:
+            mod.DOH_ENDPOINT = src.url + "/dns-query"
+            out = mod.doh_query("example.test", "A")
+        finally:
+            mod.DOH_ENDPOINT = orig
+            src.close()
+            hits = list(target.hits)
+            target.close()
+        self.assertIn("error", out)
+        self.assertEqual(hits, [])
+
+
+class GuardTests(unittest.TestCase):
+    def test_refuses_synced_output_dir(self):
+        with tempfile.TemporaryDirectory() as td:
+            synced = pathlib.Path(td) / "Dropbox" / "ev"
+            self.assertTrue(mod.is_synced_path(synced))
+            self.assertEqual(mod.main(["--observer", "t", "--out", str(synced)]), 3)
+            self.assertFalse(synced.exists())
+
+    def test_classify_failure_keeps_raw_evidence(self):
+        from unittest import mock
+        with mock.patch.object(mod, "doh_query", return_value={"error": "x"}), \
+             mock.patch.object(mod, "http_probe", return_value={"url": "u", "error": "x"}), \
+             mock.patch.object(mod, "rdap_lookup", return_value={"error": "x"}), \
+             mock.patch.object(mod, "classify", side_effect=RuntimeError("bug")):
+            snap = mod.collect("example.test", "t", delay=0)
+        self.assertEqual(snap["flags"][0]["flag"], "CLASSIFY_FAILED")
+        self.assertIn("dns", snap)
 
 
 class BundleTests(unittest.TestCase):

@@ -24,15 +24,25 @@ SHA = "a" * 40
 
 
 class FakeRunner:
-    def __init__(self, rc=0, raise_timeout=False):
-        self.calls, self.rc, self.raise_timeout = [], rc, raise_timeout
+    """模擬 rclone／git。fail_on：指令中含此子字串時回傳失敗（例如 "checkout"）。
+    git clone 成功時會建立含 .git 的目錄，行為和真的 git 一致。"""
+
+    def __init__(self, rc=0, raise_timeout=False, fail_on=None):
+        self.calls, self.kws, self.rc, self.raise_timeout, self.fail_on = [], [], rc, raise_timeout, fail_on
 
     def __call__(self, cmd, **kw):
         self.calls.append(cmd)
+        self.kws.append(kw)
         if self.raise_timeout:
             raise subprocess.TimeoutExpired(cmd, kw.get("timeout") or 1)
+        rc = self.rc
+        if self.fail_on and self.fail_on in cmd:
+            rc = 1
+        if rc == 0 and cmd[:2] == ["git", "clone"]:
+            (pathlib.Path(cmd[-1]) / ".git").mkdir(parents=True)
+            (pathlib.Path(cmd[-1]) / "file.txt").write_text("x", encoding="utf-8")
         out = f"{SHA}\tHEAD\n" if "ls-remote" in cmd else ""
-        return subprocess.CompletedProcess(cmd, self.rc, stdout=out, stderr="boom" if self.rc else "")
+        return subprocess.CompletedProcess(cmd, rc, stdout=out, stderr="boom" if rc else "")
 
 
 class PlanTests(unittest.TestCase):
@@ -82,10 +92,11 @@ class SafetyTests(unittest.TestCase):
             self.assertTrue(ok)
             cloned = [c for c in r.calls if c[:2] == ["git", "clone"]]
             self.assertEqual(len(cloned), 1)
-            self.assertTrue(cloned[0][-1].endswith(SHA[:12]))
+            self.assertTrue(cloned[0][-1].endswith(mod.PARTIAL_PREFIX + SHA[:12]))
+            self.assertTrue((dst / SHA[:12] / ".git").is_dir())
+            self.assertFalse((dst / (mod.PARTIAL_PREFIX + SHA[:12])).exists())
             self.assertTrue((dst / "oldrev00000" / ".git").exists())
             # 同一修訂第二次：不再 clone
-            (dst / SHA[:12] / ".git").mkdir(parents=True)
             r2 = FakeRunner()
             self.assertTrue(mod.pull_git({"url": "https://x/y.git"}, dst, r2, 10)[0])
             self.assertFalse([c for c in r2.calls if c[:2] == ["git", "clone"]])
@@ -195,6 +206,197 @@ class ManifestTests(unittest.TestCase):
     def test_verify_without_manifest_fails(self):
         with tempfile.TemporaryDirectory() as td:
             self.assertFalse(mod.verify(pathlib.Path(td))["ok"])
+
+
+class StabilityTests(unittest.TestCase):
+    def test_failed_checkout_leaves_no_complete_looking_directory(self):
+        with tempfile.TemporaryDirectory() as td:
+            dst = pathlib.Path(td) / "repo"
+            ok, _ = mod.pull_git({"url": "https://x/y.git"}, dst, FakeRunner(fail_on="checkout"), 10)
+            self.assertFalse(ok)
+            self.assertFalse((dst / SHA[:12]).exists())
+            self.assertFalse((dst / (mod.PARTIAL_PREFIX + SHA[:12])).exists())
+            # 下次重跑不會把殘骸當成已完成而跳過
+            r = FakeRunner()
+            self.assertTrue(mod.pull_git({"url": "https://x/y.git"}, dst, r, 10)[0])
+            self.assertTrue([c for c in r.calls if c[:2] == ["git", "clone"]])
+            self.assertTrue((dst / SHA[:12] / "file.txt").is_file())
+
+    def test_stale_partial_from_crashed_run_is_replaced(self):
+        with tempfile.TemporaryDirectory() as td:
+            dst = pathlib.Path(td) / "repo"
+            stale = dst / (mod.PARTIAL_PREFIX + SHA[:12])
+            (stale / ".git").mkdir(parents=True)
+            self.assertTrue(mod.pull_git({"url": "https://x/y.git"}, dst, FakeRunner(), 10)[0])
+            self.assertTrue((dst / SHA[:12]).is_dir())
+            self.assertFalse(stale.exists())
+
+    def test_git_never_prompts_for_credentials(self):
+        with tempfile.TemporaryDirectory() as td:
+            r = FakeRunner()
+            mod.pull_git({"url": "https://x/y.git"}, pathlib.Path(td) / "repo", r, 10)
+            self.assertTrue(r.kws)
+            for kw in r.kws:
+                self.assertEqual(kw["env"]["GIT_TERMINAL_PROMPT"], "0")
+
+    def test_rclone_retries_and_user_args_can_override(self):
+        cmd = mod.rclone_command({"remote": "d:", "path": "p", "extra_args": ["--retries", "9"]}, pathlib.Path("/x"))
+        self.assertIn("--low-level-retries", cmd)
+        self.assertLess(cmd.index("--retries"), len(cmd) - cmd[::-1].index("--retries") - 1)  # 預設在前
+        self.assertEqual(cmd[-1], "9")  # 使用者參數在最後，可覆寫預設
+
+    def test_partial_dirs_are_not_part_of_the_manifest(self):
+        with tempfile.TemporaryDirectory() as td:
+            out = pathlib.Path(td)
+            (out / "repo" / (mod.PARTIAL_PREFIX + "abc") / ".git").mkdir(parents=True)
+            (out / "repo" / (mod.PARTIAL_PREFIX + "abc") / "half.txt").write_text("x", encoding="utf-8")
+            (out / "repo" / "def456def456" / ".git").mkdir(parents=True)
+            (out / "repo" / "def456def456" / "ok.txt").write_text("y", encoding="utf-8")
+            rows = mod.build_manifest(out, git_sources={"repo"}, runner=FakeRunner(rc=1))
+            paths = [r["path"] for r in rows]
+            self.assertIn("def456def456/ok.txt", paths)
+            self.assertFalse([p for p in paths if "half.txt" in p or "abc" in p])
+
+    def test_lock_blocks_second_pull_and_is_released(self):
+        with tempfile.TemporaryDirectory() as td:
+            out = pathlib.Path(td)
+            with mod.pull_lock(out):
+                with self.assertRaises(mod.PullLockHeld):
+                    with mod.pull_lock(out):
+                        pass
+                self.assertTrue((out / mod.LOCK_NAME).exists())  # 第二把鎖失敗不可誤刪第一把
+            self.assertFalse((out / mod.LOCK_NAME).exists())
+            with mod.pull_lock(out):  # 釋放後可再取得
+                pass
+
+    def test_lock_released_even_when_pull_raises(self):
+        with tempfile.TemporaryDirectory() as td:
+            out = pathlib.Path(td)
+            with self.assertRaises(RuntimeError):
+                with mod.pull_lock(out):
+                    raise RuntimeError("boom")
+            self.assertFalse((out / mod.LOCK_NAME).exists())
+
+    def test_manifest_without_hardlink_support_falls_back_to_copy(self):
+        from unittest import mock
+        with tempfile.TemporaryDirectory() as td:
+            out = pathlib.Path(td)
+            (out / "a").mkdir()
+            (out / "a" / "f.txt").write_text("hi", encoding="utf-8")
+            with mock.patch.object(mod.os, "link", side_effect=OSError("no hardlinks")):
+                m = mod.write_manifest(out, mod.build_manifest(out))
+            self.assertTrue(m.is_file())
+            self.assertTrue(mod.verify(out)["ok"])
+            self.assertEqual([p.name for p in out.glob(".MANIFEST_tmp.*")], [])  # 暫存檔已清掉
+
+    def test_crash_between_sums_and_manifest_leaves_verifiable_store(self):
+        """模擬斷電：SHA256SUMS 已有一筆孤立記錄、清單檔不存在 → 既有資料仍可驗證，且孤立記錄被標出。"""
+        with tempfile.TemporaryDirectory() as td:
+            out = pathlib.Path(td)
+            (out / "a").mkdir()
+            (out / "a" / "f.txt").write_text("hi", encoding="utf-8")
+            mod.write_manifest(out, mod.build_manifest(out))
+            with (out / "SHA256SUMS").open("a", encoding="utf-8") as f:
+                f.write("0" * 64 + "  MANIFEST_2099-01-01T000000Z.jsonl\n")
+            res = mod.verify(out)
+            self.assertTrue(res["ok"])
+            self.assertEqual(res["orphan_sums"], ["MANIFEST_2099-01-01T000000Z.jsonl"])
+
+    def test_verify_reports_malformed_manifest_instead_of_raising(self):
+        with tempfile.TemporaryDirectory() as td:
+            out = pathlib.Path(td)
+            (out / "a").mkdir()
+            (out / "a" / "f.txt").write_text("hi", encoding="utf-8")
+            m = mod.write_manifest(out, mod.build_manifest(out))
+            bad = out / "MANIFEST_2099-01-01T000000Z.jsonl"
+            bad.write_text("{not json\n", encoding="utf-8")
+            with (out / "SHA256SUMS").open("a", encoding="utf-8") as f:
+                f.write(f"{mod.sha256_file(bad)}  {bad.name}\n")
+            res = mod.verify(out)
+            self.assertFalse(res["ok"])
+            self.assertIn("無法解析", res["error"])
+            self.assertTrue(m.is_file())
+
+    def test_verify_lists_unlisted_files_without_failing(self):
+        with tempfile.TemporaryDirectory() as td:
+            out = pathlib.Path(td)
+            (out / "a").mkdir()
+            (out / "a" / "f.txt").write_text("hi", encoding="utf-8")
+            mod.write_manifest(out, mod.build_manifest(out))
+            (out / "a" / "new.txt").write_text("later", encoding="utf-8")
+            res = mod.verify(out)
+            self.assertTrue(res["ok"])
+            self.assertEqual(res["unlisted"], ["a/new.txt"])
+
+    def test_cli_refuses_when_lock_held_or_disk_low(self):
+        from unittest import mock
+        with tempfile.TemporaryDirectory() as td:
+            plan = pathlib.Path(td) / "plan.json"
+            plan.write_text(json.dumps({"sources": [{"name": "a", "kind": "rclone", "remote": "d:"}]}), encoding="utf-8")
+            out = pathlib.Path(td) / "store"
+            out.mkdir()
+            (out / mod.LOCK_NAME).write_text("{}", encoding="utf-8")
+            with mock.patch.object(mod.shutil, "which", return_value="/usr/bin/rclone"):
+                self.assertEqual(mod.main(["pull", "--plan", str(plan), "--out", str(out)]), 5)
+                self.assertTrue((out / mod.LOCK_NAME).exists())  # 別人的鎖不能被我們清掉
+                (out / mod.LOCK_NAME).unlink()
+                self.assertEqual(mod.main(["pull", "--plan", str(plan), "--out", str(out),
+                                           "--min-free-gb", "99999999"]), 6)
+                self.assertFalse((out / mod.LOCK_NAME).exists())
+
+
+@unittest.skipUnless(__import__("shutil").which("git"), "需要真的 git")
+class RealGitIntegrationTests(unittest.TestCase):
+    """用本機倉庫跑真的 git：兩次不同 HEAD 的拉取各自成一個修訂目錄，舊的完全不動。"""
+
+    @staticmethod
+    def _git(repo, *args):
+        subprocess.run(["git", "-C", str(repo), "-c", "user.email=t@t", "-c", "user.name=t", *args],
+                       check=True, capture_output=True)
+
+    def test_two_heads_make_two_immutable_revisions(self):
+        with tempfile.TemporaryDirectory() as td:
+            remote = pathlib.Path(td) / "remote"
+            remote.mkdir()
+            self._git(remote, "init", "-q")
+            (remote / "a.txt").write_text("v1", encoding="utf-8")
+            self._git(remote, "add", ".")
+            self._git(remote, "commit", "-qm", "c1")
+            dst = pathlib.Path(td) / "store" / "repo"
+            url = remote.as_uri()
+            self.assertTrue(mod.pull_git({"url": url}, dst, subprocess.run, 120)[0])
+            (rev1,) = [p for p in dst.iterdir()]
+            self.assertTrue((rev1 / "a.txt").is_file())
+
+            self.assertTrue(mod.pull_git({"url": url}, dst, subprocess.run, 120)[0])  # 同一 HEAD：不新增
+            self.assertEqual(len(list(dst.iterdir())), 1)
+
+            (remote / "a.txt").write_text("v2", encoding="utf-8")
+            (remote / "b.txt").write_text("new", encoding="utf-8")
+            self._git(remote, "add", ".")
+            self._git(remote, "commit", "-qm", "c2")
+            self.assertTrue(mod.pull_git({"url": url}, dst, subprocess.run, 120)[0])
+            revs = sorted(p.name for p in dst.iterdir())
+            self.assertEqual(len(revs), 2)
+            self.assertEqual((rev1 / "a.txt").read_text(encoding="utf-8"), "v1")  # 舊修訂沒被動
+            self.assertFalse((rev1 / "b.txt").exists())
+            new = [dst / n for n in revs if n != rev1.name][0]
+            self.assertEqual((new / "a.txt").read_text(encoding="utf-8"), "v2")
+
+            store = pathlib.Path(td) / "store"
+            rows = mod.build_manifest(store, git_sources={"repo"})
+            heads = [r for r in rows if "git_head" in r]
+            self.assertEqual(len(heads), 2)
+            self.assertTrue(all(r["git_head"] for r in heads))
+            mod.write_manifest(store, rows)
+            self.assertTrue(mod.verify(store)["ok"])
+
+    def test_unreachable_remote_fails_fast_without_prompt(self):
+        with tempfile.TemporaryDirectory() as td:
+            ok, err = mod.pull_git({"url": (pathlib.Path(td) / "nope").as_uri()},
+                                   pathlib.Path(td) / "repo", subprocess.run, 60)
+            self.assertFalse(ok)
+            self.assertTrue(err)
 
 
 class CliTests(unittest.TestCase):

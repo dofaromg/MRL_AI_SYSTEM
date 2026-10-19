@@ -16,11 +16,13 @@
 #   python scripts/MRL_dl580_recovery_pull_v1.py verify --out D:\mrl\recovery\store
 # plan.json 格式見 scripts/MRL_dl580_recovery_plan.example.json（複製後在本機填入，勿提交含私人 ID 的版本）。
 # 結束碼：0 成功｜1 verify 失敗｜2 輸出路徑在同步資料夾｜3 有來源拉取失敗或結果為空｜4 有 0 位元組檔案未被接受
+#          5 另一個 pull 正在進行（鎖檔存在）｜6 磁碟剩餘空間不足
 from __future__ import annotations
 
 import argparse
 import hashlib
 import json
+import os
 import pathlib
 import re
 import shutil
@@ -31,6 +33,11 @@ from datetime import datetime, timezone
 ORIGIN_SIGNATURE = "MrLiouWord"
 SYNCED_MARKERS = ("dropbox", "onedrive", "google drive", "googledrive", "icloud")
 DEFAULT_TIMEOUT_SEC = 6 * 3600
+DEFAULT_MIN_FREE_GB = 1.0
+LOCK_NAME = ".pull.lock"
+PARTIAL_PREFIX = ".partial-"   # git 暫存目錄（clone 完成並 checkout 成功後才改名為正式修訂目錄）
+RCLONE_RETRY_ARGS = ["--retries", "3", "--low-level-retries", "10"]
+GIT_ENV = {"GIT_TERMINAL_PROMPT": "0"}  # 需要憑證時直接失敗，不在無人值守時卡在提示上
 _SHA_RE = re.compile(r"^[0-9a-f]{40}([0-9a-f]{24})?$")
 
 
@@ -81,16 +88,23 @@ def load_plan(path: pathlib.Path) -> list[dict]:
 def rclone_command(source: dict, dst: pathlib.Path) -> list[str]:
     src = source["remote"] + source.get("path", "")
     return ["rclone", "copy", src, str(dst), "--immutable", "--create-empty-src-dirs",
-            *source.get("extra_args", [])]
+            *RCLONE_RETRY_ARGS, *source.get("extra_args", [])]
 
 
 def _fail(r) -> str:
     return (r.stderr or r.stdout or "")[-500:] or f"exit {r.returncode}"
 
 
+def _git_env() -> dict:
+    return {**os.environ, **GIT_ENV}
+
+
 def pull_git(source: dict, dst: pathlib.Path, runner, timeout) -> tuple[bool, str]:
-    """每個遠端 HEAD 修訂存成獨立目錄 <dst>/<sha前12碼>；已有的修訂不動，新修訂不會覆蓋舊的。"""
-    r = runner(["git", "ls-remote", source["url"], "HEAD"], capture_output=True, text=True, timeout=timeout)
+    """每個遠端 HEAD 修訂存成獨立目錄 <dst>/<sha前12碼>；已有的修訂不動，新修訂不會覆蓋舊的。
+    先在 .partial-<sha前12碼> 完成 clone＋checkout，成功後才改名：中途失敗不會留下
+    『看起來完整、其實缺檔』的修訂目錄（下次執行會把它當作已完成而跳過）。"""
+    kw = dict(capture_output=True, text=True, timeout=timeout, env=_git_env())
+    r = runner(["git", "ls-remote", source["url"], "HEAD"], **kw)
     if r.returncode != 0:
         return False, _fail(r)
     parts = (r.stdout or "").split()
@@ -101,11 +115,16 @@ def pull_git(source: dict, dst: pathlib.Path, runner, timeout) -> tuple[bool, st
     if (target / ".git").exists():
         return True, ""
     dst.mkdir(parents=True, exist_ok=True)
-    for cmd in (["git", "clone", source["url"], str(target)],
-                ["git", "-C", str(target), "checkout", "--detach", sha]):
-        r = runner(cmd, capture_output=True, text=True, timeout=timeout)
+    partial = dst / f"{PARTIAL_PREFIX}{sha[:12]}"
+    if partial.exists():  # 前次中斷留下的本程式暫存目錄（不是已回收資料）；清掉重來
+        shutil.rmtree(partial, ignore_errors=True)
+    for cmd in (["git", "clone", source["url"], str(partial)],
+                ["git", "-C", str(partial), "checkout", "--detach", sha]):
+        r = runner(cmd, **kw)
         if r.returncode != 0:
+            shutil.rmtree(partial, ignore_errors=True)
             return False, _fail(r)
+    os.rename(partial, target)
     return True, ""
 
 
@@ -149,13 +168,16 @@ def build_manifest(out: pathlib.Path, git_sources=frozenset(), runner=None) -> l
     for src_dir in sorted(p for p in out.iterdir() if p.is_dir()):
         is_git = src_dir.name in git_sources
         if is_git:
-            for repo in sorted(g.parent for g in src_dir.glob("*/.git")):
+            for repo in sorted(g.parent for g in src_dir.glob("*/.git")
+                               if not g.parent.name.startswith(PARTIAL_PREFIX)):
                 rows.append({"source": src_dir.name, "path": f"{repo.name}/.git(HEAD)",
                              "git_head": git_head(repo, runner)})
         for f in sorted(src_dir.rglob("*")):
             rel = f.relative_to(src_dir)
             if not f.is_file() or (is_git and ".git" in rel.parts):
                 continue
+            if is_git and rel.parts[0].startswith(PARTIAL_PREFIX):
+                continue  # 未完成的暫存目錄不屬於回收資料
             size = f.stat().st_size
             rows.append({
                 "source": src_dir.name, "path": rel.as_posix(), "size": size,
@@ -165,20 +187,57 @@ def build_manifest(out: pathlib.Path, git_sources=frozenset(), runner=None) -> l
     return rows
 
 
+def _fsync_dir(path: pathlib.Path) -> None:
+    try:  # Windows 不支援對目錄 fsync；略過即可
+        fd = os.open(str(path), os.O_RDONLY)
+    except OSError:
+        return
+    try:
+        os.fsync(fd)
+    except OSError:
+        pass
+    finally:
+        os.close(fd)
+
+
 def write_manifest(out: pathlib.Path, rows: list[dict]) -> pathlib.Path:
+    """先把清單完整寫進暫存檔並 fsync，再把雜湊追加進 SHA256SUMS（fsync），最後以排他方式
+    連結成正式檔名。中途斷電只可能留下『有雜湊記錄但無清單』（verify 會忽略孤立記錄），
+    不會出現『有清單但沒有雜湊記錄』的半成品。"""
+    tmp = out / f".MANIFEST_tmp.{os.getpid()}"
+    with tmp.open("w", encoding="utf-8") as fh:
+        for r in rows:
+            fh.write(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n")
+        fh.flush()
+        os.fsync(fh.fileno())
+    digest = sha256_file(tmp)
     stem, n = f"MANIFEST_{utc_now()}", 0
-    while True:  # 排他建立，不覆蓋既有清單
-        name = f"{stem}.jsonl" if n == 0 else f"{stem}_{n}.jsonl"
-        try:
-            with (out / name).open("x", encoding="utf-8") as fh:
-                for r in rows:
-                    fh.write(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n")
-            break
-        except FileExistsError:
-            n += 1
-    digest = sha256_file(out / name)
-    with (out / "SHA256SUMS").open("a", encoding="utf-8") as f:
-        f.write(f"{digest}  {name}\n")
+    try:
+        while True:  # 排他建立，不覆蓋既有清單
+            name = f"{stem}.jsonl" if n == 0 else f"{stem}_{n}.jsonl"
+            if (out / name).exists():
+                n += 1
+                continue
+            with (out / "SHA256SUMS").open("a", encoding="utf-8") as f:
+                f.write(f"{digest}  {name}\n")
+                f.flush()
+                os.fsync(f.fileno())
+            try:
+                try:
+                    os.link(tmp, out / name)  # 目標已存在會丟 FileExistsError，不會覆蓋
+                except FileExistsError:
+                    raise
+                except OSError:  # 檔案系統不支援硬連結（exFAT、部分網路磁碟）：改用排他建立＋複製
+                    with (out / name).open("xb") as dst_fh, tmp.open("rb") as src_fh:
+                        shutil.copyfileobj(src_fh, dst_fh)
+                        dst_fh.flush()
+                        os.fsync(dst_fh.fileno())
+                break
+            except FileExistsError:
+                n += 1
+    finally:
+        tmp.unlink(missing_ok=True)
+    _fsync_dir(out)
     return out / name
 
 
@@ -193,7 +252,25 @@ def _read_sums(out: pathlib.Path) -> dict[str, str]:
     return sums
 
 
+def _load_manifest_rows(m: pathlib.Path) -> list[dict]:
+    rows = []
+    for i, line in enumerate(m.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip():
+            continue
+        try:
+            r = json.loads(line)
+        except json.JSONDecodeError as e:
+            raise ValueError(f"{m.name} 第 {i} 行不是合法 JSON: {e}") from e
+        if not isinstance(r, dict):
+            raise ValueError(f"{m.name} 第 {i} 行不是物件")
+        rows.append(r)
+    return rows
+
+
 def verify(out: pathlib.Path) -> dict:
+    """ok 只在：每份清單的雜湊都對得上 SHA256SUMS、清單內每個檔案都存在且雜湊一致時為 True。
+    unlisted（磁碟上有、但任何清單都沒記的檔案）與 orphan_sums（有記錄但清單不存在）只是提示，
+    不影響 ok——它們代表『尚未被清單涵蓋』，不代表已回收資料受損。"""
     manifests = sorted(out.glob("MANIFEST_*.jsonl"))
     if not manifests:
         return {"ok": False, "error": "沒有 MANIFEST 可驗證"}
@@ -204,19 +281,67 @@ def verify(out: pathlib.Path) -> dict:
         if sha256_file(m) != sums[m.name]:
             return {"ok": False, "error": f"清單雜湊不符（可能被修改或損毀）: {m.name}"}
     expected: dict[tuple, str] = {}
-    for m in manifests:  # 以最早記錄為準：之後同一路徑雜湊改變即視為異動
-        for line in m.read_text(encoding="utf-8").splitlines():
-            r = json.loads(line)
-            if "sha256" in r:
-                expected.setdefault((r["source"], r["path"]), r["sha256"])
+    try:
+        for m in manifests:  # 以最早記錄為準：之後同一路徑雜湊改變即視為異動
+            for r in _load_manifest_rows(m):
+                if "sha256" in r:
+                    expected.setdefault((r["source"], r["path"]), r["sha256"])
+    except (ValueError, KeyError, UnicodeDecodeError) as e:
+        return {"ok": False, "error": f"清單內容無法解析: {e}"}
     missing, changed = [], []
     for (src, rel), digest in expected.items():
         f = out / src / rel
-        if not f.is_file():
-            missing.append(f"{src}/{rel}")
-        elif sha256_file(f) != digest:
-            changed.append(f"{src}/{rel}")
-    return {"ok": not missing and not changed, "checked": len(expected), "missing": missing, "changed": changed}
+        try:
+            if not f.is_file():
+                missing.append(f"{src}/{rel}")
+            elif sha256_file(f) != digest:
+                changed.append(f"{src}/{rel}")
+        except OSError as e:  # 權限或 I/O 錯誤：無法確認就不能算通過
+            changed.append(f"{src}/{rel} (無法讀取: {e})")
+    orphan_sums = sorted(n for n in sums if n.startswith("MANIFEST_") and not (out / n).is_file())
+    listed = {(a, b) for a, b in expected}
+    unlisted = []
+    for src_dir in sorted(p for p in out.iterdir() if p.is_dir()):
+        for f in sorted(src_dir.rglob("*")):
+            rel = f.relative_to(src_dir)
+            if not f.is_file() or rel.parts[0].startswith(PARTIAL_PREFIX):
+                continue
+            if (src_dir.name, rel.as_posix()) not in listed and ".git" not in rel.parts:
+                unlisted.append(f"{src_dir.name}/{rel.as_posix()}")
+    return {"ok": not missing and not changed, "checked": len(expected), "missing": missing,
+            "changed": changed, "orphan_sums": orphan_sums, "unlisted": unlisted}
+
+
+# ── 執行保護：鎖檔與磁碟空間 ────────────────────────────────────────────────
+class PullLockHeld(RuntimeError):
+    pass
+
+
+class pull_lock:
+    """同一個輸出目錄同時只允許一個 pull（兩個程序交錯寫入會讓清單與實際檔案對不上）。
+    鎖檔記錄 pid 與開始時間。程序被強制終止後鎖檔會殘留：確認沒有 pull 在跑後，手動刪除即可。"""
+
+    def __init__(self, out: pathlib.Path):
+        self.path = out / LOCK_NAME
+
+    def __enter__(self):
+        try:
+            with self.path.open("x", encoding="utf-8") as f:
+                f.write(json.dumps({"pid": os.getpid(), "started": utc_now()}))
+        except FileExistsError:
+            try:
+                info = self.path.read_text(encoding="utf-8")
+            except OSError:
+                info = "?"
+            raise PullLockHeld(f"{self.path} 已存在（{info}）；若確定沒有其他 pull 在執行，請手動刪除後重試。")
+        return self
+
+    def __exit__(self, *exc):
+        self.path.unlink(missing_ok=True)
+
+
+def free_gb(path: pathlib.Path) -> float:
+    return shutil.disk_usage(path).free / 1024 ** 3
 
 
 # ── CLI ────────────────────────────────────────────────────────────────────
@@ -227,6 +352,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--plan", required=True)
     p.add_argument("--out", required=True)
     p.add_argument("--timeout", type=int, default=DEFAULT_TIMEOUT_SEC, help="每個來源的逾時秒數（0 表示不限）")
+    p.add_argument("--min-free-gb", type=float, default=DEFAULT_MIN_FREE_GB,
+                   help="輸出磁碟剩餘空間低於此值（GB）就拒絕開始；0 表示不檢查")
     p.add_argument("--allow-synced", action="store_true", help="允許輸出到雲端同步資料夾（不建議）")
     p.add_argument("--allow-empty", action="store_true", help="接受來源本來就沒有檔案")
     p.add_argument("--accept-zero-byte", action="store_true", help="接受 0 位元組檔案（已確認它們就是預期資料）")
@@ -238,6 +365,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "verify":
         res = verify(out)
         print(json.dumps(res, ensure_ascii=False, indent=2))
+        if res.get("unlisted"):
+            print(f"NOTE: {len(res['unlisted'])} 個檔案不在任何清單內（尚未被涵蓋，不影響 ok）。", file=sys.stderr)
         return 0 if res["ok"] else 1
 
     if is_synced_path(out) and not args.allow_synced:
@@ -246,9 +375,17 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     out.mkdir(parents=True, exist_ok=True)
     sources = load_plan(pathlib.Path(args.plan))
-    results = pull(sources, out, timeout=args.timeout or None)
-    rows = build_manifest(out, git_sources={s["name"] for s in sources if s["kind"] == "git"})
-    manifest = write_manifest(out, rows)
+    if args.min_free_gb and free_gb(out) < args.min_free_gb:
+        print(f"拒絕：{out} 剩餘 {free_gb(out):.2f} GB，低於 --min-free-gb {args.min_free_gb}。", file=sys.stderr)
+        return 6
+    try:
+        with pull_lock(out):
+            results = pull(sources, out, timeout=args.timeout or None)
+            rows = build_manifest(out, git_sources={s["name"] for s in sources if s["kind"] == "git"})
+            manifest = write_manifest(out, rows)
+    except PullLockHeld as e:
+        print(f"拒絕：{e}", file=sys.stderr)
+        return 5
     counts: dict[str, int] = {}
     for r in rows:
         if "sha256" in r:
