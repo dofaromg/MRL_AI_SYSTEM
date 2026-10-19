@@ -345,6 +345,85 @@ class StabilityTests(unittest.TestCase):
                 self.assertFalse((out / mod.LOCK_NAME).exists())
 
 
+class WindowsCleanupAndEnvTests(unittest.TestCase):
+    def test_rmtree_handler_clears_readonly_and_retries(self):
+        """模擬 Windows：第一次刪除因唯讀失敗，處理器解除唯讀後必須重試。"""
+        from unittest import mock
+        with tempfile.TemporaryDirectory() as td:
+            f = pathlib.Path(td) / "obj"
+            f.write_text("x", encoding="utf-8")
+            func = mock.Mock(side_effect=[PermissionError("read-only"), None])
+            mod._rmtree_onerr(func, str(f), None)
+            self.assertEqual(func.call_count, 2)
+
+    def test_rmtree_handler_gives_up_quietly_when_still_failing(self):
+        from unittest import mock
+        with tempfile.TemporaryDirectory() as td:
+            f = pathlib.Path(td) / "obj"
+            f.write_text("x", encoding="utf-8")
+            func = mock.Mock(side_effect=PermissionError("locked"))
+            mod._rmtree_onerr(func, str(f), None)  # 不丟例外；由 _force_rmtree 檢查目錄是否還在
+
+    def test_force_rmtree_removes_tree_with_readonly_files(self):
+        with tempfile.TemporaryDirectory() as td:
+            d = pathlib.Path(td) / ".partial-x" / ".git" / "objects"
+            d.mkdir(parents=True)
+            f = d / "pack"
+            f.write_text("x", encoding="utf-8")
+            f.chmod(0o444)
+            d.chmod(0o555)
+            self.assertTrue(mod._force_rmtree(pathlib.Path(td) / ".partial-x"))
+            self.assertFalse((pathlib.Path(td) / ".partial-x").exists())
+
+    def test_uncleanable_partial_gives_clear_error_instead_of_confusing_clone_failure(self):
+        from unittest import mock
+        with tempfile.TemporaryDirectory() as td:
+            dst = pathlib.Path(td) / "repo"
+            (dst / (mod.PARTIAL_PREFIX + SHA[:12])).mkdir(parents=True)
+            r = FakeRunner()
+            with mock.patch.object(mod, "_force_rmtree", return_value=False):
+                ok, err = mod.pull_git({"url": "https://x/y.git"}, dst, r, 10)
+            self.assertFalse(ok)
+            self.assertIn("無法移除暫存目錄", err)
+            self.assertFalse([c for c in r.calls if c[:2] == ["git", "clone"]])  # 沒有去 clone 到髒目錄
+
+    def test_timeout_during_clone_cleans_partial_and_is_reported_per_source(self):
+        class TimeoutOnCheckout(FakeRunner):
+            def __call__(self, cmd, **kw):
+                if "checkout" in cmd:
+                    self.calls.append(cmd)
+                    raise subprocess.TimeoutExpired(cmd, 1)
+                return super().__call__(cmd, **kw)
+
+        with tempfile.TemporaryDirectory() as td:
+            out = pathlib.Path(td)
+            res = mod.pull([{"name": "repo", "kind": "git", "url": "https://x/y.git"}], out,
+                           runner=TimeoutOnCheckout(), timeout=5)
+            self.assertFalse(res["repo"]["ok"])
+            self.assertIn("逾時", res["repo"]["error"])
+            self.assertEqual([p.name for p in (out / "repo").iterdir()], [])  # 沒有殘留的半成品
+
+    def test_git_env_drops_inherited_repo_location_variables(self):
+        from unittest import mock
+        polluted = {v: "/somewhere/else" for v in mod.GIT_LOCATION_VARS}
+        with mock.patch.dict(mod.os.environ, polluted):
+            env = mod._git_env()
+        for v in mod.GIT_LOCATION_VARS:
+            self.assertNotIn(v, env)
+        self.assertEqual(env["GIT_TERMINAL_PROMPT"], "0")
+        self.assertIn("PATH", env)  # 其餘環境照常繼承
+
+    def test_git_head_and_pull_use_sanitized_env(self):
+        from unittest import mock
+        r = FakeRunner()
+        with tempfile.TemporaryDirectory() as td, mock.patch.dict(mod.os.environ, {"GIT_DIR": "/x"}):
+            mod.git_head(pathlib.Path(td), r)
+            mod.pull_git({"url": "https://x/y.git"}, pathlib.Path(td) / "repo", r, 10)
+        self.assertTrue(r.kws)
+        for kw in r.kws:
+            self.assertNotIn("GIT_DIR", kw["env"])
+
+
 @unittest.skipUnless(__import__("shutil").which("git"), "需要真的 git")
 class RealGitIntegrationTests(unittest.TestCase):
     """用本機倉庫跑真的 git：兩次不同 HEAD 的拉取各自成一個修訂目錄，舊的完全不動。"""
@@ -352,7 +431,7 @@ class RealGitIntegrationTests(unittest.TestCase):
     @staticmethod
     def _git(repo, *args):
         subprocess.run(["git", "-C", str(repo), "-c", "user.email=t@t", "-c", "user.name=t", *args],
-                       check=True, capture_output=True)
+                       check=True, capture_output=True, env=mod._git_env())
 
     def test_two_heads_make_two_immutable_revisions(self):
         with tempfile.TemporaryDirectory() as td:

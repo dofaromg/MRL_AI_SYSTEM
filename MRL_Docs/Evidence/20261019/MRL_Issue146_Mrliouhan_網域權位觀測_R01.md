@@ -154,7 +154,7 @@ Create Preflight：`CREATE_NEW`（Evidence 目錄既有 20260928／20261003，�
 - **透過 Manus 購買的網域（Type C）**：刪除期間網域仍為已註冊狀態，並由 Manus **暫時管理**；刪除不會移除其 DNS 記錄；若備份前已有專案與網域的關聯，帳號還原後會**自動重新關聯**。
 - 外部網域：DNS 留在原提供者、不被 Manus 刪除；專案與網域的綁定在 Task Data 還原後自動重連，但須自行驗證。
 - 時間點：Task Data Backup 截止 2026-08-23 07:59 SGT；停機自 2026-08-23 08:00 SGT；還原入口 2026-08-25 08:00 SGT 開放。**還原只能完成一次**，備份可能分成多個套件，須確認全數選取。
-- 備份不含：Cloud Computer 檔案系統；GitHub 匯出僅為額外程式碼副本，不替代官方備份；第三方憑證與 OAuth token 可能無法以原樣回復；錯過的排程與 webhook 不補發。
+- 備份不含：Cloud Computer 檔案系統；GitHub 匯出僅為額外程式碼副本，不替代官方備份；第三方憑證與 OAuth token 可能無法以原樣回復；停機期間：WebDev Schedule（非 Manus Scheduled Tasks）錯過的執行不補跑；Forge API 失敗的請求不由 Manus 重播；送往不可用的 Manus 託管網站的 webhook 回 5xx 且不由 Manus 排隊或重播（外部發送方可能依自己的策略重試）。
 - A/B 類帳號：頁面稱對受影響的網域綁定做批次修復，使用者「不需」重連網域或改 DNS；維護頁若仍顯示，可在任務的 Settings → Domains 使用 Connect domain。
 
 **新增假設 H4（待查，不取代 H1–H3，可與之並存）**
