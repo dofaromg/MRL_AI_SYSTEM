@@ -1,0 +1,523 @@
+{
+  "collected_at": "2026-10-19T09:40:46Z",
+  "dns": {
+    "A": {
+      "ad": false,
+      "answers": [
+        "104.18.26.246",
+        "100.78.70.78"
+      ],
+      "authority": [],
+      "name": "mrliouhan.ai",
+      "raw_sha256": "095147937df4353ae10c12fd5c15839c5908a490f7de3c1e7b4d87c35552a08a",
+      "rcode": 0,
+      "ttl": [
+        60,
+        60
+      ],
+      "type": "A"
+    },
+    "AAAA": {
+      "ad": false,
+      "answers": [],
+      "authority": [
+        "ns1.globaldomaingroup.com. hostmaster.mrliouhan.ai. 2026060204 16384 2048 1209600 300"
+      ],
+      "name": "mrliouhan.ai",
+      "raw_sha256": "b5b6a9f64aacb55b1f4af014350723722578aa3291d0a14ac8daf1b5a4cda3c9",
+      "rcode": 0,
+      "ttl": [],
+      "type": "AAAA"
+    },
+    "CAA": {
+      "ad": false,
+      "answers": [],
+      "authority": [
+        "ns1.globaldomaingroup.com. hostmaster.mrliouhan.ai. 2026060204 16384 2048 1209600 300"
+      ],
+      "name": "mrliouhan.ai",
+      "raw_sha256": "def3d391f66e33fee48f6c0f33f90d7cf2a4e345d97831b55354722252001b5e",
+      "rcode": 0,
+      "ttl": [],
+      "type": "CAA"
+    },
+    "CNAME": {
+      "ad": false,
+      "answers": [],
+      "authority": [
+        "ns1.globaldomaingroup.com. hostmaster.mrliouhan.ai. 2026060204 16384 2048 1209600 300"
+      ],
+      "name": "mrliouhan.ai",
+      "raw_sha256": "8c3383fd243a526d0b2c5b468b6f42d9a8a41862c0c40a562ac1d2625e66882b",
+      "rcode": 0,
+      "ttl": [],
+      "type": "CNAME"
+    },
+    "DS": {
+      "ad": false,
+      "answers": [],
+      "authority": [
+        "v0n0.nic.ai. hostmaster.donuts.email. 1792402667 7200 900 1209600 3600"
+      ],
+      "name": "mrliouhan.ai",
+      "raw_sha256": "32a6d012926b8f8c3bd42a5b11f47c6c0b3c1cdacfbb6960961c3600c98aa364",
+      "rcode": 0,
+      "ttl": [],
+      "type": "DS"
+    },
+    "MX": {
+      "ad": false,
+      "answers": [],
+      "authority": [
+        "ns1.globaldomaingroup.com. hostmaster.mrliouhan.ai. 2026060204 16384 2048 1209600 300"
+      ],
+      "name": "mrliouhan.ai",
+      "raw_sha256": "8e7900d97f7b85c2e4df34d1409755004d2c1b06f05096d41162b451a9a846d8",
+      "rcode": 0,
+      "ttl": [],
+      "type": "MX"
+    },
+    "NS": {
+      "ad": false,
+      "answers": [
+        "ns1.globaldomaingroup.com.",
+        "ns2.globaldomaingroup.com."
+      ],
+      "authority": [],
+      "name": "mrliouhan.ai",
+      "raw_sha256": "c940529d37f139dabd1cb57f20a7350f5747417027722a75909f23dc095965ce",
+      "rcode": 0,
+      "ttl": [
+        60,
+        60
+      ],
+      "type": "NS"
+    },
+    "SOA": {
+      "ad": false,
+      "answers": [
+        "ns1.globaldomaingroup.com. hostmaster.mrliouhan.ai. 2026060204 16384 2048 1209600 300"
+      ],
+      "authority": [],
+      "name": "mrliouhan.ai",
+      "raw_sha256": "0d3a6fa24b72fa2fcdcdfa491c69609a2104f0712a1736da730e6e05152a1e53",
+      "rcode": 0,
+      "ttl": [
+        60
+      ],
+      "type": "SOA"
+    },
+    "TXT": {
+      "ad": false,
+      "answers": [],
+      "authority": [
+        "ns1.globaldomaingroup.com. hostmaster.mrliouhan.ai. 2026060204 16384 2048 1209600 300"
+      ],
+      "name": "mrliouhan.ai",
+      "raw_sha256": "cd268f7f66a614053335ff8c7897a452b3ade5dd52ca77a75ade48533d92f7dd",
+      "rcode": 0,
+      "ttl": [],
+      "type": "TXT"
+    },
+    "probe": {
+      "_acme-challenge": {
+        "A": {
+          "ad": false,
+          "answers": [
+            "mrliouhan.ai.8c002369248af94e.dcv.cloudflare.com."
+          ],
+          "authority": [
+            "graham.ns.cloudflare.com. dns.cloudflare.com. 2417888545 10000 2400 604800 1800"
+          ],
+          "name": "_acme-challenge.mrliouhan.ai",
+          "raw_sha256": "3c4d91ba516b9a3b2c824a4d0dfca713eaf7e9538283f60e1c1c187142166729",
+          "rcode": 0,
+          "ttl": [
+            60
+          ],
+          "type": "A"
+        },
+        "CNAME": {
+          "ad": false,
+          "answers": [
+            "mrliouhan.ai.8c002369248af94e.dcv.cloudflare.com."
+          ],
+          "authority": [],
+          "name": "_acme-challenge.mrliouhan.ai",
+          "raw_sha256": "27fe6a08132a3fb03d5c7925f90305185c0ff2bf74ba28d5b031ec4e258f505e",
+          "rcode": 0,
+          "ttl": [
+            60
+          ],
+          "type": "CNAME"
+        },
+        "TXT": {
+          "ad": false,
+          "answers": [
+            "mrliouhan.ai.8c002369248af94e.dcv.cloudflare.com."
+          ],
+          "authority": [
+            "graham.ns.cloudflare.com. dns.cloudflare.com. 2417888553 10000 2400 604800 1800"
+          ],
+          "name": "_acme-challenge.mrliouhan.ai",
+          "raw_sha256": "64f9a9b47cd9bb5b0a042e9ad97484996df90fcf5713ecc631cb5a530f537a31",
+          "rcode": 0,
+          "ttl": [
+            60
+          ],
+          "type": "TXT"
+        }
+      },
+      "_cf-custom-hostname": {
+        "A": {
+          "ad": false,
+          "answers": [],
+          "authority": [
+            "ns1.globaldomaingroup.com. hostmaster.mrliouhan.ai. 2026060204 16384 2048 1209600 300"
+          ],
+          "name": "_cf-custom-hostname.mrliouhan.ai",
+          "raw_sha256": "1ec82153c469a4271b36224705b55135c129edab2f55b8eb7bd4e4dc6d412fcb",
+          "rcode": 0,
+          "ttl": [],
+          "type": "A"
+        },
+        "CNAME": {
+          "ad": false,
+          "answers": [],
+          "authority": [
+            "ns1.globaldomaingroup.com. hostmaster.mrliouhan.ai. 2026060204 16384 2048 1209600 300"
+          ],
+          "name": "_cf-custom-hostname.mrliouhan.ai",
+          "raw_sha256": "070e737b5e466ce83dd22d016afcdb8191a85b7049fc81d5bc8e6e45f5bd8276",
+          "rcode": 0,
+          "ttl": [],
+          "type": "CNAME"
+        },
+        "TXT": {
+          "ad": false,
+          "answers": [],
+          "authority": [
+            "ns1.globaldomaingroup.com. hostmaster.mrliouhan.ai. 2026060204 16384 2048 1209600 300"
+          ],
+          "name": "_cf-custom-hostname.mrliouhan.ai",
+          "raw_sha256": "3d79d00acf87cc39fb223c07fb0c9e23c835f4812a651f5923db349827df1544",
+          "rcode": 0,
+          "ttl": [],
+          "type": "TXT"
+        }
+      },
+      "_dmarc": {
+        "A": {
+          "ad": false,
+          "answers": [],
+          "authority": [
+            "ns1.globaldomaingroup.com. hostmaster.mrliouhan.ai. 2026060204 16384 2048 1209600 300"
+          ],
+          "name": "_dmarc.mrliouhan.ai",
+          "raw_sha256": "af4ebc9fd5ab372f1edaf98735625d7647b562973def7824aa319e1ade848ffb",
+          "rcode": 0,
+          "ttl": [],
+          "type": "A"
+        },
+        "CNAME": {
+          "ad": false,
+          "answers": [],
+          "authority": [
+            "ns1.globaldomaingroup.com. hostmaster.mrliouhan.ai. 2026060204 16384 2048 1209600 300"
+          ],
+          "name": "_dmarc.mrliouhan.ai",
+          "raw_sha256": "e830f7351be922c2e5596bc736c0ed52441bca8f46aaf8633ad28f56da505e4f",
+          "rcode": 0,
+          "ttl": [],
+          "type": "CNAME"
+        },
+        "TXT": {
+          "ad": false,
+          "answers": [],
+          "authority": [
+            "ns1.globaldomaingroup.com. hostmaster.mrliouhan.ai. 2026060204 16384 2048 1209600 300"
+          ],
+          "name": "_dmarc.mrliouhan.ai",
+          "raw_sha256": "0eff473d7690bfd22c0f27dbd7a1bb2c8d872b1c251433cc27d15556f9e012dd",
+          "rcode": 0,
+          "ttl": [],
+          "type": "TXT"
+        }
+      },
+      "bridge": {
+        "A": {
+          "ad": false,
+          "answers": [],
+          "authority": [
+            "ns1.globaldomaingroup.com. hostmaster.mrliouhan.ai. 2026060204 16384 2048 1209600 300"
+          ],
+          "name": "bridge.mrliouhan.ai",
+          "raw_sha256": "42382e34ab92e1ab43f6d97c2fc776c22bdecc709de531433201d02397b0e5e6",
+          "rcode": 0,
+          "ttl": [],
+          "type": "A"
+        },
+        "CNAME": {
+          "ad": false,
+          "answers": [],
+          "authority": [
+            "ns1.globaldomaingroup.com. hostmaster.mrliouhan.ai. 2026060204 16384 2048 1209600 300"
+          ],
+          "name": "bridge.mrliouhan.ai",
+          "raw_sha256": "feec35b25390c950903b79fcc2276006215d66c1bfdd6e062ff2a5f1bb050fc0",
+          "rcode": 0,
+          "ttl": [],
+          "type": "CNAME"
+        },
+        "TXT": {
+          "ad": false,
+          "answers": [],
+          "authority": [
+            "ns1.globaldomaingroup.com. hostmaster.mrliouhan.ai. 2026060204 16384 2048 1209600 300"
+          ],
+          "name": "bridge.mrliouhan.ai",
+          "raw_sha256": "542d4670a1ea5b268c27524e4906c6fe27d3076ac0f8c9d5dfd64f5977cb89c1",
+          "rcode": 0,
+          "ttl": [],
+          "type": "TXT"
+        }
+      },
+      "manus": {
+        "A": {
+          "ad": false,
+          "answers": [],
+          "authority": [
+            "ns1.globaldomaingroup.com. hostmaster.mrliouhan.ai. 2026060204 16384 2048 1209600 300"
+          ],
+          "name": "manus.mrliouhan.ai",
+          "raw_sha256": "cd7c66558f45b263ee04d7c456b07677109281abb260ed08e5117a2d4e98510f",
+          "rcode": 0,
+          "ttl": [],
+          "type": "A"
+        },
+        "CNAME": {
+          "ad": false,
+          "answers": [],
+          "authority": [
+            "ns1.globaldomaingroup.com. hostmaster.mrliouhan.ai. 2026060204 16384 2048 1209600 300"
+          ],
+          "name": "manus.mrliouhan.ai",
+          "raw_sha256": "5fec29fe3f6e4dbd7063a3cd9d55915e55f5caec6e3b6ae41e18fd9586eed439",
+          "rcode": 0,
+          "ttl": [],
+          "type": "CNAME"
+        },
+        "TXT": {
+          "ad": false,
+          "answers": [],
+          "authority": [
+            "ns1.globaldomaingroup.com. hostmaster.mrliouhan.ai. 2026060204 16384 2048 1209600 300"
+          ],
+          "name": "manus.mrliouhan.ai",
+          "raw_sha256": "39934c1043699ade141eb4b682485d88afbd4e73eb869ae9235e9f42facb9ad9",
+          "rcode": 0,
+          "ttl": [],
+          "type": "TXT"
+        }
+      },
+      "www": {
+        "A": {
+          "ad": false,
+          "answers": [
+            "104.18.26.246",
+            "100.78.70.78"
+          ],
+          "authority": [],
+          "name": "www.mrliouhan.ai",
+          "raw_sha256": "937717f7ec5817a243170c7e73d278a5e843c458c3487410541dd1c1f0f77868",
+          "rcode": 0,
+          "ttl": [
+            60,
+            60
+          ],
+          "type": "A"
+        },
+        "CNAME": {
+          "ad": false,
+          "answers": [],
+          "authority": [
+            "ns1.globaldomaingroup.com. hostmaster.mrliouhan.ai. 2026060204 16384 2048 1209600 300"
+          ],
+          "name": "www.mrliouhan.ai",
+          "raw_sha256": "e42fa7ca81471594570c92ccd25936b9bf33103e5fbaa05d665dc03de0219fad",
+          "rcode": 0,
+          "ttl": [],
+          "type": "CNAME"
+        },
+        "TXT": {
+          "ad": false,
+          "answers": [],
+          "authority": [
+            "ns1.globaldomaingroup.com. hostmaster.mrliouhan.ai. 2026060204 16384 2048 1209600 300"
+          ],
+          "name": "www.mrliouhan.ai",
+          "raw_sha256": "4a281c9708bc7c17db8ef6887b9b7094571ae82aecf9a15f647c4d41aa8e4f32",
+          "rcode": 0,
+          "ttl": [],
+          "type": "TXT"
+        }
+      }
+    }
+  },
+  "domain": "mrliouhan.ai",
+  "flags": [
+    {
+      "detail": "104.18.26.246 位於 Cloudflare 公布範圍；只表示前端是 Cloudflare 邊緣，不表示帳號歸屬（自有 zone 或 Cloudflare for SaaS 皆會如此）。",
+      "flag": "A_RECORD_IN_CLOUDFLARE_RANGE"
+    },
+    {
+      "detail": "100.78.70.78 屬 100.64.0.0/10（CGNAT／Tailscale 常用段）卻出現在公開 A 記錄；疑似殘留或洩漏內網位址，需對照 DL580 Tailscale 位址與註冊商 zone。",
+      "flag": "A_RECORD_CGNAT_IN_PUBLIC_DNS"
+    },
+    {
+      "detail": "權威 NS = ['ns1.globaldomaingroup.com', 'ns2.globaldomaingroup.com']；DNS 權威不在 Cloudflare，Cloudflare 邊緣回應可能來自自訂主機名（SaaS）而非本網域自有 zone。",
+      "flag": "NS_NOT_CLOUDFLARE"
+    },
+    {
+      "detail": "_acme-challenge.mrliouhan.ai → mrliouhan.ai.8c002369248af94e.dcv.cloudflare.com.；此為 Cloudflare for SaaS 自訂主機名憑證驗證委派形態。該 SaaS 租戶的 Cloudflare 帳號未知（待 Audit Log）。",
+      "flag": "CLOUDFLARE_FOR_SAAS_DCV_DELEGATION"
+    },
+    {
+      "detail": "https://mrliouhan.ai/ → 302 Location 主機 manus.im；表示該網域對外請求被導向 Manus 平台（OAuth 入口）。",
+      "flag": "HTTP_REDIRECT_TO_MANUS_HOST"
+    },
+    {
+      "detail": "https://mrliouhan.ai/robots.txt → 302 Location 主機 manus.im；表示該網域對外請求被導向 Manus 平台（OAuth 入口）。",
+      "flag": "HTTP_REDIRECT_TO_MANUS_HOST"
+    },
+    {
+      "detail": "registrar={'name': 'Global Domain Group LLC', 'iana_id': '3956'}; status=['client transfer prohibited']; events={'expiration': ['2028-05-16T00:43:26.243Z'], 'registration': ['2026-05-16T00:43:26.243Z'], 'last changed': ['2026-08-12T07:53:00.711Z'], 'last update of RDAP database': ['2026-10-19T09:40:59.427Z']}; DNSSEC={'delegationSigned': False, 'maxSigLife': 1}",
+      "flag": "RDAP_REGISTRAR"
+    },
+    {
+      "detail": "註冊人受隱私服務保護；所有人身分須由註冊商帳號證明。",
+      "flag": "RDAP_REGISTRANT_PRIVACY"
+    }
+  ],
+  "http": [
+    {
+      "headers": {
+        "cf-ray": "a4ced2fbdc7a32f0-IAD",
+        "connection": "close",
+        "content-length": "0",
+        "date": "Mon, 19 Oct 2026 09:40:56 GMT",
+        "location": "https://manus.im/app-auth?appId=PAf7cRyynJ99tzp4jnjPrz&redirectUri=https%3A%2F%2Fmrliouhan.ai%2Fmanus-oauth%2Fcallback&state=aHR0cHM6Ly9tcmxpb3VoYW4uYWkv&responseType=code",
+        "server": "cloudflare",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff"
+      },
+      "set_cookie_names": [],
+      "status": 302,
+      "url": "https://mrliouhan.ai/"
+    },
+    {
+      "headers": {
+        "cf-ray": "a4ced302ac224160-IAD",
+        "connection": "close",
+        "content-length": "0",
+        "date": "Mon, 19 Oct 2026 09:40:57 GMT",
+        "location": "https://manus.im/app-auth?appId=PAf7cRyynJ99tzp4jnjPrz&redirectUri=https%3A%2F%2Fmrliouhan.ai%2Fmanus-oauth%2Fcallback&state=aHR0cHM6Ly9tcmxpb3VoYW4uYWkvcm9ib3RzLnR4dA%3D%3D&responseType=code",
+        "server": "cloudflare",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff"
+      },
+      "set_cookie_names": [],
+      "status": 302,
+      "url": "https://mrliouhan.ai/robots.txt"
+    },
+    {
+      "body": {
+        "attribution_markers_present": {
+          "Mrlious": false,
+          "canonical_authority": false,
+          "origin_signature": false
+        },
+        "body_bytes": 24,
+        "body_sha256": "c4978580b0913ad3ac3598d6bbaf031851fec11e4b223a4118357a657a890f58",
+        "body_truncated": false,
+        "links": [],
+        "meta": {},
+        "title": ""
+      },
+      "headers": {
+        "cf-ray": "a4ced3062ac58274-IAD",
+        "connection": "close",
+        "content-length": "24",
+        "content-type": "text/plain;charset=UTF-8",
+        "date": "Mon, 19 Oct 2026 09:40:57 GMT",
+        "server": "cloudflare",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff"
+      },
+      "set_cookie_names": [],
+      "status": 400,
+      "url": "https://mrliouhan.ai/manus-oauth/callback"
+    },
+    {
+      "headers": {
+        "cf-ray": "a4ced30998daf508-IAD",
+        "connection": "close",
+        "content-length": "0",
+        "date": "Mon, 19 Oct 2026 09:40:58 GMT",
+        "location": "https://mrliouhan.ai/",
+        "server": "cloudflare",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff"
+      },
+      "set_cookie_names": [],
+      "status": 301,
+      "url": "https://www.mrliouhan.ai/"
+    }
+  ],
+  "not_inferable": [
+    "不可由此推定 Manus 擁有或曾取得網域所有權（RDAP 只反映註冊商／註冊局層）。",
+    "不可由此推定誰操作了 Cloudflare / Manus 端設定（需帳號 Audit Log）。",
+    "不可由此推定任何人的意圖（INTENT_NOT_PROVEN）。",
+    "不可由此推定法律上的創作所有權轉移（OWNERSHIP_TRANSFER_NOT_PROVEN）。",
+    "單一觀測位置的結果不是全局事實；請於 DL580 與另一網路各跑一次對照。"
+  ],
+  "observer": "sandbox-cloud-20261019-r2",
+  "origin_signature": "MrLiouWord",
+  "rdap": {
+    "endpoint": "https://rdap.org/domain/",
+    "events": {
+      "expiration": [
+        "2028-05-16T00:43:26.243Z"
+      ],
+      "last changed": [
+        "2026-08-12T07:53:00.711Z"
+      ],
+      "last update of RDAP database": [
+        "2026-10-19T09:40:59.427Z"
+      ],
+      "registration": [
+        "2026-05-16T00:43:26.243Z"
+      ]
+    },
+    "handle": "9a9d85a00a5c427dac9cadc9cd42fb04-DONUTS",
+    "ldhName": "mrliouhan.ai",
+    "nameservers": [
+      "ns1.globaldomaingroup.com",
+      "ns2.globaldomaingroup.com"
+    ],
+    "raw_sha256": "a69ccc6616c1e657c9bb63548db3a9b2ed545ef01638115128d896822c2be3b1",
+    "registrant_privacy": true,
+    "registrar": {
+      "iana_id": "3956",
+      "name": "Global Domain Group LLC"
+    },
+    "secureDNS": {
+      "delegationSigned": false,
+      "maxSigLife": 1
+    },
+    "status": [
+      "client transfer prohibited"
+    ]
+  },
+  "schema": "MRL_domain_evidence_v1"
+}

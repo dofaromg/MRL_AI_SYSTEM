@@ -19,6 +19,7 @@ Create Preflight：`CREATE_NEW`（Evidence 目錄既有 20260928／20261003，�
 | 不可由此推定 | 見 §4（尤其：所有權、操作者、意圖） |
 
 原始快照與雜湊：`MRL_Docs/Evidence/20261019/snapshots/`（`SHA256SUMS` 可用 `sha256sum -c` 驗證；產生工具 `scripts/MRL_domain_evidence_collect_v1.py`）。
+快照兩份、皆保留（只追加）：`…T093120Z.json`（第一版，探測標籤不含 `manus`、RDAP 事件為單值）與 `…T094046Z.json`（R2：加入 `manus` 標籤、RDAP 事件保留多值、HTTP 本文雜湊與署名 metadata 欄位）。以下表格以兩份一致的結果為準。
 
 ---
 
@@ -48,7 +49,7 @@ Create Preflight：`CREATE_NEW`（Evidence 目錄既有 20260928／20261003，�
 | `www` A | 同上兩個位址 |
 | `bridge` A／CNAME／TXT | 無（公開 DNS 查不到；repo 範本 `deploy/dl580/cloudflared/config.yml.template` 與 deploy README 寫的 `bridge.mrliouhan.ai` 目前不解析） |
 | `_acme-challenge` CNAME | `mrliouhan.ai.8c002369248af94e.dcv.cloudflare.com.` |
-| `_cf-custom-hostname`／`_dmarc`／`manus` | 無 |
+| `_cf-custom-hostname`／`_dmarc`／`manus` | 無（`manus` 於 R2 快照 A／CNAME／TXT 皆查詢，無回應） |
 
 ### 1.3 HTTP（未登入、不跟隨轉址）— 狀態：沙盒觀測
 
@@ -59,7 +60,7 @@ Create Preflight：`CREATE_NEW`（Evidence 目錄既有 20260928／20261003，�
 | `GET https://mrliouhan.ai/manus-oauth/callback`（無參數） | 400（該路由存在於此網域的回應端） |
 | `GET https://www.mrliouhan.ai/` | 301 → `https://mrliouhan.ai/` |
 
-沙盒**沒有**登入或授權任何 Manus 流程，也沒有跟隨轉址；回應本體為空，因此 Issue 必查項 4 的 iframe／canonical／Open Graph／site name／favicon **無從觀測**（無頁面本體可讀）。
+沙盒**沒有**登入或授權任何 Manus 流程，也沒有跟隨轉址；兩個 302 與 301 回應本體為空（R2 快照以 `body` 欄位記錄本文雜湊與 metadata，僅 `/manus-oauth/callback` 的 400 有本體），因此 Issue 必查項 4 的 iframe／canonical／Open Graph／site name／favicon **無從觀測**（無頁面本體可讀）。
 
 ---
 
@@ -135,7 +136,7 @@ Create Preflight：`CREATE_NEW`（Evidence 目錄既有 20260928／20261003，�
    `python3 scripts/MRL_domain_evidence_collect_v1.py --domain mrliouhan.ai --observer DL580 --out D:\mrl\evidence\mrliouhan_before`
    輸出只落 DL580 本機，不上傳平台。
 2. **註冊商（Global Domain Group）後台**：匯出完整 zone；查 2026-08-12 的活動紀錄（誰、什麼 IP、改了什麼）；確認帳號持有人、2FA、登入紀錄、轉移鎖與 EPP 授權碼未外流；確認 `100.78.70.78` 這筆 A 記錄是否為自己加的。
-3. **Cloudflare（自己的所有帳號）**：找 `mrliouhan.ai` 的 zone 或自訂主機名（Custom Hostnames）；若找不到，表示 `*.dcv.cloudflare.com` 委派屬於**別人的** Cloudflare 帳號（支持 H1）；查 Audit Log。
+3. **Cloudflare（自己的所有帳號）**：找 `mrliouhan.ai` 的 zone 或自訂主機名（Custom Hostnames）並查 Audit Log。找到 → 可核對建立時間與操作者；**找不到 → 視為 inconclusive**：可能是別人帳號的委派（H1），也可能是已刪除自訂主機名後殘留的 `_acme-challenge` CNAME（H3），不得單憑此結果支持 H1。
 4. **Manus 後台**：Custom Domain 面板、Published URL、Workspace Owner、Billing Owner、網域加入／移除時間；先匯出程式碼包與資料並以 SHA-256 驗證、回存母體與離線備份。
 5. **完成上述驗證後**才決定：解除 Manus 綁定／撤銷 OAuth appId `PAf7cRyynJ99tzp4jnjPrz` 的授權／移除註冊商 zone 內不再需要的記錄（含 `100.78.70.78`）／向 Manus 提出 attribution 更正與資料刪除要求並取得案件編號。
 6. 修正後重跑蒐證腳本做「修正後」快照，與本檔 §1 並列。
