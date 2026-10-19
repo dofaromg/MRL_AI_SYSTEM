@@ -26,6 +26,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
+from html.parser import HTMLParser
 
 ORIGIN_SIGNATURE = "MrLiouWord"
 DOH_ENDPOINT = "https://cloudflare-dns.com/dns-query"
@@ -33,7 +34,7 @@ RDAP_ENDPOINTS = ("https://rdap.org/domain/", "https://rdap.identitydigital.serv
 USER_AGENT = "MRL-domain-evidence/1 (read-only; origin_signature=MrLiouWord)"
 RECORD_TYPES = ("A", "AAAA", "NS", "SOA", "MX", "TXT", "CAA", "CNAME", "DS")
 # 子網域探測：只看公開 DNS，不代表全部子網域（無法列舉 zone）
-PROBE_LABELS = ("www", "bridge", "_acme-challenge", "_cf-custom-hostname", "_dmarc")
+PROBE_LABELS = ("www", "bridge", "manus", "_acme-challenge", "_cf-custom-hostname", "_dmarc")
 HTTP_PATHS = ("/", "/robots.txt", "/manus-oauth/callback")
 HTTP_HOSTS_PREFIX = ("", "www.")
 PLATFORM_HOST_SUFFIXES = ("manus.im", "manus.space", "manus.computer")
@@ -97,6 +98,14 @@ def rdap_lookup(domain: str, timeout: float = 20.0) -> dict:
     return {"error": "; ".join(errors)}
 
 
+def _events_by_action(events: list) -> dict:
+    """同一 eventAction 的多筆時間戳全部保留（鑑識時間線不可只留最後一筆）。"""
+    out: dict[str, list] = {}
+    for e in events:
+        out.setdefault(e.get("eventAction"), []).append(e.get("eventDate"))
+    return out
+
+
 def reduce_rdap(d: dict, raw_sha256: str = "") -> dict:
     registrar = None
     for ent in d.get("entities", []):
@@ -111,7 +120,7 @@ def reduce_rdap(d: dict, raw_sha256: str = "") -> dict:
         "ldhName": d.get("ldhName"),
         "handle": d.get("handle"),
         "status": d.get("status", []),
-        "events": {e.get("eventAction"): e.get("eventDate") for e in d.get("events", [])},
+        "events": _events_by_action(d.get("events", [])),
         "nameservers": sorted(n.get("ldhName", "") for n in d.get("nameservers", [])),
         "secureDNS": d.get("secureDNS"),
         "registrar": registrar,
@@ -119,6 +128,55 @@ def reduce_rdap(d: dict, raw_sha256: str = "") -> dict:
             "registrant" in e.get("roles", []) and "privacy" in json.dumps(e).lower()
             for e in d.get("entities", [])),
         "raw_sha256": raw_sha256,
+    }
+
+
+BODY_LIMIT = 262144  # 只讀前 256 KiB；超過時標 body_truncated
+ATTRIBUTION_MARKERS = ("canonical_authority", "origin_signature", "Mrlious")
+
+
+class _MetaParser(HTMLParser):
+    """擷取署名相關 metadata：title / meta / canonical / icon。"""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.title = ""
+        self._in_title = False
+        self.meta: dict[str, str] = {}
+        self.links: list[dict] = []
+
+    def handle_starttag(self, tag, attrs):
+        a = {k: (v or "") for k, v in attrs}
+        if tag == "title":
+            self._in_title = True
+        elif tag == "meta":
+            key = a.get("name") or a.get("property")
+            if key:
+                self.meta[key] = a.get("content", "")
+        elif tag == "link" and a.get("rel", "").lower() in ("canonical", "icon", "shortcut icon", "apple-touch-icon"):
+            self.links.append({"rel": a.get("rel"), "href": a.get("href", "")})
+
+    def handle_endtag(self, tag):
+        if tag == "title":
+            self._in_title = False
+
+    def handle_data(self, data):
+        if self._in_title:
+            self.title += data
+
+
+def body_evidence(body: bytes, truncated: bool) -> dict:
+    """本文雜湊＋署名 metadata，讓『修正後』重跑能對照 canonical／OG／favicon／頁尾。"""
+    text = body.decode("utf-8", errors="replace")
+    parser = _MetaParser()
+    try:
+        parser.feed(text)
+    except Exception:  # noqa: BLE001 — 畸形 HTML 不得中斷蒐證
+        pass
+    return {
+        "body_bytes": len(body), "body_sha256": sha256_bytes(body), "body_truncated": truncated,
+        "title": parser.title.strip(), "meta": parser.meta, "links": parser.links,
+        "attribution_markers_present": {m: (m in text) for m in ATTRIBUTION_MARKERS},
     }
 
 
@@ -134,13 +192,21 @@ def http_probe(url: str, timeout: float = 10.0) -> dict:
         resp = opener.open(req, timeout=timeout)
         status, headers = resp.status, resp.headers
     except urllib.error.HTTPError as e:
-        status, headers = e.code, e.headers
+        resp, status, headers = e, e.code, e.headers
     except Exception as e:  # noqa: BLE001
         return {"url": url, "error": f"{type(e).__name__}: {e}"}
     hdr = {k.lower(): v for k, v in headers.items()}
     cookie_names = [c.split("=", 1)[0] for c in headers.get_all("set-cookie") or []]
     hdr.pop("set-cookie", None)  # 值不保存，只留名稱
-    return {"url": url, "status": status, "headers": hdr, "set_cookie_names": cookie_names}
+    out = {"url": url, "status": status, "headers": hdr, "set_cookie_names": cookie_names}
+    try:
+        raw = resp.read(BODY_LIMIT + 1) if resp is not None else b""
+    except Exception as e:  # noqa: BLE001
+        out["body_error"] = f"{type(e).__name__}: {e}"
+        return out
+    if raw:
+        out["body"] = body_evidence(raw[:BODY_LIMIT], len(raw) > BODY_LIMIT)
+    return out
 
 
 # ── 旗標：只描述觀測 ────────────────────────────────────────────────────────
@@ -184,7 +250,11 @@ def classify(snapshot: dict) -> list[dict]:
                 "憑證驗證委派形態。該 SaaS 租戶的 Cloudflare 帳號未知（待 Audit Log）。")
     for p in snapshot.get("http", []):
         loc = (p.get("headers") or {}).get("location", "")
-        host = urllib.parse.urlparse(loc).hostname or ""
+        try:
+            host = urllib.parse.urlparse(loc).hostname or ""
+        except ValueError:  # 畸形 Location（如 http://[）：記錄為證據，不中斷
+            add("HTTP_REDIRECT_LOCATION_UNPARSEABLE", f"{p.get('url')} Location={loc!r} 無法解析主機")
+            continue
         if any(host == s or host.endswith("." + s) for s in PLATFORM_HOST_SUFFIXES):
             add("HTTP_REDIRECT_TO_MANUS_HOST",
                 f"{p['url']} → {p['status']} Location 主機 {host}；"
@@ -228,12 +298,31 @@ def collect(domain: str, observer: str, delay: float = 0.3) -> dict:
 def write_bundle(snapshot: dict, out_dir: pathlib.Path) -> pathlib.Path:
     out_dir.mkdir(parents=True, exist_ok=True)
     body = json.dumps(snapshot, ensure_ascii=False, indent=2, sort_keys=True).encode("utf-8")
-    name = f"{snapshot['domain']}_{snapshot['collected_at'].replace(':', '')}.json"
-    (out_dir / name).write_bytes(body)
+    stem = f"{snapshot['domain']}_{snapshot['collected_at'].replace(':', '')}"
+    n = 0
+    while True:  # 排他建立：同秒碰撞時加序號，絕不覆蓋既有快照
+        name = f"{stem}.json" if n == 0 else f"{stem}_{n}.json"
+        try:
+            with (out_dir / name).open("xb") as fh:
+                fh.write(body)
+            break
+        except FileExistsError:
+            n += 1
     sums = out_dir / "SHA256SUMS"
     with sums.open("a", encoding="utf-8") as f:  # Additive-Only：只追加
         f.write(f"{sha256_bytes(body)}  {name}\n")
     return out_dir / name
+
+
+def has_usable_evidence(snap: dict) -> bool:
+    """DNS／HTTP／RDAP 至少一類有成功回應才算有可用證據（網站不通本身也是證據，不算失敗）；
+    全數失敗的錯誤快照仍會保存，但回傳非零。"""
+    dns = snap.get("dns", {})
+    dns_ok = any("error" not in v and v.get("rcode") is not None
+                 for k, v in dns.items() if k != "probe")
+    http_ok = any("status" in p for p in snap.get("http", []))
+    rdap_ok = bool(snap.get("rdap")) and "error" not in snap["rdap"]
+    return dns_ok or http_ok or rdap_ok
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -250,6 +339,9 @@ def main(argv: list[str] | None = None) -> int:
     print("NOT_INFERABLE:")
     for n in snap["not_inferable"]:
         print(f"  - {n}")
+    if not has_usable_evidence(snap):
+        print("ERROR: DNS／HTTP／RDAP 全數失敗，快照僅含錯誤；視為蒐證失敗。", file=sys.stderr)
+        return 2
     return 0
 
 
