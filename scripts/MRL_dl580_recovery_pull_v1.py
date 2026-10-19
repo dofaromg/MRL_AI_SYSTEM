@@ -26,6 +26,7 @@ import os
 import pathlib
 import re
 import shutil
+import stat
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -38,6 +39,9 @@ LOCK_NAME = ".pull.lock"
 PARTIAL_PREFIX = ".partial-"   # git 暫存目錄（clone 完成並 checkout 成功後才改名為正式修訂目錄）
 RCLONE_RETRY_ARGS = ["--retries", "3", "--low-level-retries", "10"]
 GIT_ENV = {"GIT_TERMINAL_PROMPT": "0"}  # 需要憑證時直接失敗，不在無人值守時卡在提示上
+# 繼承自父程序的 git 倉庫定位變數（例如從 git hook 內執行時會被設定）會讓 `git -C <dir>` 指到別的倉庫
+GIT_LOCATION_VARS = ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_OBJECT_DIRECTORY",
+                     "GIT_ALTERNATE_OBJECT_DIRECTORIES", "GIT_COMMON_DIR", "GIT_NAMESPACE", "GIT_PREFIX")
 _SHA_RE = re.compile(r"^[0-9a-f]{40}([0-9a-f]{24})?$")
 
 
@@ -96,7 +100,32 @@ def _fail(r) -> str:
 
 
 def _git_env() -> dict:
-    return {**os.environ, **GIT_ENV}
+    env = {k: v for k, v in os.environ.items() if k not in GIT_LOCATION_VARS}
+    return {**env, **GIT_ENV}
+
+
+def _rmtree_onerr(func, path, _exc) -> None:
+    """Windows 上 git 會把 .git/objects 底下的檔案設為唯讀，shutil.rmtree 預設刪不掉。
+    先解除唯讀再重試；仍失敗就放過（由呼叫端檢查目錄是否真的消失並回報）。"""
+    try:
+        os.chmod(path, stat.S_IWRITE | stat.S_IREAD)
+        func(path)
+    except OSError:
+        try:  # 例如目錄本身唯讀導致無法刪除其內容
+            os.chmod(os.path.dirname(path), stat.S_IRWXU)
+            func(path)
+        except OSError:
+            pass
+
+
+def _force_rmtree(path: pathlib.Path) -> bool:
+    """移除目錄（含唯讀檔）。回傳 True 表示目錄已不存在。只用於本程式自己的 .partial-* 暫存目錄。"""
+    if path.exists():
+        if sys.version_info >= (3, 12):
+            shutil.rmtree(path, onexc=_rmtree_onerr)
+        else:
+            shutil.rmtree(path, onerror=_rmtree_onerr)
+    return not path.exists()
 
 
 def pull_git(source: dict, dst: pathlib.Path, runner, timeout) -> tuple[bool, str]:
@@ -116,14 +145,19 @@ def pull_git(source: dict, dst: pathlib.Path, runner, timeout) -> tuple[bool, st
         return True, ""
     dst.mkdir(parents=True, exist_ok=True)
     partial = dst / f"{PARTIAL_PREFIX}{sha[:12]}"
-    if partial.exists():  # 前次中斷留下的本程式暫存目錄（不是已回收資料）；清掉重來
-        shutil.rmtree(partial, ignore_errors=True)
-    for cmd in (["git", "clone", source["url"], str(partial)],
-                ["git", "-C", str(partial), "checkout", "--detach", sha]):
-        r = runner(cmd, **kw)
-        if r.returncode != 0:
-            shutil.rmtree(partial, ignore_errors=True)
-            return False, _fail(r)
+    # 前次中斷留下的本程式暫存目錄（不是已回收資料）；清掉重來。清不掉要明講，不能讓 clone 吐出無關的錯誤
+    if not _force_rmtree(partial):
+        return False, f"無法移除暫存目錄 {partial}；請確認沒有程序在使用後手動刪除再重試"
+    try:
+        for cmd in (["git", "clone", source["url"], str(partial)],
+                    ["git", "-C", str(partial), "checkout", "--detach", sha]):
+            r = runner(cmd, **kw)
+            if r.returncode != 0:
+                _force_rmtree(partial)
+                return False, _fail(r)
+    except subprocess.TimeoutExpired:  # 逾時也要清掉半成品，再交給 pull() 記為該來源失敗
+        _force_rmtree(partial)
+        raise
     os.rename(partial, target)
     return True, ""
 
@@ -155,7 +189,8 @@ def pull(sources: list[dict], out: pathlib.Path, runner=None, timeout=DEFAULT_TI
 def git_head(repo: pathlib.Path, runner=None) -> str | None:
     runner = runner or subprocess.run
     try:
-        r = runner(["git", "-C", str(repo), "rev-parse", "HEAD"], capture_output=True, text=True, timeout=60)
+        r = runner(["git", "-C", str(repo), "rev-parse", "HEAD"], capture_output=True, text=True,
+                   timeout=60, env=_git_env())
         return r.stdout.strip() if r.returncode == 0 else None
     except Exception:  # noqa: BLE001
         return None
