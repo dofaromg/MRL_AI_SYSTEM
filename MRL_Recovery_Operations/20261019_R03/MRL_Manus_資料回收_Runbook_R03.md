@@ -11,9 +11,10 @@ origin_signature: MrLiouWord ｜ Additive-Only ｜ 當下狀態 2026-10-19 ｜ �
 1. **DL580 前置**：安裝並設定 `rclone`（Dropbox、Google Drive 各一個 remote）與 `git`；輸出目錄用本機磁碟（例如 `D:\mrl\recovery\store`），不要放在 Dropbox／OneDrive／Google Drive 同步資料夾內（腳本會拒絕）。
 2. **準備計畫檔**：複製 `scripts/MRL_dl580_recovery_plan.example.json` 到 DL580 本機（例如 `D:\mrl\recovery\plan.json`），填入自己的 remote 名稱與路徑。含私人 ID 的版本不要提交。
 3. **拉取**：`python scripts/MRL_dl580_recovery_pull_v1.py pull --plan D:\mrl\recovery\plan.json --out D:\mrl\recovery\store`
-   - 只用 `rclone copy --immutable` 與 `git clone/fetch`；不用 sync/move/delete。
-   - 結束時輸出 `MANIFEST_<UTC>.jsonl` 與追加的 `SHA256SUMS`；0 位元組檔案會列為警告。
-4. **驗證**：`python scripts/MRL_dl580_recovery_pull_v1.py verify --out D:\mrl\recovery\store`；有 missing／changed 時 exit code 為 1。
+   - 只用 `rclone copy --immutable` 與 `git clone`；不用 sync/move/delete。git 來源每個遠端 HEAD 修訂存成獨立目錄 `<來源名>/<sha前12碼>/`，重複拉取只會新增新修訂、不覆蓋舊的。
+   - 每個來源有逾時（預設 6 小時，`--timeout` 可調），單一來源卡住不影響其他來源。
+   - 結束時輸出 `MANIFEST_<UTC>.jsonl` 與追加的 `SHA256SUMS`；0 位元組檔案會列為警告，需確認後加 `--accept-zero-byte` 才回 0；來源沒有任何檔案則回 3（確實為空時加 `--allow-empty`）。
+4. **驗證**：`python scripts/MRL_dl580_recovery_pull_v1.py verify --out D:\mrl\recovery\store`；會先核對每份 `MANIFEST` 本身的雜湊（對照 `SHA256SUMS`）才信任其內容；清單被改動、缺記錄，或有 missing／changed 檔案時 exit code 為 1。
 5. **離線備份**：把整個 `store` 目錄與 `SHA256SUMS` 複製到離線媒體，再以 `sha256sum -c`（或 `verify`）核對。
 
 ## 來源優先序與已知狀態（當下，依雲端檔案清單；內容真偽以拉回後的雜湊為準）
@@ -29,6 +30,7 @@ origin_signature: MrLiouWord ｜ Additive-Only ｜ 當下狀態 2026-10-19 ｜ �
 | — | Manus 內 6/6 之後的變更與資料庫內容 | **僅在 Manus**；取決於是否有官方備份包（見下） |
 
 ## Manus 官方備份／還原注意（依官方說明頁）
+- **先確認帳號類型（待確認，當下未知）**：在 Manus 應用內通知確認自己屬 Type A／B／C。若為 **Type C**：還原順序是先還原 Account Info Backup（帳號資訊），再還原 Task Data（任務資料）；兩者缺一不可，順序不可顛倒。Type A／B 以應用內通知所列為準。
 - 官方備份入口在 `manus.im/backup`；還原入口 2026-08-25 開放；**還原只能一次，且套件必須完整**，所以先複製到 DL580 並算雜湊，再決定何時還原。
 - 沒有備份包時，官方說明稱無法從服務端取回已刪任務資料；已向 Manus 真人客服書面追問帳號類型與服務端保留（回覆待追蹤）。
 - Cloud Computer 檔案不在備份內；GitHub 匯出僅為額外冗餘。
