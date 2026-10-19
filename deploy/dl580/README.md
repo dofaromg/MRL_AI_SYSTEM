@@ -46,6 +46,7 @@ APFS / Batch072 為部署與備份鏈，掛在「DL580 本地 Runtime」這一�
 | 長駐服務 (systemd) | `deploy/dl580/MRL_systemd_service.template` |
 | self-hosted runner | `deploy/dl580/MRL_selfhosted_runner_notes.md` |
 | 對外橋接 (Cloudflare Tunnel) | `deploy/dl580/cloudflared/MRL_cloudflared_deploy.ps1` → `bridge.mrliouword.com` (v3.1.0) |
+| 本機工程夥伴 (Claude Code) | `deploy/tailscale/MRL_dl580_partner_setup.sh` / `.ps1`；前置依賴、操作與待實機驗收見 [Tailscale 說明](../tailscale/README.md#dl580-一鍵夥伴設定)，不取代母體 Runtime |
 
 啟動流程（與根 README 一致）：
 
