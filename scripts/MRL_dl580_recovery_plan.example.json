@@ -1,0 +1,35 @@
+{
+  "_note": "範例。複製到 DL580 本機後填入你自己的 rclone remote 名稱與路徑；不要把含私人 ID 的版本提交到 repo。",
+  "sources": [
+    {
+      "name": "dropbox_MRL_ALL_FILES_20260606",
+      "kind": "rclone",
+      "remote": "dropbox:",
+      "path": "2026-05-25 Safari輸出 (1)/MRL_ALL_FILES_20260606"
+    },
+    {
+      "name": "dropbox_top_level_docs",
+      "kind": "rclone",
+      "remote": "dropbox:",
+      "path": "",
+      "extra_args": ["--include", "MRL_*.md", "--include", "MRL_*.txt", "--max-depth", "1"]
+    },
+    {
+      "name": "gdrive_Mrl_MD_ASI_v0_0_1",
+      "kind": "rclone",
+      "remote": "gdrive:",
+      "path": "",
+      "extra_args": ["--drive-root-folder-id", "<填入 Drive 資料夾 ID，勿提交>"]
+    },
+    {
+      "name": "github_MRL_AI_SYSTEM",
+      "kind": "git",
+      "url": "https://github.com/dofaromg/MRL_AI_SYSTEM.git"
+    },
+    {
+      "name": "github_mrliouword_system",
+      "kind": "git",
+      "url": "https://github.com/dofaromg/mrliouword-system.git"
+    }
+  ]
+}
