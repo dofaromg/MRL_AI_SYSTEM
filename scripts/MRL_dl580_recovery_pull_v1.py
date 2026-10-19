@@ -163,9 +163,13 @@ def pull_git(source: dict, dst: pathlib.Path, runner, timeout) -> tuple[bool, st
     sha = parts[0] if parts else ""
     if not _SHA_RE.match(sha):
         return False, "無法取得遠端 HEAD 修訂"
-    target = dst / sha[:12]
+    # 兩種模式的目錄佈局不同，必須分開存放：worktree 用 <sha12>，mirror 用 <sha12>.mirror
+    # （同一目錄會讓換模式後的 rename 撞上既有目錄，且 build_manifest 也無法分辨）
+    target = dst / (sha[:12] if mode == "worktree" else f"{sha[:12]}.mirror")
     if _repo_complete(target, mode):
         return True, ""
+    if target.exists():  # 已存在卻不完整：不覆蓋、不 rename，明確回報讓操作者確認
+        return False, f"{target} 已存在但不是完整的 {mode} 備份；請確認內容後手動處理，腳本不會覆蓋它"
     dst.mkdir(parents=True, exist_ok=True)
     partial = dst / f"{PARTIAL_PREFIX}{sha[:12]}"
     # 前次中斷留下的本程式暫存目錄（不是已回收資料）；清掉重來。清不掉要明講，不能讓 clone 吐出無關的錯誤
@@ -208,6 +212,8 @@ def pull(sources: list[dict], out: pathlib.Path, runner=None, timeout=DEFAULT_TI
                 ok, err = pull_git(s, dst, runner, timeout)
         except subprocess.TimeoutExpired:
             ok, err = False, f"逾時（>{timeout}s），已中止此來源"
+        except OSError as e:  # 檔案系統層的意外（改名、權限、磁碟）只算這個來源失敗，不可中斷其餘來源與清單
+            ok, err = False, f"檔案系統錯誤：{type(e).__name__}: {e}"
         results[s["name"]] = {"ok": ok, **({"error": err} if err else {})}
     return results
 

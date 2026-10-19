@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
 import re
 import pathlib
 import subprocess
@@ -456,7 +457,8 @@ class MirrorModeTests(unittest.TestCase):
             self.assertEqual(len(clones), 1)
             self.assertIn("--mirror", clones[0])
             self.assertFalse([c for c in r.calls if "checkout" in c])  # 沒有工作樹，沒有 checkout
-            self.assertTrue((dst / SHA[:12] / "HEAD").is_file())
+            self.assertTrue((dst / f"{SHA[:12]}.mirror" / "HEAD").is_file())
+            self.assertFalse((dst / SHA[:12]).exists())  # 不佔用 worktree 的目錄名
             self.assertFalse((dst / (mod.PARTIAL_PREFIX + SHA[:12])).exists())
             r2 = FakeRunner()
             self.assertTrue(mod.pull_git({"url": "https://x/y.git", "mode": "mirror"}, dst, r2, 10)[0])
@@ -478,35 +480,91 @@ class MirrorModeTests(unittest.TestCase):
             self.assertFalse(ok)
             self.assertNotIn("mirror", err)
 
+
+    def test_switching_mode_does_not_collide_with_existing_worktree_backup(self):
+        with tempfile.TemporaryDirectory() as td:
+            dst = pathlib.Path(td) / "repo"
+            self.assertTrue(mod.pull_git({"url": "https://x/y.git"}, dst, FakeRunner(), 10)[0])  # 先用 worktree
+            old = sorted(p.name for p in dst.iterdir())
+            self.assertEqual(old, [SHA[:12]])
+            marker = dst / SHA[:12] / "file.txt"
+            before = marker.read_text(encoding="utf-8")
+            self.assertTrue(mod.pull_git({"url": "https://x/y.git", "mode": "mirror"}, dst, FakeRunner(), 10)[0])
+            self.assertEqual(sorted(p.name for p in dst.iterdir()), sorted([SHA[:12], f"{SHA[:12]}.mirror"]))
+            self.assertEqual(marker.read_text(encoding="utf-8"), before)  # 既有備份沒被動
+
+    def test_existing_incomplete_target_is_reported_not_renamed_over(self):
+        with tempfile.TemporaryDirectory() as td:
+            dst = pathlib.Path(td) / "repo"
+            odd = dst / f"{SHA[:12]}.mirror"
+            odd.mkdir(parents=True)
+            (odd / "stray.txt").write_text("keep me", encoding="utf-8")
+            r = FakeRunner()
+            ok, err = mod.pull_git({"url": "https://x/y.git", "mode": "mirror"}, dst, r, 10)
+            self.assertFalse(ok)
+            self.assertIn("不會覆蓋", err)
+            self.assertFalse([c for c in r.calls if c[:2] == ["git", "clone"]])
+            self.assertEqual((odd / "stray.txt").read_text(encoding="utf-8"), "keep me")
+
+    def test_unexpected_oserror_in_one_source_does_not_stop_the_others(self):
+        from unittest import mock
+        with tempfile.TemporaryDirectory() as td:
+            out = pathlib.Path(td)
+            real_rename = os.rename
+            calls = {"n": 0}
+
+            def flaky(a, b):
+                calls["n"] += 1
+                if calls["n"] == 1:
+                    raise PermissionError("denied")
+                return real_rename(a, b)
+
+            sources = [{"name": "one", "kind": "git", "url": "https://x/1.git", "mode": "mirror"},
+                       {"name": "two", "kind": "git", "url": "https://x/2.git", "mode": "mirror"}]
+            with mock.patch.object(mod.os, "rename", side_effect=flaky):
+                res = mod.pull(sources, out, runner=FakeRunner(), timeout=5)
+            self.assertFalse(res["one"]["ok"])
+            self.assertIn("檔案系統錯誤", res["one"]["error"])
+            self.assertTrue(res["two"]["ok"])
+            self.assertTrue(mod.build_manifest(out, git_sources={"one", "two"}, runner=FakeRunner()))  # 仍能產生清單
+
     def test_mirror_manifest_records_head_and_hashes_repo_files(self):
         with tempfile.TemporaryDirectory() as td:
             out = pathlib.Path(td)
             mod.pull_git({"url": "https://x/y.git", "mode": "mirror"}, out / "repo", FakeRunner(), 10)
-            (out / "repo" / SHA[:12] / "objects" / "obj1").write_bytes(b"data")
+            (out / "repo" / f"{SHA[:12]}.mirror" / "objects" / "obj1").write_bytes(b"data")
             (out / "repo" / (mod.PARTIAL_PREFIX + "zzz")).mkdir()  # 殘留暫存目錄不得進清單
             rows = mod.build_manifest(out, git_sources={"repo"}, runner=FakeRunner())
             paths = [r["path"] for r in rows]
-            self.assertIn(f"{SHA[:12]}/(mirror HEAD)", paths)
-            self.assertIn(f"{SHA[:12]}/objects/obj1", paths)   # 鏡像內容是資料，逐檔雜湊
-            self.assertIn(f"{SHA[:12]}/HEAD", paths)
+            self.assertIn(f"{SHA[:12]}.mirror/(mirror HEAD)", paths)
+            self.assertIn(f"{SHA[:12]}.mirror/objects/obj1", paths)   # 鏡像內容是資料，逐檔雜湊
+            self.assertIn(f"{SHA[:12]}.mirror/HEAD", paths)
             self.assertFalse([p for p in paths if "zzz" in p])
 
 
 @unittest.skipUnless(__import__("shutil").which("git"), "需要真的 git")
 class RealMirrorIntegrationTests(unittest.TestCase):
+    @staticmethod
+    def _commit_with_trailing_space_name(remote: pathlib.Path) -> None:
+        """用 git fast-import 直接寫入物件：檔名結尾帶空白的條目不經過工作樹與索引，
+        所以任何作業系統（包含 Windows，那裡工作樹與索引都拒絕這種檔名）都能建出同樣的提交。"""
+        env = mod._git_env()
+        run = lambda *a, **k: subprocess.run(["git", "-C", str(remote), *a], check=True, capture_output=True, env=env, **k)
+        run("init", "-q")
+        run("symbolic-ref", "HEAD", "refs/heads/main")
+        body = "結尾有空白的檔名".encode("utf-8")
+        ok = b"ok"
+        quoted = "".join(f"\\{b:03o}" if b > 127 else chr(b) for b in "母體/".encode("utf-8")) + "echo.analyst "
+        stream = (b"commit refs/heads/main\ncommitter t <t@t> 1700000000 +0000\ndata 2\nc1\n"
+                  + b"M 100644 inline ok.txt\ndata " + str(len(ok)).encode() + b"\n" + ok + b"\n"
+                  + b'M 100644 inline "' + quoted.encode("ascii") + b'"\ndata ' + str(len(body)).encode() + b"\n" + body + b"\n")
+        run("fast-import", "--quiet", input=stream)
+
     def test_mirror_preserves_windows_invalid_filename_and_verifies(self):
         with tempfile.TemporaryDirectory() as td:
             remote = pathlib.Path(td) / "remote"
             remote.mkdir()
-            g = lambda *a: subprocess.run(["git", "-C", str(remote), "-c", "user.email=t@t", "-c", "user.name=t", *a],
-                                          check=True, capture_output=True, env=mod._git_env())
-            g("init", "-q")
-            bad = remote / "母體"
-            bad.mkdir()
-            (bad / "echo.analyst ").write_text("結尾有空白的檔名（Windows 無法建立）", encoding="utf-8")
-            (remote / "ok.txt").write_text("ok", encoding="utf-8")
-            g("add", ".")
-            g("commit", "-qm", "c1")
+            self._commit_with_trailing_space_name(remote)
             store = pathlib.Path(td) / "store"
             res = mod.pull([{"name": "repo", "kind": "git", "url": remote.as_uri(), "mode": "mirror"}], store, timeout=120)
             self.assertTrue(res["repo"]["ok"], res)

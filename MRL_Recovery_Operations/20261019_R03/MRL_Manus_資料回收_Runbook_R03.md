@@ -17,7 +17,7 @@ origin_signature: MrLiouWord ｜ Additive-Only ｜ 當下狀態 2026-10-19 ｜ �
    git sparse-checkout set scripts tests MRL_Recovery_Operations MRL_Docs
    git checkout claude/github-issue-146-ks94ny
    ```
-   同理：**計畫檔裡的 git 來源要加 `"mode": "mirror"`**（範例計畫檔已設好）。mirror 用 `git clone --mirror`，沒有工作樹，所有分支、歷史與任何檔名都完整保留；工作樹模式遇到這類倉庫會失敗，並提示改用 mirror。要從鏡像讀檔：`git --git-dir=<鏡像目錄> show HEAD:<路徑>`，或在 Linux／WSL 上 checkout。
+   同理：**計畫檔裡的 git 來源要加 `"mode": "mirror"`**（範例計畫檔已設好）。mirror 用 `git clone --mirror`，沒有工作樹，所有分支、歷史與任何檔名都完整保留，存成 `<來源名>\\<sha前12碼>.mirror\\`（和一般模式的 `<sha前12碼>\\` 分開，換模式不會互相覆蓋；目標目錄已存在但不完整時腳本會回報而不是覆蓋）；工作樹模式遇到這類倉庫會失敗，並提示改用 mirror。要從鏡像讀檔：`git --git-dir=<鏡像目錄> show HEAD:<路徑>`，或在 Linux／WSL 上 checkout。
 1. **DL580 前置**：安裝並設定 `rclone`（Dropbox、Google Drive 各一個 remote）與 `git`；輸出目錄用本機磁碟（例如 `D:\mrl\recovery\store`），不要放在 Dropbox／OneDrive／Google Drive 同步資料夾內（腳本會拒絕）。
 2. **準備計畫檔**：複製 `scripts/MRL_dl580_recovery_plan.example.json` 到 DL580 本機（例如 `D:\mrl\recovery\plan.json`），填入自己的 remote 名稱與路徑。含私人 ID 的版本不要提交。
 3. **拉取**：`python scripts/MRL_dl580_recovery_pull_v1.py pull --plan D:\mrl\recovery\plan.json --out D:\mrl\recovery\store`
