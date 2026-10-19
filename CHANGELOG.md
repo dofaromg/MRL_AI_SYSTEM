@@ -20,6 +20,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `scripts/MRL_dl580_recovery_pull_v1.py`：git 先在 `.partial-<sha>` 完成 clone＋checkout 才改名（中途失敗不留下「看似完整」的殘骸）、`GIT_TERMINAL_PROMPT=0`、rclone 預設重試、鎖檔防並行 pull（exit 5）、磁碟空間檢查（exit 6）、清單先寫暫存檔再追加雜湊再排他連結（斷電不留半成品）、`verify` 對畸形清單回報而非拋例外並列出 `unlisted`／`orphan_sums`
 - `scripts/MRL_dl580_recovery_pull_v1.py`（CodeRabbit 追加）：Windows 唯讀 `.git/objects` 暫存目錄可清除、逾時也清暫存目錄並明確回報清不掉的情況、git 指令不繼承 `GIT_DIR` 等倉庫定位變數
 - `scripts/MRL_dl580_recovery_pull_v1.py`：git 來源新增 `"mode": "mirror"`（`git clone --mirror`，無工作樹、保留全部 refs 與任何檔名）；起因是 DL580 實機（Windows）整個檢出被 `MRL_MotherSource_ZhiZhang_FlowAgent_Lineage_v1/母體/` 下 15 個結尾帶空白的檔名擋住。worktree 模式遇到此類失敗會提示改用 mirror；範例計畫檔的 GitHub 來源已改為 mirror；Runbook 補 Windows 取得腳本的 sparse checkout 步驟
+- mirror 模式（CodeRabbit 追加）：mirror 備份存成 `<sha12>.mirror`，與 worktree 的 `<sha12>` 分開；目標已存在但不完整時回報不覆蓋；單一來源的檔案系統錯誤（`OSError`）只算該來源失敗，不中斷其餘來源與清單；真 git 的 mirror 測試改用 `git fast-import` 建立結尾空白的檔名，Windows 也能建出同樣的提交
 - 證據檔 R01 追加 §7（Manus 官方服務變更的網域暫管機制與假設 H4，待查）；Runbook 補網域暫管與備份範圍注意事項
 - 測試：兩個模組合計 52 項，含真實 git 本機倉庫整合測試與真實本機 HTTP 伺服器的「不跟隨轉址」測試
 
