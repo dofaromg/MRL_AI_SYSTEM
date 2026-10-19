@@ -1,0 +1,39 @@
+name: MRL BlackHole Daily Distiller
+
+"on":
+  schedule:
+    - cron: "17 2 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  distill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Distill recent popular repositories
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 09_workflow/MRL_BlackHole_DailyDistiller_v1.py \
+            --since-days 7 \
+            --limit 20 \
+            --output "$RUNNER_TEMP/MRL_BlackHole_DailyDistillation.json"
+
+      - name: Upload append-only distillation report
+        uses: actions/upload-artifact@v4
+        with:
+          name: MRL_BlackHole_DailyDistillation-${{ github.run_id }}
+          path: ${{ runner.temp }}/MRL_BlackHole_DailyDistillation.json
+          if-no-files-found: error
+          retention-days: 90

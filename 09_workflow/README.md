@@ -87,6 +87,22 @@ python 09_workflow/mrl_librarian.py search --state runnable
 python 09_workflow/mrl_librarian.py query  --path 03_memory/merkle/memory_chain.py
 ```
 
+## BlackHole Daily Distiller — `MRL_BlackHole_DailyDistiller_v1.py`
+
+Daily read-only discovery of recently created, popular public GitHub repositories.
+The report records source URLs, repository metadata, README headings, and a README
+SHA-256; it does not import or execute external code. Integration candidates
+remain `PENDING_HUMAN_REVIEW` and cannot be activated by this module.
+
+```bash
+python 09_workflow/MRL_BlackHole_DailyDistiller_v1.py \
+  --since-days 7 --limit 20 --output /tmp/MRL_BlackHole_DailyDistillation.json
+```
+
+`.github/workflows/MRL_BlackHole_DailyDistiller.yml` runs this daily and uploads
+the report as a workflow artifact. This is an engineering mirror output, not
+proof of DL580 persistence or real-device runtime.
+
 ## Fluin memory CLI
 
 | Script | Purpose |
@@ -97,4 +113,3 @@ python 09_workflow/mrl_librarian.py query  --path 03_memory/merkle/memory_chain.
 | `FluinRecorder.py` | `record_input()` helper |
 | `FluinAnalyzer.py` | `analyze_entry()` helper |
 | `FluinMemoryVault.py` | `build_memory()` helper |
-

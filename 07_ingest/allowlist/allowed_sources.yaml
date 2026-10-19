@@ -11,3 +11,9 @@ sources:
   # - id: github_mrl_ai_system
   #   type: git
   #   name: MRL_AI_SYSTEM repo
+  - id: github_public_repository_metadata
+    type: github_api
+    name: Public repository metadata and README structure for daily distillation
+    host: api.github.com
+    access: read_only
+    execution: prohibited

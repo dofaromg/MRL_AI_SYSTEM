@@ -29,6 +29,14 @@ sources:
       - "09_workflow/signature.js"       # LAW-0 interfaces
       - "09_workflow/seed.js"            # SEED(X) compression
 
+  - id: github_public_repository_metadata
+    name: "GitHub public repository metadata and README structure"
+    endpoint: "https://api.github.com"
+    role: "External reference material for MRL_BlackHole_DailyDistiller_v1"
+    access: read_only
+    execution: prohibited
+    review_status: human_review_required
+
 # Usage:
 # - append here whenever you add a new source file
 # - never delete canonical sources; deprecate via metadata

@@ -2,4 +2,5 @@
 # Start empty: deny-by-default. Add hosts only after verifying TOS + legal rights.
 hosts:
   - example.com
+  - api.github.com
   # - api.your-company.internal
