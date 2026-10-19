@@ -23,6 +23,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - mirror 模式（CodeRabbit 追加）：mirror 備份存成 `<sha12>.mirror`，與 worktree 的 `<sha12>` 分開；目標已存在但不完整時回報不覆蓋；單一來源的檔案系統錯誤（`OSError`）只算該來源失敗，不中斷其餘來源與清單；真 git 的 mirror 測試改用 `git fast-import` 建立結尾空白的檔名，Windows 也能建出同樣的提交
 - Runbook 更正（DL580 實機回報）：`git sparse-checkout` 在 Windows 上無效（索引仍須含無效路徑條目，checkout 仍失敗，實機實測）；改用 `git archive` 取出需要的目錄，沙盒驗證可跑 69 項測試；DL580 無 `winget`，rclone 改從官方網站下載
 - Runbook 再更正（DL580 實機回報，第二次）：`git archive <分支> <多個路徑>` 在 Windows 上同樣因無效檔名失敗（輸出 0 位元組）；改為每個目錄各自以 `<分支>:<目錄>` 取出，沙盒（含以索引拒絕的路徑重現失敗症狀）與真實倉庫驗證通過，Windows 實機待驗證；補 `safe.directory` 與貼指令的注意事項
+- Runbook（DL580 實機回報，第三次）：逐目錄 `git archive` 在 Windows 實機成功（四個目錄都取出）；`python -m unittest tests.xxx` 因 DL580 的 Python 不把目前資料夾放進搜尋路徑而失敗，改用 `python -c` 先 `sys.path.insert(0, '.')`（沙盒含隔離模式 69 項全過）
 - 證據檔 R01 追加 §7（Manus 官方服務變更的網域暫管機制與假設 H4，待查）；Runbook 補網域暫管與備份範圍注意事項
 - 測試：兩個模組合計 52 項，含真實 git 本機倉庫整合測試與真實本機 HTTP 伺服器的「不跟隨轉址」測試
 
