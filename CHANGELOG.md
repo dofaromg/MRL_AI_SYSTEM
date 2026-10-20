@@ -26,6 +26,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Runbook（DL580 實機回報，第三次）：逐目錄 `git archive` 在 Windows 實機成功（四個目錄都取出）；`python -m unittest tests.xxx` 因 DL580 的 Python 不把目前資料夾放進搜尋路徑而失敗，改用 `python -c` 先 `sys.path.insert(0, '.')`（沙盒含隔離模式 69 項全過）
 - 證據檔 R01 追加 §7（Manus 官方服務變更的網域暫管機制與假設 H4，待查）；Runbook 補網域暫管與備份範圍注意事項
 - 測試：兩個模組合計 52 項，含真實 git 本機倉庫整合測試與真實本機 HTTP 伺服器的「不跟隨轉址」測試
+- `scripts/MRL_dl580_recovery_pull_v1.py`：`plan.json` 以 `utf-8-sig` 讀取（Windows 記事本／PowerShell 5.1 存檔帶 BOM 時不再解析失敗）；新增 BOM 測試。DL580 實機（2026-10-20）：兩個模組測試 69 項通過、蒐證腳本跑成功、rclone v1.75.2 可執行；`pull`／`verify` 對真實資料仍待實機驗證
 
 ---
 

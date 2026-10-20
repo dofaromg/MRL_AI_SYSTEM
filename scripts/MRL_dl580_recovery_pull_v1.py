@@ -67,7 +67,8 @@ def is_synced_path(path: pathlib.Path) -> bool:
 
 
 def load_plan(path: pathlib.Path) -> list[dict]:
-    plan = json.loads(path.read_text(encoding="utf-8"))
+    # utf-8-sig：Windows 記事本／PowerShell 5.1 存檔常帶 BOM，純 utf-8 會讓 json 解析失敗
+    plan = json.loads(path.read_text(encoding="utf-8-sig"))
     sources = plan.get("sources")
     if not isinstance(sources, list) or not sources:
         raise ValueError("plan.sources 必須是非空陣列")
