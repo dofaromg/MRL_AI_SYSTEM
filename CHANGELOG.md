@@ -14,6 +14,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `MRL_Docs/Governance/MRL_attribution_roles_v1.json` — 權位／角色分離與頁面署名規則（`domain_owner`、`billing_party` 標 unverified）
 - `scripts/MRL_domain_evidence_collect_v1.py` + `tests/test_MRL_domain_evidence_collect_v1.py` — 零依賴唯讀蒐證，輸出僅落本地並寫 SHA-256
 - 4 個 repo 可控頁面（`MRL_Mother_Launch.js`、`MRL_Platform_Server.py`、`src/mrl_app.html`、WebConsole `index.html`）新增 author／canonical-authority／origin-signature／og:site_name metadata 與頁尾署名（純新增）
+- `MRL_Docs/Evidence/20261020/` — DL580 實機復盤 R01（環境、指令與結果、蒐證觀測、本機盤點、未做／待驗證、教訓）與記憶回填 JSON；實機測試 @4119586 共 70 項通過、git mirror ×2 pull／verify／fsck 皆通過（2026-10-20，實機）；Dropbox／Drive 取回、Manus 端、註冊商／Cloudflare 稽核、wake.ps1 收據、DL580 世界模型皆未做／待驗證；建構者陳述（資料於 MRL 系統內已互通、主權在建構者）原樣記錄，不由 AI 驗證
 
 ### Changed（Issue #146 — 模組穩定性；沙盒測試通過，DL580 實機待驗證）
 - `scripts/MRL_domain_evidence_collect_v1.py`：暫時性網路錯誤（逾時、連線中斷、429／5xx）最多重試 3 次並記錄 `attempts`；3xx／4xx 不重試；快照與 `SHA256SUMS` 寫入後 fsync；`classify` 失敗不再丟失原始證據；輸出路徑在雲端同步資料夾時拒絕（exit 3）
