@@ -55,6 +55,13 @@ class PlanTests(unittest.TestCase):
     def test_example_plan_is_valid(self):
         self.assertGreaterEqual(len(mod.load_plan(_EXAMPLE)), 4)
 
+    def test_plan_with_utf8_bom_loads(self):
+        with tempfile.TemporaryDirectory() as td:
+            p = pathlib.Path(td) / "p.json"
+            p.write_bytes(b"\xef\xbb\xbf" + json.dumps(
+                {"sources": [{"name": "a", "kind": "git", "url": "https://a/b"}]}).encode("utf-8"))
+            self.assertEqual(mod.load_plan(p)[0]["name"], "a")
+
     def test_rejects_bad_plans(self):
         with tempfile.TemporaryDirectory() as td:
             def load(obj):
