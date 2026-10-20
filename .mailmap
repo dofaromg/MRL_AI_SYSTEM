@@ -1,0 +1,5 @@
+# .mailmap — MRL 身份對應模組（附加、不改寫歷史）
+# origin_signature: MrLiouWord
+# git log / shortlog / blame 會依此把 commit 作者顯示為 MRL 對外名稱；原始 commit 內容不變。
+MRL_Partner <noreply@anthropic.com> Claude <noreply@anthropic.com>
+MRL_Partner <noreply@anthropic.com> <noreply@anthropic.com>
