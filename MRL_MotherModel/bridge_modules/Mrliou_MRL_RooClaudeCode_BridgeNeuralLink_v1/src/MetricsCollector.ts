@@ -160,10 +160,9 @@ export class MetricsCollector {
 
 		const targetCount = (histogram.count * percentile) / 100
 
-		let cumulative = 0
 		for (const [bucket, count] of histogram.buckets) {
-			cumulative += count
-			if (cumulative >= targetCount) {
+			// Buckets already contain cumulative counts.
+			if (count >= targetCount) {
 				return bucket
 			}
 		}
