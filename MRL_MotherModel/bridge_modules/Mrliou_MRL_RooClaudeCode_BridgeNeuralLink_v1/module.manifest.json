@@ -13,7 +13,14 @@
   "role": "VSCode_Extension_WebApp_DL580_Bridge",
   "layer": "L7(Bridge)",
   "status": "initialized",
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "stage_enhancements": {
+    "stage_04": {
+      "date": "2026-10-29",
+      "status": "NEW_MODULES_ADDED",
+      "description": "Runtime Enhancement Modules (TaskDispatcher, EventAggregator, MetricsCollector)"
+    }
+  },
   "target_runtime": "DL580_Windows",
   "transport": {
     "protocol": "WebSocket",
@@ -48,6 +55,35 @@
       "file": "src/BaseChannel.ts",
       "lines": 143,
       "purpose": "Abstract base class for all communication channels"
+    }
+  ],
+  "enhanced_components": [
+    {
+      "name": "TaskDispatcher",
+      "type": "task_scheduler",
+      "file": "src/TaskDispatcher.ts",
+      "lines": 240,
+      "purpose": "Task queue management with priority, timeout, and retry logic",
+      "added_in_stage": "04",
+      "immutable": false
+    },
+    {
+      "name": "EventAggregator",
+      "type": "event_system",
+      "file": "src/EventAggregator.ts",
+      "lines": 280,
+      "purpose": "Multi-source event collection, filtering, and pub/sub distribution",
+      "added_in_stage": "04",
+      "immutable": false
+    },
+    {
+      "name": "MetricsCollector",
+      "type": "monitoring",
+      "file": "src/MetricsCollector.ts",
+      "lines": 320,
+      "purpose": "Performance metrics tracking with Prometheus export support",
+      "added_in_stage": "04",
+      "immutable": false
     }
   ],
   "dependencies": {
