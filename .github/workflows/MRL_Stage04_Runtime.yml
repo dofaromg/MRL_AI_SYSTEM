@@ -1,0 +1,49 @@
+name: MRL Stage04 Runtime
+on:
+  pull_request:
+    paths:
+      - 'MRL_MotherModel/bridge_modules/Mrliou_MRL_RooClaudeCode_BridgeNeuralLink_v1/**'
+      - '.github/workflows/MRL_Stage04_Runtime.yml'
+  push:
+    branches: ['codex/mrl-stage04-percentile-fix']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  stage04:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: MRL_MotherModel/bridge_modules/Mrliou_MRL_RooClaudeCode_BridgeNeuralLink_v1
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.22.1'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Build Stage04
+        run: |
+          set -o pipefail
+          mkdir -p ci-evidence
+          npm run build 2>&1 | tee ci-evidence/build.log
+      - name: Test Stage04
+        run: |
+          set -o pipefail
+          npm test 2>&1 | tee ci-evidence/tests.log
+      - name: Preserve full Bridge diagnostic
+        if: always()
+        run: |
+          mkdir -p ci-evidence
+          set +e
+          npm run build:bridge > ci-evidence/bridge-build.log 2>&1
+          result=$?
+          printf 'bridge_build_exit=%s\n' "$result" >> ci-evidence/bridge-build.log
+          printf 'Full Bridge diagnostic exit: %s (not a Stage04 acceptance claim)\n' "$result" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: MRL-Stage04-${{ github.sha }}
+          path: MRL_MotherModel/bridge_modules/Mrliou_MRL_RooClaudeCode_BridgeNeuralLink_v1/ci-evidence/
+          if-no-files-found: error

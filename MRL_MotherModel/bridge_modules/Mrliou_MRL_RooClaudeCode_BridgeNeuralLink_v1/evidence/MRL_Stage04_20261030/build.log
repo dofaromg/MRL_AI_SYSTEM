@@ -1,0 +1,7 @@
+command: npm run build
+exit_code: 0
+
+> mrl-stage04-runtime-enhancement@1.1.0 build
+> tsc -p tsconfig.stage04.json
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.

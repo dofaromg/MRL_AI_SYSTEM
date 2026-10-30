@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "target": "ES2022", "module": "NodeNext", "moduleResolution": "NodeNext",
+    "strict": true, "skipLibCheck": true, "declaration": true,
+    "outDir": "dist", "rewriteRelativeImportExtensions": true
+  },
+  "include": ["src/TaskDispatcher.ts", "src/EventAggregator.ts", "src/MetricsCollector.ts", "src/MRL_Stage04Runtime.ts"]
+}

@@ -24,7 +24,7 @@ export interface MetricCounter {
  */
 export interface MetricHistogram {
 	name: string
-	buckets: Map<number, number> // bucket edge -> count
+	buckets: Map<number, number> // bucket edge -> cumulative count
 	sum: number
 	count: number
 	min: number
@@ -226,6 +226,9 @@ export class MetricsCollector {
 
 		// Histograms
 		for (const histogram of this.histograms.values()) {
+			for (const [edge, count] of histogram.buckets) {
+				output += `${histogram.name}_bucket{le="${edge}"${this.formatTagsWithoutBrace(histogram.tags)}} ${count}\n`
+			}
 			output += `${histogram.name}_sum${this.formatTags(histogram.tags)} ${histogram.sum}\n`
 			output += `${histogram.name}_count${this.formatTags(histogram.tags)} ${histogram.count}\n`
 			output += `${histogram.name}_bucket{le="+Inf"${this.formatTagsWithoutBrace(histogram.tags)}} ${histogram.count}\n`
@@ -240,11 +243,11 @@ export class MetricsCollector {
 	public getMetrics(): {
 		counters: Record<string, number>
 		gauges: Record<string, number>
-		histograms: Record<string, ReturnType<typeof this.getHistogramStats>>
+		histograms: Record<string, ReturnType<MetricsCollector["getHistogramStats"]>>
 	} {
 		const counters: Record<string, number> = {}
 		const gauges: Record<string, number> = {}
-		const histograms: Record<string, ReturnType<typeof this.getHistogramStats>> = {}
+		const histograms: Record<string, ReturnType<MetricsCollector["getHistogramStats"]>> = {}
 
 		for (const [key, counter] of this.counters) {
 			counters[key] = counter.value
@@ -328,3 +331,4 @@ export class MetricsCollector {
 		}
 	}
 }
+

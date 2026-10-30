@@ -46,6 +46,7 @@ export class TaskDispatcher {
 
 	private socket: Socket | null = null
 	private taskIdCounter = 0
+	private timeouts = new Map<string, ReturnType<typeof setTimeout>>()
 
 	constructor(options: TaskDispatcherOptions = {}) {
 		this.maxQueueSize = options.maxQueueSize ?? 1000
@@ -125,6 +126,7 @@ export class TaskDispatcher {
 			return
 		}
 
+		this.clearTimeout(taskId)
 		this.running.delete(taskId)
 		task.status = "completed"
 		task.result = result
@@ -143,6 +145,7 @@ export class TaskDispatcher {
 			return
 		}
 
+		this.clearTimeout(taskId)
 		task.error = error
 		task.retryCount++
 
@@ -178,6 +181,7 @@ export class TaskDispatcher {
 
 		task = this.running.get(taskId)
 		if (task) {
+			this.clearTimeout(taskId)
 			this.running.delete(taskId)
 			task.status = "cancelled"
 			this.completed.set(taskId, task)
@@ -225,6 +229,7 @@ export class TaskDispatcher {
 	 * Clear all tasks.
 	 */
 	public clear(): void {
+		for (const id of this.timeouts.keys()) this.clearTimeout(id)
 		this.queue.clear()
 		this.running.clear()
 		this.completed.clear()
@@ -232,11 +237,19 @@ export class TaskDispatcher {
 	}
 
 	private setupTimeout(task: DispatchedTask): void {
-		setTimeout(() => {
+		this.clearTimeout(task.id)
+		this.timeouts.set(task.id, setTimeout(() => {
+			this.timeouts.delete(task.id)
 			if (this.running.has(task.id)) {
 				this.failTask(task.id, `Task timeout after ${task.timeoutMs}ms`)
 			}
-		}, task.timeoutMs)
+		}, task.timeoutMs))
+	}
+
+	private clearTimeout(taskId: string): void {
+		const timer = this.timeouts.get(taskId)
+		if (timer !== undefined) clearTimeout(timer)
+		this.timeouts.delete(taskId)
 	}
 
 	private generateTaskId(): string {
@@ -249,3 +262,4 @@ export class TaskDispatcher {
 		}
 	}
 }
+
