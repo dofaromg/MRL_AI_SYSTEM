@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.stage04.json",
+  "compilerOptions": {"noEmit": true},
+  "include": ["src/**/*.ts"]
+}
