@@ -1,0 +1,159 @@
+{
+  "origin_signature": "MrLiouWord",
+  "canonical_base": "e4f7a1ec43f30bd1820ec0d20b1203b0a203b9a8",
+  "source_commits": [
+    "e467b0004e8401d8f13347aeef2eb3a2ef01998b",
+    "e72d2534102fca416e285d28ee9b4774ff870026"
+  ],
+  "scope": "iOS client assets only; no backend or full ProductBridge package claim",
+  "files": [
+    {
+      "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/L10n.swift",
+      "size": 325,
+      "sha256": "847d3550cbf4fda3a7cc2838399c914f3f9739161e24b6f94f2e7fba0d5e2483",
+      "source_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+      "last_change_commit": "0579c8d9e1f95b5499736c8fdc00497f6ae82b24",
+      "source_blob": "f746463afad039beba28cd8cf3f87722e68b049c"
+    },
+    {
+      "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Models/Scan.swift",
+      "size": 2635,
+      "sha256": "4e398f88053143da8861bc9d01c0212769ecf5ce25e1c67ac5b0448a3ebd50d9",
+      "source_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+      "last_change_commit": "0579c8d9e1f95b5499736c8fdc00497f6ae82b24",
+      "source_blob": "e4b12bddbfbd67dcc40699d8557a8c45ae820a1e"
+    },
+    {
+      "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/PhotogramApp.swift",
+      "size": 236,
+      "sha256": "f0c0bf72e167a76417e884d3ddf850a96dcfaff18c3c06e5201a2f34ddb47776",
+      "source_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+      "last_change_commit": "0579c8d9e1f95b5499736c8fdc00497f6ae82b24",
+      "source_blob": "37d79afaac7dc56bd811302835f374fc64079312"
+    },
+    {
+      "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Reconstruction/MRLReconstructionClient.swift",
+      "size": 4298,
+      "sha256": "ec8b815dd3e45561f2546320e79d789afcef6d74876d735d9790d21e931eb5b5",
+      "source_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+      "last_change_commit": "0579c8d9e1f95b5499736c8fdc00497f6ae82b24",
+      "source_blob": "e32a38f528d81e2aec3a8e0e015a2355c79c0d1d"
+    },
+    {
+      "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Reconstruction/MRLReconstructionJob.swift",
+      "size": 544,
+      "sha256": "267b9fb976659d7497494c5c82c8e18f2065d922ed4d44a2b3278553e0b3aadc",
+      "source_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+      "last_change_commit": "0579c8d9e1f95b5499736c8fdc00497f6ae82b24",
+      "source_blob": "519332b4a7a5f77dafd31f9c180775e0bdacde54"
+    },
+    {
+      "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Utilities/FileManager+Tools.swift",
+      "size": 1042,
+      "sha256": "bf6d054d557e24c05c957c07270c021f64928f41d0695db3d1783f201b8e5897",
+      "source_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+      "last_change_commit": "0579c8d9e1f95b5499736c8fdc00497f6ae82b24",
+      "source_blob": "a7f4ced23e5d1ced67eb6d3dfe1de1c4e7f0965f"
+    },
+    {
+      "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Utilities/ShareSheet.swift",
+      "size": 357,
+      "sha256": "b138f033598d43bd4838238099d64537ec15e3aeb9e88b0c646915c4d0de7431",
+      "source_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+      "last_change_commit": "0579c8d9e1f95b5499736c8fdc00497f6ae82b24",
+      "source_blob": "2caebc9ddeaa41b898eb73d54d7a98db791e3381"
+    },
+    {
+      "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Views/ReconstructionBridgeView.swift",
+      "size": 2444,
+      "sha256": "6fe6d55ac1ff0dcccf093025cacc9ee408f36eb69257e95fcf00702b77820382",
+      "source_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+      "last_change_commit": "0579c8d9e1f95b5499736c8fdc00497f6ae82b24",
+      "source_blob": "324ce9182000977b4fd94858820ea53eef13243a"
+    },
+    {
+      "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Views/ScansListView.swift",
+      "size": 2790,
+      "sha256": "65a443e48bb98e594b3778496e12e6b3f7d4c68eaffb709fb2d4b2410b269147",
+      "source_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+      "last_change_commit": "0579c8d9e1f95b5499736c8fdc00497f6ae82b24",
+      "source_blob": "c9cc18d8a3ddcdfebb6eca0c5add77fa94521727"
+    },
+    {
+      "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/Views/ScansStackListView.swift",
+      "size": 5909,
+      "sha256": "f29ba13da160651c38970358bf606c0f4d6cffb6460c3d19a718a236aa83d2bc",
+      "source_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+      "last_change_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+      "source_blob": "d9ef9cc407d608d1efa5c5860dc8b259db11be3d"
+    },
+    {
+      "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/en.lproj/Localizable.strings",
+      "size": 83,
+      "sha256": "b0e4ab9e8475400e796ef2a551759fbec6ea3e1c6683494b4aa4c62c06a306a4",
+      "source_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+      "last_change_commit": "0579c8d9e1f95b5499736c8fdc00497f6ae82b24",
+      "source_blob": "86b37f53eeb3ad89b04257b3d854036b8deb333a"
+    },
+    {
+      "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/ios/MRL_3DScanner_iOS/zh-Hant.lproj/Localizable.strings",
+      "size": 90,
+      "sha256": "370e608598a2ede8073aee8438961e44993692e8905cd3feb2579d8d3b0beb71",
+      "source_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+      "last_change_commit": "0579c8d9e1f95b5499736c8fdc00497f6ae82b24",
+      "source_blob": "dc2619e9dc810a079af721afe7ba68126503a07f"
+    },
+    {
+      "path": "MRL_3DScanner_iOS_DL580_ProductBridge_v1_1/docs/04_PATCH_NOTES_NavigationStack_v1.md",
+      "size": 6709,
+      "sha256": "35309b1a37fa5450acb58720c63161ed412f48b4479c01a19ab1cd0012da0da3",
+      "source_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+      "last_change_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+      "source_blob": "f7c745d57eea3d2fe61cc17260efdd73944fcffb"
+    },
+    {
+      "path": "MRL_Reference_Layer/MRL_SwiftUI_NavigationCookbook_Reference_v1.md",
+      "size": 4843,
+      "sha256": "9d58452afe73d7d78d4be199f9effc15741b11b6e51c17fe147d20c9fe4dad21",
+      "source_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+      "last_change_commit": "e72d2534102fca416e285d28ee9b4774ff870026",
+      "source_blob": "ae8feed6ca2906b7e83fcdda40e9c04371dcee0f"
+    }
+  ],
+  "dependency_tree": {
+    "ScansStackListView": [
+      "ScanRoute",
+      "ScanNavigationModel",
+      "ScanStore",
+      "Scan",
+      "ReconstructionBridgeView"
+    ],
+    "ReconstructionBridgeView": [
+      "MRLReconstructionClient",
+      "MRLReconstructionJob"
+    ],
+    "MRLReconstructionClient": [
+      "Scan",
+      "FileManager+Tools"
+    ],
+    "PhotogramApp": [
+      "ScanStore",
+      "ScansListView"
+    ],
+    "ScansListView": [
+      "ScanDetailView",
+      "ReconstructionBridgeView"
+    ]
+  },
+  "limitations": [
+    "No Xcode project in source",
+    "SwiftUI build and UI validation pending",
+    "NavigationStack not wired in",
+    "External backend service required for reconstruction"
+  ],
+  "excluded": [
+    "source package MANIFEST.json and CHECKSUMS.sha256: describe full package unavailable in canonical base",
+    "Reference README and manifest: unrelated source records excluded; this provenance registers actual assets",
+    "CHANGELOG: source history excluded; this append-only provenance describes new import"
+  ]
+}
