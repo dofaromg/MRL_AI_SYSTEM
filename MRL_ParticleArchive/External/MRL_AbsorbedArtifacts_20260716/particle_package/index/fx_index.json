@@ -1,0 +1,27 @@
+{
+  "fx02": {
+    "name": "Data",
+    "count": 46367,
+    "file": "particles/by_fx/fx02.jsonl"
+  },
+  "fx04": {
+    "name": "Compute",
+    "count": 960,
+    "file": "particles/by_fx/fx04.jsonl"
+  },
+  "fx09": {
+    "name": "Validate",
+    "count": 1742,
+    "file": "particles/by_fx/fx09.jsonl"
+  },
+  "fx14": {
+    "name": "State",
+    "count": 995,
+    "file": "particles/by_fx/fx14.jsonl"
+  },
+  "fx17": {
+    "name": "Meta",
+    "count": 295,
+    "file": "particles/by_fx/fx17.jsonl"
+  }
+}

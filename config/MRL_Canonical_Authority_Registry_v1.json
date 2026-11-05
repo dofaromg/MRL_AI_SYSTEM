@@ -1,0 +1,69 @@
+{
+  "schema": "MRL_Canonical_Authority_Registry_v1",
+  "root_authority": {
+    "owner": "Mrliou",
+    "product": "MrliouAI",
+    "namespace": "MRL_",
+    "origin_signature": "MrLiouWord",
+    "mother_runtime": "DL580/MotherAssembly"
+  },
+  "layer_order": [
+    "ROOT_AUTHORITY",
+    "MRL_PRODUCT",
+    "MRL_CAPABILITY",
+    "MRL_RUNTIME",
+    "MRL_INTERFACE",
+    "MRL_ADAPTER",
+    "EXTERNAL_SOURCE"
+  ],
+  "layers": {
+    "ROOT_AUTHORITY": {
+      "rank": 0,
+      "may_define_canonical_identity": true,
+      "allowed_subjects": ["Mrliou"]
+    },
+    "MRL_PRODUCT": {
+      "rank": 1,
+      "may_define_canonical_identity": true,
+      "allowed_subjects": ["MrliouAI", "MRL_"]
+    },
+    "MRL_CAPABILITY": {
+      "rank": 2,
+      "may_define_canonical_identity": true,
+      "required_prefix": "MRL_"
+    },
+    "MRL_RUNTIME": {
+      "rank": 3,
+      "may_define_canonical_identity": true,
+      "required_product": "MrliouAI"
+    },
+    "MRL_INTERFACE": {
+      "rank": 4,
+      "may_define_canonical_identity": false,
+      "must_resolve_to": "MrliouAI"
+    },
+    "MRL_ADAPTER": {
+      "rank": 5,
+      "may_define_canonical_identity": false,
+      "allowed_roles": ["adapter", "transport", "compatibility_alias", "provenance"]
+    },
+    "EXTERNAL_SOURCE": {
+      "rank": 6,
+      "may_define_canonical_identity": false,
+      "allowed_roles": ["source", "evidence", "historical_reference", "vendor_metadata"]
+    }
+  },
+  "canonical_contract": {
+    "product": "MrliouAI",
+    "source_owner": "Mrliou",
+    "origin_signature": "MrLiouWord",
+    "route_prefixes": ["/api/mrl/", "/mrl/"],
+    "packet_prefix": "MRL_",
+    "trace_prefix": "MRL-"
+  },
+  "external_platform_policy": {
+    "placement": "bottom",
+    "permitted_fields": ["source", "adapter", "transport", "provenance", "compatibility_alias", "vendor_metadata", "historical_reference"],
+    "forbidden_targets": ["product", "canonical_route", "packet_type", "trace_prefix", "root_authority", "runtime_identity"]
+  }
+}

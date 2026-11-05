@@ -1,0 +1,25 @@
+{
+  "product": "Mrliouword",
+  "version": "1.0.0",
+  "python_package": "mrliouword",
+  "cli": "mrliouword",
+  "env_prefix_canonical": "MRLIOUWORD_",
+  "env_prefix_compat": "MRL_",
+  "api_base_path": "/api/v1",
+  "origin_signature": "MrLiouWord",
+  "container_prefix": "mrliouword-",
+  "k8s_label": "app.kubernetes.io/part-of=mrliouword",
+  "protocol": "Mrliouword Particle Protocol",
+  "legacy_aliases": ["MRL", "FlowAgent", "ParticleRuntime"],
+  "source_of_truth": {
+    "python_package": "mrliouword/",
+    "merkle_chain": "03_memory/merkle/memory_chain.py",
+    "vector_store": "03_memory/vector/vector_store.py",
+    "schemas": "mrliouword/schemas.py",
+    "api_gateway": "09_workflow/api_gateway.py",
+    "config_manager": "09_workflow/config_manager.py",
+    "root_law": "00_rootlaw/rootlaw.yaml",
+    "source_manifest": "08_sources/sources.manifest.yaml"
+  },
+  "schema_version": "1.0"
+}

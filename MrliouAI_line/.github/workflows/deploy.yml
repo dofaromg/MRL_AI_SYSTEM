@@ -1,0 +1,152 @@
+name: CI / Release
+
+"on":
+  push:
+    branches: [main]
+    tags:
+      - "v*.*.*"
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  # ──────────────────────────────────────────────
+  # Job 1: Quality gates (lint + type + test)
+  # ──────────────────────────────────────────────
+  quality:
+    name: Quality gates
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5.6.0
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov ruff
+
+      - name: Lint (ruff)
+        run: |
+          ruff check mrliouword/ 09_workflow/config_manager.py --select E,F,I --ignore E501 || true
+        # '|| true' prevents lint warnings from blocking the gate while the codebase is being migrated;
+        # remove once the backlog of lint issues is cleared.
+
+      - name: Run pytest (full suite + integration)
+        run: python -m pytest tests/ -v --tb=short --cov=mrliouword --cov-report=term-missing
+        env:
+          MRL_RUNTIME_MODE: test
+          MRLIOUWORD_SYSTEM_DEBUG: "false"
+
+      - name: Dependency vulnerability scan (pip-audit)
+        run: |
+          pip install pip-audit
+          pip-audit -r requirements.txt --ignore-vuln PYSEC-2022-43012 || true
+        # pip-audit best-effort; failures are reported but do not block the gate during ramp-up.
+
+  # ──────────────────────────────────────────────
+  # Job 2: Build release package (tags only)
+  # ──────────────────────────────────────────────
+  release:
+    name: Build & publish release
+    needs: quality
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5.6.0
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: Run final tests before release
+        run: python -m pytest tests/ -v --tb=short
+        env:
+          MRL_RUNTIME_MODE: test
+
+      - name: Extract version
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
+
+      - name: Build release archive
+        id: build
+        run: |
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          ARCHIVE="mrliouword-${VERSION}.zip"
+
+          zip -r "${ARCHIVE}" \
+            mrliouword \
+            00_rootlaw 01_schema 02_principles 03_memory \
+            04_runtime 05_persona 06_trace 07_ingest \
+            08_sources 09_workflow ui \
+            README.md CHANGELOG.md \
+            requirements.txt pyproject.toml \
+            data/mrliouword_manifest.json \
+            -x "**/__pycache__/*" \
+               "**/*.pyc" \
+               "**/log/*" \
+               "data/sessions/*" \
+               "data/learning/*" \
+               "backups/*"
+
+          echo "archive=${ARCHIVE}" >> "$GITHUB_OUTPUT"
+
+      - name: Extract release notes from CHANGELOG
+        id: notes
+        run: |
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          python3 - <<'PYEOF'
+          import re, os
+
+          version = os.environ.get("VERSION", "")
+          with open("CHANGELOG.md") as f:
+              content = f.read()
+
+          # Find the section for this version (strip leading 'v' for matching)
+          ver_bare = version.lstrip("v")
+          pattern = rf"## \[{re.escape(ver_bare)}\].*?\n(.*?)(?=\n## |\Z)"
+          m = re.search(pattern, content, re.DOTALL)
+          notes = m.group(1).strip() if m else f"Release {version}"
+
+          with open(os.environ["GITHUB_OUTPUT"], "a") as out:
+              # multi-line output
+              out.write("notes<<EOF\n")
+              out.write(notes + "\n")
+              out.write("EOF\n")
+          PYEOF
+        env:
+          VERSION: ${{ steps.version.outputs.VERSION }}
+
+      - name: Create GitHub Release and upload asset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.version.outputs.VERSION }}
+          NOTES: ${{ steps.notes.outputs.notes }}
+        run: |
+          gh release create "${VERSION}" \
+            --title "Mrliouword ${VERSION}" \
+            --notes "${NOTES}" \
+            "mrliouword-${VERSION}.zip"
+

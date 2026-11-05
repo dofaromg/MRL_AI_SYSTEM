@@ -1,0 +1,26 @@
+{
+  "source_id": "MRL-EXT-GENAI-COURSE-001",
+  "source_type": "external_course_landing_page",
+  "source_title": "Applied Generative AI for Digital Transformation",
+  "detected_keywords": [
+    "Generative AI",
+    "Digital Transformation",
+    "AI Workflow",
+    "AI Governance",
+    "Enterprise AI",
+    "AI Agent",
+    "Automation"
+  ],
+  "status": "SOURCE_REF_ONLY",
+  "rule": "external source cannot define MRL, only be absorbed by MRL",
+  "intake_date": "2026-06-29",
+  "version": "v1",
+  "created_by": "Mrliou_MRL_ExternalSourceIntake",
+  "absorbed_by": "MRL_Mother_System",
+  "notes": [
+    "This external course is a SourceRef only.",
+    "No MRL naming or architecture shall be derived from or overridden by this external source.",
+    "All concepts are absorbed into MRL Mother as capability references.",
+    "External course cannot promote itself to a primary MRL component."
+  ]
+}

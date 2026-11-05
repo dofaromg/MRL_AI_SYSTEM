@@ -1,0 +1,80 @@
+{
+  "mapping_id": "MRL-MAP-GENAI-001",
+  "version": "v1",
+  "source_ref": "MRL-EXT-GENAI-COURSE-001",
+  "source_title": "Applied Generative AI for Digital Transformation",
+  "created_at": "2026-06-29",
+  "mapping_rule": "external_absorbed_by_mother_only",
+  "mappings": [
+    {
+      "external_concept": "External_GenAI",
+      "external_label": "Generative AI",
+      "mrl_target": "Mrliou_MRL_Runtime",
+      "mrl_description": "MRL Mother Runtime — the execution layer that instantiates generative intelligence within the mother body",
+      "overlap_level": "STRUCTURAL",
+      "evidence_note": "GenAI execution is the runtime concern of Mrliou_MRL_Runtime"
+    },
+    {
+      "external_concept": "External_AI_Agent",
+      "external_label": "AI Agent",
+      "mrl_target": "Mrliou_FlowAgent",
+      "mrl_description": "MRL FlowAgent — autonomous agent runtime derived from FlowAgent lineage absorbed into MRL mother",
+      "overlap_level": "STRUCTURAL",
+      "evidence_note": "FlowAgent is the canonical MRL agent execution unit"
+    },
+    {
+      "external_concept": "External_Workflow",
+      "external_label": "AI Workflow",
+      "mrl_target": "Mrliou_FlowComputer",
+      "mrl_description": "MRL FlowComputer — workflow orchestration and computation graph within MRL runtime",
+      "overlap_level": "COMMON",
+      "evidence_note": "Workflow orchestration maps directly to FlowComputer execution model"
+    },
+    {
+      "external_concept": "External_RAG",
+      "external_label": "Retrieval-Augmented Generation",
+      "mrl_target": "Mrliou_MRL_Knowledge_Index / Vector Memory",
+      "mrl_description": "MRL Knowledge Index with Vector Memory — retrieval layer in MRL storage for context-aware generation",
+      "overlap_level": "UNIQUE_SIMILARITY",
+      "evidence_note": "RAG patterns match MRL vector memory retrieval; full structural equivalence requires evidence"
+    },
+    {
+      "external_concept": "External_Governance",
+      "external_label": "AI Governance",
+      "mrl_target": "Mrliou_MRL_LAW / AuditSupervisor",
+      "mrl_description": "MRL LAW layer and AuditSupervisor — governance, policy enforcement, and audit trail within MRL",
+      "overlap_level": "STRUCTURAL",
+      "evidence_note": "Governance is the domain of MRL_LAW and AuditSupervisor components"
+    },
+    {
+      "external_concept": "External_Enterprise_AI",
+      "external_label": "Enterprise AI",
+      "mrl_target": "Mrliou_MRL_RuntimeOS",
+      "mrl_description": "MRL RuntimeOS — enterprise-grade AI operating system layer of MRL mother",
+      "overlap_level": "STRUCTURAL",
+      "evidence_note": "Enterprise AI platform corresponds to Mrliou_MRL_RuntimeOS architecture"
+    },
+    {
+      "external_concept": "External_Automation",
+      "external_label": "Automation",
+      "mrl_target": "Mrliou_MRL_RuntimeBridge",
+      "mrl_description": "MRL RuntimeBridge — automation and integration bridge between MRL runtime and external systems",
+      "overlap_level": "COMMON",
+      "evidence_note": "Automation execution is bridged through MRL_RuntimeBridge"
+    },
+    {
+      "external_concept": "External_Digital_Transformation",
+      "external_label": "Digital Transformation",
+      "mrl_target": "Mrliou_MRL_System_Reconstruction",
+      "mrl_description": "MRL System Reconstruction — the systematic re-architecture of systems absorbed into and reconstructed by MRL mother",
+      "overlap_level": "UNIQUE_SIMILARITY",
+      "evidence_note": "Digital transformation as a concept maps to MRL's system reconstruction methodology"
+    }
+  ],
+  "overlap_level_legend": {
+    "COMMON": "Widely shared concept; direct functional correspondence",
+    "STRUCTURAL": "Core structural equivalence between external concept and MRL component",
+    "UNIQUE_SIMILARITY": "Similarity identified but MRL implementation has distinct characteristics; evidence required for full mapping",
+    "EVIDENCE_REQUIRED": "Potential mapping flagged but cannot be confirmed without additional runtime evidence"
+  }
+}
