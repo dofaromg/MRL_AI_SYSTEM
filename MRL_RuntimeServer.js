@@ -1,91 +1,100 @@
-const http = require('http');
-const runtime = require('./MRL_RuntimeOS_EnterpriseRuntimePlatform_CoreExecutable_v1_4_0/MRL_API/MRL_RuntimeServer');
-const manifest = require('./data/MRL_runtime_gateway_manifest.json');
-
-const {
-  convergence_view: MRL_CONVERGENCE_VIEW,
-  perception: MRL_PERCEPTION,
-  ...MRL_STATE
-} = manifest;
-
-const runtimeHandler = runtime.server.listeners('request')[0];
-
-function sendJSON(res, code, obj) {
-  res.writeHead(code, { 'content-type': 'application/json' });
-  res.end(JSON.stringify(obj));
-}
-
-function readBody(req) {
-  return new Promise((resolve, reject) => {
-    let data = '';
-    let settled = false;
-    const fail = err => { if (settled) return; settled = true; reject(err); };
-    req.on('data', chunk => {
-      if (settled) return;
-      data += chunk;
-      if (data.length > runtime.MRL_CFG.max_body_bytes) {
-        const err = new Error('MRL_BODY_TOO_LARGE');
-        err.code = 413;
-        fail(err);
-        req.destroy();
-      }
-    });
-    req.on('end', () => {
-      if (settled) return;
-      settled = true;
-      try { resolve(data ? JSON.parse(data) : {}); } catch (e) { reject(e); }
-    });
-    req.on('error', fail);
-  });
-}
-
-// 驗證關閉時，不把會改狀態的 runtime 路由（ingest/execute/job/artifact…）公開委派出去。
-const MRL_SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
-function MRL_blockUnauthenticatedWrite(req) {
-  if (MRL_SAFE_METHODS.has(req.method)) return false;
-  if (runtime.MRL_CFG.auth_required) return false;
-  return String(process.env.MRL_ALLOW_UNAUTHENTICATED_WRITES || 'false').toLowerCase() !== 'true';
-}
-
-const server = http.createServer(async (req, res) => {
-  try {
-    if (req.method === 'GET' && req.url === '/health') {
-      return sendJSON(res, 200, { ok: true, ...MRL_STATE });
+const express = require("express");
+const app = express();
+// origin_signature: MrLiouWord — base-aligned adaptation of b07a7de.
+app.use((req, res, next) => {
+  if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) return next();
+  const authRequired = String(process.env.MRL_AUTH_REQUIRED || 'false').toLowerCase() === 'true';
+  if (authRequired) {
+    const token = process.env.MRL_API_TOKEN;
+    const authorization = req.headers.authorization;
+    const credentials = typeof authorization === 'string'
+      ? /^Bearer +(.+)$/i.exec(authorization) : null;
+    if (!token || !credentials || credentials[1] !== token) {
+      return res.status(401).json({ error: 'MRL_UNAUTHORIZED' });
     }
-    if (req.method === 'GET' && req.url === '/mrl/state') {
-      return sendJSON(res, 200, MRL_STATE);
-    }
-    if (req.method === 'GET' && req.url === '/api/mrl/runtime/convergence') {
-      return sendJSON(res, 200, MRL_CONVERGENCE_VIEW);
-    }
-    if (req.method === 'POST' && req.url === '/mrl/perceive') {
-      const input = await readBody(req);
-      return sendJSON(res, 200, {
-        ok: true,
-        route: MRL_PERCEPTION.route,
-        input,
-        flow: MRL_PERCEPTION.flow,
-        sovereignty: MRL_PERCEPTION.sovereignty
-      });
-    }
-    if (MRL_blockUnauthenticatedWrite(req)) {
-      return sendJSON(res, 403, {
-        error: 'MRL_AUTH_REQUIRED_FOR_WRITE',
-        message: 'State-changing runtime routes need MRL_AUTH_REQUIRED=true and MRL_API_TOKEN (or MRL_ALLOW_UNAUTHENTICATED_WRITES=true for local dev).'
-      });
-    }
-    return runtimeHandler(req, res);
-  } catch (e) {
-    return sendJSON(res, e.code || 500, { error: 'MRL_GATEWAY_ERROR', message: e.message });
+  } else if (String(process.env.MRL_ALLOW_UNAUTHENTICATED_WRITES || 'false').toLowerCase() !== 'true') {
+    return res.status(403).json({ error: 'MRL_AUTH_REQUIRED_FOR_WRITE' });
   }
+  next();
 });
-
-if (require.main === module) {
-  const port = Number(process.env.MRL_PORT || 8790);
-  const host = process.env.MRL_HOST || '0.0.0.0';
-  server.listen(port, host, () => {
-    console.log(`MRL Runtime Gateway running at http://${host}:${port}`);
+app.use(express.json());
+const MRL_STATE = {
+  origin_signature: "MrLiouWord",
+  system_name: "MRL_完整態母體運轉系統_v1",
+  sovereignty_mode: "權位區分模式",
+  status: "running",
+  canonical_language: "中文",
+  external_language_policy: "英文僅作 Adapter 對照",
+  attention_policy: "Attention/注意力為歷史層；MRL正式主體為感知力",
+  modules: {
+    MRL_World_Module: "completed_running",
+    MRL_平行世界模組: "completed_running",
+    MRL_AI: "completed_running",
+    MRL_AGI: "completed_running",
+    MRL_ASI: "completed_running",
+    MRL_World: "completed_running",
+    MRL_感知力核心: "active",
+    MRL_多世界同步: "active",
+    MRL_回放回復: "active",
+    MRL_主權層: "active"
+  }
+};
+app.get("/health", (req, res) => {
+  res.json({
+    ok: true,
+    ...MRL_STATE
   });
-}
-
-module.exports = { ...runtime, server };
+});
+app.get("/mrl/state", (req, res) => {
+  res.json(MRL_STATE);
+});
+// Read-only convergence governance view（規格見 docs/MRL_Runtime_Civilization_Stack_Convergence_v1.md）。
+// 不啟動 daemon、不變更 runtime、不宣稱 pending 項目完成。
+const MRL_CONVERGENCE_VIEW = {
+  status: "SPEC_READY",
+  implementation: "READ_ONLY_API_ACTIVE",
+  source: "docs/MRL_Runtime_Civilization_Stack_Convergence_v1.md",
+  merge_order: ["#35", "#37", "#36", "EntryGateway", "Convergence"],
+  active: {
+    runtime_core: "LOCAL_ACCEPTANCE",
+    naming_alignment: "LOCAL_ACCEPTANCE",
+    pid_scope: "DECLARED_ACTIVE",
+    entry_gateway: "DECLARED_ACTIVE"
+  },
+  pending: {
+    persistent_loop_daemon: "PENDING",
+    replay_restore_runtime: "PENDING",
+    world_sync: "PENDING",
+    baseworld_db: "PENDING",
+    dl580_reboot_survival: "PENDING"
+  },
+  note: "This endpoint is read-only convergence governance view. It does not start daemon, mutate runtime, or claim pending items complete."
+};
+app.get("/api/mrl/runtime/convergence", (req, res) => {
+  res.json(MRL_CONVERGENCE_VIEW);
+});
+app.post("/mrl/perceive", (req, res) => {
+  res.json({
+    ok: true,
+    route: "MRL_感知力核心",
+    input: req.body,
+    flow: [
+      "世界狀態",
+      "感知力場",
+      "語境同步",
+      "記憶拉取",
+      "人格共振",
+      "運轉組裝",
+      "世界投影",
+      "回放",
+      "回復",
+      "驗證",
+      "重新同步"
+    ],
+    sovereignty: "MRL 主體；外部僅 Adapter"
+  });
+});
+const port = process.env.MRL_PORT || 8790;
+app.listen(port, () => {
+  console.log(`MRL Runtime running on port ${port}`);
+});

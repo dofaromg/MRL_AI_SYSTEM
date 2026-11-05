@@ -49,7 +49,7 @@ import threading
 import time
 from typing import Any, Dict, List, Optional
 
-from MRL_utils import ORIGIN_SIGNATURE
+ORIGIN_SIGNATURE = "MrLiouWord"
 PRODUCT_NAME = "MRL_AI_SYSTEM"
 METRICS_VERSION = "1.0"
 

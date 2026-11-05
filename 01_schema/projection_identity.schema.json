@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "MRL://schema/projection_identity/v1",
+  "title": "MRL Projection Identity",
+  "type": "object",
+  "required": ["projection_id", "projection_type", "platform", "origin_ref", "source_ref", "observed_at", "version", "state"],
+  "properties": {
+    "projection_id": {"type": "string", "minLength": 1},
+    "projection_type": {"enum": ["repository", "notion_page", "drive_file", "runtime_host", "database", "worker", "domain", "ip", "port", "api", "endpoint", "artifact", "archive", "interface"]},
+    "platform": {"type": "string", "minLength": 1},
+    "external_id": {"type": ["string", "null"]},
+    "origin_ref": {"type": "string", "minLength": 1},
+    "source_ref": {"type": "string", "minLength": 1},
+    "bridge_ref": {"type": ["string", "null"]},
+    "content_hash": {"type": ["string", "null"]},
+    "version": {"type": "string", "minLength": 1},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "created_at": {"type": ["string", "null"], "format": "date-time"},
+    "relation": {"enum": ["PROJECTION_OF", "MIRROR_OF", "DESCENDANT_OF", "BRANCHED_FROM", "REINTEGRATED_INTO", "UNRESOLVED"]},
+    "state": {"enum": ["CURRENT", "HISTORICAL", "MIRROR_CANDIDATE", "UNRESOLVED", "ARCHIVED"]},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

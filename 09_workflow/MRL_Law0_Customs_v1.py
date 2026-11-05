@@ -38,7 +38,9 @@ from MRL_OriginBoundary_Guard_v1 import (  # noqa: E402
     MRL_OriginBoundaryGuard, embed_signature, verify_signature, reclaim_name,
 )
 
-from MRL_utils import ORIGIN_SIGNATURE
+ORIGIN_SIGNATURE = "MrLiouWord"
+
+
 class MRL_Law0Customs:
     """
     Law-0 海關。任何外部模型/能力經此通關，成為母體內部粒子。

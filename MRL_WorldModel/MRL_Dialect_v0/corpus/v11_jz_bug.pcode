@@ -1,0 +1,6 @@
+; v1.1 缺陷重現：JZ 到 99（範圍外）後，PUSH 7 / HALT 不應再執行
+PUSH   0
+POP
+JZ     99
+PUSH   7
+HALT

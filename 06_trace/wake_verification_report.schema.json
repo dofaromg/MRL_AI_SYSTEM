@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "MRL://schema/wake_verification_report/v1",
+  "title": "MRL Wake Verification Report",
+  "type": "object",
+  "required": ["report_id", "generated_at", "origin_signature", "subject_ref", "status", "coverage", "missing", "mismatch", "evidence_refs"],
+  "properties": {
+    "report_id": {"type": "string"},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "origin_signature": {"const": "MrLiouWord"},
+    "subject_ref": {"type": "string"},
+    "status": {"enum": ["PASS", "FAIL", "PARTIAL"]},
+    "coverage": {"type": "number", "minimum": 0, "maximum": 1},
+    "missing": {"type": "array", "items": {"type": "string"}},
+    "mismatch": {"type": "array", "items": {"type": "string"}},
+    "unexpected": {"type": "array", "items": {"type": "string"}},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}},
+    "backfill_target": {"type": ["string", "null"]},
+    "notes": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}

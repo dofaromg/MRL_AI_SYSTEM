@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "MRL://schema/bridge_reference/v1",
+  "title": "MRL Bridge Reference",
+  "type": "object",
+  "required": ["bridge_id", "source_ref", "target_ref", "direction", "translation_state", "evidence_refs"],
+  "properties": {
+    "bridge_id": {"type": "string", "minLength": 1},
+    "source_ref": {"type": "string", "minLength": 1},
+    "target_ref": {"type": "string", "minLength": 1},
+    "direction": {"enum": ["FORWARD", "REVERSE", "BIDIRECTIONAL"]},
+    "translation_state": {"enum": ["DEFINED", "IMPLEMENTED", "WIRED", "TESTED", "TRACED", "RESTORABLE", "UNRESOLVED"]},
+    "forward_transform": {"type": ["string", "null"]},
+    "inverse_transform": {"type": ["string", "null"]},
+    "reversible": {"type": "boolean"},
+    "version": {"type": ["string", "null"]},
+    "content_hash": {"type": ["string", "null"]},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

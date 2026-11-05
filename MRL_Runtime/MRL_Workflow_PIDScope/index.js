@@ -3,7 +3,7 @@
 // origin_signature=MrLiouWord
 //
 // Layer B (Node orchestration ownership). 接 DB adapter（本地 acceptance / 正式 MRL_BaseWorld_DB_v1）。
-// 提供：PID ownership、workflow registry、structure field（歷史名 scope graph）、process lineage、scope isolation、
+// 提供：PID ownership、workflow registry、structure field、process lineage、scope isolation、
 //       recovery（checkpoint/restore）、persistent-loop orchestration。
 
 const { makeAdapter, TABLES } = require("./db_adapter");
@@ -29,8 +29,7 @@ function createPIDScopeLayer(opts) {
     origin_signature: "MrLiouWord",
     runtime_layer: "MRL_Mother_Runtime",
     db, core, registry,
-    structureField,          // canonical (v2)
-    graph: structureField,   // 歷史相容 alias 屬性，不作 canonical 主體
+    structureField,
     lineage, isolation, recovery, orchestrator,
     SCOPES, TABLES,
   };

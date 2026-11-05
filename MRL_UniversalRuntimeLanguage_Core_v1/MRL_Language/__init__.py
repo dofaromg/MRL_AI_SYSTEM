@@ -15,7 +15,6 @@ from . import (
     MRL_MrLiouIR_Compiler,
     MRL_ParticleIR_Engine,
     MRL_PerceptionKernel,
-    MRL_TokenPredictor,
     MRL_UniversalParser_Core,
 )
 
@@ -32,7 +31,6 @@ __all__ = [
     "MRL_MrLiouIR_Compiler",
     "MRL_ParticleIR_Engine",
     "MRL_PerceptionKernel",
-    "MRL_TokenPredictor",
     "MRL_MrLiouIR",
     "MRL_ParticleIR",
     # compatibility alias

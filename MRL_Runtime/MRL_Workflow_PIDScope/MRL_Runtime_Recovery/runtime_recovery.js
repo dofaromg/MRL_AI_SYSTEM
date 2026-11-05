@@ -10,8 +10,7 @@ class RuntimeRecovery {
       type: "checkpoint",
       checkpoint_id: "cp_" + Date.now() + "_" + Math.floor(Math.random() * 1e6),
       label: label || null,
-      structureField: this.sf.snapshot(), // canonical (v2)
-      graph: this.sf.snapshot(),          // 歷史相容 alias
+      structureField: this.sf.snapshot(),
       ts: Date.now(),
     };
     this.db.insert("runtime_recovery_chain", cp);
@@ -22,7 +21,7 @@ class RuntimeRecovery {
     const cp = this.db.find("runtime_recovery_chain",
       (r) => r.type === "checkpoint" && r.checkpoint_id === checkpoint_id)[0];
     if (!cp) throw new Error("no checkpoint: " + checkpoint_id);
-    this.sf.restore(cp.structureField || cp.graph); // 相容舊格式 cp.graph
+    this.sf.restore(cp.structureField);
     return cp;
   }
 

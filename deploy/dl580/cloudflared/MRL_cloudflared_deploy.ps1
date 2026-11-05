@@ -1,16 +1,18 @@
-# MRL_DL580_Cloudflared_Deploy_v3 — bridge.mrliouword.com Cloudflare Tunnel 部署入口 (Windows / PowerShell, D: 路徑版)
+# MRL_DL580_Cloudflared_Deploy_v2 — bridge.mrliouhan.ai Cloudflare Tunnel 部署入口 (Windows / PowerShell, D: 路徑版)
 # origin_signature=MrLiouWord
 # 權位定位：Cloudflare Tunnel 為「接線 / Adapter」層（對外橋接通道），非 MRL 母體本體。
-#           DL580 為母體自運行節點；bridge.mrliouword.com 僅為對外入口 hostname。
-# v3.1.0 變更：hostname 由 bridge.mrliouhan.ai → bridge.mrliouword.com
-# 部署後須在 Cloudflare Worker 設環境變數：MRL_DL580_ORIGIN=https://bridge.mrliouword.com
+#           DL580 為母體自運行節點；bridge.mrliouhan.ai 僅為對外入口 hostname。
 # Batch 076 路徑改寫：因 C: 槽滿載，cloudflared 主目錄改置於 D:\cloudflared。
 param(
   [string]$CloudflaredHome = "D:\cloudflared",
   [string]$TunnelName      = "mrl-dl580-tunnel",
-  [string]$Hostname        = "bridge.mrliouword.com",
+  [string]$Hostname        = "mrliouword.com",
 
-  [int]$MrlPort            = $(if ($env:MRL_PORT) { [int]$env:MRL_PORT } else { 8790 })
+  [int]$MrlPort            = $(if ($env:MRL_PORT) { [int]$env:MRL_PORT } else { 8790 }),
+  # 修補 2026-10-03：DL580 已有運行中的 Tunnel（mrl-bridge 632dfad4，服務 MRL_Tunnel，
+  # config 於 C:\Users\Administrator\.cloudflared\config.yml）。本腳本會改寫 config.yml、
+  # 對 hostname 執行 route dns、安裝 cloudflared 服務；偵測到既有 Tunnel 時預設中止。
+  [switch]$AllowExistingTunnel
 )
 
 $ErrorActionPreference = "Stop"
@@ -24,6 +26,24 @@ Write-Host "origin_signature=$OriginSignature"
 Write-Host "mode=權位區分模式 (Cloudflare Tunnel = 接線/Adapter，非母體)"
 Write-Host "CLOUDFLARED_HOME=$CloudflaredHome"
 Write-Host "hostname=$Hostname -> http://localhost:$MrlPort"
+
+
+# ── 既有 Tunnel 保護（修補 2026-10-03，Additive）──────────────────────────────
+$existingSignals = @()
+foreach ($svcName in @("MRL_Tunnel", "cloudflared")) {
+  if (Get-Service -Name $svcName -ErrorAction SilentlyContinue) { $existingSignals += "service:$svcName" }
+}
+foreach ($cfg in @("C:\Users\Administrator\.cloudflared\config.yml", (Join-Path $CloudflaredHome "config.yml"))) {
+  if (Test-Path $cfg) { $existingSignals += "config:$cfg" }
+}
+if (Get-NetTCPConnection -State Listen -LocalPort $MrlPort -ErrorAction SilentlyContinue) { $existingSignals += "port_in_use:$MrlPort" }
+if ($existingSignals.Count -gt 0 -and -not $AllowExistingTunnel) {
+  Write-Host "ABORT：偵測到既有 Tunnel／設定／埠占用，未做任何變更：" -ForegroundColor Yellow
+  $existingSignals | ForEach-Object { Write-Host "  - $_" }
+  Write-Host "既有 DNS／路由一律保留。要在既有 Tunnel 加 hostname，請手動在現有 config.yml 的 ingress 新增一條（catch-all 之前），再重啟 MRL_Tunnel。"
+  Write-Host "確定要另建新 Tunnel 才加 -AllowExistingTunnel。"
+  exit 2
+}
 
 # 步驟一：建立 D: 目錄並設定 cloudflared 主目錄環境變數（避免預設寫入 C:\Users\）
 New-Item -ItemType Directory -Force -Path $CloudflaredHome | Out-Null

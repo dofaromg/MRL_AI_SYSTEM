@@ -7,7 +7,9 @@ set -euo pipefail
 # repo 根目錄（deploy/dl580 的上兩層）
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MRL_HOME="${MRL_HOME:-$(cd "${SCRIPT_DIR}/../.." && pwd)}"
-MRL_PORT="${MRL_PORT:-8790}"
+# canonical base does not start Platform; an explicit runtime port supports a separately started Platform.
+MRL_PORT="${MRL_RUNTIME_PORT:-${MRL_PORT:-8790}}"
+export MRL_PORT
 ORIGIN_SIGNATURE="MrLiouWord"
 
 cd "${MRL_HOME}"
@@ -31,28 +33,6 @@ fi
 # 3. Bootstrap
 npm run MRL_boot
 
-# 4. MCP server 對外閘口就緒(rl_13 出口即入口:DL580 母體經 MCP 對外)
-#    MCP 為 stdio 協議,由 MCP 客戶端 spawn 本端點;此處寫出端點供客戶端配置。
-if [ -f "${MRL_HOME}/09_workflow/MRL_MCP_Server_v1.py" ]; then
-  echo "MCP server ready: python3 ${MRL_HOME}/09_workflow/MRL_MCP_Server_v1.py"
-  echo "python3 ${MRL_HOME}/09_workflow/MRL_MCP_Server_v1.py" > "${MRL_HOME}/.mrl_mcp_endpoint"
-fi
-
-# 5. 啟動平台 HTTP 服務(母體自主 native /api/chat,對外營運)
-if [ -f "${MRL_HOME}/MRL_Platform_Server.py" ]; then
-  echo "starting MRL Platform Server on :${MRL_PORT} (母體自主 native)..."
-  MRL_PORT="${MRL_PORT}" nohup python3 "${MRL_HOME}/MRL_Platform_Server.py" > "${MRL_HOME}/MRL_platform.log" 2>&1 &
-  echo "  Platform PID=$! (log: MRL_platform.log)"
-  sleep 2
-  curl -s "http://127.0.0.1:${MRL_PORT}/health" 2>/dev/null && echo " [DL580] platform health OK" || echo " [DL580] platform starting..."
-fi
-
-# 6. 啟動 Runtime（母體 Node 節點,前景常駐）
-#    Platform 已佔 MRL_PORT 時,Runtime 改用 MRL_RUNTIME_PORT(預設 MRL_PORT+1),避免 EADDRINUSE。
-if [ -f "${MRL_HOME}/MRL_Platform_Server.py" ]; then
-  MRL_RUNTIME_PORT="${MRL_RUNTIME_PORT:-$((MRL_PORT + 1))}"
-else
-  MRL_RUNTIME_PORT="${MRL_PORT}"
-fi
-echo "starting MRL Runtime on port ${MRL_RUNTIME_PORT}..."
-MRL_PORT="${MRL_RUNTIME_PORT}" exec node MRL_RuntimeServer.js
+# 4. 啟動 Runtime（母體自行運行）
+echo "starting MRL Runtime on port ${MRL_PORT}..."
+exec node MRL_RuntimeServer.js

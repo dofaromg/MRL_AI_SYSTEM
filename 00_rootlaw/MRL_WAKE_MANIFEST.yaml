@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "manifest_id": "MRL-WAKE-MANIFEST-v1",
+  "origin_signature": "MrLiouWord",
+  "record_mode": "additive_only",
+  "wake_sequence": [
+    "Top Index",
+    "Governance/Rights",
+    "Origin/Provenance",
+    "World/Domain/State",
+    "Task",
+    "Translation/Gate",
+    "Verify",
+    "Backfill"
+  ],
+  "canonical_pointer": "00_rootlaw/canonical_pointer.yaml",
+  "required_sources": [
+    {"kind":"rootlaw","ref":"00_rootlaw/rootlaw.yaml","required":true},
+    {"kind":"memory_merkle","ref":"03_memory/merkle/memory_chain.py","required":true},
+    {"kind":"runtime","ref":"04_runtime/flowcore_loop.py","required":true},
+    {"kind":"world","ref":"05_persona/world_module.py","required":true},
+    {"kind":"source_registry","ref":"08_sources/sources.manifest.yaml","required":true}
+  ],
+  "required_invariants": [
+    "origin_signature_preserved",
+    "projection_not_origin",
+    "evidence_first",
+    "no_silent_rewrite",
+    "additive_correction",
+    "reversible_return_path"
+  ],
+  "runtime_contract": {
+    "loader": "04_runtime/wake_loader.py",
+    "trace_output_default": "06_trace/traces/wake_trace.jsonl",
+    "fail_closed_on_missing_required_source": true,
+    "fail_closed_on_origin_mismatch": true
+  },
+  "backfill": {
+    "target": "world_model_state",
+    "mode": "append_only",
+    "preserve_previous_state": true
+  }
+}

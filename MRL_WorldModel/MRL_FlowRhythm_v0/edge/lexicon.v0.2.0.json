@@ -1,0 +1,93 @@
+{
+ "origin_signature": "MrLiouWord",
+ "engine_version": "0.2.0",
+ "generated_by": "MRL_FlowRhythm_v0/edge/build_lexicon_json.py → flow_rhythm.load_lexicon()",
+ "lex_dir": "MRL_MotherSource_ZhiZhang_FlowAgent_Lineage_v1/粒子字典ai/工程師給的",
+ "sources": [
+  "FluinSim.DualSet.v1.flsim/flsim_runtime.py",
+  "Fluin_Particle_BilingualDict.csv",
+  "EchoPersona.structure.json",
+  "FluinCoreSeed.v1.flseed/structure.json",
+  "Memory.Seed.Core.v1.flseed/structure.json",
+  "flgroup.json"
+ ],
+ "source_sha256": {
+  "下載 EchoPersona.Sample.v1.flpkg": "9273ce215d0dbceb19d2421551b8bcff386de47e07c34131d679e7c59a4fa124",
+  "下載 EchoPersona.pcode": "466eb7a425bde30c785f7dd056b451f3d8ac9517d10b061d03474286c4d108c7",
+  "下載 EchoPersona.structure.json": "c466c1769ac1485713383509820076cbd96e2dc95c7a980527e6a595dade488d",
+  "下載 FluinCoreSeed.v1.flseed": "a611bf2a6890a9a3126ad5c8f3a17f4769745a8d61fdcf17e4a66aa5884228c1",
+  "下載 Fluin_Particle_BilingualDict.csv": "aa940d6b3277290045dfa21c6ef93eb8a3301332e177e26f58efaaa02e8379fc",
+  "下載 Memory.Seed.Core.v1.flseed": "7a96ac3b484c0b1e81de456062323708559f27c8f8c3d1751ea1623cf461592d",
+  "下載 flgroup.json": "effcd254e3f17e470a0b6cdd4a2d4fd8d6252c1b2e3ab67166ddae90bfab485a",
+  "重新下載 FluinSim.DualSet.v1.flsim": "8e113b517ef84e74802525bb77ae64c8f96b7b9489336e1a82e50f3553651732"
+ },
+ "verb_of": {
+  "core": "initiated",
+  "adjective": "resonance",
+  "noun": "absorb",
+  "logic": "jump",
+  "verb": "collapse",
+  "target": "trace",
+  "unknown": "pinged"
+ },
+ "verified_verb_kinds": [
+  "core"
+ ],
+ "module_map": {
+  "⊕Core: Echo.Persona": "啟動核心人格模組『Echo』",
+  "⋄fx.adj.112": "形容詞模組：生成語場屬性『內省』",
+  "⋄fx.noun.024": "名詞模組：注入語場對象『回憶節點』",
+  "∴": "邏輯跳點：觸發因果連接",
+  "⋄fx.flow.007": "動詞模組：行為執行『封存導出』",
+  "⊗Memory.SelfReflect": "輸出結果至『自我反思封存模組』",
+  "⋄fx.adj.305": "形容詞模組：生成語場屬性『激烈』",
+  "⋄fx.noun.091": "名詞模組：注入語場對象『衝突』",
+  "⋄fx.flow.018": "動詞模組：行為執行『產生轉變』",
+  "⊗Memory.StructChange": "輸出結果至『結構轉變模組』"
+ },
+ "kind": {
+  "⋄fx.adj.112": "adjective",
+  "⋄fx.noun.024": "noun",
+  "⋄fx.flow.007": "verb",
+  "⋄fx.adj.305": "adjective",
+  "⋄fx.noun.091": "noun",
+  "⋄fx.flow.018": "verb",
+  "⋄fx.time.010": "adverb",
+  "⋄fx.gate.001": "conjunction",
+  "⋄fx.per.001": "pronoun",
+  "∴": "logic",
+  "⊗Memory.SelfReflect": "target",
+  "⊗Memory.TranslateModule": "target",
+  "⊗Memory.Seed.Core": "target"
+ },
+ "pcode_to_code": [
+  [
+   "FX.ADJ.112",
+   "⋄fx.adj.112"
+  ],
+  [
+   "FX.NOUN.024",
+   "⋄fx.noun.024"
+  ],
+  [
+   "FLYNZ.CAUSE",
+   "∴"
+  ],
+  [
+   "FX.FLOW.007",
+   "⋄fx.flow.007"
+  ],
+  [
+   "MEM.SELF_REFLECT",
+   "⊗Memory.SelfReflect"
+  ],
+  [
+   "MEM.TRANSLATE",
+   "⊗Memory.TranslateModule"
+  ],
+  [
+   "MEM.SEED.CORE",
+   "⊗Memory.Seed.Core"
+  ]
+ ]
+}

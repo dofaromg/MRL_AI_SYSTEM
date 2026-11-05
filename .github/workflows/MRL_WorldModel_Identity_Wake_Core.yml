@@ -1,0 +1,48 @@
+name: MRL WorldModel Identity Wake Core
+
+on:
+  pull_request:
+    paths:
+      - '00_rootlaw/canonical_pointer.yaml'
+      - '00_rootlaw/MRL_WAKE_MANIFEST.yaml'
+      - '01_schema/**'
+      - '04_runtime/wake_loader.py'
+      - '06_trace/wake_*.schema.json'
+      - '.github/workflows/MRL_WorldModel_Identity_Wake_Core.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile wake loader
+        run: python -m py_compile 04_runtime/wake_loader.py
+
+      - name: Parse machine-readable contracts
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          files = [
+              Path('00_rootlaw/canonical_pointer.yaml'),
+              Path('00_rootlaw/MRL_WAKE_MANIFEST.yaml'),
+              Path('01_schema/origin_identity.schema.json'),
+              Path('01_schema/projection_identity.schema.json'),
+              Path('01_schema/source_reference.schema.json'),
+              Path('01_schema/bridge_reference.schema.json'),
+              Path('01_schema/wake_manifest.schema.json'),
+              Path('06_trace/wake_trace.schema.json'),
+              Path('06_trace/wake_verification_report.schema.json'),
+          ]
+          for path in files:
+              with path.open('r', encoding='utf-8') as f:
+                  obj = json.load(f)
+              if not isinstance(obj, dict):
+                  raise SystemExit(f'{path}: expected JSON object')
+              print(f'PASS {path}')
+          PY
+
+      - name: Verify World-Model wake closure
+        run: python 04_runtime/wake_loader.py --no-write-trace

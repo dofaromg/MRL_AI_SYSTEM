@@ -25,7 +25,7 @@ import json
 import pathlib
 from typing import Any, Dict, List, Optional
 
-from MRL_utils import ORIGIN_SIGNATURE
+ORIGIN_SIGNATURE = "MrLiouWord"
 _REPO = pathlib.Path(__file__).resolve().parent.parent
 _ARCHIVE = _REPO / "MRL_ParticleArchive"
 _MANIFEST = _ARCHIVE / "MRL_ParticleArchive_manifest.json"

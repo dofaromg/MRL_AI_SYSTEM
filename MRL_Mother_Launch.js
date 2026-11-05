@@ -7,17 +7,50 @@
 // 路由與 MRL_RuntimeServer.js 對齊，之後可慢慢更新擴充。
 
 const http = require("http");
-const manifest = require("./data/MRL_runtime_gateway_manifest.json");
-
-const {
-  convergence_view: MRL_CONVERGENCE_VIEW,
-  perception: MRL_PERCEPTION,
-  ...MRL_STATE_BASE
-} = manifest;
 
 const MRL_STATE = {
-  ...MRL_STATE_BASE,
-  launcher: "MRL_Mother_Launch (zero-dependency stdlib)"
+  origin_signature: "MrLiouWord",
+  system_name: "MRL_完整態母體運轉系統_v1",
+  sovereignty_mode: "權位區分模式",
+  status: "running",
+  launcher: "MRL_Mother_Launch (zero-dependency stdlib)",
+  canonical_language: "中文",
+  external_language_policy: "英文僅作 Adapter 對照",
+  attention_policy: "Attention/注意力為歷史層；MRL正式主體為感知力",
+  modules: {
+    MRL_World_Module: "completed_running",
+    MRL_平行世界模組: "completed_running",
+    MRL_AI: "completed_running",
+    MRL_AGI: "completed_running",
+    MRL_ASI: "completed_running",
+    MRL_World: "completed_running",
+    MRL_感知力核心: "active",
+    MRL_多世界同步: "active",
+    MRL_回放回復: "active",
+    MRL_主權層: "active"
+  }
+};
+
+// 唯讀收斂治理視圖：不啟動 daemon、不變更 runtime、不宣稱 pending 完成。
+const MRL_CONVERGENCE_VIEW = {
+  status: "SPEC_READY",
+  implementation: "READ_ONLY_API_ACTIVE",
+  source: "docs/MRL_Runtime_Civilization_Stack_Convergence_v1.md",
+  merge_order: ["#35", "#37", "#36", "EntryGateway", "Convergence"],
+  active: {
+    runtime_core: "LOCAL_ACCEPTANCE",
+    naming_alignment: "LOCAL_ACCEPTANCE",
+    pid_scope: "DECLARED_ACTIVE",
+    entry_gateway: "DECLARED_ACTIVE"
+  },
+  pending: {
+    persistent_loop_daemon: "PENDING",
+    replay_restore_runtime: "PENDING",
+    world_sync: "PENDING",
+    baseworld_db: "PENDING",
+    dl580_reboot_survival: "PENDING"
+  },
+  note: "Read-only convergence governance view. Does not start daemon, mutate runtime, or claim pending items complete."
 };
 
 function sendJSON(res, status, obj) {
@@ -53,6 +86,10 @@ function sendHTML(res, status, html) {
 function dashboardHTML() {
   return `<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="author" content="Mr.liou (Mrlious)">
+<meta name="canonical-authority" content="Mr.liou">
+<meta name="origin-signature" content="MrLiouWord">
+<meta property="og:site_name" content="Mrlious">
 <title>MRL 完整態母體運轉系統</title>
 <style>
 :root{color-scheme:dark}body{margin:0;font-family:system-ui,"Noto Sans TC",sans-serif;
@@ -75,6 +112,7 @@ pre{background:#0a0c0e;border:1px solid #1d2a22;border-radius:8px;padding:12px;o
 <div class="card"><h2>感知力核心</h2>
 <button onclick="perceive()">送出感知測試</button><pre id="perc">點上方按鈕</pre></div>
 </main>
+<footer style="max-width:880px;margin:0 auto;padding:10px 20px 28px;color:#5a7d5a;font-size:12px">canonical_authority: Mr.liou ｜ origin_signature: MrLiouWord ｜ 對外署名: Mrlious ｜ 執行／託管平台僅為承載載體，非來源權位</footer>
 <script>
 async function j(u,o){return (await fetch(u,o)).json()}
 (async()=>{
@@ -115,10 +153,11 @@ const server = http.createServer(async (req, res) => {
     const input = await readBody(req);
     return sendJSON(res, 200, {
       ok: true,
-      route: MRL_PERCEPTION.route,
+      route: "MRL_感知力核心",
       input,
-      flow: MRL_PERCEPTION.flow,
-      sovereignty: MRL_PERCEPTION.sovereignty
+      flow: ["世界狀態", "感知力場", "語境同步", "記憶拉取", "人格共振",
+             "運轉組裝", "世界投影", "回放", "回復", "驗證", "重新同步"],
+      sovereignty: "MRL 主體；外部僅 Adapter"
     });
   }
   return sendJSON(res, 404, { ok: false, error: "MRL_ROUTE_NOT_FOUND", path });

@@ -21,7 +21,6 @@ from MRL_UniversalRuntimeLanguage_Core_v1.MRL_Language import (
     MRL_MrLiouIR_Compiler,
     MRL_ParticleIR_Engine,
     MRL_PerceptionKernel,
-    MRL_TokenPredictor,
     MRL_UniversalParser_Core,
 )
 from MRL_UniversalRuntimeLanguage_Core_v1.MRL_Runtime import (
@@ -51,10 +50,8 @@ class MRL_DL580_Runtime:
         mrliouir = MRL_MrLiouIR_Compiler.compile_mrliouir(parse_result)
         stages.append("MrLiouIR")
 
-        # 4. Observe (Perception + Multi-Head Perception)
+        # 4. Observe (Perception)
         perception = MRL_PerceptionKernel.observe(mrliouir)
-        multi_perception = MRL_PerceptionKernel.MRL_MultiPerceptionField(mrliouir)
-        multi_field = multi_perception.full_field()
         stages.append("Observe")
 
         # 5. ParticleIR (可逆鏈 + 粒子對映 + roundtrip)
@@ -64,17 +61,7 @@ class MRL_DL580_Runtime:
         particle_map = MRL_ParticleIR_Engine.map_particles(mrliouir)
         stages.append("ParticleIR")
 
-        # 5b. TokenPredictor（N-gram + 多頭感知場加權）
-        token_predictor = MRL_TokenPredictor.MRL_TokenPredictor().fit(
-            texts=[source], mrliouir=mrliouir
-        )
-        # 取首個 word token 作為 context 示範預測
-        sample_tokens = [t for t in source.split() if t.strip()]
-        context_tok = sample_tokens[0] if sample_tokens else "<BOS>"
-        token_preds = token_predictor.predict_weighted(
-            context_tok, multi_field.get("field", {}), top_k=5
-        )
-        stages.append("TokenPredictor")
+        # 6. RuntimeStructureField
         structurefield = MRL_RuntimeStructureField.build(mrliouir, perception["observation_order"])
         stages.append("RuntimeStructureField")
 
@@ -110,16 +97,6 @@ class MRL_DL580_Runtime:
             "parse": {"lang": parse_result["lang"], "unit_count": parse_result["unit_count"]},
             "mrliouir": {"node_count": mrliouir["node_count"], "mrliouir_hash": mrliouir["mrliouir_hash"]},
             "perception": perception["field_summary"],
-            "multi_perception": {
-                "head_count": multi_field.get("head_count"),
-                "node_count": multi_field.get("node_count"),
-                "top_node": multi_field.get("top_node"),
-            },
-            "token_prediction": {
-                "context_token": context_tok,
-                "top_k": token_preds,
-                "vocab_size": token_predictor.model._vocab_size,
-            },
             "particles": {"trace_checksum": trace.get("bundle_checksum"), "map": particle_map},
             "roundtrip": roundtrip,
             "structurefield": structurefield,

@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "origin_signature": "MrLiouWord",
+  "record_mode": "additive_only",
+  "canonical": {
+    "repository": "dofaromg/MRL_AI_SYSTEM",
+    "source_ref": "MRL_AI_SYSTEM/memory-system-rules-prep",
+    "construction_ref": "MRL_AI_SYSTEM/worldmodel-identity-wake-core-v1",
+    "notion_restore_anchor": "3bf8eeee-c5b5-8172-9984-f3bb1608522b",
+    "world_model_record": "3bf8eeee-c5b5-8172-9984-f3bb1608522b"
+  },
+  "mirrors": [
+    {
+      "platform": "notion",
+      "id": "3d28eeee-c5b5-8004-845d-da3e995d2788",
+      "relation": "MIRROR_CANDIDATE",
+      "policy": "NO_DELETE"
+    }
+  ],
+  "invariants": [
+    "World != Platform",
+    "Platform != Identity",
+    "Projection != Origin",
+    "No silent rewrite",
+    "Corrections are additive"
+  ]
+}

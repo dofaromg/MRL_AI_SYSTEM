@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "MRL://schema/wake_manifest/v1",
+  "title": "MRL Wake Manifest",
+  "type": "object",
+  "required": ["schema_version", "manifest_id", "origin_signature", "wake_sequence", "canonical_pointer", "required_sources", "required_invariants", "runtime_contract", "backfill"],
+  "properties": {
+    "schema_version": {"type": "string"},
+    "manifest_id": {"type": "string"},
+    "origin_signature": {"const": "MrLiouWord"},
+    "record_mode": {"const": "additive_only"},
+    "wake_sequence": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "canonical_pointer": {"type": "string", "minLength": 1},
+    "required_sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "ref", "required"],
+        "properties": {
+          "kind": {"type": "string"},
+          "ref": {"type": "string"},
+          "required": {"type": "boolean"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "required_invariants": {"type": "array", "items": {"type": "string"}},
+    "runtime_contract": {
+      "type": "object",
+      "required": ["loader", "trace_output_default", "fail_closed_on_missing_required_source", "fail_closed_on_origin_mismatch"],
+      "properties": {
+        "loader": {"type": "string"},
+        "trace_output_default": {"type": "string"},
+        "fail_closed_on_missing_required_source": {"type": "boolean"},
+        "fail_closed_on_origin_mismatch": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "backfill": {
+      "type": "object",
+      "required": ["target", "mode", "preserve_previous_state"],
+      "properties": {
+        "target": {"type": "string"},
+        "mode": {"const": "append_only"},
+        "preserve_previous_state": {"const": true}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

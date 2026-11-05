@@ -424,10 +424,7 @@ class LLMGateway:
         )
 
     def is_mock_model(self, model: str) -> bool:
-        try:
-            return isinstance(self.adapter_for(model), MockAdapter)
-        except KeyError:
-            return False
+        return model in self._adapters and isinstance(self._adapters[model], MockAdapter)
 
     def complete(self, request: LLMRequest) -> LLMResponse:
         """Route *request* to the appropriate adapter and return the response."""
@@ -436,6 +433,26 @@ class LLMGateway:
 
     def list_adapters(self) -> List[str]:
         return sorted(self._adapters.keys())
+
+    def status(self) -> Dict[str, Any]:
+        """
+        Return a status dict describing the registered adapters.
+
+        Returns
+        -------
+        {
+          "registered_adapters": list[str],
+          "default_adapter":     str,        # "mock" if nothing else registered
+          "origin_signature":    "MrLiouWord",
+        }
+        """
+        adapters = self.list_adapters()
+        default = adapters[0] if adapters else "none"
+        return {
+            "registered_adapters": adapters,
+            "default_adapter":     default,
+            "origin_signature":    ORIGIN_SIGNATURE,
+        }
 
 
 # ─── CLI ─────────────────────────────────────────────────────────────────────

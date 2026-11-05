@@ -1,0 +1,25 @@
+; 1+2+…+10：驗證 JZ/JMP 迴圈、記憶體、SPREAD 1（= 把 ACC 推入堆疊）
+; origin_signature: MrLiouWord
+STORE  n, 10
+STORE  s, 0
+top:
+LOAD   n
+JZ     end
+LOAD   s
+SPREAD 1
+LOAD   n
+SPREAD 1
+MERGE  2              ; s + n
+POP
+STORE  s
+PUSH   1
+LOAD   n
+SPREAD 1
+DELTA                 ; n - 1
+STORE  n
+POP
+POP
+JMP    top
+end:
+LOAD   s
+HALT

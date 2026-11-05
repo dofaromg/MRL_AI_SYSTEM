@@ -62,7 +62,7 @@ import threading
 import time
 from typing import Any, Callable, Dict, Hashable, Optional, Tuple, TypeVar
 
-from MRL_utils import ORIGIN_SIGNATURE
+ORIGIN_SIGNATURE = "MrLiouWord"
 PRODUCT_NAME = "MRL_AI_SYSTEM"
 CACHE_VERSION = "1.0"
 

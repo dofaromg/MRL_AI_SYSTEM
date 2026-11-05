@@ -40,30 +40,6 @@ origin_signature = `MrLiouWord`
 
 ---
 
-## v2 — Runtime Civilization Stack 核心 + 命名規範對齊
-
-分支：`MRL_Branch_StructureField_Rename_Alignment_v1`（自 PR #35 分出）
-
-### 已完成（實跑驗證）
-
-- 建立 `MRL_UniversalRuntimeLanguage_Core_v1` 可運行核心管線（acceptance 6/6 PASS）。
-- 套用 v2 正式命名規範：`MetaIR → MrLiouIR`（MrLiou 中介語義層）、`Graph → StructureField`（結構場）。
-- `MetaIR / Graph / Attention` 降為歷史名稱 / Adapter / alias，主線 canonical 不再使用。
-- 舊名以 alias shim 模組向後兼容（`MRL_MetaIR_Compiler`、`MRL_RuntimeGraph_Builder`）。
-- 視覺化更名：`Graph Visualization → MRL_StructureField_Visualization`。
-
-### 待驗證 / 不得宣稱完成
-
-- API `/api/mrl/mrliouir/*`、`/api/{runtime,world}/structurefield` 與 DB `*StructureField_Node/Relation`：
-  目前無對應程式，僅命名定錨，不得宣稱已實作。
-- DL580 實機 acceptance、live BaseWorld DB 連線：未驗證。
-
-### 下一步
-
-- `MRL_PersistentLoop_Daemon_v1`（規格已備，待複查後實作）。
-
----
-
 ## v4 — RuntimeParticle Compression + StructureField 硬正名
 
 分支：`MRL_Branch_RuntimeParticle_Compression_v4`
@@ -102,50 +78,38 @@ origin_signature = `MrLiouWord`
 
 ---
 
-## audit — Runtime Canon 收斂審計（待驗證收斂紀錄）
+## v5 — iPhone 本地 Runtime 與內外部節點角色回填
 
-分支：`MRL_Branch_Runtime_Convergence_Audit_v1`（base main `17248be`）
+日期：2026-07-28
 
-### 已完成（審計，非升格）
+### 問題來源
 
-- 產出 `docs/MRL_Runtime_Canonical_Report_v1.md`：Canon / Conflict / Mirror / Proof / Restore Chain。
-- 登錄 9 個 runtime 候選（A 起）以 reference + sha256，**未刪除、未 bulk-copy、未新增第四套 Runtime**。
-- 命名違規（C/D/F 之 attention/graph/metair）標 **待正名**，非刪除理由。
+- 先前把 iPhone 誤判成單純外部客戶端。
+- 把裝置中的 Server Configuration、`oauth-callback`、Files app 與本地服務入口直接解讀為遠端 SSH 主機設定。
+- 因此把 DL580、GitHub 與 Cloudflare 的角色向內部主控方向錯置。
 
-### 待驗證（不得寫成已升格）
+### 已回填
 
-- 層主體選定（Language/IR core：Py #37 vs JS v1.2.0）。
-- Restore Chain 統一物件（FlowCore v1.1.0 revert_to_merkle_root 為基準）。
-- BaseWorld：27-table 為**外部審計支持／本 repo 待驗證**；`d1_schema.sql` 僅 LAW-0/LAW-2 concrete piece，非全量驗收。
+- `README.md`
+  - 加入 iPhone Local Runtime / Local Server / Control Plane。
+  - 明確區分 DL580、Mac mini、GitHub、Cloudflare 的節點角色。
+- `docs/MRL_母體定義檔_v1.md`
+  - 新增內部執行節點層。
+  - 新增 iPhone、DL580、Mac mini 與外部 Adapter 邊界。
+- `docs/MRL_iPhone本地Runtime_內外部節點回填_v1.md`
+  - 建立完整角色修正、設定判讀規則、工程影響面與後續 canonical 目錄。
 
-### 不回填
+### 正式裁定
 
-- 任何 Runtime「主體已升格」之宣稱（未裁示前）。
+```text
+iPhone = Local Runtime + Local Server + Control Plane + User Environment
+DL580 = Mother Runtime + Compute + Persistence
+Mac mini = Relay + Bridge + Desktop Runtime
+GitHub = Engineering Mirror + Version Channel
+Cloudflare = Public Edge + Tunnel + Protection Adapter
+```
 
----
+### 後續掃描範圍
 
-## 實機驗收 — DL580 本地 MCP Filesystem Server 連線（2026-07-05）
-
-分支：`copilot/` 當前工作分支（狀態回填，Additive-Only）
-
-### 已完成（實機，使用者提供之 DL580 本地日誌）
-
-- DL580 本地 MCP（Model Context Protocol）Filesystem server 啟動：PASS（實機 — 2026-07-05）
-  - `Using built-in Node.js for MCP server: Filesystem` → `Server started and connected successfully`
-- MCP 握手：PASS（`initialize` id=0 → result；`notifications/initialized`）
-- 工具列舉：PASS（`tools/list` id=1 → result）
-- 正常關閉：PASS（`intentional shutdown`，非 crash）
-- 兩次連線週期（12:11 / 12:19 UTC）均完整成功，無錯誤訊息。
-
-### 待驗證 / 不得宣稱完成
-
-- 本驗收僅涵蓋 MCP Filesystem 基礎連線握手，**不代表**：
-  - Ollama / 真模型已存在（`OLLAMA_HOST` 實機驗收仍 pending）
-  - Blender `bpy` runtime 已跑通（實機驗收仍 pending）
-  - DL580 全平台「已上線」（host 全量驗收仍 pending）
-- MCP client 端身分（本地客戶端種類）未於日誌中確認。
-
-### 不回填
-
-- 「DL580 已上線」之宣稱
-- 任何超出 MCP Filesystem 連線範圍的完成度宣稱
+- 搜尋並修正 `mobile client`、`thin client`、`phone remote control`、`DL580 only entry`、`GitHub control plane` 等錯位語意。
+- 將既有手機端、瀏覽器端、Mrliouagi、Files bridge、callback 與 sensor input 資產對位至 `MRL_Nodes/iPhone/`，不另建平行系統。

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "MRL://schema/source_reference/v1",
+  "title": "MRL Source Reference",
+  "type": "object",
+  "required": ["source_id", "source_type", "location", "observed_at", "authority_state"],
+  "properties": {
+    "source_id": {"type": "string", "minLength": 1},
+    "source_type": {"enum": ["repository", "file", "document", "database", "runtime", "api", "dataset", "model", "artifact", "archive", "external_material"]},
+    "location": {"type": "string", "minLength": 1},
+    "external_name": {"type": ["string", "null"]},
+    "version": {"type": ["string", "null"]},
+    "content_hash": {"type": ["string", "null"]},
+    "license_ref": {"type": ["string", "null"]},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "authority_state": {"enum": ["CANONICAL", "EVIDENCE", "CANDIDATE", "EXTERNAL_MATERIAL", "UNRESOLVED"]},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

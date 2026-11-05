@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "MRL://schema/origin_identity/v1",
+  "title": "MRL Origin Identity",
+  "type": "object",
+  "required": ["origin_id", "origin_signature", "canonical_name", "created_at", "evidence_refs"],
+  "properties": {
+    "origin_id": {"type": "string", "minLength": 1},
+    "origin_signature": {"const": "MrLiouWord"},
+    "canonical_name": {"type": "string", "minLength": 1},
+    "aliases": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "created_at": {"type": "string", "format": "date-time"},
+    "source_ref": {"type": ["string", "null"]},
+    "version": {"type": "string"},
+    "content_hash": {"type": ["string", "null"]},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}},
+    "state": {"enum": ["ACTIVE", "HISTORICAL", "DORMANT", "ARCHIVED", "UNRESOLVED"]}
+  },
+  "additionalProperties": false
+}

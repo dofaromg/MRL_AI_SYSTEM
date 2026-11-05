@@ -1,0 +1,204 @@
+name: MRL recovery operations source gate
+
+on:
+  pull_request:
+    paths:
+      - "MRL_Recovery_Operations/20261010_R02/**"
+      - ".github/workflows/MRL_recovery_operations.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  operations-source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - name: Checkout reviewed source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.12
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Verify operations manifest and static syntax
+        run: python -B MRL_Recovery_Operations/20261010_R02/verify_operations_manifest.py
+      - name: Verify watchdog v3 with 29 memory-only cases
+        shell: bash
+        run: |
+          python -B - <<'PY'
+          import json
+          import subprocess
+          import sys
+
+          path = "MRL_Recovery_Operations/20261010_R02/MRL_active_runtime_watchdog_v3.py"
+          result = subprocess.run(
+              [sys.executable, "-B", path, "--self-test"],
+              check=True, capture_output=True, text=True, timeout=60)
+          receipt = json.loads(result.stdout)
+          checks = receipt.get("checks")
+          valid = (
+              receipt.get("schema") == "MRL_active_runtime_watchdog_v3"
+              and receipt.get("origin_signature") == "MrLiouWord"
+              and receipt.get("executed_where") == "MOCK_MEMORY_ONLY"
+              and type(receipt.get("passed")) is int and receipt["passed"] == 29
+              and type(receipt.get("total")) is int and receipt["total"] == 29
+              and isinstance(checks, list) and len(checks) == 29
+              and all(isinstance(c, dict) and c.get("pass") is True for c in checks)
+              and len({c.get("case") for c in checks}) == 29
+              and type(receipt.get("real_process_starts")) is int
+              and receipt["real_process_starts"] == 0
+              and receipt.get("dl580_runtime") == "NOT_ASSERTED"
+          )
+          if not valid:
+              raise SystemExit("WATCHDOG_SELF_TEST_RECEIPT_INVALID")
+          print(json.dumps(receipt, sort_keys=True))
+          PY
+      - name: Verify Qdrant service with 28 memory-only cases
+        shell: bash
+        run: |
+          python -B - <<'PY'
+          import json
+          import unittest
+
+          expected = 28
+          loader = unittest.TestLoader()
+          suite = loader.discover(
+              start_dir="MRL_Recovery_Operations/20261010_R02",
+              pattern="test_MRL_qdrant_local_service_v1.py")
+          loaded = suite.countTestCases()
+          if loader.errors or loaded != expected:
+              print(json.dumps({
+                  "schema": "MRL_qdrant_local_service_ci_v1",
+                  "origin_signature": "MrLiouWord",
+                  "status": "FAIL",
+                  "error": "QDRANT_TEST_DISCOVERY_COUNT_INVALID",
+                  "expected": expected, "loaded": loaded,
+                  "discovery_errors": len(loader.errors),
+                  "execution_scope": "CLOUD_FIXTURES_ONLY",
+                  "dl580_runtime": "NOT_ASSERTED",
+              }, sort_keys=True))
+              raise SystemExit(1)
+
+          result = unittest.TextTestRunner(verbosity=2).run(suite)
+          valid = (
+              result.testsRun == expected
+              and result.wasSuccessful()
+              and not result.skipped
+              and not result.expectedFailures
+              and not result.unexpectedSuccesses
+          )
+          print(json.dumps({
+              "schema": "MRL_qdrant_local_service_ci_v1",
+              "origin_signature": "MrLiouWord",
+              "status": "PASS" if valid else "FAIL",
+              "expected": expected, "loaded": loaded, "executed": result.testsRun,
+              "failures": len(result.failures), "errors": len(result.errors),
+              "skipped": len(result.skipped),
+              "expected_failures": len(result.expectedFailures),
+              "unexpected_successes": len(result.unexpectedSuccesses),
+              "execution_scope": "CLOUD_FIXTURES_ONLY",
+              "dl580_runtime": "NOT_ASSERTED",
+          }, sort_keys=True))
+          raise SystemExit(0 if valid else 1)
+          PY
+      - name: Verify durable Qdrant CRUD with 9 memory-only cases
+        shell: bash
+        run: |
+          python -B - <<'PY'
+          import json
+          import unittest
+
+          expected = 9
+          loader = unittest.TestLoader()
+          suite = loader.discover(
+              start_dir="MRL_Recovery_Operations/20261010_R02",
+              pattern="test_MRL_qdrant_durable_crud_v1.py")
+          loaded = suite.countTestCases()
+          if loader.errors or loaded != expected:
+              print(json.dumps({
+                  "schema": "MRL_qdrant_durable_crud_ci_v1",
+                  "origin_signature": "MrLiouWord",
+                  "status": "FAIL",
+                  "error": "QDRANT_DURABLE_CRUD_DISCOVERY_COUNT_INVALID",
+                  "expected": expected, "loaded": loaded,
+                  "discovery_errors": len(loader.errors),
+                  "execution_scope": "CLOUD_FIXTURES_ONLY",
+                  "dl580_runtime": "NOT_ASSERTED",
+              }, sort_keys=True))
+              raise SystemExit(1)
+
+          result = unittest.TextTestRunner(verbosity=2).run(suite)
+          valid = (
+              result.testsRun == expected
+              and result.wasSuccessful()
+              and not result.skipped
+              and not result.expectedFailures
+              and not result.unexpectedSuccesses
+          )
+          print(json.dumps({
+              "schema": "MRL_qdrant_durable_crud_ci_v1",
+              "origin_signature": "MrLiouWord",
+              "status": "PASS" if valid else "FAIL",
+              "expected": expected, "loaded": loaded, "executed": result.testsRun,
+              "failures": len(result.failures), "errors": len(result.errors),
+              "skipped": len(result.skipped),
+              "expected_failures": len(result.expectedFailures),
+              "unexpected_successes": len(result.unexpectedSuccesses),
+              "execution_scope": "CLOUD_FIXTURES_ONLY",
+              "dl580_runtime": "NOT_ASSERTED",
+          }, sort_keys=True))
+          raise SystemExit(0 if valid else 1)
+          PY
+      - name: Verify durable Qdrant CRUD v2 with 10 memory-only cases
+        shell: bash
+        run: |
+          python -B - <<'PY'
+          import json
+          import unittest
+
+          expected = 10
+          loader = unittest.TestLoader()
+          suite = loader.discover(
+              start_dir="MRL_Recovery_Operations/20261010_R02",
+              pattern="test_MRL_qdrant_durable_crud_v2.py")
+          loaded = suite.countTestCases()
+          if loader.errors or loaded != expected:
+              print(json.dumps({
+                  "schema": "MRL_qdrant_durable_crud_ci_v2",
+                  "origin_signature": "MrLiouWord",
+                  "status": "FAIL",
+                  "error": "QDRANT_DURABLE_CRUD_V2_DISCOVERY_COUNT_INVALID",
+                  "expected": expected, "loaded": loaded,
+                  "discovery_errors": len(loader.errors),
+                  "execution_scope": "CLOUD_FIXTURES_ONLY",
+                  "dl580_runtime": "NOT_ASSERTED",
+              }, sort_keys=True))
+              raise SystemExit(1)
+
+          result = unittest.TextTestRunner(verbosity=2).run(suite)
+          valid = (
+              result.testsRun == expected
+              and result.wasSuccessful()
+              and not result.skipped
+              and not result.expectedFailures
+              and not result.unexpectedSuccesses
+          )
+          print(json.dumps({
+              "schema": "MRL_qdrant_durable_crud_ci_v2",
+              "origin_signature": "MrLiouWord",
+              "status": "PASS" if valid else "FAIL",
+              "expected": expected, "loaded": loaded, "executed": result.testsRun,
+              "failures": len(result.failures), "errors": len(result.errors),
+              "skipped": len(result.skipped),
+              "expected_failures": len(result.expectedFailures),
+              "unexpected_successes": len(result.unexpectedSuccesses),
+              "execution_scope": "CLOUD_FIXTURES_ONLY",
+              "dl580_runtime": "NOT_ASSERTED",
+          }, sort_keys=True))
+          raise SystemExit(0 if valid else 1)
+          PY

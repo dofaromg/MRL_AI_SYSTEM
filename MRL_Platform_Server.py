@@ -15,34 +15,19 @@ import json
 import os
 import pathlib
 import sys
-import threading
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 ORIGIN_SIGNATURE = "MrLiouWord"
 PLATFORM_DOMAIN = os.environ.get("MRL_PLATFORM_DOMAIN", "mrliouword.com")
-# 零外部依賴法則:平台**不**預設指向任何外部模型供應商。真模型一律走母體自運行
-# DL580(OLLAMA / OpenAI 相容自架端點)。設了 MRL_MOTHER_GATEWAY_URL(指向你 DL580
-# 對外網址)才接;未設則 deny-by-default,誠實回「DL580 未連」,絕不偷用外部 cf。
 _REPO = pathlib.Path(__file__).resolve().parent
-_GATEWAY_MANIFEST = json.loads(
-    (_REPO / "data" / "MRL_runtime_gateway_manifest.json").read_text(encoding="utf-8")
-)
 for p in [_REPO / "09_workflow", str(_REPO)]:
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
-# MRL API 紀錄模組（母體 API 呼叫/遙測落地帳本）。載入失敗不得中斷平台。
-try:
-    from mrliouword import api_record as _api_record
-except Exception:  # noqa: BLE001
-    _api_record = None
-
 # 母體 crown（優雅降級：未就緒不致整站掛掉）
 _MA = None
 _MA_ERR = None
-_MCP = None
-_MCP_LOCK = threading.Lock()
 
 
 def _mother():
@@ -60,15 +45,6 @@ def _mother():
     return _MA
 
 
-def _mcp():
-    """惰性建立 MCP bridge（重用既有 stdio MCP server 核心）。呼叫方須持 _MCP_LOCK。"""
-    global _MCP
-    if _MCP is None:
-        from MRL_MCP_Server_v1 import MRL_MCPServer
-        _MCP = MRL_MCPServer()
-    return _MCP
-
-
 def _subsystem_summary(rep_subs):
     # status() 回布林、boot() 報告回 "ok"/"unavailable" 字串 —— 兩者皆計入。
     ok = sum(1 for v in rep_subs.values()
@@ -78,16 +54,26 @@ def _subsystem_summary(rep_subs):
 
 # ── API handlers（回傳 dict）─────────────────────────────────────────────────
 def api_state():
-    state = {
-        k: v for k, v in _GATEWAY_MANIFEST.items()
-        if k not in {"convergence_view", "perception"}
+    return {
+        "origin_signature": ORIGIN_SIGNATURE,
+        "system_name": "MRL_完整態母體運轉系統_v1",
+        "platform": PLATFORM_DOMAIN,
+        "sovereignty_mode": "權位區分模式",
+        "status": "running",
+        "attention_policy": "Attention 為歷史層；正式主體為感知力(Perception)",
     }
-    state["platform"] = PLATFORM_DOMAIN
-    return state
 
 
 def api_convergence():
-    return dict(_GATEWAY_MANIFEST["convergence_view"])
+    return {
+        "status": "SPEC_READY", "implementation": "READ_ONLY_API_ACTIVE",
+        "active": {"runtime_core": "LOCAL_ACCEPTANCE", "naming_alignment": "LOCAL_ACCEPTANCE",
+                   "pid_scope": "DECLARED_ACTIVE", "entry_gateway": "DECLARED_ACTIVE"},
+        "pending": {"persistent_loop_daemon": "PENDING", "replay_restore_runtime": "PENDING",
+                    "world_sync": "PENDING", "baseworld_db": "PENDING",
+                    "dl580_reboot_survival": "PENDING"},
+        "note": "唯讀治理視圖；不啟動 daemon、不宣稱 pending 完成。",
+    }
 
 
 def api_mother_status():
@@ -129,7 +115,6 @@ def api_chat(body):
     try:
         if hasattr(m, "chat"):
             out = m.chat(msg)
-            # chat() 以 {"error": ...} 回報失敗（無預設模型/閘道不可用/供應商失敗）——不可包成 ok:true
             if isinstance(out, dict) and out.get("error"):
                 return {"ok": False, "via": "MotherAssembly.chat", "reason": str(out["error"])}
             return {"ok": True, "via": "MotherAssembly.chat",
@@ -137,29 +122,9 @@ def api_chat(body):
     except Exception:  # noqa: BLE001
         pass
     return {"ok": True, "via": "perceive_flow", "input": msg,
-            "flow": _GATEWAY_MANIFEST["perception"]["flow"],
+            "flow": ["世界狀態", "感知力場", "語境同步", "記憶拉取", "人格共振",
+                     "運轉組裝", "世界投影", "回放", "回復", "驗證", "重新同步"],
             "note": "真模型未配置（待實機 OLLAMA_HOST/endpoint）；此為感知力流程路由。"}
-
-
-def api_mcp(body):
-    """HTTP bridge: 把 JSON-RPC request 轉發到既有 MCP 核心。"""
-    if not isinstance(body, dict):
-        return {"jsonrpc": "2.0", "id": None,
-                "error": {"code": -32600, "message": "invalid request: object required"}}
-    if not isinstance(body.get("method"), str) or not body["method"]:
-        return {"jsonrpc": "2.0", "id": body.get("id"),
-                "error": {"code": -32600, "message": "invalid request: method required"}}
-    try:
-        with _MCP_LOCK:
-            resp = _mcp().handle(body)
-    except Exception as exc:  # noqa: BLE001
-        return {"jsonrpc": "2.0", "id": body.get("id"),
-                "error": {"code": -32603, "message": f"{type(exc).__name__}: {exc}"}}
-    if resp is None:
-        return {"jsonrpc": "2.0", "id": body.get("id"),
-                "result": {"accepted": True, "notification": True,
-                           "origin_signature": ORIGIN_SIGNATURE}}
-    return resp
 
 
 def api_monitor():
@@ -177,7 +142,6 @@ API_DOCS = [
     ("GET", "/api/mother/status", "MotherAssembly 子系統健康"),
     ("POST", "/api/dl580/run", "跑 DL580 canonical 管線，回驗收 {source,lang}"),
     ("POST", "/api/chat", "人格對話 {message}"),
-    ("POST", "/api/mcp", "MCP JSON-RPC bridge {jsonrpc,id,method,params}"),
     ("GET", "/api/monitor", "即時監控聚合"),
     ("POST", "/mrl/perceive", "感知力核心流程 {..}"),
 ]
@@ -187,7 +151,12 @@ def page_html():
     rows = "".join(f'<tr><td><span class=m>{m}</span></td><td>{p}</td><td>{d}</td></tr>'
                    for m, p, d in API_DOCS)
     return """<!doctype html><html lang=zh-Hant><head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1"><title>MRL 母體平台 · """ + PLATFORM_DOMAIN + """</title>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=author content='Mr.liou (Mrlious)'>
+<meta name=canonical-authority content=Mr.liou>
+<meta name=origin-signature content=MrLiouWord>
+<meta property=og:site_name content=Mrlious>
+<title>MRL 母體平台 · """ + PLATFORM_DOMAIN + """</title>
 <style>:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;font-family:system-ui,"Noto Sans TC",sans-serif;background:#0b0d10;color:#e8eef2}
 header{padding:22px 20px;border-bottom:1px solid #1d2a22;background:linear-gradient(180deg,#0f1a12,#0b0d10)}
 h1{margin:0;font-size:20px;color:#8de08a}.sig{color:#5a7d5a;font-size:12px;margin-top:5px}
@@ -223,6 +192,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}td{padding:6px 8px;bord
 <textarea id=msg rows=3 placeholder=對母體說點什麼…></textarea>
 <button class=act onclick=chat()>送出</button><pre id=chatOut></pre></div></section>
 </main>
+<footer style="max-width:900px;margin:0 auto;padding:10px 18px 26px;color:#5a7d5a;font-size:12px">canonical_authority: Mr.liou ｜ origin_signature: MrLiouWord ｜ 對外署名: Mrlious ｜ 執行／託管平台僅為承載載體，非來源權位</footer>
 <script>
 const $=s=>document.querySelector(s);
 document.querySelectorAll('.nv').forEach(b=>b.onclick=()=>{
@@ -238,74 +208,6 @@ async function chat(){$('#chatOut').textContent='…';$('#chatOut').textContent=
 </script></body></html>"""
 
 
-def records_dashboard_html():
-    """MRL API 紀錄看板（自含單頁）。讀 /api/mrl/records/summary 與 /api/mrl/records。
-    origin_signature: MrLiouWord — 完成「記錄→儲存→查詢→呈現」迴圈。"""
-    return """<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MRL API 紀錄看板 · MrLiouWord</title>
-<style>
-:root{--bg:#0b0f0d;--panel:#0f1512;--line:#1d2a22;--ink:#e7f0ea;--dim:#8aa294;--acc:#27d07a;--warn:#ffcc66;--danger:#ff6b6b}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,"Noto Sans TC",Segoe UI,Roboto,sans-serif}
-header{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
-.dot{width:9px;height:9px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 3px rgba(39,208,122,.18)}
-h1{font-size:16px;margin:0}.tag{font-size:11px;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:2px 9px}
-.wrap{max-width:1100px;margin:0 auto;padding:18px 20px}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:16px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
-.card b{font-size:24px;display:block}.card span{color:var(--dim);font-size:12px}
-.row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px}
-.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;flex:1;min-width:260px}
-.box h3{margin:0 0 8px;font-size:13px;color:var(--dim)}
-table{width:100%;border-collapse:collapse;font-size:12.5px}
-td,th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:280px}
-th{color:var(--dim);font-weight:600}
-.s2{color:var(--acc)}.s4{color:var(--warn)}.s5{color:var(--danger)}
-button{background:var(--acc);color:#04150c;border:0;border-radius:9px;padding:8px 16px;font-weight:700;cursor:pointer}
-.mut{color:var(--dim);font-size:12px}
-</style></head><body>
-<header><span class="dot"></span><h1>MRL API 紀錄看板</h1>
-<span class="tag">origin_signature: MrLiouWord</span>
-<span class="tag" id="prod">MrliouAI</span>
-<span style="flex:1"></span><button onclick="load()">刷新</button></header>
-<div class="wrap">
-  <div class="cards" id="cards"></div>
-  <div class="row">
-    <div class="box"><h3>依路徑 / by_path</h3><table id="bypath"><tbody></tbody></table></div>
-    <div class="box"><h3>依狀態 / by_status</h3><table id="bystatus"><tbody></tbody></table>
-      <h3 style="margin-top:12px">依方法 / by_method</h3><table id="bymethod"><tbody></tbody></table></div>
-  </div>
-  <div class="box"><h3>最近紀錄 / recent (最多 100)</h3>
-    <table><thead><tr><th>時間 (UTC)</th><th>method</th><th>path</th><th>status</th><th>ms</th><th>trace_id</th></tr></thead>
-    <tbody id="rows"></tbody></table></div>
-  <p class="mut" id="err"></p>
-</div>
-<script>
-const $=s=>document.querySelector(s);
-function scls(s){s=String(s);return s[0]==='2'?'s2':s[0]==='4'?'s4':s[0]==='5'?'s5':''}
-function kvrows(obj){return Object.entries(obj||{}).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<tr><td>${k}</td><td style="text-align:right">${v}</td></tr>`).join('')||'<tr><td class="mut">—</td></tr>'}
-async function load(){
-  $('#err').textContent='';
-  try{
-    const s=await (await fetch('/api/mrl/records/summary')).json();
-    $('#cards').innerHTML=`
-      <div class="card"><b>${s.total??0}</b><span>總請求數 total</span></div>
-      <div class="card"><b>${Object.keys(s.by_path||{}).length}</b><span>不同路徑 paths</span></div>
-      <div class="card"><b>${(s.by_status&&s.by_status['200'])||0}</b><span>200 成功</span></div>
-      <div class="card"><b>${((s.by_status&&s.by_status['503'])||0)+((s.by_status&&s.by_status['500'])||0)}</b><span>5xx</span></div>`;
-    $('#bypath').innerHTML='<tbody>'+kvrows(s.by_path)+'</tbody>';
-    $('#bystatus').innerHTML='<tbody>'+kvrows(s.by_status)+'</tbody>';
-    $('#bymethod').innerHTML='<tbody>'+kvrows(s.by_method)+'</tbody>';
-    if(s.product)$('#prod').textContent=s.product;
-    const d=await (await fetch('/api/mrl/records?n=100')).json();
-    const recs=(d.records||[]).slice().reverse();
-    $('#rows').innerHTML=recs.map(r=>`<tr><td>${(r.ts||'').replace('T',' ').replace('Z','')}</td><td>${r.method||''}</td><td title="${r.path||''}">${r.path||''}</td><td class="${scls(r.status)}">${r.status??''}</td><td>${r.latency_ms??''}</td><td class="mut">${r.trace_id||''}</td></tr>`).join('')||'<tr><td class="mut" colspan=6>尚無紀錄</td></tr>';
-  }catch(e){$('#err').textContent='讀取失敗：'+e+'（此看板需 MRL_Platform_Server.py 提供 /api/mrl/records）';}
-}
-load();setInterval(load,10000);
-</script></body></html>"""
-
-
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *a):  # 安靜
         pass
@@ -317,27 +219,8 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("content-type", ctype)
         self.send_header("content-length", str(len(body)))
         self.send_header("access-control-allow-origin", "*")
-        self.send_header("x-mrl-origin-signature", ORIGIN_SIGNATURE)
         self.end_headers()
         self.wfile.write(body)
-        self._record(status, len(body))
-
-    def _record(self, status, nbytes):
-        """把本次 API 呼叫記入 MRL_ApiRecord 帳本；失敗絕不影響回應。"""
-        if _api_record is None:
-            return
-        try:
-            t0 = getattr(self, "_t0", None)
-            latency_ms = (time.time() - t0) * 1000.0 if t0 else None
-            _api_record.record(
-                method=self.command,
-                path=self.path.split("?")[0],
-                status=int(status),
-                latency_ms=latency_ms,
-                meta={"bytes": int(nbytes)},
-            )
-        except Exception:  # noqa: BLE001
-            pass
 
     def _body(self):
         n = int(self.headers.get("content-length", 0) or 0)
@@ -348,38 +231,10 @@ class Handler(BaseHTTPRequestHandler):
         except Exception:  # noqa: BLE001
             return {}
 
-    def _query(self):
-        from urllib.parse import parse_qs, urlparse
-        return {k: v[0] for k, v in parse_qs(urlparse(self.path).query).items()}
-
     def do_GET(self):
-        self._t0 = time.time()
         p = self.path.split("?")[0]
-        # MRL API 紀錄模組讀取端點
-        if p == "/api/mrl/records":
-            if _api_record is None:
-                return self._send(503, {"ok": False, "error": "MRL_APIRECORD_UNAVAILABLE"})
-            try:
-                n = int(self._query().get("n", "50"))
-            except ValueError:
-                n = 50
-            return self._send(200, {"ok": True, "origin_signature": ORIGIN_SIGNATURE,
-                                    "records": _api_record.tail(n)})
-        if p == "/api/mrl/records/summary":
-            if _api_record is None:
-                return self._send(503, {"ok": False, "error": "MRL_APIRECORD_UNAVAILABLE"})
-            return self._send(200, {"ok": True, **_api_record.summary()})
-        if p in ("/mrl/records", "/api/mrl/records/view"):
-            # MRL API 紀錄看板：讀 /api/mrl/records/summary 與 /api/mrl/records，可視化。
-            return self._send(200, records_dashboard_html(), "text/html; charset=utf-8")
         if p in ("/", "/index.html"):
-            # 產品級入口 (MRL_Product_Entry_UI · Issue #25/#26/#27/#28/#29)。
-            # 找不到產品 UI 才退回舊工程頁 page_html()（#27：正式入口不應是工程測試頁）。
-            app = _REPO / "src" / "mrl_app.html"
-            try:
-                return self._send(200, app.read_text(encoding="utf-8"), "text/html; charset=utf-8")
-            except Exception:  # noqa: BLE001
-                return self._send(200, page_html(), "text/html; charset=utf-8")
+            return self._send(200, page_html(), "text/html; charset=utf-8")
         if p == "/health":
             return self._send(200, {"ok": True, **api_state()})
         if p == "/mrl/state":
@@ -393,40 +248,15 @@ class Handler(BaseHTTPRequestHandler):
         return self._send(404, {"ok": False, "error": "MRL_ROUTE_NOT_FOUND", "path": p})
 
     def do_POST(self):
-        self._t0 = time.time()
         p = self.path.split("?")[0]
         b = self._body()
-        # 產品遙測端點：前端/Worker 上報 console/network/ui 事件 → 記入 MRL_ApiRecord 帳本。
-        if p == "/api/mrl/telemetry/logs":
-            def _len(x):
-                return len(x) if isinstance(x, list) else 0
-            counts = {
-                "consoleLogs": _len(b.get("consoleLogs")),
-                "networkRequests": _len(b.get("networkRequests")),
-                "uiEvents": _len(b.get("uiEvents")),
-            }
-            trace_id = None
-            if _api_record is not None:
-                rec = _api_record.record(
-                    method="POST", path=p, status=200, kind="telemetry",
-                    meta={"counts": counts, "referer": self.headers.get("referer")},
-                )
-                trace_id = rec.get("trace_id")
-            return self._send(200, {"success": True, "product": "MrliouAI",
-                                    "source_owner": "Mrliou", "origin_signature": ORIGIN_SIGNATURE,
-                                    "trace_id": trace_id, "counts": counts})
         if p == "/api/dl580/run":
             return self._send(200, api_dl580_run(b))
         if p == "/api/chat":
             return self._send(200, api_chat(b))
-        if p == "/api/mcp":
-            return self._send(200, api_mcp(b))
         if p == "/mrl/perceive":
-            return self._send(200, {"ok": True,
-                                    "route": _GATEWAY_MANIFEST["perception"]["route"],
-                                    "input": b,
-                                    "flow": _GATEWAY_MANIFEST["perception"]["flow"],
-                                    "sovereignty": _GATEWAY_MANIFEST["perception"]["sovereignty"]})
+            return self._send(200, {"ok": True, "route": "MRL_感知力核心", "input": b,
+                                    "sovereignty": "MRL 主體；外部僅 Adapter"})
         return self._send(404, {"ok": False, "error": "MRL_ROUTE_NOT_FOUND", "path": p})
 
 

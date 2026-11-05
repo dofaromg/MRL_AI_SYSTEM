@@ -14,6 +14,14 @@ $env:MRL_PLATFORM_DOMAIN = $MrlDomain
 
 Set-Location $MrlHome
 Write-Host "MRL_PLATFORM_START | origin_signature=MrLiouWord"
+# 埠衝突保護（修補 2026-10-03）：依 MRL_PORT_MAP（flow-tasks config, 2026-07-10），DL580 的 :8790 已由
+# MRL_RuntimeOS_v1.4.0 使用。埠被占用時中止，請以 $env:MRL_PORT 指定空埠（例：7960）再啟動。
+if (Get-NetTCPConnection -State Listen -LocalPort ([int]$MrlPort) -ErrorAction SilentlyContinue) {
+  $owner = (Get-NetTCPConnection -State Listen -LocalPort ([int]$MrlPort) | Select-Object -First 1).OwningProcess
+  $pname = (Get-Process -Id $owner -ErrorAction SilentlyContinue).ProcessName
+  Write-Host "ABORT：埠 $MrlPort 已被 PID $owner ($pname) 使用，未啟動平台。設 `$env:MRL_PORT 為空埠後重試。" -ForegroundColor Yellow
+  exit 2
+}
 Write-Host "node_role=DL580 母體自運行節點 | platform=$MrlDomain | MRL_HOME=$MrlHome | MRL_PORT=$MrlPort"
 
 # C: 容量不足 → 一律導向 D:\。所有暫存/落盤(含 DL580 PersistentLoop)改寫到 D:\MRL_runtime。

@@ -1,0 +1,511 @@
+{
+ "origin_signature": "MrLiouWord",
+ "kind": "MRL_Wake_Receipt",
+ "timestamp": "2026-09-28T17:12:45+08:00",
+ "host": "WIN-PBVUI7VK2A6",
+ "platform": "Windows-2019Server-10.0.17763-SP0",
+ "python": "3.12.2",
+ "environment": "實機（母體 DL580）",
+ "roots": [
+  "D:\\"
+ ],
+ "seed_selfcheck": {
+  "checked": 11,
+  "ok": 0,
+  "mismatch_or_missing": [
+   "00_WAKE_ME_FIRST.md",
+   "wake.ps1",
+   "01_Schema/MRL_Flowagent_Root_Origin_V0_2026-03-03.md",
+   "01_Schema/MRL_Session_Summary_20260927.md",
+   "01_Schema/MRL_System_Cognition_Record_v1_1.md",
+   "02_Principles/MRL_局部視角不得升格全局權威_喚醒規則_v1.md",
+   "02_Principles/MRL_語場本體優先_不得平台化_喚醒規則_v1.md",
+   "03_Memory/MRL_Evidence_Manifest_20260927.json",
+   "04_Reflex/make_seed_sums.py",
+   "04_Reflex/wake_verify.py",
+   "05_Agent/AGENT_PROTOCOL.md"
+  ]
+ },
+ "replay": {
+  "manifest_files": 116,
+  "matched": 60,
+  "pending_recovery": 56,
+  "files_scanned": 1533001,
+  "matched_list": [
+   {
+    "file": "AutoLoop.guardian.mirror.config.json",
+    "local_path": "D:\\APFS\\AutoLoop.guardian.mirror.config.json"
+   },
+   {
+    "file": "Claude_3_empathetic.mirror__.zip",
+    "local_path": "D:\\Claude 3 empathetic.mirror  .zip"
+   },
+   {
+    "file": "EchoPersona_TranslationModule.flpkg.zip",
+    "local_path": "D:\\EchoPersona_TranslationModule.flpkg (2).zip"
+   },
+   {
+    "file": "F_____________2_3008eeeec5b58070a8abd2ddc4f89345.md",
+    "local_path": "D:\\F++語言的立體模型檢閱器設計 (3) 3008eeeec5b58070a8abd2ddc4f89345.md"
+   },
+   {
+    "file": "FirebaseUI-Android-master.zip",
+    "local_path": "D:\\FirebaseUI-Android-master.zip"
+   },
+   {
+    "file": "FlowAgent.3D.Viewer.Core.v1.fl3dpkg.zip",
+    "local_path": "D:\\FlowAgent.3D.Viewer.Core.v1.fl3dpkg.zip"
+   },
+   {
+    "file": "FlowAgent_Decompressed_Files.zip",
+    "local_path": "D:\\123 1(2).zip"
+   },
+   {
+    "file": "FlowAgent________.pdf",
+    "local_path": "D:\\FlowAgent_專利技術說明書.pdf"
+   },
+   {
+    "file": "FlowIOMap_v2k7.txt",
+    "local_path": "D:\\d\\mrl\\MRL_GenesisLanguage_System_CPP_DL580_v2_1_RuntimeDaemon_API\\MRL_Source_Input\\MRL_FluinArchiveRoundTrip\\flowagent_mother_system_v20.1__EXTRACTED\\flowagent_final\\visual_maps\\FlowIOMap_v2k7.txt"
+   },
+   {
+    "file": "FlowOS_BootSequence_v2k7.txt",
+    "local_path": "D:\\d\\mrl\\MRL_GenesisLanguage_System_CPP_DL580_v2_1_RuntimeDaemon_API\\MRL_Source_Input\\MRL_FluinArchiveRoundTrip\\flowagent_mother_system_v20.1__EXTRACTED\\flowagent_final\\visual_maps\\FlowOS_BootSequence_v2k7.txt"
+   },
+   {
+    "file": "Flowagent_.pdf",
+    "local_path": "D:\\Flowagent .pdf"
+   },
+   {
+    "file": "MRLIOU_zero.zip",
+    "local_path": "D:\\MrlToolchain\\🌐 MRLiou_ASI 超級電腦 - 完整系統架構白皮書 v1 0 2\\MRLIOU_zero.zip"
+   },
+   {
+    "file": "MRL_3D_AI_Reconstruction_System_v1_product.zip",
+    "local_path": "D:\\MRL_3D_AI_Reconstruction_System_v1_product.zip"
+   },
+   {
+    "file": "MRL_AI_SYSTEM-main.zip",
+    "local_path": "D:\\MRL_AI_SYSTEM-main (2).zip"
+   },
+   {
+    "file": "MRL_Batch03A_Content_Verification_Report.md",
+    "local_path": "D:\\MRL_EvidenceChain_Batch04_20260612\\_reports\\MRL_Batch03A_Content_Verification_Report.md"
+   },
+   {
+    "file": "MRL_CLAUDE_DL580_BUILD_ORDER.md",
+    "local_path": "D:\\d\\mrl\\MRL_GenesisLanguage_System_CPP_DL580_v2_1_RuntimeDaemon_API\\MRL_Claude_Execution_Order\\MRL_CLAUDE_DL580_BUILD_ORDER.md"
+   },
+   {
+    "file": "MRL_Mother_Product_Runtime_v1_0_0.zip",
+    "local_path": "D:\\MRL_Mother_Product_Runtime_v1_0_0.zip"
+   },
+   {
+    "file": "MRL_Mother_v2_FULL_CANONICAL_DL580_FINAL_FULLSTACK.zip",
+    "local_path": "D:\\MRL_Mother_v2_FULL_CANONICAL_DL580_FINAL_FULLSTACK.zip"
+   },
+   {
+    "file": "MRL_____________v1.zip",
+    "local_path": "D:\\MRL母體工程架構中心_整理包_v1.zip"
+   },
+   {
+    "file": "MRLiou_800AI_Integrated_GitHub_Deploy_v1_0_0.zip",
+    "local_path": "D:\\Downloads\\MRLiou_800AI_Integrated_GitHub_Deploy_v1_0_0(2).zip"
+   },
+   {
+    "file": "MRLiou_______-___________3c620472fc134876936d573cee125f7a.md",
+    "local_path": "D:\\MRLiouХ¦сю¦Ью®+ЮВию¦+юБ¦ - юцїµкВµозХмщЮкзХаСЪыЗµтЦюїп 3c620472fc134876936d573cee125f7a.md"
+   },
+   {
+    "file": "Mcp.pdf",
+    "local_path": "D:\\Mcp (1).pdf"
+   },
+   {
+    "file": "Mrliou11.txt",
+    "local_path": "D:\\d\\Mrliouword ASI\\Mrliou1+1.txt"
+   },
+   {
+    "file": "Mrliouword_II.zip",
+    "local_path": "D:\\Mrliouword II.zip"
+   },
+   {
+    "file": "README_DL580___.md",
+    "local_path": "D:\\README_DL580_自架.md"
+   },
+   {
+    "file": "___FlowAgent.WorldSeed.v1.flpkg.zip",
+    "local_path": "D:\\APFS\\智障系統\\系統夥伴\\儲存\\FluinSeed_CompleteArchive_20250719\\下載 FlowAgent.WorldSeed.v1.flpkg.zip"
+   },
+   {
+    "file": "___Fluin______-___________1__3008eeeec5b58078a3c1e5788e5df15d.md",
+    "local_path": "D:\\🌐 Fluin 粒子字典 - 反推映射生成系統 (1) 3008eeeec5b58078a3c1e5788e5df15d.md"
+   },
+   {
+    "file": "_____.md",
+    "local_path": "D:\\Mrl_上帝視角分析師人格.py.md"
+   },
+   {
+    "file": "________2e28eeeec5b581abbe94c50463e4ac5d.md",
+    "local_path": "D:\\d\\Mrliou_agents (1)\\Mrl_FlowAgent\\growthbook-flags-sdk-example-main (1)\\growthbook-flags-sdk-example-main\\🎯 核心文檔 2e28eeeec5b581abbe94c50463e4ac5d.md"
+   },
+   {
+    "file": "_________270__2.txt",
+    "local_path": "D:\\ChatGPT Atlas.app\\MRL_Mother_v2_FULL_CANONICAL_DL580_FINAL_FULLSTACK\\MRL_Mother_v2_FULL_CANONICAL_DL580\\記憶封存節點總表_270條 2.txt"
+   },
+   {
+    "file": "_________2cf8eeeec5b58135a8d2eea6d80ed224.md",
+    "local_path": "D:\\ChatGPT Atlas.app\\私人和共用\\Mrliouword 8♾️Flowagent 系統架構資料庫 (1)\\自然語言理解核心 2cf8eeeec5b58135a8d2eea6d80ed224.md"
+   },
+   {
+    "file": "__________2cf8eeeec5b581be9d56e108dd418213.md",
+    "local_path": "D:\\ChatGPT Atlas.app\\私人和共用\\Mrliouword 8♾️Flowagent 系統架構資料庫 (1)\\多模態內容理解引擎 2cf8eeeec5b581be9d56e108dd418213.md"
+   },
+   {
+    "file": "___________.zip",
+    "local_path": "D:\\liou.dream.persona.bundle.zip"
+   },
+   {
+    "file": "_mnt_data.txt",
+    "local_path": "D:\\FlowAnent  (1)(1).txt"
+   },
+   {
+    "file": "api-gateway.yaml",
+    "local_path": "D:\\d\\deep-learning-containers-main\\flowagent_final拷貝\\flowagent_final\\k8s\\flowagent-k8s\\05-gateway\\api-gateway.yaml"
+   },
+   {
+    "file": "empathetic.mirror.persona.sync.json",
+    "local_path": "D:\\empathetic.mirror.persona.sync.json"
+   },
+   {
+    "file": "files_111.zip",
+    "local_path": "D:\\files (111).zip"
+   },
+   {
+    "file": "flowagent_systemd.zip",
+    "local_path": "D:\\flowagent_systemd.zip"
+   },
+   {
+    "file": "flowcore_loop.pdf",
+    "local_path": "D:\\flowcore loop 2.pdf"
+   },
+   {
+    "file": "flowcore_loop.py",
+    "local_path": "D:\\flowcore_loop 4.py"
+   },
+   {
+    "file": "flowcore_loop_v02.zip",
+    "local_path": "D:\\flowcore loop v02.zip"
+   },
+   {
+    "file": "flowmind_loader.py",
+    "local_path": "D:\\d\\deep-learning-containers-main\\flowagent_final拷貝\\flowagent_final\\flowmind_loader.py"
+   },
+   {
+    "file": "fri_jan_16_2026____________.json",
+    "local_path": "D:\\fri_jan_16_2026_注意力机制粒子模块系统.json"
+   },
+   {
+    "file": "guardian.mirror.PingFlowMap.svg",
+    "local_path": "D:\\guardian.mirror.PingFlowMap.svg"
+   },
+   {
+    "file": "guardian.mirror.log.parsed.json",
+    "local_path": "D:\\guardian.mirror.log.parsed.json"
+   },
+   {
+    "file": "guardian.mirror.trace.loop.bundle.v2.flpkg.zip",
+    "local_path": "D:\\guardian.mirror.trace.loop.bundle.v2.flpkg.zip"
+   },
+   {
+    "file": "guardian.mirror.trace.loop.json",
+    "local_path": "D:\\guardian.mirror.trace.loop.json"
+   },
+   {
+    "file": "guardian.mirror.v2.sync.json",
+    "local_path": "D:\\guardian.mirror.v2.sync.json"
+   },
+   {
+    "file": "main.py",
+    "local_path": "D:\\d\\FastPlayer\\flow-genesis-alpha\\gpu\\flowagent_memory_coherence_v1\\app\\main.py"
+   },
+   {
+    "file": "mcp-particle-team-v1.1.0",
+    "local_path": "D:\\mcp-particle-team-v1.1.0"
+   },
+   {
+    "file": "metacode_usage.js",
+    "local_path": "D:\\metacode_usage (2).js"
+   },
+   {
+    "file": "models.py",
+    "local_path": "D:\\d\\FastPlayer\\flow-genesis-alpha\\gpu\\flowagent_memory_coherence_v1\\app\\models.py"
+   },
+   {
+    "file": "mrl-agi-v3.1.0-seed.js",
+    "local_path": "D:\\MrlToolchain\\🌐 MRLiou_ASI 超級電腦 - 完整系統架構白皮書 v1 0 2\\🤖 AI能力粒子庫\\mrl-agi-v3.1.0-seed 2.js"
+   },
+   {
+    "file": "mrl-engine-v1.0.1-fix.zip",
+    "local_path": "D:\\mrl-engine-v1.0.1-fix (2).zip"
+   },
+   {
+    "file": "mrl-engine-v12.zip",
+    "local_path": "D:\\mrl-engine-v12 (1).zip"
+   },
+   {
+    "file": "mrl-ton-jetton-distilled.md",
+    "local_path": "D:\\Downloads\\mrl-ton-jetton-distilled.md"
+   },
+   {
+    "file": "refman-9_6-en.pdf",
+    "local_path": "D:\\refman-9.6-en.pdf"
+   },
+   {
+    "file": "schemas.py",
+    "local_path": "D:\\d\\FastPlayer\\flow-genesis-alpha\\gpu\\flowagent_memory_coherence_v1\\app\\schemas.py"
+   },
+   {
+    "file": "spaces-sdks-docker-first-demo.md",
+    "local_path": "D:\\p\\particle_sandbox\\imports\\batch_20250102\\sandbox_20250101_3\\particle_sandbox\\local_deploy_system\\hub-docs-main\\docs\\hub\\spaces-sdks-docker-first-demo.md"
+   },
+   {
+    "file": "智障系統.zip",
+    "local_path": "D:\\APFS\\智障系統.zip"
+   }
+  ],
+  "pending_list": [
+   {
+    "file": "0001-fix-MRL-regenerate-complete-uv-lockfile.patch",
+    "sha256": "c109a207c571831823ebc80aa7fc300427d448c8ba105d08b19f3f19299f26d2"
+   },
+   {
+    "file": "0892ff350899f4999a6d19b9fa1df3047f59cbb48feaf74681e254ad5713f07b-filelists.sqlite_1.bz2",
+    "sha256": "0892ff350899f4999a6d19b9fa1df3047f59cbb48feaf74681e254ad5713f07b"
+   },
+   {
+    "file": "14cb9f3188b9e04ab8168acd5cdfb7aa934942d4ac806c04c5d2d08bb2f92d01-other.xml.zst",
+    "sha256": "14cb9f3188b9e04ab8168acd5cdfb7aa934942d4ac806c04c5d2d08bb2f92d01"
+   },
+   {
+    "file": "2-main.zip",
+    "sha256": "77728fb5b40b228dada0091cac11604cb80e241b5859e0b8fff45f6b593908f5"
+   },
+   {
+    "file": "Dockerfile",
+    "sha256": "c34ba7cc06f58ee07d42a4fa4e0380db12af4249893de2c0a53e1fb63d40d592"
+   },
+   {
+    "file": "Enhanced_Markdown_Specification",
+    "sha256": "604431b6a1d1253fac035c8fe9e8ef678d34de2735c9f93c5ce191d3475548a3"
+   },
+   {
+    "file": "ExportBlock-72a742a0-7b54-4514-9ce3-a669df3af6b5-Part-1.zip",
+    "sha256": "2aae04a742d019926291965caca5f78db3fa10b3d9a72a46db2f6353e408e5b2"
+   },
+   {
+    "file": "IMG_9414.PNG",
+    "sha256": "5ebfa250501f2fc7ba31cb1df7a4e7067632624e4ecdef5150271426ce08fde2"
+   },
+   {
+    "file": "MRL-see-through-main.zip",
+    "sha256": "a1899e9284fe15113bdea939894470d75fe327abb0ffbbe894b02fb8710622f2"
+   },
+   {
+    "file": "MRL_BaseWorld_DB_v1_SCHEMA_AUDIT.pdf",
+    "sha256": "ecf7f605f38c6ab3901c745b378a4f45288dd29530a187076e8010fe94a59912"
+   },
+   {
+    "file": "MRL_Branch_Update_Backwrite_Record_20260609.json",
+    "sha256": "12ad852efdfb0c19d0b396c2100a63f4a4c6783b9e5350c1cc5fd20d29920753"
+   },
+   {
+    "file": "MRL_Branch_Update_Backwrite_Record_20260609.zip",
+    "sha256": "3e10c5a387e09c3545ee514d48f3b3482473858d92003a9f4afbf2bf90f754ca"
+   },
+   {
+    "file": "MRL_MDbooks_Product_v1_1__DEPLOYABLE_SOURCE.zip",
+    "sha256": "37373aaa08b149987534e188d7f508534fb16cdbe9ee2b21213c966fec2301df"
+   },
+   {
+    "file": "MRL_Round_01_10_Audit_Seed_20260609.json",
+    "sha256": "39079eaa7979ef9a78c239888f982bd0b5c1b42c0e909790b3c4e81a52578499"
+   },
+   {
+    "file": "MRL_TopLevel_MasterIndex_v2_Backwrite_Patch_20260609.json",
+    "sha256": "44d3083f0e0a62f19b6aa7460e5122c12798ec906a1f126b27228612f2e2f692"
+   },
+   {
+    "file": "MRL_URL_v1.py",
+    "sha256": "15efc0584f861ee9a94389cc7b059de9a164046b93dcdf1f63729789e8e019ae"
+   },
+   {
+    "file": "MRL_Window_Recovery_FULL_COMPLETE_2026-07-08_v1_1.docx.txt",
+    "sha256": "0efc4e142ecdd0420b29f82beff7dd96b5377245501c394585b5a85166a20501"
+   },
+   {
+    "file": "MRL_Window_Recovery_FULL_COMPLETE_2026-07-08_v1_1.md",
+    "sha256": "ec7d01f8e8bf1ae903a0c260bf6c5738e97de93480d485af9c000a55b59513be"
+   },
+   {
+    "file": "MRL_Window_Recovery_FULL_COMPLETE_2026-07-08_v1_1_DELIVERY.zip",
+    "sha256": "12352fe9bdcd5fac67c7bcdbf5215907583adc809d1a5078908785757e2643ba"
+   },
+   {
+    "file": "MRL_Window_Recovery_FULL_COMPLETE_2026-07-08_v1_1_machine_index.json",
+    "sha256": "09fec42ceb14a7ba16fa4762784289d9d2fdf24ec82b75a330c0f34f203a38d6"
+   },
+   {
+    "file": "MRL_Window_Recovery_FULL_COMPLETE_2026-07-08_v1_1_manifest.json",
+    "sha256": "3301c4cf28e5be571458004c1ae9538f745feba8ddb7e9badaf7f3aefe5b846c"
+   },
+   {
+    "file": "MRL_World_Model_Commercial_Governance_20260922_v1.zip",
+    "sha256": "75df21d619f007adb241ce43999d133f6a7004069d815a9af2a4d4089786f469"
+   },
+   {
+    "file": "MRL______Seed_Origin.py_________________1_2026-06-13_2026-06-13.md",
+    "sha256": "cf04fa96b51f7ed565ba38099cf93532b12736592f924d74c3c192b186816628"
+   },
+   {
+    "file": "MRLiou_______-________68fba42e79f04fa49da978344aade010.md",
+    "sha256": "32a48adcb521a89b84346d8579269535157f8905709eb6893a76b04f610ae952"
+   },
+   {
+    "file": "MRLiou_____________20260315_v02.docx.txt",
+    "sha256": "56ad6f2f811b724329e061574da3d23441ee082104e52a2ed2c4bcd27141a021"
+   },
+   {
+    "file": "Mrliou_MRL_GitHub_Payment_Provenance_Incident_Record_20260914_v3.docx.txt",
+    "sha256": "3907265f84871c6cf2e5905d08a580d4ddb02506e45dc3a15282da5c344c87ea"
+   },
+   {
+    "file": "Mrliou_MRL_WorldModel_LLM_vLLM_20260922_v1.zip",
+    "sha256": "35ca730dc37f28c1be2db664541aee82c6faae959e3d80312c090e85ada8d35e"
+   },
+   {
+    "file": "Mrliou_MRL_World_Model_Commercial_Site_v1.tar.gz",
+    "sha256": "b7c4943599f62349138ec490ede64c9a4cdac5073cb9f41de19585e79b525698"
+   },
+   {
+    "file": "Mrliouword_3D__.docx.txt",
+    "sha256": "1bb92383ea376e44593388b3bda1477b5344a89750ed76edcb45f46f024c9fde"
+   },
+   {
+    "file": "PDF.pdf",
+    "sha256": "bd92a07224f21009a2d65b4caa9546abe4f59f4bd157e71d339de66b08401c76"
+   },
+   {
+    "file": "SwiftUI___.doc.txt",
+    "sha256": "16b55ba98eb1fa71980d45575ea48992f43d7827c270326af80617699b43f39a"
+   },
+   {
+    "file": "Writing_effective_skills_for_Notion_MCP",
+    "sha256": "4486c0fdd2e8ece1618466f77898dc14f04dcea153deee4ad587b473e25078ae"
+   },
+   {
+    "file": "_mnt_data.pages",
+    "sha256": "d3a05dae9f2d17219157baf71fd6bd3c0728d9d7d34c8a14d17e8ddebdd321c7"
+   },
+   {
+    "file": "_mnt_data_2.pages",
+    "sha256": "65e15787ee47993b83fe75aa78ffac8b1af9ab84187be854e62de2549bf5776c"
+   },
+   {
+    "file": "a19f5fe0-d949-4b18-b9aa-65f9f8015d91______LLM_API_________.md",
+    "sha256": "2667065e047c20d386410e38b7ff64719606076023e366a350416d90ba6bd1f4"
+   },
+   {
+    "file": "app.py",
+    "sha256": "fdd72e7fa7eb977f486e31833b50d450abeb94febb978996b7bb0ccd363e6265"
+   },
+   {
+    "file": "cagent-1.9.7-1.el9.x86_64.rpm",
+    "sha256": "98f70f24eb2de35a2329db20ed3d636ebeaac005bb4fc4aa960bfd81fdce7ba3"
+   },
+   {
+    "file": "containerd_io-1_6_10-3_1_el9_x86_64.rpm",
+    "sha256": "4ffa892ae04dfd34d5cb1ab726264a79cf0eb5d92c14e668ed0d4dafda7f87ef"
+   },
+   {
+    "file": "document__17_.json",
+    "sha256": "fad644d4421fd8a23a63af1fca4f578dedfea146ddc1d0ac806907b6d768d25c"
+   },
+   {
+    "file": "firebase-brand-assets.zip",
+    "sha256": "ac17065f4790742b247743e7fa1d019afbb1e1da6d9950fc73cd40e9cbbb1235"
+   },
+   {
+    "file": "first_message_response.json",
+    "sha256": "b720574128ad8aa02a443d2208d4f5bb34b3e0e84a3371b7e38ba71ae47a639f"
+   },
+   {
+    "file": "hiring_impact.py",
+    "sha256": "4280efd786c3b8d6b7ed2f6e2e9026b2eb33ac1072f35739f457e4a98cdbe419"
+   },
+   {
+    "file": "image.jpg",
+    "sha256": "6c22c299359fbe7df96a3eafc30fabd2ba7bd2e67ecce3dd1d0aaddfdd7ffb58"
+   },
+   {
+    "file": "image.png",
+    "sha256": "ef732e93e5d089698bcba272570f04e5bbbbb7e62181ca19175bbcefc33e9fcd"
+   },
+   {
+    "file": "image.png",
+    "sha256": "de997afcfd0b77a68ba36b9504fe9c655c06d18c1d4e4e56931a99832ab3ced1"
+   },
+   {
+    "file": "image.png",
+    "sha256": "3b465c1ed2b34f39f5b5d892c2133b28e36abc271145cc002d425f0cf5acd6d7"
+   },
+   {
+    "file": "manifest.md",
+    "sha256": "4615ab77d8c4c2ac17d04103271740cb261903ee0c19509709915607d766e294"
+   },
+   {
+    "file": "meta_world_portal.js",
+    "sha256": "4292365ef256eb6be97e550e9740f756afa74bcf31cfbc2192f337537f475d96"
+   },
+   {
+    "file": "mrliou_asi.docx.txt",
+    "sha256": "1f86fc575a8c16b90ab03c70f9ee6c503166e36ed49b8018519532ecc35383b2"
+   },
+   {
+    "file": "postgresql-snapshot.tar.bz2",
+    "sha256": "dcea1cb15b4f53ad6e13a145a38eb80e0859585263e04158c1165a4ebff052ea"
+   },
+   {
+    "file": "postgresql-snapshot.tar.bz2.sha256",
+    "sha256": "920f3b96e821e718946898e4b1efbfa29e0c2a9ad4269612adad6d1eca74a42a"
+   },
+   {
+    "file": "runtipi-appstore-master.zip",
+    "sha256": "2863142c4498a3bf1f827c5fbcedd0235f1825fbb6693ede797216f2e72451f7"
+   },
+   {
+    "file": "start.js",
+    "sha256": "b6c591fdf230dc2132f6a6e81f07af8b81294c5bc57c1cc7a3df670b4c1167fa"
+   },
+   {
+    "file": "supercomputer_ready.txt.docx.txt",
+    "sha256": "05d9ebd7d189c44ff75e2e974a9b604bc4f3abb6310ec03519fe5a5e8d12ba73"
+   },
+   {
+    "file": "劉品妍.zip",
+    "sha256": "4aaa6c2b54fabcb3049cd2d584b69a370d58d690fd66fb8b10751a8a13ff3b54"
+   },
+   {
+    "file": "母體_3.zip",
+    "sha256": "8bcca0e26b453e759145856d902f7d3b95176bc6c7d618ee3bc2b193ed704694"
+   }
+  ]
+ },
+ "dialect_roundtrip": {
+  "dialect_version": "0.1.0",
+  "unique_files": 290,
+  "roundtrip_pass": 290,
+  "roundtrip_fail": 0,
+  "failed": []
+ },
+ "note": "當下狀態。matched = 已對上原始檔；pending = 待找回（此根目錄這次未接上線，不代表不存在）。"
+}

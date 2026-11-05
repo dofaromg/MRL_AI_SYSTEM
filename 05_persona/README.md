@@ -7,7 +7,6 @@ Persona definitions and world module for FlowAgent agents (L4 WORLD / L5 MIRROR 
 | File | Purpose |
 |------|---------|
 | `world_module.py` | World Module entry point — nodes, state, trajectory, particle-globe coordinates |
-| `codepartner/persona.yaml` | CodePartner (CoreProgrammer.Seed) — recovered FlowAgent programming persona |
 
 ## world_module.py
 
@@ -37,7 +36,7 @@ python 05_persona/world_module.py rewind --step 1
 
 Runtime data is written to `05_persona/_data/world/` (gitignored).
 
-## Persona definition format
+## Persona definition format (planned)
 
 ```yaml
 id: <persona_id>
@@ -47,9 +46,6 @@ capabilities: []        # allowed action types
 constraints: []         # extra rules beyond rootlaw
 world: AI | Platform | Real
 ```
-
-First implemented persona: `codepartner/persona.yaml` (CodePartner / CoreProgrammer.Seed,
-recovered from the FlowAgent lineage — sources in `08_sources/flowagent_codepartner_recovery/`).
 
 See `00_rootlaw/rootlaw.yaml` for invariants that apply to all personas.
 
