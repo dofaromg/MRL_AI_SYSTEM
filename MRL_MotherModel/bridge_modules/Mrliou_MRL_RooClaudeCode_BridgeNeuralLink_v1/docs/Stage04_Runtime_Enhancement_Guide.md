@@ -399,3 +399,26 @@ collector.incrementCounter("bridge.ready")
 **完成日期**: 2026-10-29  
 **貢獻者**: Claude Haiku 4.5  
 **審查者**: 待 PR 審查
+
+
+
+## MRL Stage04 修補附錄（2026-10-30，origin_signature: MrLiouWord）
+
+保留 v1.1.0 原有內容；本附錄修正原指南未提供建置入口與實測證據的缺口。
+`npm ci`、`npm run build`、`npm test` 於本模組目錄執行。
+建置產物 `dist/MRL_Stage04Runtime.js` 提供三模組與 `createStage04Runtime(socket)`；
+由呼叫端持有、連線與關閉 Socket.IO socket，不會自動連往 DL580。
+
+百分位採累計桶上界估計，不是原始樣本的精確分位數。
+樣本 [5,45,90,450,900]：p50=100、p95=p99=1000；
+有限累計桶 [1,2,3,4,5,5]，sum=1490、count=5、+Inf=5。
+超過最大有限桶的百分位延續既有語意：回傳實測 max。
+Prometheus 匯出現包含有限桶，可與統計 API 交叉核對。
+
+TaskDispatcher 取消、完成、失敗與 clear 均釋放計時器，避免舊 attempt 提前終止重試。
+新增測試包含實際本機 Socket.IO server/client 三模組訊息流。
+此入口為增量整合，不會改寫原四個 Bridge 組件。
+
+完整 `npm run build:bridge` 仍失敗：缺 ExtensionChannel.ts、@roo-code/types、VSCode 型別，
+且 TaskChannel 有衍生型別錯誤。原驗收報告的「全部整合通過」及 100% 覆蓋率不可沿用為本次證據。
+詳細結果見 `MRL_Stage04_Repair_Addendum_20261030.md` 及 evidence/MRL_Stage04_20261030。

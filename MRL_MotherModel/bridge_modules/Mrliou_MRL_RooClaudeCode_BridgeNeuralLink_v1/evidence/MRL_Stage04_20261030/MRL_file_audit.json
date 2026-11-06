@@ -1,0 +1,169 @@
+{
+  "origin_signature": "MrLiouWord",
+  "files": [
+    {
+      "path": "config/dl580_bridge.config.json",
+      "size": 1459,
+      "sha256": "6c4b5d729d6ba8c4cdb68827c3c86afdb1cc1a75f46c7093a2fed5a87890a281"
+    },
+    {
+      "path": "docs/MRL_BridgeNeuralLink_Integration.md",
+      "size": 7617,
+      "sha256": "f9f939bf41ce67c327a608a105b73981cc47510ef442066635b6fc861e8dcfb0"
+    },
+    {
+      "path": "docs/MRL_Stage04_Repair_Addendum_20261030.md",
+      "size": 2619,
+      "sha256": "038f92a67ad9a1af9f0f16ba3bf89877e5b86210ecbe1079e8d2966cad450f8c"
+    },
+    {
+      "path": "docs/RECOVERY_MAP_UPDATE.md",
+      "size": 8063,
+      "sha256": "2d4c9b382a20413a0e5c89f662b0eeeb0a8b06dcb4fc48b952d2900f3c7478ea"
+    },
+    {
+      "path": "docs/Stage04_Runtime_Enhancement_Guide.md",
+      "size": 11226,
+      "sha256": "5c57ea023e38c6d71557c03b413e38fcc373bffaff9dea38c1cf2ab44316f125"
+    },
+    {
+      "path": "evidence/dependency_tree.json",
+      "size": 5021,
+      "sha256": "39b12173549c5b732b45fe4abbf79b1a92b48039fd7bf54e38cd6d310d258cea"
+    },
+    {
+      "path": "evidence/file_list.txt",
+      "size": 5827,
+      "sha256": "e21c5db7b7ee22e862543cd0fceb692bcad403f059901bf03ed7363f6fc199df"
+    },
+    {
+      "path": "evidence/package_map.json",
+      "size": 5291,
+      "sha256": "df882b6c236ab5f2b304de3d921747e7181bce3c14caa77e902647fbd0b8fe7c"
+    },
+    {
+      "path": "evidence/sha256.txt",
+      "size": 1712,
+      "sha256": "c77ba501934c099f55b3463c410c85221885eb70885791fe974dcab2dc82d4e8"
+    },
+    {
+      "path": "module.manifest.json",
+      "size": 3856,
+      "sha256": "fba29132c8e1263699a470a6dae6c033a934fc457d874a98fc4a47dd2d815bee"
+    },
+    {
+      "path": "package-lock.json",
+      "size": 13567,
+      "sha256": "7737ddf20f11001eaae346529f7a71cb6780573e2d7efb57c7504bed0bca658f"
+    },
+    {
+      "path": "package.json",
+      "size": 470,
+      "sha256": "35922f00d1d9013ce91bfb972df5c984b1d700d4158c8db8a970b3436558c3b1"
+    },
+    {
+      "path": "scripts/install.ps1",
+      "size": 3498,
+      "sha256": "dd79918236585bffc16892ced29f0e75be99917c8050b19950ca82ea464d0cfe"
+    },
+    {
+      "path": "scripts/package.ps1",
+      "size": 4479,
+      "sha256": "baa427df36a2c1dbd80e17fa85464c58f1cdf479931a2169df8da685fc720791"
+    },
+    {
+      "path": "scripts/verify.ps1",
+      "size": 7932,
+      "sha256": "eaa4a987933af4eceee04dfb37a7960fc6484bbd3c8663cba5d75880070b8cd7"
+    },
+    {
+      "path": "src/BaseChannel.ts",
+      "size": 3311,
+      "sha256": "b28dfdeaf5dd2a107d21fdd56de750afc278e371acf349871d6e20a99e12e66e"
+    },
+    {
+      "path": "src/BridgeOrchestrator.ts",
+      "size": 10106,
+      "sha256": "bb8223122c3eaa3db0bd7baa5364d21a0be7980a3eb2936f9816fc9d3eed399a"
+    },
+    {
+      "path": "src/EventAggregator.ts",
+      "size": 5832,
+      "sha256": "729226914f367c7531c1f08d4f3ce3f04c3e46ed2bbcb814323c55265b75f83d"
+    },
+    {
+      "path": "src/MRL_Stage04Runtime.ts",
+      "size": 949,
+      "sha256": "4b073c607fdb01f2e9bcddf2e7a7eac881838426e22640583e737a2680dcb23b"
+    },
+    {
+      "path": "src/MetricsCollector.ts",
+      "size": 7953,
+      "sha256": "d12998e0ec8e5786b42d8f50c23c17eb3d9d55e62d857a9f839f3455a5f14042"
+    },
+    {
+      "path": "src/SocketTransport.ts",
+      "size": 7536,
+      "sha256": "4556c64157f82ff189e2996bfaa8f85bcb46c5b0d614dd033c5d4fa3c3752015"
+    },
+    {
+      "path": "src/TaskChannel.ts",
+      "size": 6351,
+      "sha256": "e888d200decf9ce498886995eb72ca5a04d6558063e329748b6749d88fa03b32"
+    },
+    {
+      "path": "src/TaskDispatcher.ts",
+      "size": 6208,
+      "sha256": "c48af79f74ac0ca4b891f91aad6fbd9f01d13ea24ba8afb2dcd08d206904ea03"
+    },
+    {
+      "path": "src/index.ts",
+      "size": 676,
+      "sha256": "8a23e37d4f7037788f1f2e1819b1137d212046bf4b67d1f2d05ee2f8077325b3"
+    },
+    {
+      "path": "tests/MRL_MetricsCollector.test.mts",
+      "size": 2720,
+      "sha256": "7eaf627f99d5e2d397823ff5d73a1fe8c5d8ba21aeb99c56262f0cc88b88c368"
+    },
+    {
+      "path": "tests/MRL_Stage04Integration.test.mts",
+      "size": 3569,
+      "sha256": "a0e071e8d72b7d373db6b00d5d8701aa09a4c4062c7125a409422e6c1f0004d8"
+    },
+    {
+      "path": "tsconfig.bridge.json",
+      "size": 112,
+      "sha256": "3dca10b09c3d69ca866d0c575c2134f83806fbb50467b3be2dc2c2ced1996174"
+    },
+    {
+      "path": "tsconfig.stage04.json",
+      "size": 356,
+      "sha256": "2293bdb37b4eedb21b3d2ad44e6b0bbd4332276bd590c9ee023be49d06a7667c"
+    }
+  ],
+  "missing_dependencies": [
+    "src/ExtensionChannel.ts",
+    "@roo-code/types",
+    "vscode"
+  ],
+  "dependency_tree": {
+    "MRL_Stage04Runtime.ts": [
+      "TaskDispatcher.ts",
+      "EventAggregator.ts",
+      "MetricsCollector.ts",
+      "socket.io-client"
+    ],
+    "index.ts": [
+      "BridgeOrchestrator.ts",
+      "SocketTransport.ts",
+      "BaseChannel.ts",
+      "TaskChannel.ts"
+    ],
+    "BridgeOrchestrator.ts": [
+      "ExtensionChannel.ts (MISSING)",
+      "@roo-code/types (UNRESOLVED)"
+    ]
+  },
+  "delivery_status": "DELIVERY_FAIL_FULL_INTEGRATION_BLOCKED"
+}

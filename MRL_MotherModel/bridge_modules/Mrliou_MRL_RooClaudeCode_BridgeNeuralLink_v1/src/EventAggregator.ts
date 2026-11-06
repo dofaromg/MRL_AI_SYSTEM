@@ -93,7 +93,7 @@ export class EventAggregator {
 		this.events.set(event.id, event)
 		if (this.events.size > this.maxHistorySize) {
 			const firstKey = this.events.keys().next().value
-			this.events.delete(firstKey)
+			if (firstKey !== undefined) this.events.delete(firstKey)
 		}
 
 		// Distribute to subscribers
@@ -255,3 +255,4 @@ export class EventAggregator {
 		return `evt_${Date.now()}_${++this.eventIdCounter}`
 	}
 }
+

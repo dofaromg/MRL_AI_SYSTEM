@@ -1,0 +1,17 @@
+command: npm run build:bridge
+exit_code: 2
+
+> mrl-stage04-runtime-enhancement@1.1.0 build:bridge
+> tsc -p tsconfig.bridge.json
+
+src/BaseChannel.ts(2,25): error TS2307: Cannot find module 'vscode' or its corresponding type declarations.
+src/BaseChannel.ts(4,57): error TS2307: Cannot find module '@roo-code/types' or its corresponding type declarations.
+src/BridgeOrchestrator.ts(15,8): error TS2307: Cannot find module '@roo-code/types' or its corresponding type declarations.
+src/BridgeOrchestrator.ts(18,34): error TS2307: Cannot find module './ExtensionChannel.js' or its corresponding type declarations.
+src/SocketTransport.ts(3,51): error TS2307: Cannot find module '@roo-code/types' or its corresponding type declarations.
+src/TaskChannel.ts(15,8): error TS2307: Cannot find module '@roo-code/types' or its corresponding type declarations.
+src/TaskChannel.ts(21,3): error TS2538: Type 'symbol' cannot be used as an index type.
+src/TaskChannel.ts(27,3): error TS2537: Type '{ from: string | number | symbol; to: TaskBridgeEventName; createPayload: (task: TaskLike, ...args: any[]) => any; }' has no matching index signature for type 'number'.
+src/TaskChannel.ts(27,3): error TS2537: Type '{ from: string | number | symbol; to: TaskBridgeEventName; createPayload: (task: TaskLike, ...args: any[]) => any; }' has no matching index signature for type 'string'.
+src/TaskChannel.ts(27,3): error TS2538: Type 'symbol' cannot be used as an index type.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
