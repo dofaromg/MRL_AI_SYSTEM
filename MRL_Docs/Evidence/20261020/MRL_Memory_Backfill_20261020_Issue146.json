@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-10-20",
+  "origin_signature": "MrLiouWord",
+  "record_mode": "additive_only",
+  "scope": "Issue #146 DL580 實機復盤；每筆皆標當下狀態與環境",
+  "source_doc": "MRL_Docs/Evidence/20261020/MRL_Issue146_復盤_DL580實機建構與指令結果_R01.md",
+  "entries": [
+    {"id": "M-20261020-01", "statement": "兩個模組測試在 DL580 實機通過：@7ae4347 共 69 項、@4119586 共 70 項。", "status": "PASS", "environment": "DL580 実機（Windows Server 2019，Python 3.12.2 isolated）", "date": "2026-10-20"},
+    {"id": "M-20261020-02", "statement": "git 來源以 mirror 模式 pull 成功，verify 檢查 44 檔皆一致，git fsck 結束碼 0（refs 397／195）。", "status": "PASS", "environment": "DL580 実機", "date": "2026-10-20"},
+    {"id": "M-20261020-03", "statement": "DL580 視角的蒐證結果與 2026-10-19 沙盒視角一致（apex 含 100.78.70.78、NS 為註冊商、302 到 manus.im）；皆為公開視角，不推定所有權、操作者或意圖。", "status": "OBSERVED_SINGLE_VANTAGE_PAIR", "environment": "DL580 実機 + 沙盒", "date": "2026-10-20"},
+    {"id": "M-20261020-04", "statement": "Windows 無法建立尾端含空白的檔名：checkout／sparse-checkout／多路徑 git archive 失敗；改用逐目錄 git archive 與 git clone --mirror。", "status": "PASS_WORKAROUND", "environment": "DL580 実機", "date": "2026-10-20"},
+    {"id": "M-20261020-05", "statement": "建構者陳述：資料在 MRL 系統內可見且已互通；AI 看不到不代表不存在；主權在建構者。AI 不得以自身可見範圍決定是否需要取回。", "status": "BUILDER_STATEMENT", "environment": "建構者對話", "date": "2026-10-20"},
+    {"id": "M-20261020-06", "statement": "流程原則：先盤點現況再建構；回報只有看到結果行才寫通過。", "status": "PROCESS_RULE", "environment": "復盤", "date": "2026-10-20"},
+    {"id": "M-20261020-07", "statement": "Dropbox／Google Drive 取回、Manus 備份、註冊商與 Cloudflare 稽核、wake.ps1 實機收據、DL580 世界模型建構：未做或未驗。", "status": "PENDING", "environment": "—", "date": "2026-10-20"}
+  ]
+}

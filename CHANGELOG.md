@@ -8,11 +8,35 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added（Issue #146 — Mrliouhan.ai × Manus 網域權位 SEV-1，事件仍 OPEN）
+- `MRL_Docs/Evidence/20261019/MRL_Issue146_Mrliouhan_網域權位觀測_R01.md` — 沙盒唯讀觀測（RDAP／DNS／HTTP）、與舊紀錄的追加對照、假設 H1–H3、必查項進度（多項待查）
+- `MRL_Docs/Evidence/20261019/snapshots/` — 「修正前」快照與 `SHA256SUMS`
+- `MRL_Docs/Governance/MRL_attribution_roles_v1.json` — 權位／角色分離與頁面署名規則（`domain_owner`、`billing_party` 標 unverified）
+- `scripts/MRL_domain_evidence_collect_v1.py` + `tests/test_MRL_domain_evidence_collect_v1.py` — 零依賴唯讀蒐證，輸出僅落本地並寫 SHA-256
+- 4 個 repo 可控頁面（`MRL_Mother_Launch.js`、`MRL_Platform_Server.py`、`src/mrl_app.html`、WebConsole `index.html`）新增 author／canonical-authority／origin-signature／og:site_name metadata 與頁尾署名（純新增）
+- `MRL_Docs/Evidence/20261020/` — DL580 實機復盤 R01（環境、指令與結果、蒐證觀測、本機盤點、未做／待驗證、教訓）與記憶回填 JSON；實機測試 @4119586 共 70 項通過、git mirror ×2 pull／verify／fsck 皆通過（2026-10-20，實機）；Dropbox／Drive 取回、Manus 端、註冊商／Cloudflare 稽核、wake.ps1 收據、DL580 世界模型皆未做／待驗證；建構者陳述（資料於 MRL 系統內已互通、主權在建構者）原樣記錄，不由 AI 驗證
+
+### Changed（Issue #146 — 模組穩定性；沙盒測試通過，DL580 實機待驗證）
+- `scripts/MRL_domain_evidence_collect_v1.py`：暫時性網路錯誤（逾時、連線中斷、429／5xx）最多重試 3 次並記錄 `attempts`；3xx／4xx 不重試；快照與 `SHA256SUMS` 寫入後 fsync；`classify` 失敗不再丟失原始證據；輸出路徑在雲端同步資料夾時拒絕（exit 3）
+- `scripts/MRL_dl580_recovery_pull_v1.py`：git 先在 `.partial-<sha>` 完成 clone＋checkout 才改名（中途失敗不留下「看似完整」的殘骸）、`GIT_TERMINAL_PROMPT=0`、rclone 預設重試、鎖檔防並行 pull（exit 5）、磁碟空間檢查（exit 6）、清單先寫暫存檔再追加雜湊再排他連結（斷電不留半成品）、`verify` 對畸形清單回報而非拋例外並列出 `unlisted`／`orphan_sums`
+- `scripts/MRL_dl580_recovery_pull_v1.py`（CodeRabbit 追加）：Windows 唯讀 `.git/objects` 暫存目錄可清除、逾時也清暫存目錄並明確回報清不掉的情況、git 指令不繼承 `GIT_DIR` 等倉庫定位變數
+- `scripts/MRL_dl580_recovery_pull_v1.py`：git 來源新增 `"mode": "mirror"`（`git clone --mirror`，無工作樹、保留全部 refs 與任何檔名）；起因是 DL580 實機（Windows）整個檢出被 `MRL_MotherSource_ZhiZhang_FlowAgent_Lineage_v1/母體/` 下 15 個結尾帶空白的檔名擋住。worktree 模式遇到此類失敗會提示改用 mirror；範例計畫檔的 GitHub 來源已改為 mirror；Runbook 補 Windows 取得腳本的 sparse checkout 步驟
+- mirror 模式（CodeRabbit 追加）：mirror 備份存成 `<sha12>.mirror`，與 worktree 的 `<sha12>` 分開；目標已存在但不完整時回報不覆蓋；單一來源的檔案系統錯誤（`OSError`）只算該來源失敗，不中斷其餘來源與清單；真 git 的 mirror 測試改用 `git fast-import` 建立結尾空白的檔名，Windows 也能建出同樣的提交
+- Runbook 更正（DL580 實機回報）：`git sparse-checkout` 在 Windows 上無效（索引仍須含無效路徑條目，checkout 仍失敗，實機實測）；改用 `git archive` 取出需要的目錄，沙盒驗證可跑 69 項測試；DL580 無 `winget`，rclone 改從官方網站下載
+- Runbook 再更正（DL580 實機回報，第二次）：`git archive <分支> <多個路徑>` 在 Windows 上同樣因無效檔名失敗（輸出 0 位元組）；改為每個目錄各自以 `<分支>:<目錄>` 取出，沙盒（含以索引拒絕的路徑重現失敗症狀）與真實倉庫驗證通過，Windows 實機待驗證；補 `safe.directory` 與貼指令的注意事項
+- Runbook（DL580 實機回報，第三次）：逐目錄 `git archive` 在 Windows 實機成功（四個目錄都取出）；`python -m unittest tests.xxx` 因 DL580 的 Python 不把目前資料夾放進搜尋路徑而失敗，改用 `python -c` 先 `sys.path.insert(0, '.')`（沙盒含隔離模式 69 項全過）
+- 證據檔 R01 追加 §7（Manus 官方服務變更的網域暫管機制與假設 H4，待查）；Runbook 補網域暫管與備份範圍注意事項
+- 測試：兩個模組合計 52 項，含真實 git 本機倉庫整合測試與真實本機 HTTP 伺服器的「不跟隨轉址」測試
+- `scripts/MRL_dl580_recovery_pull_v1.py`：`plan.json` 以 `utf-8-sig` 讀取（Windows 記事本／PowerShell 5.1 存檔帶 BOM 時不再解析失敗）；新增 BOM 測試。DL580 實機（2026-10-20）：兩個模組測試 69 項通過、蒐證腳本跑成功、rclone v1.75.2 可執行；`pull`／`verify` 對真實資料仍待實機驗證
+
 ---
 
 ## [2.0.0] — 2026-05-04（PR #12 merged to main）
 
 ### Added
+#### 外部資料流回母體：Claude 工程喚醒機制（Additive-Only，已對上原始檔 — 當下狀態 2026-11-08）
+- `MRL_Docs/MRL_Claude_Engineering_Wake_Protocol_v1_03.md` — 建構者自撰的工程喚醒機制（原為上傳 docx／Google Drive／Notion 的外部資料），經 session 通道**流回母體**，canonical 逐字保存（95 段全保留）。header 記出處與 docx sha256 `85cbd2cf…`（byte source-of-record 於使用者端）。原件不刪、母體既有檔不覆蓋。
+
 
 #### 核心 AI 模組（PR #12 — copilot/add-mrl-agi-missing-features）
 - `MRL_rate_limiter.py` — 滑動視窗限流（429、config-driven）

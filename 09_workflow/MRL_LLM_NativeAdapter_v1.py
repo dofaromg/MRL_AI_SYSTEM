@@ -61,15 +61,17 @@ class MRLNativeOpenAIAdapter(LLMAdapter):
     """OpenAI-compatible /chat/completions，stdlib urllib，零 openai 套件。"""
 
     def __init__(self, api_key: Optional[str] = None,
-                 base_url: str = "https://api.openai.com/v1") -> None:
+                 base_url: str = "https://api.openai.com/v1",
+                 model_override: str = "") -> None:
         self._api_key = api_key or os.environ.get("OPENAI_API_KEY", "")
         self._base_url = base_url.rstrip("/")
+        self._model_override = model_override  # 本地引擎用真實模型名（路由鍵為 "local"）
 
     def complete(self, request: LLMRequest) -> LLMResponse:
         t0 = time.time()
         try:
             payload: Dict[str, Any] = {
-                "model": request.model, "messages": request.messages,
+                "model": (self._model_override or request.model), "messages": request.messages,
                 "max_tokens": request.max_tokens, "temperature": request.temperature,
                 **request.extra,
             }
@@ -148,7 +150,7 @@ class MRLNativeAnthropicAdapter(LLMAdapter):
 
 
 def register_native_adapters(gateway: Any, *, openai_key: str = "", anthropic_key: str = "",
-                             local_base_url: str = "") -> List[str]:
+                             local_base_url: str = "", local_model: str = "") -> List[str]:
     """
     把 MRL-native adapter 註冊進 llm_adapter.LLMGateway（取代 SDK 殼）。
     回傳已註冊的 native adapter 名稱清單。
@@ -161,7 +163,7 @@ def register_native_adapters(gateway: Any, *, openai_key: str = "", anthropic_ke
         gateway.register("anthropic", MRLNativeAnthropicAdapter(api_key=anthropic_key))
         registered.append("anthropic(native)")
     if local_base_url:
-        gateway.register("local", MRLNativeOpenAIAdapter(api_key="local", base_url=local_base_url))
+        gateway.register("local", MRLNativeOpenAIAdapter(api_key="local", base_url=local_base_url, model_override=local_model))
         registered.append("local(native)")
     return registered
 

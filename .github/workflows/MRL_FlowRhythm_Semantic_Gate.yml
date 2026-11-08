@@ -1,0 +1,27 @@
+name: MRL FlowRhythm Semantic Gate
+
+on:
+  pull_request:
+    paths:
+      - 'MRL_WorldModel/MRL_FlowRhythm_v0/**'
+      - '.github/workflows/MRL_FlowRhythm_Semantic_Gate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile FlowRhythm
+        run: |
+          python -m py_compile MRL_WorldModel/MRL_FlowRhythm_v0/flow_rhythm.py
+          python -m py_compile MRL_WorldModel/MRL_FlowRhythm_v0/tests/test_rhythm.py
+
+      - name: Verify fail-closed semantic gate and replay
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python MRL_WorldModel/MRL_FlowRhythm_v0/tests/test_rhythm.py

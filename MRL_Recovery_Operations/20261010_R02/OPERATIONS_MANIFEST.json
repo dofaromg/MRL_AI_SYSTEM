@@ -1,0 +1,141 @@
+{
+  "schema": "MRL_Recovery_Operations_Manifest_R02",
+  "origin_signature": "MrLiouWord",
+  "record_mode": "APPEND_ONLY",
+  "source_authorship": "Cloud-authored operations supplement, with original D file bodies and credentials retained on D",
+  "frozen_recovery_commit": "be2f1d63ed355bb972241cc0db4eeecceeb0f04d",
+  "frozen_recovery_tree": "25431d3a327e9c3805a2adae429e5b56e2a85feb",
+  "frozen_recovery_paths_unchanged": 33,
+  "files": [
+    {
+      "path": ".github/workflows/MRL_recovery_operations.yml",
+      "bytes": 8569,
+      "sha256": "4ecafda83ca68dfa0a1130caf2bdc329d2adc170db70c3ae5232f7372a362b58",
+      "git_blob_sha": "be6f7079425579c689ddce0df262e042df985f94"
+    },
+    {
+      "path": "MRL_Recovery_Operations/20261010_R02/MRL_active_runtime_watchdog_v3.py",
+      "bytes": 32301,
+      "sha256": "c9d671083bba6d0f8300a1b2e78d983a04e411971f274cf435088f555f1efb0a",
+      "git_blob_sha": "d567f54d1ab24a18fd055548bb5216db10ce9e49"
+    },
+    {
+      "path": "MRL_Recovery_Operations/20261010_R02/MRL_active_watchdog_activation_verify_v1.py",
+      "bytes": 21393,
+      "sha256": "286d5f003e6eea722f1c0c33ba16ebacf58b3d9489ced3c0a26b931368702720",
+      "git_blob_sha": "7e80dc1ec0c75b651f662b18ce3a21ba202ab992"
+    },
+    {
+      "path": "MRL_Recovery_Operations/20261010_R02/MRL_Existing_Inference_7500_Probe_R02.py",
+      "bytes": 4351,
+      "sha256": "e0efc688ac74e2b0fae96c3bee34e3a8ea1f34ab296e75ee51a00c76bdc2b630",
+      "git_blob_sha": "cf60945b55f5e53f932b8e10cc5a8db3ac9d666d"
+    },
+    {
+      "path": "MRL_Recovery_Operations/20261010_R02/MRL_Install_Active_Watchdog_R02_v3.ps1",
+      "bytes": 7977,
+      "sha256": "2e2aea6ded8622be3543e8003c3f3ad71a679e8306e610af59ea98b42215587f",
+      "git_blob_sha": "83a22f7e8beb12912b5c5bbdf173402a1775b564"
+    },
+    {
+      "path": "MRL_Recovery_Operations/20261010_R02/MRL_qdrant_durable_crud_v1.py",
+      "bytes": 15051,
+      "sha256": "62005510abddcac8c2d745d4291bf0f0231b37a2ae5e0e8e789f5201ecda17bc",
+      "git_blob_sha": "4a86794b698934f782f3eb6f803ad1caca16e87d"
+    },
+    {
+      "path": "MRL_Recovery_Operations/20261010_R02/MRL_qdrant_durable_crud_v2.py",
+      "bytes": 15154,
+      "sha256": "6ba4236c031a8f2199a0501eccbd709f93c1522af7513c1a675bffd0f594b352",
+      "git_blob_sha": "5a917db19da1d4365b87ba92952a474f47cdbdb6"
+    },
+    {
+      "path": "MRL_Recovery_Operations/20261010_R02/MRL_qdrant_local_service_task_v1.ps1",
+      "bytes": 8270,
+      "sha256": "403cfac505a8ce59e39ee016901a23adbbb7e086f858b41034ef08067d0c3297",
+      "git_blob_sha": "0c18ca069315dadc781683a80ebb5f02b5742c20"
+    },
+    {
+      "path": "MRL_Recovery_Operations/20261010_R02/MRL_qdrant_local_service_v1.py",
+      "bytes": 36865,
+      "sha256": "5964dbe32fcb3cad9672648aff5e6e6b40a8bfa5a7472c68da0834eeb155be4f",
+      "git_blob_sha": "b6a2c13b45345a58caeaa55afe048fcf36fd734f"
+    },
+    {
+      "path": "MRL_Recovery_Operations/20261010_R02/MRL_qdrant_native_probe_R02_v3.py",
+      "bytes": 36514,
+      "sha256": "e037408dab9ad3906c45feb86cd5a27dd4715841efb654b90a8208966cc74f2a",
+      "git_blob_sha": "bc7d1b972f6d97161de59fd41b01d0ec92ceaf73"
+    },
+    {
+      "path": "MRL_Recovery_Operations/20261010_R02/MRL_Watchdog_SyntaxCandidate_Helper_R01.py",
+      "bytes": 12786,
+      "sha256": "bd5e5d2774dad9468bd766221a96bcb3af86dc68432a82e98559c82403839c12",
+      "git_blob_sha": "7570945dcaea7190ba88175de234192f17c4da6d"
+    },
+    {
+      "path": "MRL_Recovery_Operations/20261010_R02/OPERATIONS_RUNTIME_EVIDENCE.json",
+      "bytes": 34404,
+      "sha256": "d3b51cbbb80a5ccd00addba6cc36a3910992e9c16f14d9bd67e12d24978d689b",
+      "git_blob_sha": "75fdd270ddc50c3b407d15839c70a44c359edf78"
+    },
+    {
+      "path": "MRL_Recovery_Operations/20261010_R02/README.md",
+      "bytes": 7459,
+      "sha256": "36f1495dad8046d46908d313a403ddf4eb21c5b5cd67d118e7f39ddc0ff8181c",
+      "git_blob_sha": "d60e73e9a000ba3d4863c40a177c4114146acebb"
+    },
+    {
+      "path": "MRL_Recovery_Operations/20261010_R02/RUNTIME_EVIDENCE.md",
+      "bytes": 19753,
+      "sha256": "18aba32547ea6d28c674adfc837c91811317ce5e4cde40357be81743236a6ea0",
+      "git_blob_sha": "b57de7171a012513e55bd8cb3e9a51fe8c6f9eac"
+    },
+    {
+      "path": "MRL_Recovery_Operations/20261010_R02/test_MRL_qdrant_durable_crud_v1.py",
+      "bytes": 6751,
+      "sha256": "938fce79dc81659cc1f2eafed9d6c366432bc52b26883f4a889baa2983d6d908",
+      "git_blob_sha": "053d291d9e60ef535d5b52ec7761bd6ec5027190"
+    },
+    {
+      "path": "MRL_Recovery_Operations/20261010_R02/test_MRL_qdrant_durable_crud_v2.py",
+      "bytes": 8636,
+      "sha256": "466b5b42224048ad41847850373b878e8c4ed51638123e9d86b2de1fa7e39c98",
+      "git_blob_sha": "cf427f963ca412db0585d7847417fa915d131251"
+    },
+    {
+      "path": "MRL_Recovery_Operations/20261010_R02/test_MRL_qdrant_local_service_v1.py",
+      "bytes": 15364,
+      "sha256": "054ce2380f17cd8a39a6c76f6a071923fa4acdcd7651475a17ff0738a042a8dd",
+      "git_blob_sha": "933a31ec51187062349e2a90bc6751e28ba472ad"
+    },
+    {
+      "path": "MRL_Recovery_Operations/20261010_R02/verify_operations_manifest.py",
+      "bytes": 12716,
+      "sha256": "258308306dc737dcd1e59ae1476977ab2d59847eacb1f5d6b2de3f84fdf5b519",
+      "git_blob_sha": "bc5a562677a25bc7100c6d33ad1c0eaefacf290c"
+    }
+  ],
+  "expected_file_list": [
+    ".github/workflows/MRL_recovery_operations.yml",
+    "MRL_Recovery_Operations/20261010_R02/MRL_Existing_Inference_7500_Probe_R02.py",
+    "MRL_Recovery_Operations/20261010_R02/MRL_Install_Active_Watchdog_R02_v3.ps1",
+    "MRL_Recovery_Operations/20261010_R02/MRL_Watchdog_SyntaxCandidate_Helper_R01.py",
+    "MRL_Recovery_Operations/20261010_R02/MRL_active_runtime_watchdog_v3.py",
+    "MRL_Recovery_Operations/20261010_R02/MRL_active_watchdog_activation_verify_v1.py",
+    "MRL_Recovery_Operations/20261010_R02/MRL_qdrant_durable_crud_v1.py",
+    "MRL_Recovery_Operations/20261010_R02/MRL_qdrant_durable_crud_v2.py",
+    "MRL_Recovery_Operations/20261010_R02/MRL_qdrant_local_service_task_v1.ps1",
+    "MRL_Recovery_Operations/20261010_R02/MRL_qdrant_local_service_v1.py",
+    "MRL_Recovery_Operations/20261010_R02/MRL_qdrant_native_probe_R02_v3.py",
+    "MRL_Recovery_Operations/20261010_R02/OPERATIONS_MANIFEST.json",
+    "MRL_Recovery_Operations/20261010_R02/OPERATIONS_RUNTIME_EVIDENCE.json",
+    "MRL_Recovery_Operations/20261010_R02/README.md",
+    "MRL_Recovery_Operations/20261010_R02/RUNTIME_EVIDENCE.md",
+    "MRL_Recovery_Operations/20261010_R02/test_MRL_qdrant_durable_crud_v1.py",
+    "MRL_Recovery_Operations/20261010_R02/test_MRL_qdrant_durable_crud_v2.py",
+    "MRL_Recovery_Operations/20261010_R02/test_MRL_qdrant_local_service_v1.py",
+    "MRL_Recovery_Operations/20261010_R02/verify_operations_manifest.py"
+  ],
+  "hash_rule": "SHA256 and Git blob SHA apply to exact UTF-8 bytes; this manifest excludes its own hash."
+}

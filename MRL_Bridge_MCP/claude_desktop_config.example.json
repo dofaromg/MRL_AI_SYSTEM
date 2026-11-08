@@ -1,0 +1,9 @@
+{
+  "//": "合併進 %APPDATA%\\Claude\\claude_desktop_config.json 的 mcpServers 區塊。路徑用雙反斜線。",
+  "mcpServers": {
+    "MRL_Bridge_MCP": {
+      "command": "D:\\mrl\\mcp\\MRL_Bridge_MCP\\MRL_Bridge_MCP.exe",
+      "args": []
+    }
+  }
+}

@@ -28,7 +28,7 @@ import re
 import time
 from typing import Any, Dict, List, Optional, Tuple
 
-ORIGIN_SIGNATURE = "MrLiouWord"
+from MRL_utils import ORIGIN_SIGNATURE
 _REPO = pathlib.Path(__file__).resolve().parent.parent
 
 # Notion 設計的語義保存加權(原文 aggregate_scores 的 weights)

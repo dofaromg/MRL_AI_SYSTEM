@@ -7,7 +7,9 @@ set -euo pipefail
 # repo 根目錄（deploy/dl580 的上兩層）
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MRL_HOME="${MRL_HOME:-$(cd "${SCRIPT_DIR}/../.." && pwd)}"
-MRL_PORT="${MRL_PORT:-8790}"
+# canonical base does not start Platform; an explicit runtime port supports a separately started Platform.
+MRL_PORT="${MRL_RUNTIME_PORT:-${MRL_PORT:-8790}}"
+export MRL_PORT
 ORIGIN_SIGNATURE="MrLiouWord"
 
 cd "${MRL_HOME}"

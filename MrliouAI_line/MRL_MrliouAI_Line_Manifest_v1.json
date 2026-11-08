@@ -1,0 +1,691 @@
+{
+  "manifest": "MRL_MrliouAI_Line_Manifest_v1",
+  "origin_signature": "MrLiouWord",
+  "rule": "unrelated-histories merge; base branch keeps original paths; MrliouAI version of every add/add conflict preserved verbatim at MrliouAI_line/<path> (NO_DELETE + ADDITIVE_RESOLUTION)",
+  "decided_by": "MR.liou (dofaromg), 2026-11-05: option 1, default branch keeps original paths",
+  "MrliouAI_head": "7cad46e17893f18d4ea90c3f0d24395e16e3589f",
+  "base_head": "78b56a4918ae0ebe1a3a9f28c699ecef6b8c60f9",
+  "conflict_count": 85,
+  "entries": [
+    {
+      "path": ".github/workflows/MRL_DL580_selfhosted_deploy.yml",
+      "active_at_path": "base",
+      "base_blob": "176ad7296924670e5daba72083b55481c36f4e75",
+      "MrliouAI_blob": "840bab13104679c18558726e150230688d60bcef",
+      "MrliouAI_preserved_at": "MrliouAI_line/.github/workflows/MRL_DL580_selfhosted_deploy.yml",
+      "mode": "100644"
+    },
+    {
+      "path": ".github/workflows/deploy.yml",
+      "active_at_path": "base",
+      "base_blob": "5a0fc0ab4eb7aabc2536c1ac8948089126af28a0",
+      "MrliouAI_blob": "3362470e63343ae260d9bbf1310a02f923561623",
+      "MrliouAI_preserved_at": "MrliouAI_line/.github/workflows/deploy.yml",
+      "mode": "100644"
+    },
+    {
+      "path": ".gitignore",
+      "active_at_path": "base",
+      "base_blob": "25e219cd3f903c2efce584b76f30ecb8b6b9abc4",
+      "MrliouAI_blob": "5c5205db36eb5858c7e8db4818fc43d73c2589cf",
+      "MrliouAI_preserved_at": "MrliouAI_line/.gitignore",
+      "mode": "100644"
+    },
+    {
+      "path": "00_rootlaw/rootlaw.yaml",
+      "active_at_path": "base",
+      "base_blob": "90d90ed364a8d0bc0303715c2659277d2ab6f015",
+      "MrliouAI_blob": "521c9f3910c838901440c5dfcc097347a3a1863f",
+      "MrliouAI_preserved_at": "MrliouAI_line/00_rootlaw/rootlaw.yaml",
+      "mode": "100644"
+    },
+    {
+      "path": "03_memory/vector/vector_store.py",
+      "active_at_path": "base",
+      "base_blob": "a3e2171379128c0af4b159af2999efba7f511d46",
+      "MrliouAI_blob": "cf4c8d19a1378766aa08781a18f0c3b6dbebbecd",
+      "MrliouAI_preserved_at": "MrliouAI_line/03_memory/vector/vector_store.py",
+      "mode": "100644"
+    },
+    {
+      "path": "05_persona/README.md",
+      "active_at_path": "base",
+      "base_blob": "2f9e1cbe779a8ccc7e1d1983862c120902a450c2",
+      "MrliouAI_blob": "e7cf0912ade6d88275a2fc9811a57e4e92eaed42",
+      "MrliouAI_preserved_at": "MrliouAI_line/05_persona/README.md",
+      "mode": "100644"
+    },
+    {
+      "path": "08_sources/sources.manifest.yaml",
+      "active_at_path": "base",
+      "base_blob": "14468a59f6161b70c62c735d64f4f0a198499e7e",
+      "MrliouAI_blob": "d85c0c68581c5048a0d58d18c4609290a9583cab",
+      "MrliouAI_preserved_at": "MrliouAI_line/08_sources/sources.manifest.yaml",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_DataIdentity_v1.py",
+      "active_at_path": "base",
+      "base_blob": "7bfccf833714e1194e2d66d7a9cf714f2ef94b6c",
+      "MrliouAI_blob": "a2dedaba8fcdc9958a1ad179bd146efbdcc02d18",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_DataIdentity_v1.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_FlowAgent_LawEngine_v1.py",
+      "active_at_path": "base",
+      "base_blob": "1ebe86edf9dff83f4f62a07d389bf373978e78ee",
+      "MrliouAI_blob": "7287a3f65a833f6c1ad8202f20f629b48456ce4c",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_FlowAgent_LawEngine_v1.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_LLM_NativeAdapter_v1.py",
+      "active_at_path": "base",
+      "base_blob": "15a96b3d2fe1cb8b30843d568d696a548f06e4b9",
+      "MrliouAI_blob": "1cc11ea821850c8fe10277eac5079f986d17268d",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_LLM_NativeAdapter_v1.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_Law0_Customs_v1.py",
+      "active_at_path": "base",
+      "base_blob": "abce111ea80951b94159b7810a8d48dbc1a226d4",
+      "MrliouAI_blob": "cfae5cf87e5f0236ba6ac389fddfb5d3ef6f635a",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_Law0_Customs_v1.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_LogicalStructureExtractor_v1.py",
+      "active_at_path": "base",
+      "base_blob": "e9a8e8c3728be2200b19f7a58b70e417f8b4791a",
+      "MrliouAI_blob": "915f570b54e76705baf8262ac06245ee7a00cb02",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_LogicalStructureExtractor_v1.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_MCP_Server_v1.py",
+      "active_at_path": "base",
+      "base_blob": "7b4ca4b7a39bad176e24f525ff7c487895d34c95",
+      "MrliouAI_blob": "165bb766f04bd14396b9c813db29b8fac7efe208",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_MCP_Server_v1.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_Mobius_Closure_Engine_v1.py",
+      "active_at_path": "base",
+      "base_blob": "f42d403d5e68301fba6d3e481fc97fa3b2f2e267",
+      "MrliouAI_blob": "e8a9e63eee6eae34f81a00366f4bbc7fc240728c",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_Mobius_Closure_Engine_v1.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_OID_Parser_v1.py",
+      "active_at_path": "base",
+      "base_blob": "b9af69643abd7c30f277463195e947a864f1a6a5",
+      "MrliouAI_blob": "1bed23dc5ef00c12ca41dcf12cccb05503b65be5",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_OID_Parser_v1.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_OriginBoundary_Guard_v1.py",
+      "active_at_path": "base",
+      "base_blob": "5e9a7e9ee7df4dfe67d944089ddf6c571e0cafbc",
+      "MrliouAI_blob": "333be52c57b4c22d96b34ace59a3fcf51a8ab5d8",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_OriginBoundary_Guard_v1.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_ParallelPersonaEngine_v1.py",
+      "active_at_path": "base",
+      "base_blob": "c0ae910f3ed45d08eef911f5a634d8be42ffb03b",
+      "MrliouAI_blob": "18f810f46cfd6685b20833eb6fb1e54701ed7eff",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_ParallelPersonaEngine_v1.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_ParticleArchive_Manager_v1.py",
+      "active_at_path": "base",
+      "base_blob": "ddb050995eb059bca8c78b4023d296dd9cdc1540",
+      "MrliouAI_blob": "b34fd3363a3bbb91430229483e0d5e71410d224d",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_ParticleArchive_Manager_v1.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL__Flowcore_Loop_2.py",
+      "active_at_path": "base",
+      "base_blob": "a88a065b4e9cae0f526dcedb945c7368e1f817b7",
+      "MrliouAI_blob": "8097ce96a2ec2e781c0e041d9305737d8f32095a",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL__Flowcore_Loop_2.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_cache.py",
+      "active_at_path": "base",
+      "base_blob": "376bc45529d0a99c112dd62fa7d3dcbaabf7b89c",
+      "MrliouAI_blob": "f871f543054e1c99f5b85c5d86c697c5d35a50d4",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_cache.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_event_bus.py",
+      "active_at_path": "base",
+      "base_blob": "341650fb41be42d55089025ed03c473d8ae0a098",
+      "MrliouAI_blob": "30ea2a2089495c418d46bc2b34ca3d173797ee5f",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_event_bus.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_health_monitor.py",
+      "active_at_path": "base",
+      "base_blob": "8ea12961e52fcd8d28f1ad2c1d359be5eb83f28f",
+      "MrliouAI_blob": "04ee19f767bd057176222fde2c28e93bf549396c",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_health_monitor.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_host_guard.py",
+      "active_at_path": "base",
+      "base_blob": "b3ac6c8a8146b7625d859bc39fde8068d71eddc3",
+      "MrliouAI_blob": "b52e8eac8569d6c5a556031a18e5ef181264459b",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_host_guard.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_learning_ingest.py",
+      "active_at_path": "base",
+      "base_blob": "ae827a4a9beea48d423051c385926daf155c5ab2",
+      "MrliouAI_blob": "41d995a2c0b968d3fa3355e8fde3fdf565d2761f",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_learning_ingest.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_metrics.py",
+      "active_at_path": "base",
+      "base_blob": "1e4f852b780233290af2337c6b6ff7cbd7ff32ec",
+      "MrliouAI_blob": "ea88de05e4dbac2729d72d9de6378bc057382cee",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_metrics.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_mother_assembly.py",
+      "active_at_path": "base",
+      "base_blob": "e79bf78c4f40185156e3be9acdb9f6d7276534be",
+      "MrliouAI_blob": "ca8a3d48a429a28fa6e79a16b2e4e0f52b877123",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_mother_assembly.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_multi_agent.py",
+      "active_at_path": "base",
+      "base_blob": "dc18e91f3b20bdc5d634b4da3658e99723657bad",
+      "MrliouAI_blob": "c5ef55019fe13fc281e56ce22206364bc41b790b",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_multi_agent.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_rate_limiter.py",
+      "active_at_path": "base",
+      "base_blob": "676b64c1c42184a02747f005c24e890f26f42746",
+      "MrliouAI_blob": "c4509b413dc2b18677936452a472b5202c64d0da",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_rate_limiter.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/MRL_self_optimize.py",
+      "active_at_path": "base",
+      "base_blob": "d0f75ca42756af79d82cc4ca6462492000a06976",
+      "MrliouAI_blob": "60a28ebe53d68ee362acd957d04cd273ad824ec8",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/MRL_self_optimize.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/api_gateway.py",
+      "active_at_path": "base",
+      "base_blob": "c07577ed204e8b7ebcd607b1b1879959e5a03571",
+      "MrliouAI_blob": "9670d57282bdb3a59f6e2dd3fd22eb613f95ceb8",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/api_gateway.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/config_manager.py",
+      "active_at_path": "base",
+      "base_blob": "3a5c557c0c796130ff338657851915360d9d3af8",
+      "MrliouAI_blob": "ee52ea164ebf8dbae62f0d6f6e43b2dfe361a064",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/config_manager.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/llm_adapter.py",
+      "active_at_path": "base",
+      "base_blob": "7f0608887e48a47ab61b23faaf54002229827dfd",
+      "MrliouAI_blob": "1d69c5e06aca1c762a66a10f2cb2f13d5a0fde2b",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/llm_adapter.py",
+      "mode": "100644"
+    },
+    {
+      "path": "09_workflow/prompt_template.py",
+      "active_at_path": "base",
+      "base_blob": "f4ea3328fd6ed07754cdb5830677e0c6d47bdddd",
+      "MrliouAI_blob": "e16d16cc8ff69e29f1a85ad5cd4c9bbc6cd4fc00",
+      "MrliouAI_preserved_at": "MrliouAI_line/09_workflow/prompt_template.py",
+      "mode": "100644"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "active_at_path": "base",
+      "base_blob": "c2473e5c0cc68340fe9ee4a8966a382c89233965",
+      "MrliouAI_blob": "22b33f1664fbf9f565b662d67c3e92d078feb0a2",
+      "MrliouAI_preserved_at": "MrliouAI_line/CHANGELOG.md",
+      "mode": "100644"
+    },
+    {
+      "path": "CLAUDE.md",
+      "active_at_path": "base",
+      "base_blob": "cf3be5e6658d71e10645a2833c9de22ecb381bcd",
+      "MrliouAI_blob": "827ad97dc4ef2f47ce5bb93c7858937d1d7277da",
+      "MrliouAI_preserved_at": "MrliouAI_line/CLAUDE.md",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_Adapters/DL580/README.md",
+      "active_at_path": "base",
+      "base_blob": "38ff3849747272d0997cc8f1a750e55d69adc794",
+      "MrliouAI_blob": "a5e1d7143d9f9edbc20524a460be51dfda13de21",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_Adapters/DL580/README.md",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_Mother/MRL_AGI/README.md",
+      "active_at_path": "base",
+      "base_blob": "10c2bc01c1b2cdec073efbb152fe9a53e2f76275",
+      "MrliouAI_blob": "ea95187ac4ceb1611d7ecfec10aa89617e0d4dfc",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_Mother/MRL_AGI/README.md",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_Mother/MRL_AI/README.md",
+      "active_at_path": "base",
+      "base_blob": "dd97cbfb5204b3849ce1750c364cb9b148d268a2",
+      "MrliouAI_blob": "45d2edb06c5e7adf9094002667358fa93f036a97",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_Mother/MRL_AI/README.md",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_Mother/MRL_ASI/README.md",
+      "active_at_path": "base",
+      "base_blob": "b31611d08365782a1d7219e1964cec2fd15960b8",
+      "MrliouAI_blob": "12afe2967ede1fe331db15a67a5e9a05ebd8df71",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_Mother/MRL_ASI/README.md",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_MotherSource_ZhiZhang_FlowAgent_Lineage_v1/generative_expansion_metacode/_定位清單_v1.md",
+      "active_at_path": "base",
+      "base_blob": "3948af04406ad743cf10af35b57cde0055c00ee5",
+      "MrliouAI_blob": "5a4d85734611690bc65db419db627ee47c180bb1",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_MotherSource_ZhiZhang_FlowAgent_Lineage_v1/generative_expansion_metacode/_定位清單_v1.md",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_Mother_Launch.js",
+      "active_at_path": "base",
+      "base_blob": "a1582df6ddab3d58d46b893b28f806ec9160bfd2",
+      "MrliouAI_blob": "ac1bf2a05fbac71c5104099d2f2510c9b1a4c1b1",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_Mother_Launch.js",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_ParticleArchive/MRL_ParticleArchive_manifest.json",
+      "active_at_path": "base",
+      "base_blob": "7d1e80055d64f885d87e199409683cd655b40886",
+      "MrliouAI_blob": "a51e5ff49bdde7dca809715d8a3531be9dcb4201",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_ParticleArchive/MRL_ParticleArchive_manifest.json",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_ParticleArchive/README.md",
+      "active_at_path": "base",
+      "base_blob": "6fbdd60fd2c574ce5b81869e665433f93a4858c5",
+      "MrliouAI_blob": "6258ef1ffccb75b3967c67e8e42642e7bce4734f",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_ParticleArchive/README.md",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_Platform_Server.py",
+      "active_at_path": "base",
+      "base_blob": "d63656ab31924bf9523b9114e3621e1e1023e8e9",
+      "MrliouAI_blob": "decc60ab52c975d3bfe581f4e9723d16459c2158",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_Platform_Server.py",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_Runtime/MRL_Workflow_PIDScope/MRL_Runtime_Recovery/runtime_recovery.js",
+      "active_at_path": "base",
+      "base_blob": "3d7ae27478f9accc0ff18f40d50ddf199b3880f3",
+      "MrliouAI_blob": "5b87e1d737e8096e446ae2e2709545bd43965f42",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_Runtime/MRL_Workflow_PIDScope/MRL_Runtime_Recovery/runtime_recovery.js",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_Runtime/MRL_Workflow_PIDScope/MRL_Runtime_StructureField/runtime_structurefield.js",
+      "active_at_path": "base",
+      "base_blob": "ed08e557ef0693ba613d9bd9f075d36075aeeff5",
+      "MrliouAI_blob": "40001d1213910d8fb966dbaa5de3820f280d435b",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_Runtime/MRL_Workflow_PIDScope/MRL_Runtime_StructureField/runtime_structurefield.js",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_Runtime/MRL_Workflow_PIDScope/MRL_ScopeIsolation/scope_isolation.js",
+      "active_at_path": "base",
+      "base_blob": "6af017de2ad4e2001dca792ebbd148a406a4d028",
+      "MrliouAI_blob": "a3ed6a0e40fb19c945a68db36650a51b38001d43",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_Runtime/MRL_Workflow_PIDScope/MRL_ScopeIsolation/scope_isolation.js",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_Runtime/MRL_Workflow_PIDScope/index.js",
+      "active_at_path": "base",
+      "base_blob": "8f709334965f05429b6a87c81ec5231d5a2ebe2b",
+      "MrliouAI_blob": "d91fd72ee0a605d9e2328baef8a3fd4b3faea359",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_Runtime/MRL_Workflow_PIDScope/index.js",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_RuntimeOS_EnterpriseRuntimePlatform_CoreExecutable_v1_4_0/MRL_API/MRL_RuntimeServer.js",
+      "active_at_path": "base",
+      "base_blob": "d077cbee28eb01502e281e1fd50c452e0db9e395",
+      "MrliouAI_blob": "71062ac848d783c17592b9d245dd0166dc25504e",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_RuntimeOS_EnterpriseRuntimePlatform_CoreExecutable_v1_4_0/MRL_API/MRL_RuntimeServer.js",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_RuntimeOS_EnterpriseRuntimePlatform_CoreExecutable_v1_4_0/MRL_Enterprise/MRL_Config.js",
+      "active_at_path": "base",
+      "base_blob": "812981eb89e15ea931e3e6b7773b7474f3be74b3",
+      "MrliouAI_blob": "4e202382370ab56654752ba5a79742cd7b49afb5",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_RuntimeOS_EnterpriseRuntimePlatform_CoreExecutable_v1_4_0/MRL_Enterprise/MRL_Config.js",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_RuntimeOS_EnterpriseRuntimePlatform_CoreExecutable_v1_4_0/MRL_Storage/MRL_Audit/MRL_Audit_Ledger.jsonl",
+      "active_at_path": "base",
+      "base_blob": "75ff779de84a37a2e0f3ad7c89c1e0414be0dacd",
+      "MrliouAI_blob": "8914345323c43862618658ace29acdd4cb8daad1",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_RuntimeOS_EnterpriseRuntimePlatform_CoreExecutable_v1_4_0/MRL_Storage/MRL_Audit/MRL_Audit_Ledger.jsonl",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_RuntimeOS_EnterpriseRuntimePlatform_CoreExecutable_v1_4_0/MRL_WebConsole/index.html",
+      "active_at_path": "base",
+      "base_blob": "0850c27cdbe9828920e77d6095218a10959cf964",
+      "MrliouAI_blob": "4fa1cf3878e7a40dc1af921984f4bcbd57e3e38e",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_RuntimeOS_EnterpriseRuntimePlatform_CoreExecutable_v1_4_0/MRL_WebConsole/index.html",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_RuntimeServer.js",
+      "active_at_path": "base",
+      "base_blob": "c9a7723dde80d52cea7e945c534f4334efdcc3a3",
+      "MrliouAI_blob": "2adeb96f9f2d8003f7159e92d7e620f1d60fb85c",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_RuntimeServer.js",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_UniversalRuntimeLanguage_Core_v1/MRL_Language/MRL_PerceptionKernel.py",
+      "active_at_path": "base",
+      "base_blob": "3dad09f78012f54730d1f2576800060c09380c88",
+      "MrliouAI_blob": "e012f742cf30f99d2dc3b074e6c907c50ac2fe20",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_UniversalRuntimeLanguage_Core_v1/MRL_Language/MRL_PerceptionKernel.py",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_UniversalRuntimeLanguage_Core_v1/MRL_Language/__init__.py",
+      "active_at_path": "base",
+      "base_blob": "7b715cb93bae85936e3542d49769f0b661c9cfd7",
+      "MrliouAI_blob": "b396f974c4c99c6e1e1a31d6dc3221dc70243c8e",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_UniversalRuntimeLanguage_Core_v1/MRL_Language/__init__.py",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_UniversalRuntimeLanguage_Core_v1/MRL_Runtime/MRL_DL580_Runtime.py",
+      "active_at_path": "base",
+      "base_blob": "62a2ce0748842e40e69513382ec4927df58a40fd",
+      "MrliouAI_blob": "d7dce3dc2b3484e36ea262fdacecf7b6ec0577be",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_UniversalRuntimeLanguage_Core_v1/MRL_Runtime/MRL_DL580_Runtime.py",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_UniversalRuntimeLanguage_Core_v1/MRL_Runtime/MRL_RuntimeGraph_Builder.py",
+      "active_at_path": "base",
+      "base_blob": "95af42a0673b3cf14185446cfb1dca59edcf50ec",
+      "MrliouAI_blob": "db2ed050381cdd675e655ee24aea3c19e1c6a4bc",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_UniversalRuntimeLanguage_Core_v1/MRL_Runtime/MRL_RuntimeGraph_Builder.py",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_UniversalRuntimeLanguage_Core_v1/MRL_Runtime/MRL_Verification.py",
+      "active_at_path": "base",
+      "base_blob": "e102daad924a54efe6d506c50b85001ee52f80b2",
+      "MrliouAI_blob": "56f68cc2f15ae1e4555c23c235b4d97ccee19a15",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_UniversalRuntimeLanguage_Core_v1/MRL_Runtime/MRL_Verification.py",
+      "mode": "100644"
+    },
+    {
+      "path": "MRL_UniversalRuntimeLanguage_Core_v1/MRL_Runtime/__init__.py",
+      "active_at_path": "base",
+      "base_blob": "6e383db32d41e5ca62bde804d21a796a25405e43",
+      "MrliouAI_blob": "b6102dcf7019f3a5ac1f902ac2fe5b10f9f5e942",
+      "MrliouAI_preserved_at": "MrliouAI_line/MRL_UniversalRuntimeLanguage_Core_v1/MRL_Runtime/__init__.py",
+      "mode": "100644"
+    },
+    {
+      "path": "README.md",
+      "active_at_path": "base",
+      "base_blob": "2498300979261d5ba7b25a03e53ec7cd3aec5ae6",
+      "MrliouAI_blob": "70bbd74811b945e64018d42a6d38fb4417aec33d",
+      "MrliouAI_preserved_at": "MrliouAI_line/README.md",
+      "mode": "100644"
+    },
+    {
+      "path": "data/config.json",
+      "active_at_path": "base",
+      "base_blob": "bfe5d0d212dadfd1bc179b15b89b191b89fb17a1",
+      "MrliouAI_blob": "5f2eadac057e4eee5be5b143dcb0b362db3ce2aa",
+      "MrliouAI_preserved_at": "MrliouAI_line/data/config.json",
+      "mode": "100644"
+    },
+    {
+      "path": "data/prompt_templates.json",
+      "active_at_path": "base",
+      "base_blob": "1e665eb609b209d6e7582de5bd6f8a48c93ee514",
+      "MrliouAI_blob": "0ef06d9fbf4345eaef43bce4c5b86c1d943e2ec3",
+      "MrliouAI_preserved_at": "MrliouAI_line/data/prompt_templates.json",
+      "mode": "100644"
+    },
+    {
+      "path": "deploy/dl580/MRL_Platform_Start.ps1",
+      "active_at_path": "base",
+      "base_blob": "71628230aac85623bc75f534e81f7805cfade5f9",
+      "MrliouAI_blob": "aa0ef550353cbb33c0c778b76f497fb8d6e1e9cc",
+      "MrliouAI_preserved_at": "MrliouAI_line/deploy/dl580/MRL_Platform_Start.ps1",
+      "mode": "100644"
+    },
+    {
+      "path": "deploy/dl580/MRL_dl580_start.sh",
+      "active_at_path": "base",
+      "base_blob": "c8c1bbff4636970c2e4efa74596ceb4156ab104e",
+      "MrliouAI_blob": "462d6f95cdd637e7d04f06b599d292815524a632",
+      "MrliouAI_preserved_at": "MrliouAI_line/deploy/dl580/MRL_dl580_start.sh",
+      "mode": "100755"
+    },
+    {
+      "path": "deploy/dl580/README.md",
+      "active_at_path": "base",
+      "base_blob": "a8a442c1adaeba816ffb2834e2e4cdbc57f42ba5",
+      "MrliouAI_blob": "ab4c69e80344e36caa7a0b9501f81a239525d9ee",
+      "MrliouAI_preserved_at": "MrliouAI_line/deploy/dl580/README.md",
+      "mode": "100644"
+    },
+    {
+      "path": "deploy/dl580/cloudflared/MRL_cloudflared_deploy.ps1",
+      "active_at_path": "base",
+      "base_blob": "5044aad1739635fc353a522751447c4a6995f495",
+      "MrliouAI_blob": "54b6506e15acdf572ca0892e3b6db5e2fdb5459a",
+      "MrliouAI_preserved_at": "MrliouAI_line/deploy/dl580/cloudflared/MRL_cloudflared_deploy.ps1",
+      "mode": "100644"
+    },
+    {
+      "path": "deploy/dl580/cloudflared/README.md",
+      "active_at_path": "base",
+      "base_blob": "00782e22457ccef72f986202bb52381a169bb605",
+      "MrliouAI_blob": "17088273300ea749df80ee6486ecdcf31995d465",
+      "MrliouAI_preserved_at": "MrliouAI_line/deploy/dl580/cloudflared/README.md",
+      "mode": "100644"
+    },
+    {
+      "path": "deploy/dl580/cloudflared/config.yml.template",
+      "active_at_path": "base",
+      "base_blob": "c10694cdc709326bfe96bdba3587ce6c5cab7a72",
+      "MrliouAI_blob": "ea4976ff7f73a6308fc1ed5cafdae57bc8e0487f",
+      "MrliouAI_preserved_at": "MrliouAI_line/deploy/dl580/cloudflared/config.yml.template",
+      "mode": "100644"
+    },
+    {
+      "path": "deploy/tailscale/README.md",
+      "active_at_path": "base",
+      "base_blob": "868a0cb94e0213279767458cb4393a727f871104",
+      "MrliouAI_blob": "b9bd29da5ed9a440814caaa560a174a68625a42e",
+      "MrliouAI_preserved_at": "MrliouAI_line/deploy/tailscale/README.md",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/MRL_世界模組工程書_v1.md",
+      "active_at_path": "base",
+      "base_blob": "95a5d186eaddd8f7daf88df605ba9184826f6064",
+      "MrliouAI_blob": "3b0f3a5cce90c151858507b628323cba4da2ac9b",
+      "MrliouAI_preserved_at": "MrliouAI_line/docs/MRL_世界模組工程書_v1.md",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/MRL_主線收斂與分支條例_附錄_v1.md",
+      "active_at_path": "base",
+      "base_blob": "86887a12ba940e09b9cb246beefdcc01ee692d95",
+      "MrliouAI_blob": "7190a19fc98e4b35895f605c29bbf6ce04a01eaf",
+      "MrliouAI_preserved_at": "MrliouAI_line/docs/MRL_主線收斂與分支條例_附錄_v1.md",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/MRL_命名規範_v2_MrLiouIR_StructureField.md",
+      "active_at_path": "base",
+      "base_blob": "1323f5c7e8db9130415091945e12b26f98e07d86",
+      "MrliouAI_blob": "588bdc8ddc585616fc202854fba3c553bf079a49",
+      "MrliouAI_preserved_at": "MrliouAI_line/docs/MRL_命名規範_v2_MrLiouIR_StructureField.md",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/MRL_工程日誌.md",
+      "active_at_path": "base",
+      "base_blob": "628c7fb7ed799f1b4c0185bed8215e4a4d43c3ac",
+      "MrliouAI_blob": "c802d94307dde24d5f3bef903f9253fb9baf32ba",
+      "MrliouAI_preserved_at": "MrliouAI_line/docs/MRL_工程日誌.md",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/MRL_母體定義檔_v1.md",
+      "active_at_path": "base",
+      "base_blob": "ac0395118b98d67583c415f62ee8a4d29b39a415",
+      "MrliouAI_blob": "0117d5360af380d86d78be2a31badaf63825e972",
+      "MrliouAI_preserved_at": "MrliouAI_line/docs/MRL_母體定義檔_v1.md",
+      "mode": "100644"
+    },
+    {
+      "path": "metacode_core.js",
+      "active_at_path": "base",
+      "base_blob": "39b1bb6e8ef4dfce3ea0d8cc01fe38ab8721f7bd",
+      "MrliouAI_blob": "220fe4f319eed9a5703c1d63f112f4551d5d560c",
+      "MrliouAI_preserved_at": "MrliouAI_line/metacode_core.js",
+      "mode": "100644"
+    },
+    {
+      "path": "package.json",
+      "active_at_path": "base",
+      "base_blob": "c0332f7a7b893490e6685cb6a66c69033d7b53ce",
+      "MrliouAI_blob": "746dd8ac4f129d6c73922eb9421e31542458e2c9",
+      "MrliouAI_preserved_at": "MrliouAI_line/package.json",
+      "mode": "100644"
+    },
+    {
+      "path": "src/mrl_app.html",
+      "active_at_path": "base",
+      "base_blob": "14d4e9daf3229bfe8dfec72b86eee86b2b9a3c05",
+      "MrliouAI_blob": "8295613164c22ec4738dd9774a1a71a4fe2f9058",
+      "MrliouAI_preserved_at": "MrliouAI_line/src/mrl_app.html",
+      "mode": "100644"
+    },
+    {
+      "path": "src/mrl_worker.js",
+      "active_at_path": "base",
+      "base_blob": "4182266a8b08f7060aeaea076ff3e79bc7f1ed2a",
+      "MrliouAI_blob": "96d02005bdfedb0fbc9d11f85bf96424cbcc0bbd",
+      "MrliouAI_preserved_at": "MrliouAI_line/src/mrl_worker.js",
+      "mode": "100644"
+    },
+    {
+      "path": "tests/conftest.py",
+      "active_at_path": "base",
+      "base_blob": "d4007a0a5fd82ea354c9fdfc8a96cea947cd4466",
+      "MrliouAI_blob": "0f1553a0ada53b036c408ad5d2e544acad146e5d",
+      "MrliouAI_preserved_at": "MrliouAI_line/tests/conftest.py",
+      "mode": "100644"
+    },
+    {
+      "path": "tests/test_MRL_mcp_server.py",
+      "active_at_path": "base",
+      "base_blob": "2b2c2e2842d4290a0cf9dafeab2fb9e774cf2f77",
+      "MrliouAI_blob": "9ea07289f9290fbf7f9fcbc0a5415281ff072dbe",
+      "MrliouAI_preserved_at": "MrliouAI_line/tests/test_MRL_mcp_server.py",
+      "mode": "100644"
+    },
+    {
+      "path": "tests/test_MRL_oid_parser.py",
+      "active_at_path": "base",
+      "base_blob": "0ded352614c276aa9d798654d0b09cd9cb3d92f3",
+      "MrliouAI_blob": "d99f94e9f8b4684fbb898beb04319804f284090d",
+      "MrliouAI_preserved_at": "MrliouAI_line/tests/test_MRL_oid_parser.py",
+      "mode": "100644"
+    },
+    {
+      "path": "tests/test_MRL_universal_runtime_core.py",
+      "active_at_path": "base",
+      "base_blob": "7ebeb95e93dcfe04ea254a9a5c2502e3cba4aecd",
+      "MrliouAI_blob": "c25badac08a90cb7b995d658f15c409ae61cd0f6",
+      "MrliouAI_preserved_at": "MrliouAI_line/tests/test_MRL_universal_runtime_core.py",
+      "mode": "100644"
+    },
+    {
+      "path": "tests/test_api_gateway.py",
+      "active_at_path": "base",
+      "base_blob": "1402324377624dcaed9824d39e7d5a8ab3d76b2a",
+      "MrliouAI_blob": "75f4606c5a3618ab524e3eddb0144ed2aaf52ffd",
+      "MrliouAI_preserved_at": "MrliouAI_line/tests/test_api_gateway.py",
+      "mode": "100644"
+    },
+    {
+      "path": "tests/test_mother_assembly.py",
+      "active_at_path": "base",
+      "base_blob": "5c393d2673ba692c395eddf41d1db41687a4e572",
+      "MrliouAI_blob": "eebf66f9f826043aa777e0a01115f0ee41ce0411",
+      "MrliouAI_preserved_at": "MrliouAI_line/tests/test_mother_assembly.py",
+      "mode": "100644"
+    },
+    {
+      "path": "wrangler.jsonc",
+      "active_at_path": "base",
+      "base_blob": "2b3e3559302f5feed8f7ad61e408189b06610ba0",
+      "MrliouAI_blob": "c808d6ed8e13eb8fa005cb814228e1ef45639dc4",
+      "MrliouAI_preserved_at": "MrliouAI_line/wrangler.jsonc",
+      "mode": "100644"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+# origin_signature: MrLiouWord
+# Ignore dynamic MetaCode exports; preserve the original recovery evidence.
+MetaCode.export.*.json
+!MetaCode.export.2026-07-08.json

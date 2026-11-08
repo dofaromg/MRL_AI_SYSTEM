@@ -78,22 +78,38 @@ origin_signature = `MrLiouWord`
 
 ---
 
-## audit — Runtime Canon 收斂審計（待驗證收斂紀錄）
+## v5 — iPhone 本地 Runtime 與內外部節點角色回填
 
-分支：`MRL_Branch_Runtime_Convergence_Audit_v1`（base main `17248be`）
+日期：2026-07-28
 
-### 已完成（審計，非升格）
+### 問題來源
 
-- 產出 `docs/MRL_Runtime_Canonical_Report_v1.md`：Canon / Conflict / Mirror / Proof / Restore Chain。
-- 登錄 9 個 runtime 候選（A 起）以 reference + sha256，**未刪除、未 bulk-copy、未新增第四套 Runtime**。
-- 命名違規（C/D/F 之 attention/graph/metair）標 **待正名**，非刪除理由。
+- 先前把 iPhone 誤判成單純外部客戶端。
+- 把裝置中的 Server Configuration、`oauth-callback`、Files app 與本地服務入口直接解讀為遠端 SSH 主機設定。
+- 因此把 DL580、GitHub 與 Cloudflare 的角色向內部主控方向錯置。
 
-### 待驗證（不得寫成已升格）
+### 已回填
 
-- 層主體選定（Language/IR core：Py #37 vs JS v1.2.0）。
-- Restore Chain 統一物件（FlowCore v1.1.0 revert_to_merkle_root 為基準）。
-- BaseWorld：27-table 為**外部審計支持／本 repo 待驗證**；`d1_schema.sql` 僅 LAW-0/LAW-2 concrete piece，非全量驗收。
+- `README.md`
+  - 加入 iPhone Local Runtime / Local Server / Control Plane。
+  - 明確區分 DL580、Mac mini、GitHub、Cloudflare 的節點角色。
+- `docs/MRL_母體定義檔_v1.md`
+  - 新增內部執行節點層。
+  - 新增 iPhone、DL580、Mac mini 與外部 Adapter 邊界。
+- `docs/MRL_iPhone本地Runtime_內外部節點回填_v1.md`
+  - 建立完整角色修正、設定判讀規則、工程影響面與後續 canonical 目錄。
 
-### 不回填
+### 正式裁定
 
-- 任何 Runtime「主體已升格」之宣稱（未裁示前）。
+```text
+iPhone = Local Runtime + Local Server + Control Plane + User Environment
+DL580 = Mother Runtime + Compute + Persistence
+Mac mini = Relay + Bridge + Desktop Runtime
+GitHub = Engineering Mirror + Version Channel
+Cloudflare = Public Edge + Tunnel + Protection Adapter
+```
+
+### 後續掃描範圍
+
+- 搜尋並修正 `mobile client`、`thin client`、`phone remote control`、`DL580 only entry`、`GitHub control plane` 等錯位語意。
+- 將既有手機端、瀏覽器端、Mrliouagi、Files bridge、callback 與 sensor input 資產對位至 `MRL_Nodes/iPhone/`，不另建平行系統。

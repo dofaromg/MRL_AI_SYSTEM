@@ -1,0 +1,7 @@
+{
+  // 既有 Worker particle-replay 的補位版本；compatibility_date 沿用線上設定
+  "name": "particle-replay",
+  "main": "index.mjs",
+  "compatibility_date": "2024-01-01",
+  "observability": { "enabled": true }
+}

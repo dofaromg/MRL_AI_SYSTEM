@@ -1,0 +1,30 @@
+; ============================================================================
+; MRL Firebase 寄信網域驗證 DNS 片段  —  mrliouword.com
+; origin_signature=MrLiouWord
+;
+; 用途：Firebase 用你的自有網域寄送驗證信 / 重設密碼信所需的 SPF + 擁有權 + DKIM。
+; 這是「片段」，供對照或匯入用；請貼到 mrliouword.com 既有 zone 內，勿覆蓋整個 zone。
+;
+; ── 重要（會讓 Firebase 一直驗證失敗的雷）─────────────────────────────
+;  1) SPF 只能有「一筆」。若 mrliouword.com 已有 SPF（例如 Google Workspace），
+;     不要新增下方第 1 筆，改成把 include:_spf.firebasemail.com 合併進既有那筆：
+;         @  IN TXT "v=spf1 include:_spf.google.com include:_spf.firebasemail.com ~all"
+;  2) 若 DNS 在 Cloudflare，下方兩筆 DKIM CNAME 要設「DNS only（灰雲，關 Proxy）」。
+;  3) CNAME 目標結尾的 "." 要保留（代表完整網域，不再接後綴）。
+;  4) 根網域可同時有多筆 TXT（SPF 那筆 + firebase 那筆），這是允許的；只有 SPF 不能重複。
+; ─────────────────────────────────────────────────────────────────────
+;
+; 名稱以 @ = 根網域(mrliouword.com) 表示；子網域為相對名稱。
+; TTL 交給後台預設（Cloudflare 用 Auto）。
+
+@                     IN  TXT    "v=spf1 include:_spf.firebasemail.com ~all"
+@                     IN  TXT    "firebase=flowmemorysync"
+firebase1._domainkey  IN  CNAME  mail-mrliouword-com.dkim1._domainkey.firebasemail.com.
+firebase2._domainkey  IN  CNAME  mail-mrliouword-com.dkim2._domainkey.firebasemail.com.
+
+; ── 各後台「Name/Host」欄位對照 ──────────────────────────────────────
+;   根 TXT 兩筆        : 有些後台填 "@"，有些留空，有些要完整 "mrliouword.com"
+;   firebase1._domainkey : 有些後台只填 "firebase1._domainkey"，
+;                          有些要完整 "firebase1._domainkey.mrliouword.com"
+;   firebase2._domainkey : 同上
+; ─────────────────────────────────────────────────────────────────────

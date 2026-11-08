@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "MRL://schema/wake_trace/v1",
+  "title": "MRL Wake Trace",
+  "type": "object",
+  "required": ["trace_id", "created_at", "origin_signature", "event_type", "status", "error_count", "errors", "checks", "canonical"],
+  "properties": {
+    "trace_id": {"type": "string"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "origin_signature": {"const": "MrLiouWord"},
+    "event_type": {"const": "MRL_WORLD_MODEL_WAKE_VERIFY"},
+    "status": {"enum": ["PASS", "FAIL"]},
+    "error_count": {"type": "integer", "minimum": 0},
+    "errors": {"type": "array", "items": {"type": "string"}},
+    "checks": {"type": "array", "items": {"type": "object"}},
+    "canonical": {"type": "object"},
+    "backfill_target": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}

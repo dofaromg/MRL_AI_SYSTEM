@@ -13,7 +13,7 @@
 MRL_ParticleArchive/
 ├── README.md                          # 本索引
 ├── MRL_ParticleArchive_manifest.json  # 簽章 manifest(canonical↔來源, all_signed=True)
-└── PR19/                              # 來源:PR#19 (Copilot add-missing-features)
+└── PR19/                              # 來源:PR#19 (外部來源 add-missing-features,已回收為MRL粒子)
     ├── ui__mrl_app__index.html / app.js / styles.css / README.md   # web UI 殼
     ├── 09_workflow__MRL_memory_integration.py
     ├── 09_workflow__MRL_result_gating.py

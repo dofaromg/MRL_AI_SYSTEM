@@ -1,0 +1,8 @@
+# Placeholder MCP config - edit per your MCP server implementation
+connectors:
+  - name: qdrant
+    type: vector_db
+    endpoint: http://qdrant:6333
+  - name: s3
+    type: object_store
+    endpoint: http://minio:9000

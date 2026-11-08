@@ -1,0 +1,570 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "rX8mhOLljYeM"
+      },
+      "source": [
+        "##### Copyright 2019 The TensorFlow Authors."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "cellView": "form",
+        "id": "BZSlp3DAjdYf"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Licensed under the Apache License, Version 2.0 (the \"License\");\n",
+        "# you may not use this file except in compliance with the License.\n",
+        "# You may obtain a copy of the License at\n",
+        "#\n",
+        "# https://www.apache.org/licenses/LICENSE-2.0\n",
+        "#\n",
+        "# Unless required by applicable law or agreed to in writing, software\n",
+        "# distributed under the License is distributed on an \"AS IS\" BASIS,\n",
+        "# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n",
+        "# See the License for the specific language governing permissions and\n",
+        "# limitations under the License."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "3wF5wszaj97Y"
+      },
+      "source": [
+        "# TensorFlow 2 quickstart for beginners"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "DUNzJc4jTj6G"
+      },
+      "source": [
+        "<table class=\"tfo-notebook-buttons\" align=\"left\">\n",
+        "  <td>\n",
+        "    <a target=\"_blank\" href=\"https://www.tensorflow.org/tutorials/quickstart/beginner\"><img src=\"https://www.tensorflow.org/images/tf_logo_32px.png\" />View on TensorFlow.org</a>\n",
+        "  </td>\n",
+        "  <td>\n",
+        "    <a target=\"_blank\" href=\"https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/tutorials/quickstart/beginner.ipynb\"><img src=\"https://www.tensorflow.org/images/colab_logo_32px.png\" />Run in Google Colab</a>\n",
+        "  </td>\n",
+        "  <td>\n",
+        "    <a target=\"_blank\" href=\"https://github.com/tensorflow/docs/blob/master/site/en/tutorials/quickstart/beginner.ipynb\"><img src=\"https://www.tensorflow.org/images/GitHub-Mark-32px.png\" />View source on GitHub</a>\n",
+        "  </td>\n",
+        "  <td>\n",
+        "    <a href=\"https://storage.googleapis.com/tensorflow_docs/docs/site/en/tutorials/quickstart/beginner.ipynb\"><img src=\"https://www.tensorflow.org/images/download_logo_32px.png\" />Download notebook</a>\n",
+        "  </td>\n",
+        "</table>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "04QgGZc9bF5D"
+      },
+      "source": [
+        "This short introduction uses [Keras](https://www.tensorflow.org/guide/keras/overview) to:\n",
+        "\n",
+        "1. Load a prebuilt dataset.\n",
+        "1. Build a neural network machine learning model that classifies images.\n",
+        "2. Train this neural network.\n",
+        "3. Evaluate the accuracy of the model."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "hiH7AC-NTniF"
+      },
+      "source": [
+        "This tutorial is a [Google Colaboratory](https://colab.research.google.com/notebooks/welcome.ipynb) notebook. Python programs are run directly in the browser—a great way to learn and use TensorFlow. To follow this tutorial, run the notebook in Google Colab by clicking the button at the top of this page.\n",
+        "\n",
+        "1. In Colab, connect to a Python runtime: At the top-right of the menu bar, select *CONNECT*.\n",
+        "2. To run all the code in the notebook, select **Runtime** > **Run all**. To run the code cells one at a time, hover over each cell and select the **Run cell** icon.\n",
+        "\n",
+        "![Run cell icon](https://github.com/tensorflow/docs/blob/master/site/en/tutorials/quickstart/images/beginner/run_cell_icon.png?raw=1)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "nnrWf3PCEzXL"
+      },
+      "source": [
+        "## Set up TensorFlow\n",
+        "\n",
+        "Import TensorFlow into your program to get started:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 2,
+      "metadata": {
+        "id": "0trJmd6DjqBZ",
+        "outputId": "71147606-9b0f-4193-b3e4-82ad86565953",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "TensorFlow version: 2.20.0\n"
+          ]
+        }
+      ],
+      "source": [
+        "import tensorflow as tf\n",
+        "print(\"TensorFlow version:\", tf.__version__)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "7NAbSZiaoJ4z"
+      },
+      "source": [
+        "If you are following along in your own development environment, rather than [Colab](https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/tutorials/quickstart/beginner.ipynb), see the [install guide](https://www.tensorflow.org/install) for setting up TensorFlow for development.\n",
+        "\n",
+        "Note: Make sure you have upgraded to the latest `pip` to install the TensorFlow 2 package if you are using your own development environment. See the [install guide](https://www.tensorflow.org/install) for details.\n",
+        "\n",
+        "## Load a dataset\n",
+        "\n",
+        "Load and prepare the MNIST dataset. The pixel values of the images range from 0 through 255. Scale these values to a range of 0 to 1 by dividing the values by `255.0`. This also converts the sample data from integers to floating-point numbers:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 3,
+      "metadata": {
+        "id": "7FP5258xjs-v",
+        "outputId": "aa178c45-c75c-4188-f741-f8ace34b374b",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz\n",
+            "\u001b[1m11490434/11490434\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m0s\u001b[0m 0us/step\n"
+          ]
+        }
+      ],
+      "source": [
+        "mnist = tf.keras.datasets.mnist\n",
+        "\n",
+        "(x_train, y_train), (x_test, y_test) = mnist.load_data()\n",
+        "x_train, x_test = x_train / 255.0, x_test / 255.0"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "BPZ68wASog_I"
+      },
+      "source": [
+        "## Build a machine learning model\n",
+        "\n",
+        "Build a `tf.keras.Sequential` model:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 4,
+      "metadata": {
+        "id": "h3IKyzTCDNGo",
+        "outputId": "95d39f20-11c2-4e27-b9da-b36a20fd1ae9",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "/usr/local/lib/python3.12/dist-packages/keras/src/layers/reshaping/flatten.py:37: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.\n",
+            "  super().__init__(**kwargs)\n"
+          ]
+        }
+      ],
+      "source": [
+        "model = tf.keras.models.Sequential([\n",
+        "  tf.keras.layers.Flatten(input_shape=(28, 28)),\n",
+        "  tf.keras.layers.Dense(128, activation='relu'),\n",
+        "  tf.keras.layers.Dropout(0.2),\n",
+        "  tf.keras.layers.Dense(10)\n",
+        "])"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "l2hiez2eIUz8"
+      },
+      "source": [
+        "[`Sequential`](https://www.tensorflow.org/guide/keras/sequential_model) is useful for stacking layers where each layer has one input [tensor](https://www.tensorflow.org/guide/tensor) and one output tensor. Layers are functions with a known mathematical structure that can be reused and have trainable variables. Most TensorFlow models are composed of layers. This model uses the [`Flatten`](https://www.tensorflow.org/api_docs/python/tf/keras/layers/Flatten), [`Dense`](https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense), and [`Dropout`](https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dropout) layers.\n",
+        "\n",
+        "For each example, the model returns a vector of [logits](https://developers.google.com/machine-learning/glossary#logits) or [log-odds](https://developers.google.com/machine-learning/glossary#log-odds) scores, one for each class."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 5,
+      "metadata": {
+        "id": "OeOrNdnkEEcR",
+        "outputId": "0ef26f4b-59cf-4536-b927-bebe08324f4f",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([[ 0.07163744,  0.6085875 , -0.98556614,  0.24241984,  0.8302016 ,\n",
+              "        -0.7104944 , -0.5326662 , -0.04312883, -0.38223565, -0.5400839 ]],\n",
+              "      dtype=float32)"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 5
+        }
+      ],
+      "source": [
+        "predictions = model(x_train[:1]).numpy()\n",
+        "predictions"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "tgjhDQGcIniO"
+      },
+      "source": [
+        "The `tf.nn.softmax` function converts these logits to *probabilities* for each class:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 6,
+      "metadata": {
+        "id": "zWSRnQ0WI5eq",
+        "outputId": "bbecc842-924e-487c-d100-8c6d1376a2d5",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([[0.10579003, 0.18098357, 0.03675421, 0.12549157, 0.22588374,\n",
+              "        0.04839151, 0.05780947, 0.09431969, 0.06719395, 0.05738224]],\n",
+              "      dtype=float32)"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 6
+        }
+      ],
+      "source": [
+        "tf.nn.softmax(predictions).numpy()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "he5u_okAYS4a"
+      },
+      "source": [
+        "Note: It is possible to bake the `tf.nn.softmax` function into the activation function for the last layer of the network. While this can make the model output more directly interpretable, this approach is discouraged as it's impossible to provide an exact and numerically stable loss calculation for all models when using a softmax output."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "hQyugpgRIyrA"
+      },
+      "source": [
+        "Define a loss function for training using `losses.SparseCategoricalCrossentropy`:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 7,
+      "metadata": {
+        "id": "RSkzdv8MD0tT"
+      },
+      "outputs": [],
+      "source": [
+        "loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "SfR4MsSDU880"
+      },
+      "source": [
+        "The loss function takes a vector of ground truth values and a vector of logits and returns a scalar loss for each example. This loss is equal to the negative log probability of the true class: The loss is zero if the model is sure of the correct class.\n",
+        "\n",
+        "This untrained model gives probabilities close to random (1/10 for each class), so the initial loss should be close to `-tf.math.log(1/10) ~= 2.3`."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 8,
+      "metadata": {
+        "id": "NJWqEVrrJ7ZB",
+        "outputId": "e719eb24-2db7-4e6c-ad4a-09761b07d179",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "np.float32(3.028431)"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 8
+        }
+      ],
+      "source": [
+        "loss_fn(y_train[:1], predictions).numpy()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "ada44eb947d4"
+      },
+      "source": [
+        "Before you start training, configure and compile the model using Keras `Model.compile`. Set the [`optimizer`](https://www.tensorflow.org/api_docs/python/tf/keras/optimizers) class to `adam`, set the `loss` to the `loss_fn` function you defined earlier, and specify a metric to be evaluated for the model by setting the `metrics` parameter to `accuracy`."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 9,
+      "metadata": {
+        "id": "9foNKHzTD2Vo"
+      },
+      "outputs": [],
+      "source": [
+        "model.compile(optimizer='adam',\n",
+        "              loss=loss_fn,\n",
+        "              metrics=['accuracy'])"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "ix4mEL65on-w"
+      },
+      "source": [
+        "## Train and evaluate your model\n",
+        "\n",
+        "Use the `Model.fit` method to adjust your model parameters and minimize the loss:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 10,
+      "metadata": {
+        "id": "y7suUbJXVLqP",
+        "outputId": "464cc56a-a030-4011-b38b-39ddefc0dc4e",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Epoch 1/5\n",
+            "\u001b[1m1875/1875\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m16s\u001b[0m 7ms/step - accuracy: 0.9153 - loss: 0.2932\n",
+            "Epoch 2/5\n",
+            "\u001b[1m1875/1875\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m13s\u001b[0m 7ms/step - accuracy: 0.9585 - loss: 0.1408\n",
+            "Epoch 3/5\n",
+            "\u001b[1m1875/1875\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m17s\u001b[0m 5ms/step - accuracy: 0.9673 - loss: 0.1075\n",
+            "Epoch 4/5\n",
+            "\u001b[1m1875/1875\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m12s\u001b[0m 6ms/step - accuracy: 0.9727 - loss: 0.0878\n",
+            "Epoch 5/5\n",
+            "\u001b[1m1875/1875\u001b[0m \u001b[32m━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[37m\u001b[0m \u001b[1m20s\u001b[0m 6ms/step - accuracy: 0.9763 - loss: 0.0747\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "<keras.src.callbacks.history.History at 0x7f9d55efe840>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 10
+        }
+      ],
+      "source": [
+        "model.fit(x_train, y_train, epochs=5)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "4mDAAPFqVVgn"
+      },
+      "source": [
+        "The `Model.evaluate` method checks the model's performance, usually on a [validation set](https://developers.google.com/machine-learning/glossary#validation-set) or [test set](https://developers.google.com/machine-learning/glossary#test-set)."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 11,
+      "metadata": {
+        "id": "F7dTAzgHDUh7",
+        "outputId": "a87e62b5-16a5-4ac9-91e6-286812d35ab1",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "313/313 - 1s - 3ms/step - accuracy: 0.9775 - loss: 0.0744\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[0.07442055642604828, 0.9775000214576721]"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 11
+        }
+      ],
+      "source": [
+        "model.evaluate(x_test,  y_test, verbose=2)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "T4JfEh7kvx6m"
+      },
+      "source": [
+        "The image classifier is now trained to ~98% accuracy on this dataset. To learn more, read the [TensorFlow tutorials](https://www.tensorflow.org/tutorials/)."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Aj8NrlzlJqDG"
+      },
+      "source": [
+        "If you want your model to return a probability, you can wrap the trained model, and attach the softmax to it:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 12,
+      "metadata": {
+        "id": "rYb6DrEH0GMv"
+      },
+      "outputs": [],
+      "source": [
+        "probability_model = tf.keras.Sequential([\n",
+        "  model,\n",
+        "  tf.keras.layers.Softmax()\n",
+        "])"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 13,
+      "metadata": {
+        "id": "cnqOZtUp1YR_",
+        "outputId": "82e08be6-92c5-42a9-9851-deb56630d431",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "<tf.Tensor: shape=(5, 10), dtype=float32, numpy=\n",
+              "array([[3.99353468e-07, 4.54397728e-08, 4.01891521e-05, 1.25755847e-04,\n",
+              "        1.67991801e-11, 3.30757075e-08, 4.08074345e-13, 9.99829769e-01,\n",
+              "        6.65999877e-08, 3.57096542e-06],\n",
+              "       [2.07138733e-08, 6.44608925e-04, 9.99123752e-01, 2.10799612e-04,\n",
+              "        3.66474840e-16, 1.43485056e-06, 5.40869280e-07, 9.77539091e-11,\n",
+              "        1.88603881e-05, 2.43482589e-13],\n",
+              "       [3.71487613e-06, 9.97008979e-01, 4.78137255e-04, 1.40786753e-04,\n",
+              "        5.83518995e-05, 7.97262146e-06, 6.36923214e-05, 2.03580759e-03,\n",
+              "        2.02035197e-04, 5.77340927e-07],\n",
+              "       [9.99484897e-01, 2.29863706e-09, 1.35817711e-04, 8.60692353e-07,\n",
+              "        3.32763847e-07, 5.27233988e-06, 2.00379855e-05, 1.57938368e-04,\n",
+              "        1.27416428e-07, 1.94633205e-04],\n",
+              "       [4.92240952e-06, 1.66347069e-09, 1.31889274e-05, 5.39272271e-08,\n",
+              "        9.77112353e-01, 1.18986016e-07, 4.02294245e-05, 1.29363412e-04,\n",
+              "        1.26588219e-07, 2.26996876e-02]], dtype=float32)>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 13
+        }
+      ],
+      "source": [
+        "probability_model(x_test[:5])"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-47O6_GLdRuT"
+      },
+      "source": [
+        "## Conclusion\n",
+        "\n",
+        "Congratulations! You have trained a machine learning model using a prebuilt dataset using the [Keras](https://www.tensorflow.org/guide/keras/overview) API.\n",
+        "\n",
+        "For more examples of using Keras, check out the [tutorials](https://www.tensorflow.org/tutorials/keras/). To learn more about building models with Keras, read the [guides](https://www.tensorflow.org/guide/keras). If you want learn more about loading and preparing data, see the tutorials on [image data loading](https://www.tensorflow.org/tutorials/load_data/images) or [CSV data loading](https://www.tensorflow.org/tutorials/load_data/csv).\n"
+      ]
+    }
+  ],
+  "metadata": {
+    "colab": {
+      "name": "beginner.ipynb",
+      "toc_visible": true,
+      "provenance": []
+    },
+    "kernelspec": {
+      "display_name": "Python 3",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}

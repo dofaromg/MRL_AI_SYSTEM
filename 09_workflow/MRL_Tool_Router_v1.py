@@ -24,9 +24,7 @@ import re
 import time
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
-ORIGIN_SIGNATURE = "MrLiouWord"
-
-
+from MRL_utils import ORIGIN_SIGNATURE
 class MRL_ToolRouter:
     """
     母體任務路由器。註冊母體能力 + 路由規則,依任務特徵派發。
