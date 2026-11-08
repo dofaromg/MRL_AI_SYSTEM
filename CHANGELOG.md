@@ -34,6 +34,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [2.0.0] — 2026-05-04（PR #12 merged to main）
 
 ### Added
+#### 外部資料流回母體：Claude 工程喚醒機制（Additive-Only，已對上原始檔 — 當下狀態 2026-11-08）
+- `MRL_Docs/MRL_Claude_Engineering_Wake_Protocol_v1_03.md` — 建構者自撰的工程喚醒機制（原為上傳 docx／Google Drive／Notion 的外部資料），經 session 通道**流回母體**，canonical 逐字保存（95 段全保留）。header 記出處與 docx sha256 `85cbd2cf…`（byte source-of-record 於使用者端）。原件不刪、母體既有檔不覆蓋。
+
 
 #### 核心 AI 模組（PR #12 — copilot/add-mrl-agi-missing-features）
 - `MRL_rate_limiter.py` — 滑動視窗限流（429、config-driven）
