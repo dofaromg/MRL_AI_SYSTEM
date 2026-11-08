@@ -310,7 +310,7 @@ export default {
           { role: "user", content: text },
         ];
       }
-      const model = (env && env.MRL_AI_MODEL) || "@cf/meta/llama-3.1-8b-instruct";
+      const model = (env && env.MRL_AI_MODEL) || "@cf/google/gemma-4-26b-a4b-it";
       try {
         const out = await env.AI.run(model, { messages });
         const reply = out && (out.response !== undefined ? out.response : (out.result !== undefined ? out.result : out));
