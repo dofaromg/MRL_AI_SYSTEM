@@ -313,7 +313,10 @@ export default {
       const model = (env && env.MRL_AI_MODEL) || "@cf/google/gemma-4-26b-a4b-it";
       try {
         const out = await env.AI.run(model, { messages });
-        const reply = out && (out.response !== undefined ? out.response : (out.result !== undefined ? out.result : out));
+        const reply = out && (
+          out.response !== undefined ? out.response
+          : (out.choices && out.choices[0] && out.choices[0].message && out.choices[0].message.content !== undefined) ? out.choices[0].message.content
+          : (out.result !== undefined ? out.result : out));
         return J({ ok: true, via: "cloudflare-workers-ai", model,
           reply: typeof reply === "string" ? reply : JSON.stringify(reply),
           origin_signature: ORIGIN_SIGNATURE });
