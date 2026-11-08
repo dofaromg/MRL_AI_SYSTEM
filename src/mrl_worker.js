@@ -280,51 +280,6 @@ export default {
       }
     }
 
-    // 公開邊緣 AI 聊天（可營運商品端點）：POST /api/ai/chat
-    //   自成一體，用 Cloudflare Workers AI 在邊緣直答；不碰 DL580、不需 edge token。
-    //   body: {"message":"..."} 或 {"prompt":"..."} 或 {"messages":[{role,content},...]}
-    if (p === "/api/ai/chat") {
-      if (request.method !== "POST") {
-        return J({ ok: false, error: "MRL_METHOD_NOT_ALLOWED", reason: "POST JSON {\"message\":\"...\"}" }, 405);
-      }
-      if (!env || !env.AI || typeof env.AI.run !== "function") {
-        return J({ ok: false, edge: true, error: "MRL_WORKERS_AI_UNBOUND",
-          reason: "Workers AI 未綁定或帳號無配額；請在 Cloudflare 綁定 AI 後重部署。" }, 503);
-      }
-      let payload;
-      try {
-        const bb = await readBoundedBody(request);
-        if (bb === null) return J({ ok: false, error: "MRL_PAYLOAD_TOO_LARGE", max_bytes: MAX_BODY_BYTES }, 413);
-        payload = JSON.parse(new TextDecoder().decode(bb));
-      } catch (e) {
-        return J({ ok: false, error: "MRL_INVALID_JSON" }, 400);
-      }
-      let messages;
-      if (payload && Array.isArray(payload.messages)) {
-        messages = payload.messages;
-      } else {
-        const text = ((payload && (payload.message || payload.prompt)) || "").toString();
-        if (!text.trim()) return J({ ok: false, error: "MRL_EMPTY_MESSAGE", reason: "need {\"message\":\"...\"}" }, 400);
-        messages = [
-          { role: "system", content: "你是 MRL 母體語場的對話人格，回應精簡、誠實、以繁體中文為主。origin_signature: " + ORIGIN_SIGNATURE },
-          { role: "user", content: text },
-        ];
-      }
-      const model = (env && env.MRL_AI_MODEL) || "@cf/google/gemma-4-26b-a4b-it";
-      try {
-        const out = await env.AI.run(model, { messages });
-        const reply = out && (
-          out.response !== undefined ? out.response
-          : (out.choices && out.choices[0] && out.choices[0].message && out.choices[0].message.content !== undefined) ? out.choices[0].message.content
-          : (out.result !== undefined ? out.result : out));
-        return J({ ok: true, via: "cloudflare-workers-ai", model,
-          reply: typeof reply === "string" ? reply : JSON.stringify(reply),
-          origin_signature: ORIGIN_SIGNATURE });
-      } catch (e) {
-        return J({ ok: false, edge: true, error: "MRL_WORKERS_AI_ERROR", reason: String((e && e.message) || e) }, 502);
-      }
-    }
-
     // 動態端點 → 轉發 DL580 母體後端
     if (PROXY_PATHS.includes(p)) {
       // 奇異點優先（2026-10-03）：MRL_DL580_ORIGIN = 固定 IP 入口（origin.mrliouword.com → 220.132.58.129），

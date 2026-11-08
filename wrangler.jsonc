@@ -4,7 +4,6 @@
   "main": "src/mrl_worker.js",
   "compatibility_date": "2026-05-30",
   "observability": { "enabled": true },
-  "ai": { "binding": "AI" },
   "vars": {
     "MRL_PLATFORM_DOMAIN": "mrliouword.com",
     // 奇異點（固定 IP）優先，Tunnel 備援；兩者皆經 Cloudflare Access（service token 存為 secret）
