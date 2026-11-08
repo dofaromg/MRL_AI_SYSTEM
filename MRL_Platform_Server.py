@@ -104,11 +104,51 @@ def api_dl580_run(body):
         return {"ok": False, "reason": str(exc)}
 
 
+def _ollama_reply(msg):
+    """本地模型優先（跑在 DL580 上的 Ollama，零邊際成本、不經任何外部 API）。
+    OLLAMA_HOST 未通或未配置時回 None，交回原流程。零依賴（urllib）。"""
+    import urllib.request as _u
+    host = os.environ.get("OLLAMA_HOST", "http://127.0.0.1:11434").rstrip("/")
+    def _post(path, payload, timeout):
+        req = _u.Request(host + path, data=json.dumps(payload).encode("utf-8"),
+                         headers={"content-type": "application/json"}, method="POST")
+        with _u.urlopen(req, timeout=timeout) as r:
+            return json.loads(r.read().decode("utf-8"))
+    def _get(path, timeout):
+        with _u.urlopen(host + path, timeout=timeout) as r:
+            return json.loads(r.read().decode("utf-8"))
+    try:
+        model = os.environ.get("OLLAMA_MODEL")
+        if not model:
+            tags = _get("/api/tags", 3).get("models") or []
+            if not tags:
+                return None  # 尚未 pull 任何模型
+            model = tags[0].get("name") or tags[0].get("model")
+        out = _post("/api/chat", {
+            "model": model, "stream": False,
+            "messages": [
+                {"role": "system", "content": "你是 MRL 母體語場的對話人格，回應精簡、誠實、以繁體中文為主。origin_signature: " + ORIGIN_SIGNATURE},
+                {"role": "user", "content": msg},
+            ],
+        }, 120)
+        reply = (out.get("message") or {}).get("content")
+        if not reply:
+            return None
+        return {"ok": True, "via": "ollama(local)", "model": model,
+                "reply": reply, "origin_signature": ORIGIN_SIGNATURE,
+                "note": "本地模型回答（DL580 Ollama），不經外部 API、不計費給開發者。"}
+    except Exception:  # noqa: BLE001  — 連不到/未配置：交回原流程，不報錯
+        return None
+
+
 def api_chat(body):
     m = _mother()
     msg = (body or {}).get("message", "")
     if not msg:
         return {"ok": False, "reason": "message required"}
+    _local = _ollama_reply(msg)
+    if _local is not None:
+        return _local
     if m is None:
         return {"ok": False, "reason": _MA_ERR or "mother unavailable"}
     # 優雅降級：有 chat 用 chat，否則走感知力流程描述
