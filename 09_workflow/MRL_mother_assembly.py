@@ -458,7 +458,8 @@ class MotherAssembly:
             try:
                 names = _native(self.llm_gateway, openai_key=openai_key,
                                 anthropic_key=anthropic_key,
-                                local_base_url=local_base if local_on else "")
+                                local_base_url=local_base if local_on else "",
+                                local_model=_cfg("llm.local_model"))
                 registered.extend(names)
             except Exception:  # noqa: BLE001
                 pass
