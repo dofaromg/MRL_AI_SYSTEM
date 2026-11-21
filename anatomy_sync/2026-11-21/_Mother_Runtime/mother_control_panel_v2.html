@@ -68,13 +68,13 @@ textarea{width:100%;background:#0a0e1a;color:#e8ecf1;border:1px solid #334;borde
 <div class="row">
   <div class="cell"><div class="num" id="aliveCnt">—</div><div class="lbl">alive 粒子</div></div>
   <div class="cell"><div class="num" id="deadCnt">—</div><div class="lbl">dead / shell</div></div>
-  <div class="cell"><div class="num">108</div><div class="lbl">總粒子 map</div></div>
+  <div class="cell"><div class="num" id="inventoryCnt">30 / 108</div><div class="lbl">已登錄 / 總粒子 map</div></div>
   <div class="cell"><div class="num" id="dl580St">—</div><div class="lbl">DL580 狀態</div></div>
 </div>
 
 <h2>■ 操作 (直接戳)</h2>
 <div>
-  <button onclick="scanAll()">🛰 全掃 108 粒子</button>
+  <button onclick="scanAll()">🛰 全掃 (已登錄 30 · fix #4 PR#160)</button>
   <button onclick="scanDL580()">🏛 DL580 五端口</button>
   <button onclick="kernelRun()">🧠 Kernel 戳 /run</button>
   <button onclick="observerStream()">📡 Observer 事件流</button>
@@ -194,16 +194,18 @@ async function probe(name){
 }
 
 async function scanAll(){
-  log('info','開始全掃 ...');
-  let alive=0,dead=0;
+  // fix #4 (codex P2 · PR#160) · claim 108 vs 實際 30 inventory 不符 · 現在動態從 PARTICLES 算
   const all=Object.values(PARTICLES).flat();
+  log('info',`開始掃 · 本面板已登錄 ${all.length} 粒子 (108 中 78 未登錄 inventory · 待補完 04 補齊)`);
+  let alive=0,dead=0;
   for(const n of all){
     const ok=await probe(n);
     if(ok)alive++;else dead++;
   }
   document.getElementById('aliveCnt').textContent=alive;
   document.getElementById('deadCnt').textContent=dead;
-  log('info',`掃完: alive ${alive} · dead ${dead} / ${all.length}`);
+  document.getElementById('inventoryCnt').textContent=`${all.length} / 108`;
+  log('info',`掃完: alive ${alive} · dead ${dead} / ${all.length} 已登錄 (108 中 ${108-all.length} 未登錄)`);
 }
 
 // ============ DL580 五端口 ============
@@ -245,7 +247,12 @@ async function kernelRun(){
     const txt=await r.text();
     let j;try{j=JSON.parse(txt)}catch{j={raw:txt}}
     out.textContent=JSON.stringify(j,null,2);
-    log('ok','kernel /run OK');
+    // fix #5 (codex P2 · PR#160) · fetch 不 reject HTTP error · 必須 check r.ok 才能 log OK
+    if(r.ok){
+      log('ok',`kernel /run ${r.status}`);
+    }else{
+      log('err',`kernel /run HTTP ${r.status} · response in output box`);
+    }
   }catch(e){
     out.textContent='ERROR: '+e.message;
     log('err','kernel /run '+e.message);

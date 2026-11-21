@@ -67,18 +67,34 @@ check_health() {
   fi
 }
 
-check_dl580() {
-  local port="$1"
-  local svc="$2"
-  local url="https://${DL580_BRIDGE}:${port}/health"
+# fix #1 (codex P2 · PR#160) · 區分 public tunnel (HTTPS · no port) 與 local service ports (HTTP · 127.0.0.1)
+# 對照 deploy/dl580/MRL_Network_Receipt.ps1:148-150 (public tunnel) + :108-112 (local ports)
+check_tunnel() {
+  local url="https://${DL580_BRIDGE}/health"
   local code
-  code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 \
-    -H "X-Bridge-Key: ${BRIDGE_KEY}" "$url" 2>/dev/null || echo "000")
+  code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 "$url" 2>/dev/null || echo "000")
   if [ "$code" = "200" ]; then
-    echo -e "  ${G}✓${N} DL580:${port} ${svc} online"
+    echo -e "  ${G}✓${N} tunnel ${DL580_BRIDGE} reachable"
     return 0
   else
-    echo -e "  ${R}✗${N} DL580:${port} ${svc} = ${code}"
+    echo -e "  ${R}✗${N} tunnel ${DL580_BRIDGE} = ${code}"
+    return 1
+  fi
+}
+
+# Local service port probe · 必須在 DL580 本機跑 · 否則外網路由不到 local HTTP port
+check_dl580_local() {
+  local port="$1"
+  local svc="$2"
+  local host="${DL580_LOCAL_HOST:-127.0.0.1}"
+  local url="http://${host}:${port}/health"
+  local code
+  code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 "$url" 2>/dev/null || echo "000")
+  if [ "$code" = "200" ]; then
+    echo -e "  ${G}✓${N} DL580 local :${port} ${svc} online"
+    return 0
+  else
+    echo -e "  ${R}✗${N} DL580 local :${port} ${svc} = ${code} (若非在 DL580 本機跑 · 本層必 fail)"
     return 1
   fi
 }
@@ -95,6 +111,7 @@ check_wrangler_toml() {
   return 1
 }
 
+# fix #2 (codex P2 · PR#160) · aggregate failures 到 global FAIL · 最終 exit nonzero when any fail
 scan_tier() {
   local tier_name="$1"; shift
   local workers=("$@")
@@ -104,19 +121,25 @@ scan_tier() {
     if check_health "$w"; then ok=$((ok+1)); else fail=$((fail+1)); fi
   done
   echo -e "  → ${G}${ok} OK${N} · ${R}${fail} fail${N}"
+  FAIL=$((FAIL+fail))
 }
 
 # ---------- 模式 ----------
 MODE="${1:-all}"
+FAIL=0
 
+# fix #3 (codex P2 · PR#160) · 每個 DL580 probe 用 `|| FAIL=...` guard · 避免 set -e 在首個 fail 中斷後續 scan
 case "$MODE" in
   all)
-    echo -e "\n${B}■ DL580 Bridge 五端口${N}"
-    check_dl580 7500 "Inference"
-    check_dl580 7600 "Operations"
-    check_dl580 7700 "ASI_Engine"
-    check_dl580 7800 "Bridge(主)"
-    check_dl580 7900 "FlowAgent_API"
+    echo -e "\n${B}■ DL580 public tunnel (HTTPS · no port)${N}"
+    check_tunnel || FAIL=$((FAIL+1))
+
+    echo -e "\n${B}■ DL580 local service ports (需在 DL580 本機跑才會 pass)${N}"
+    check_dl580_local 7500 "Inference"     || FAIL=$((FAIL+1))
+    check_dl580_local 7600 "Operations"    || FAIL=$((FAIL+1))
+    check_dl580_local 7700 "ASI_Engine"    || FAIL=$((FAIL+1))
+    check_dl580_local 7800 "Bridge(主)"    || FAIL=$((FAIL+1))
+    check_dl580_local 7900 "FlowAgent_API" || FAIL=$((FAIL+1))
 
     scan_tier "階段 1 · 殼 (L0+L-1)" "${TIER1_SHELL[@]}"
     scan_tier "階段 2 · 腦 (L1+L-1)" "${TIER2_BRAIN[@]}"
@@ -140,14 +163,19 @@ case "$MODE" in
 
   *)
     # 傳單一 worker 名
-    check_health "$MODE"
+    check_health "$MODE" || FAIL=$((FAIL+1))
     ;;
 esac
 
 echo ""
 echo -e "${B}========================================${N}"
-echo -e "${B}  完成 · 若有 fail · 查 CF Dashboard Logs${N}"
-echo -e "${B}========================================${N}"
+if [ "$FAIL" -eq 0 ]; then
+  echo -e "${B}  ${G}全綠 · 完成${N}${B}${N}"
+  exit 0
+else
+  echo -e "${B}  ${Y}有 ${FAIL} 項 fail · 查上面 ✗ 標示 · CF Dashboard Logs${N}${B}${N}"
+  exit 1
+fi
 
 # ---------- 戒律驗證 ----------
 # origin_signature: MrLiouWord ✓
