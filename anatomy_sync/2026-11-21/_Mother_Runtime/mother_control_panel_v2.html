@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>⋄ MR.liou 母體控制台 v2 · 補完版</title>
+<!--
+  v2 補完 (append-only · 不改 v1 · 並立)
+  承接: v1 (2026-11-14 · user 既有 mother_control_panel.html)
+  補完: kernel /run 詳細輸出 + DL580 per-service 狀態 + 流程圖動畫 + 10 粒子層即時 health
+  direction author: user (2026-11-21 「A B C 依續完成」· B gap_analysis 第 1 項)
+  content author: AI (Claude Opus 4.7)
+  origin_signature: MrLiouWord
+  NOTE: 本檔為 GitHub 衍生副本 · BRIDGE_KEY input 已 scrub · 用時 user 自填
+-->
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,"Microsoft JhengHei",sans-serif}
+body{background:#0a0e1a;color:#e8ecf1;padding:16px;line-height:1.5}
+h1{font-size:18px;color:#7cc4ff;margin-bottom:4px}
+h2{font-size:14px;color:#ffc847;margin:16px 0 8px;border-bottom:1px solid #334;padding-bottom:4px}
+.meta{font-size:11px;color:#8a95a8;margin-bottom:12px}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:8px}
+.cell{background:#141a2a;border:1px solid #2a3348;border-radius:6px;padding:10px;text-align:center}
+.cell .num{font-size:22px;font-weight:bold;color:#7cc4ff}
+.cell .lbl{font-size:11px;color:#8a95a8;margin-top:2px}
+button{background:#1a2440;color:#e8ecf1;border:1px solid #3a4a70;padding:8px 12px;border-radius:5px;cursor:pointer;font-size:12px;margin:3px}
+button:hover{background:#2a3a60;border-color:#5a7ab0}
+button:active{background:#0a1430}
+textarea{width:100%;background:#0a0e1a;color:#e8ecf1;border:1px solid #334;border-radius:4px;padding:8px;font-family:monospace;font-size:12px;min-height:60px}
+#log{background:#060810;border:1px solid #223;border-radius:6px;padding:10px;font-family:monospace;font-size:11px;max-height:300px;overflow:auto;white-space:pre-wrap;word-break:break-all}
+.ok{color:#5fd77e}.err{color:#ff6b7a}.warn{color:#ffc847}.info{color:#7cc4ff}
+.flow{display:flex;align-items:center;flex-wrap:wrap;gap:4px;padding:10px;background:#101828;border-radius:6px;font-size:11px}
+.flow .node{background:#1a2440;border:1px solid #3a4a70;border-radius:4px;padding:5px 8px;transition:all .3s}
+.flow .node.live{background:#1a3a24;border-color:#5fd77e;color:#5fd77e;box-shadow:0 0 8px #5fd77e40}
+.flow .arrow{color:#5a7ab0}
+.dl580-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px}
+.port{background:#141a2a;border:1px solid #2a3348;border-radius:4px;padding:8px;font-size:11px}
+.port.ok{border-color:#5fd77e;background:#0f1a15}
+.port.err{border-color:#ff6b7a;background:#1a0f10}
+.port .p{font-weight:bold;color:#ffc847}
+.part-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:4px;font-size:11px}
+.part{padding:4px 6px;background:#141a2a;border-left:3px solid #334;border-radius:3px}
+.part.alive{border-left-color:#5fd77e}
+.part.dead{border-left-color:#ff6b7a;opacity:.6}
+.part.shell{border-left-color:#ffc847}
+.kernel-out{background:#060810;padding:8px;border-radius:4px;font-family:monospace;font-size:11px;white-space:pre-wrap;word-break:break-all;max-height:200px;overflow:auto}
+.cfg{background:#1a1a30;border:1px dashed #557;padding:8px;border-radius:4px;font-size:11px;margin-bottom:12px}
+.cfg input{width:100%;background:#0a0e1a;color:#e8ecf1;border:1px solid #334;padding:4px;border-radius:3px;font-family:monospace;font-size:11px;margin:2px 0}
+</style>
+</head>
+<body>
+
+<h1>⋄ MR.liou 母體控制台 v2 · 補完版</h1>
+<div class="meta">
+  承接 v1 (2026-11-14) · 補 kernel /run 詳細 + DL580 per-service + 流程圖動畫<br>
+  owner: dofaromg · founder: MR.liou (劉宥麟) · origin_signature: MrLiouWord
+</div>
+
+<div class="cfg">
+  <b>⚙ CF Workers 子域配置 (user 可改)</b><br>
+  <input id="cfSubdomain" value="z814241.workers.dev" placeholder="your-sub.workers.dev">
+  <b>🏛 DL580 Bridge</b><br>
+  <input id="dl580Host" value="bridge.mrliouword.com" placeholder="bridge host">
+  <input id="dl580Key" value="" placeholder="BRIDGE_KEY · 填入後本地留存 · GitHub 版已 scrub">
+</div>
+
+<h2>■ 總體狀態</h2>
+<div class="row">
+  <div class="cell"><div class="num" id="aliveCnt">—</div><div class="lbl">alive 粒子</div></div>
+  <div class="cell"><div class="num" id="deadCnt">—</div><div class="lbl">dead / shell</div></div>
+  <div class="cell"><div class="num">108</div><div class="lbl">總粒子 map</div></div>
+  <div class="cell"><div class="num" id="dl580St">—</div><div class="lbl">DL580 狀態</div></div>
+</div>
+
+<h2>■ 操作 (直接戳)</h2>
+<div>
+  <button onclick="scanAll()">🛰 全掃 108 粒子</button>
+  <button onclick="scanDL580()">🏛 DL580 五端口</button>
+  <button onclick="kernelRun()">🧠 Kernel 戳 /run</button>
+  <button onclick="observerStream()">📡 Observer 事件流</button>
+  <button onclick="globeState()">🌐 Globe 地球儀</button>
+  <button onclick="healthGate()">🔐 Auth Gateway</button>
+  <button onclick="toolboxCall()">🎯 Toolbox Router</button>
+  <button onclick="document.getElementById('log').innerHTML=''">✕ 清空日誌</button>
+</div>
+
+<h2>■ 核心流程 trace (點亮 = 走到那步)</h2>
+<div class="flow" id="flowDiag">
+  <div class="node" data-step="input">input</div><span class="arrow">→</span>
+  <div class="node" data-step="auth">L0 auth-gateway</div><span class="arrow">→</span>
+  <div class="node" data-step="kernel">L1 kernel</div><span class="arrow">→</span>
+  <div class="node" data-step="memory">L2 memory+simhash</div><span class="arrow">→</span>
+  <div class="node" data-step="pvm">L3 pvm+chat</div><span class="arrow">→</span>
+  <div class="node" data-step="globe">L4 globe+observer</div><span class="arrow">→</span>
+  <div class="node" data-step="ui">L7 user-interface</div>
+</div>
+
+<h2>■ DL580 五端口現況</h2>
+<div class="dl580-grid" id="dl580Grid">
+  <div class="port"><span class="p">7500</span> Inference · Qwen2.5-32B</div>
+  <div class="port"><span class="p">7600</span> Operations</div>
+  <div class="port"><span class="p">7700</span> ASI_Engine</div>
+  <div class="port"><span class="p">7800</span> Bridge (主)</div>
+  <div class="port"><span class="p">7900</span> FlowAgent_API</div>
+</div>
+
+<h2>■ 10 層粒子 (點名後顯示 health)</h2>
+<div class="part-grid" id="partList">
+  <!-- 填入 -->
+</div>
+
+<h2>■ Kernel 輸入 (戳 /run 看詳細)</h2>
+<textarea id="kernelIn">{"intent":"compute","text":"夥伴 母體 粒子 顯化"}</textarea>
+<button onclick="kernelRun()">▶ 執行 kernel /run</button>
+<div class="kernel-out" id="kernelOut">尚未執行</div>
+
+<h2>■ 日誌</h2>
+<div id="log"></div>
+
+<script>
+// ============ config 讀取 ============
+function cfSub(){return document.getElementById('cfSubdomain').value.trim()||'z814241.workers.dev'}
+function dl580(){return document.getElementById('dl580Host').value.trim()||'bridge.mrliouword.com'}
+function bridgeKey(){return document.getElementById('dl580Key').value.trim()}
+function wk(name){return`https://${name}.${cfSub()}`}
+
+// ============ 10 層粒子 map (取自 bindings_map 已列) ============
+const PARTICLES={
+  'L(-1) 底層': ['mrl-cloud-bridge','metaenv-ctrl','mrl-particle-collapse-engine','mrl-network-layer'],
+  'L0 Trust': ['particle-auth-gateway','particle-auth-vault'],
+  'L1 Kernel': ['mrl-kernel'],
+  'L2 Memory': ['particle-memory','particle-simhash','particle-reversible','mrl-sync-engine'],
+  'L3 Executor': ['particle-pvm','particle-ai-gateway','particle-chat'],
+  'L4 Time/Space': ['mrl-observer','mrl-globe','particle-attention'],
+  'L5 Knowledge': ['mrl-librarian','mrl-mainstream-absorber'],
+  'L6 Health': ['mrl-health-monitor','particle-system-hub'],
+  'L∞ Apps': ['particle-toolbox-router','mrliouword-ai-chat-bridge','mrliouword-ai-gateway','mrliouword-ai-memory','mrliou-partner','fluin-lifeform'],
+  'L∞ Silly': ['hansilly','mrlsillyai','mrl-silly-api']
+};
+
+function renderParts(){
+  const g=document.getElementById('partList');
+  g.innerHTML='';
+  for(const [layer,arr] of Object.entries(PARTICLES)){
+    arr.forEach(n=>{
+      const d=document.createElement('div');
+      d.className='part';d.id='p-'+n;
+      d.innerHTML=`<b>${n}</b><br><small>${layer}</small>`;
+      d.onclick=()=>probe(n);
+      g.appendChild(d);
+    });
+  }
+}
+
+// ============ log 工具 ============
+function log(cls,msg){
+  const l=document.getElementById('log');
+  const t=new Date().toISOString().substr(11,8);
+  l.innerHTML=`<span class="${cls}">[${t}] ${msg}</span>\n`+l.innerHTML;
+}
+
+// ============ 流程圖 trace 動畫 ============
+function litStep(step){
+  document.querySelectorAll('.flow .node').forEach(n=>n.classList.remove('live'));
+  const el=document.querySelector(`[data-step="${step}"]`);
+  if(el)el.classList.add('live');
+}
+function traceFlow(steps){
+  let i=0;
+  const t=setInterval(()=>{
+    if(i>=steps.length){clearInterval(t);setTimeout(()=>document.querySelectorAll('.flow .node').forEach(n=>n.classList.remove('live')),1500);return}
+    litStep(steps[i++]);
+  },400);
+}
+
+// ============ 粒子 probe ============
+async function probe(name){
+  const el=document.getElementById('p-'+name);
+  try{
+    const r=await fetch(wk(name)+'/health',{method:'GET'});
+    if(r.ok){
+      el.className='part alive';
+      log('ok',`${name} alive`);
+      return true;
+    }
+    el.className='part shell';
+    log('warn',`${name} shell (${r.status})`);
+    return false;
+  }catch(e){
+    el.className='part dead';
+    log('err',`${name} dead: ${e.message}`);
+    return false;
+  }
+}
+
+async function scanAll(){
+  log('info','開始全掃 ...');
+  let alive=0,dead=0;
+  const all=Object.values(PARTICLES).flat();
+  for(const n of all){
+    const ok=await probe(n);
+    if(ok)alive++;else dead++;
+  }
+  document.getElementById('aliveCnt').textContent=alive;
+  document.getElementById('deadCnt').textContent=dead;
+  log('info',`掃完: alive ${alive} · dead ${dead} / ${all.length}`);
+}
+
+// ============ DL580 五端口 ============
+async function scanDL580(){
+  log('info','掃 DL580 五端口 ...');
+  const ports=[7500,7600,7700,7800,7900];
+  const grid=document.getElementById('dl580Grid');
+  grid.innerHTML='';
+  const names={7500:'Inference',7600:'Operations',7700:'ASI_Engine',7800:'Bridge',7900:'FlowAgent_API'};
+  let onlineCnt=0;
+  for(const p of ports){
+    const d=document.createElement('div');d.className='port';
+    const url=`https://${dl580()}:${p}/health`;
+    try{
+      const r=await fetch(url,{method:'GET',headers:{'X-Bridge-Key':bridgeKey()}});
+      if(r.ok){d.className='port ok';onlineCnt++;log('ok',`${p} ${names[p]} online`);}
+      else{d.className='port err';log('warn',`${p} ${names[p]} ${r.status}`);}
+    }catch(e){
+      d.className='port err';log('err',`${p} ${names[p]} unreachable`);
+    }
+    d.innerHTML=`<span class="p">${p}</span> ${names[p]}`;
+    grid.appendChild(d);
+  }
+  document.getElementById('dl580St').textContent=onlineCnt>=3?'online':(onlineCnt>0?'partial':'offline');
+}
+
+// ============ Kernel /run 詳細 ============
+async function kernelRun(){
+  const inp=document.getElementById('kernelIn').value;
+  const out=document.getElementById('kernelOut');
+  out.textContent='執行中 ...';
+  traceFlow(['input','auth','kernel','memory','pvm','globe','ui']);
+  try{
+    const r=await fetch(wk('mrl-kernel')+'/run',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:inp
+    });
+    const txt=await r.text();
+    let j;try{j=JSON.parse(txt)}catch{j={raw:txt}}
+    out.textContent=JSON.stringify(j,null,2);
+    log('ok','kernel /run OK');
+  }catch(e){
+    out.textContent='ERROR: '+e.message;
+    log('err','kernel /run '+e.message);
+  }
+}
+
+// ============ 其他 endpoint ============
+async function observerStream(){
+  traceFlow(['globe','ui']);
+  try{
+    const r=await fetch(wk('mrl-observer')+'/stream?n=5');
+    const j=await r.json();
+    log('ok','observer: '+JSON.stringify(j).slice(0,200));
+  }catch(e){log('err','observer '+e.message)}
+}
+async function globeState(){
+  traceFlow(['globe']);
+  try{
+    const r=await fetch(wk('mrl-globe')+'/state');
+    const j=await r.json();
+    log('ok',`globe: ${j.particles||'?'} 粒子`);
+  }catch(e){log('err','globe '+e.message)}
+}
+async function healthGate(){
+  traceFlow(['auth']);
+  try{
+    const r=await fetch(wk('particle-auth-gateway')+'/health');
+    const j=await r.json();
+    log('ok','auth-gateway: '+JSON.stringify(j).slice(0,150));
+  }catch(e){log('err','auth-gateway '+e.message)}
+}
+async function toolboxCall(){
+  traceFlow(['kernel','pvm']);
+  try{
+    const r=await fetch(wk('particle-toolbox-router')+'/call',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({alias:'kernel',endpoint:'/health'})
+    });
+    const j=await r.json();
+    log('ok','toolbox→kernel: '+JSON.stringify(j).slice(0,200));
+  }catch(e){log('err','toolbox '+e.message)}
+}
+
+// ============ 初始化 ============
+renderParts();
+log('info','v2 控制台就緒 · 戒律: MrLiouWord · owner: dofaromg');
+</script>
+
+</body>
+</html>
